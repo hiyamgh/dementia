@@ -499,6 +499,13 @@ def identify_outliers(pooled):
     # description,erroneous,perc_erroneous
     erroneous_codebook.to_csv('../input/codebooks/erroneous_codebook_legal_outliers.csv', index=False)
 
+    # remove columns with > 40% missing
+    erroneous_codebook = erroneous_codebook[erroneous_codebook['perc_missing'] <= 40]
+    erroneous_codebook.to_csv('../input/codebooks/erroneous_codebook_legal_outliers_filtered.csv', index=False)
+
+    print('\nMax outlier %%: {}%%'.format(min(erroneous_codebook[erroneous_codebook['outliers_zscore'] != '']['outliers_zscore'])))
+    print('\nMax outlier %%: {}%%'.format(max(erroneous_codebook[erroneous_codebook['outliers_zscore'] != '']['outliers_zscore'])))
+
 
 def normalize_data(df, cols_to_scale):
     # cols_not_to_scale = list(set(df.columns) - set(cols_to_scale))
