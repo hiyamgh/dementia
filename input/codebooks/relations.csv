@@ -1,0 +1,73 @@
+parent,parent_perc_missing,parent_desc,child,child_perc_missing,child_desc,relation2parent
+DAYPAID_2,-1,Is anyone paid (other than the living maid) to help the elderly during the day?,ABUSE_2,99.4140625,Is there a concern of abuse between the paid caregiver and elderly? ,DAYPAID_2=2 or DAYPAID_2=3 or DAYPAID_2=4 or DAYPAID_2=98
+,,,HRHELP_2,99.90234375,How many hours is this person available for help? ,DAYPAID_2=2 or DAYPAID_2=3 or DAYPAID_2=4 or DAYPAID_2=98
+CJOB_2,28.61328125,Do you have a job currently? ,CJOBCAT_2,73.046875,what is your job,CJOB_2=1 or CJOB_2=2
+CAREHELP_2,85.9375,Do any other friends or relatives regularly help to care for the elderly,HELPHOUR_2,96.2890625,For how many hours per week on average do they stand in for you?,CAREHELP_2=1
+,,,HELPCUT1_2,96.2890625,Have any friends and relatives stayed off work over the last 3 months to help with caregiving?,CAREHELP_2=1
+HELPCUT2_2,85.9375,Does the elderly have a maid living in the house?,HELPCUT3_2,96.875,Does the maid take care of the elderly?,HELPCUT2_2=1
+CINCOM_2,28.7109375,Do you have any income (the job or other)?,CINCOM1_2,90.625,What is your monthly income?,CINCOM_2=1
+,,,CKINCOM_2,82.12890625,What is the kind of income?,CINCOM_2=1
+agepart,76.46484375,Age reported by participant:,agedisc,78.7109375,"Is there a discrepancy, of at least one year between the ages obtained from the three different sources?",agepart!=999 and ageinfo!=999 and agedoc!=999
+,,,age2,97.55859375,Age according to Events Calendar.,agepart=999 or ageinfo=999 or agedoc=999 or agediscy=1
+ageinfo,76.46484375,Age reported by informant:,agedisc,78.7109375,"Is there a discrepancy, of at least one year between the ages obtained from the three different sources?",agepart!=999 and ageinfo!=999 and agedoc!=999
+,,,age2,97.55859375,Age according to Events Calendar.,agepart=999 or ageinfo=999 or agedoc=999 or agediscy=1
+agedoc,76.46484375,Age stated in document:,agedisc,78.7109375,"Is there a discrepancy, of at least one year between the ages obtained from the three different sources?",agepart!=999 and ageinfo!=999 and agedoc!=999
+,,,age2,97.55859375,Age according to Events Calendar.,agepart=999 or ageinfo=999 or agedoc=999 or agediscy=1
+agedisc,78.7109375,"Is there a discrepancy, of at least one year between the ages obtained from the three different sources?",ageexpl,96.875,Can the discrepancy be explained convincingly by participant and/or informant?,agedisc=1
+ageexpl,96.875,Can the discrepancy be explained convincingly by participant and/or informant?,age1,97.36328125,"If yes, state here in your opinion, the most likely correct age of the participant and skip to section 3.",ageexpl=1
+,,,agediscy,99.51171875,Number of years of discrepancy,ageexpl=0
+agediscy,99.51171875,Number of years of discrepancy,age2,97.55859375,Age according to Events Calendar.,agepart=999 or ageinfo=999 or agedoc=999 or agediscy=1
+Q171_2,3.80859375,do you have children,Q181_2,19.140625,depressed or bothered by the relationship with children,Q171_2=1
+Q221_2,3.3203125,Have you cried at all? How often? Has cried:,Q231_2,29.4921875,Has felt like crying,Q221_2=0
+Q311_2,96.2890625,during the last month,Q332_2,87.40234375,seems very nervous or worried,Q311_2=1 or Q313_2=1
+,,,Q333_2,87.59765625,"seems very sad, moorning or depressed",Q311_2=1 or Q313_2=1
+,,,Q334_2,87.59765625,seems very nervous or scared,Q311_2=1 or Q313_2=1
+,,,Q335_2,87.59765625,wet eyes: filled with larms or crying,Q311_2=1 or Q313_2=1
+Q313_2,97.36328125,felt like wanting to die for at least 2 weeks in the past month,Q332_2,87.40234375,seems very nervous or worried,Q311_2=1 or Q313_2=1
+,,,Q333_2,87.59765625,"seems very sad, moorning or depressed",Q311_2=1 or Q313_2=1
+,,,Q334_2,87.59765625,seems very nervous or scared,Q311_2=1 or Q313_2=1
+,,,Q335_2,87.59765625,wet eyes: filled with larms or crying,Q311_2=1 or Q313_2=1
+Q366_2,82.03125,did you visit a doctor or specialist to treat the problem,Q367_2,97.75390625,did the doctor/specialist give you any advice ,Q366_2=1
+Q367_2,97.75390625,did the doctor/specialist give you any advice ,Q368_2,98.4375,what was the doctor's advice ,Q367_2=1
+,,,Q369_2,97.8515625,did the doctor/specialist prescribe any medication for you,Q367_2=1 or Q367_2=0
+Q369_2,97.8515625,did the doctor/specialist prescribe any medication for you,Q3610_2,98.33984375,was the medication useful ,Q369_2=1
+Q931_2,3.3203125,There are people like this,Q941_2,7.6171875,An unrealistic belief that there are people trying to upset or hurt him/her.,Q931_2=0
+DAY1_2,35.3515625,how much time did you spend with the elderly yesterday?,DAY1A_2,51.171875,specify the hours when part of the time indicated (yesterday),DAY1_2=1
+,,,DAY1B_2,78.90625,specify the hours when all of the time indicated (yesterday),DAY1_2=2
+DAY2_2,35.546875,how much time did you spend with the elderly Day before yesterday?,DAY2A_2,50.48828125,specify the hours when part of the time indicated (the day before yesterday),DAY2_2=1
+,,,DAY2B_2,80.078125,specify the hours when all of the time indicated (the day before yesterday),DAY2_2=2
+CARENEED_2,28.61328125,The older person,CAREWHO1_2,85.9375,The informant is the ,CARENEED_2=1 or CARENEED_2=2
+,,,CAREWHO2_2,85.9375,Hands on’ care is provided mainly by ,CARENEED_2=1 or CARENEED_2=2
+CUTBACK_2,85.9375,Have you given up or cut down on work to care for the elderly?,CUTWHEN_2,99.8046875,How long did you give up work?,CUTBACK_2=1
+,,,CUTHOUR_2,99.4140625,By how many hours per week did you cut back on your work?,CUTBACK_2=1 or CUTBACK_2=2
+CHORES_2,1.171875,"Does he/she have difficulty performing household chores that he/she is used to do, such as preparing food or boiling a pot of tea?",CHOREDIS_2,85.9375,Does the interviewer think that the problem is primarily due to physical disability?,CHORES_2=0.5 or CHORES_2=1 or CHORES_2=0.0001
+FEED_2,1.171875,Does he/she have difficulty feeding him/herself? ,FEEDDIS_2,95.1171875,Does the interviewer think that the problem is primarily due to physical disability?,FEED_2=1 or FEED_2=2 or FEED_2=3 or FEED_2=0.0001
+DRESS_2,1.46484375,Does he/she have difficulty dressing?,DRESSDIS_2,88.28125,Does the interviewer think that the problem is primarily due to physical disability?,DRESS_2=1 or DRESS_2=2 or DRESS_2=3 or DRESS_2=0.0001
+TOILET_2,1.26953125,Does he/she have difficulty using the toilet? Does he/she wet or soil him/herself?,TOILDIS_2,93.65234375,Does the interviewer think that the problem is primarily due to physical disability?,TOILET_2=1 or TOILET_2=2 or TOILET_2=3 or TOILET_2=0.0001
+NPI1,28.7109375,"Does your (xxxx) believe that others are stealing from him or her, or planning to harm him or her in some way?",NPI1SEV,99.4140625,How much does this affect your xxxx?,NPI1=1
+,,,NPI1DIS,99.4140625,How much distress does this problem cause you?,NPI1=1
+NPI2,28.7109375,Does your (xxxx) act as if he or she hears voices? Does he or she talk to people who are not there?,NPI2SEV,50.78125,How much does this affect your xxxx?,NPI2=1
+,,,NPI2DIS,50.87890625,How much distress does this problem cause you?,NPI2=1
+NPI3,28.7109375,Is your (xxxx) stubborn and resistive to help from others?,NPI3SEV,50.48828125,How much does this affect your xxxx?,NPI3=1
+,,,NPI3DIS,50.48828125,How much distress does this problem cause you?,NPI3=1
+NPI4,28.61328125,Does your (xxxx) act as if he or she is sad or in low spirits? Does he or she cry?,NPI4SEV,49.51171875,How much does this affect your xxxx?,NPI4=1
+,,,NPI4DIS,49.51171875,How much distress does this problem cause you?,NPI4=1
+NPI5,28.7109375,"Does your (xxxx) become upset when separated from you? Does he or she have any other signs of nervousness, such as shortness of breath, sighing, being unable to relax, or feeling excessively tense?",NPI5SEV,50.390625,How much does this affect your xxxx?,NPI5=1
+,,,NPI5DIS,50.48828125,How much distress does this problem cause you?,NPI5=1
+NPI6,28.61328125,Does your (xxxx) appear to feel too good or act excessively happy?,NPI6SEV,50.78125,How much does this affect your xxxx?,NPI6=1
+,,,NPI6DIS,50.78125,How much distress does this problem cause you?,NPI6=1
+NPI7,28.61328125,Does your (xxxx) seem less interested in his or her usual activities and plans of others?,NPI7SEV,47.65625,How much does this affect your xxxx?,NPI7=1
+,,,NPI7DIS,47.65625,How much distress does this problem cause you?,NPI7=1
+NPI8,28.61328125,"Does your (xxxx) seem to act impulsively? For example, does your (xxxx) talk to strangers as if he or she knows them, or does your (xxxx) say things that may hurt people’s feeling?",NPI8SEV,50.29296875,How much does this affect your xxxx?,NPI8=1
+,,,NPI8DIS,50.29296875,How much distress does this problem cause you?,NPI8=1
+NPI9,28.61328125,Is your (xxxx) impatient and cranky? Does he or she have difficulty coping with delays or waiting for planned activities?,NPI9SEV,50.48828125,How much does this affect your xxxx?,NPI9=1
+,,,NPI9DIS,50.48828125,How much distress does this problem cause you?,NPI9=1
+NPI10,28.61328125,"Does your (xxxx) engage in repetitive activities, such as pacing around the house, handling buttons, wrapping string, or doing other things repeatedly?",NPI10SEV,50.87890625,How much does this affect your xxxx?,NPI10=1
+,,,NPI10DIS,50.87890625,How much distress does this problem cause you?,NPI10=1
+NPI11,28.61328125,"Does your (xxxx) awaken you during the night, rise too early in the morning, or take excessive naps during the day?",NPI11SEV,50.29296875,How much does this affect your xxxx?,NPI11=1
+,,,NPI11DIS,50.29296875,How much distress does this problem cause you?,NPI11=1
+NPI12,29.39453125,"Has your (xxxx) lost or gained weight, or had a change in the food he she likes? ",NPI12SEV,50.390625,How much does this affect your xxxx?,NPI12=1
+,,,NPI12DIS,50.390625,How much distress does this problem cause you?,NPI12=1
+NPIHELP,52.5390625,Did you consult any doctor or specialist regarding any of the problems listed above?,NPITIME,98.73046875,When? (time since going to consult in months),NPIHELP=1
+NPIADV,93.45703125,Did the doctor or specialist give any advice?,NPIAHLP,98.828125,Did it help?,NPIADV=1
+NPIMED,93.45703125,Did the doctor or specialist prescribe any medication?,NPIMHLP,91.89453125,Did it help?,NPIMED=1
