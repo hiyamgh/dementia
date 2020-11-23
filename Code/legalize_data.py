@@ -36,10 +36,12 @@ Given the small frequency numbers, these should not compromise our sample size a
 
 import pandas as pd
 import numpy as np
+from numpy import percentile
 import os
-from create_numeric import get_col_name_in_pooled
+from utils import get_col_name_in_pooled
 from collections import Counter
 from sklearn.preprocessing import StandardScaler, MinMaxScaler
+from sklearn.neighbors import LocalOutlierFactor
 
 
 def check_create_dir(dest):
@@ -335,58 +337,81 @@ def drop_missing(merged, pooled, missing_codebook):
     return merged, mc
 
 
-def keep_legal(numeric, legal_cols, output_folder):
+def keep_legal(numeric, legal_cols, pooled, output_folder):
     ''' saves the legal columsn as a '''
-    drop_indexes = []
-    for index, row in numeric.iterrows():
-        if row['COLUMN'] not in legal_cols:
-            drop_indexes.append(index)
-
-    numeric=numeric.drop(drop_indexes)
-    print(len(numeric))
+    numeric_copy = numeric
+    numeric_copy = numeric_copy[numeric_copy['COLUMN'].isin(legal_cols)]
 
     # sort by percentage of missing
-    numeric = numeric.sort_values(by='perc_missing', ascending=False)
+    # numeric = numeric.sort_values(by='perc_missing', ascending=False)
+    # I will re-compute the percentage of missing
+    allcols = list(numeric_copy['COLUMN'])
+    perc_missing = []
+    for col in allcols:
+        pm = (pooled[col].isna().sum() / len(pooled)) * 100
+        perc_missing.append(pm)
+    numeric_copy['perc_missing'] = perc_missing
+    numeric_copy = numeric_copy.sort_values(by='perc_missing', ascending=False)
     check_create_dir(dest=output_folder)
-    numeric.to_csv(os.path.join(output_folder, 'legal.csv'), index=False)
-    print('\nNumber of legal cols: {}'.format(len(numeric)))
-    print('Number of legal cols with missing > 40%: {}'.format(len(numeric[numeric['perc_missing'] >= 40])))
+    numeric_copy.to_csv(os.path.join(output_folder, 'legal.csv'), index=False)
+    print('\nNumber of legal cols: {}'.format(len(numeric_copy)))
+    print('Number of legal cols with missing > 40%: {}'.format(len(numeric_copy[numeric_copy['perc_missing'] >= 40])))
 
 
-def legalize_erroneous(legal_cols, erroneous_df, output_folder,copyofdem):
+def legalize_erroneous(legal_cols, erroneous_df, output_folder, copyofdem):
     ''' function to keep only the legal columns in erroneous code book '''
     erroneous_df = erroneous_df.rename(columns={'Unnamed: 0': 'COLUMN'})
     erroneous_df = erroneous_df[erroneous_df['COLUMN'].isin(legal_cols)]
     erroneous_df = erroneous_df.sort_values(by=['perc_erroneous'], ascending=False)
-    erroneous_df=erroneous_df.apply(lambda row:set_description(row,copyofdem),axis=1)
+    erroneous_df = erroneous_df.apply(lambda row: set_description(row, copyofdem), axis=1)
     check_create_dir(dest=output_folder)
     erroneous_df.to_csv(os.path.join(output_folder, 'erroneous_codebook_legal.csv'), index=False)
 
 
-def set_description(row,copyofdem):
+def set_description(row, copyofdem):
     print(row['COLUMN'])
-    vals=copyofdem.loc[(copyofdem['name']==row['COLUMN'])]['label::English'].values
+    vals=copyofdem.loc[(copyofdem['name'] == row['COLUMN'])]['label::English'].values
     if len(vals) > 0:
         row['description']=vals.item()
     return row
 
-def calculate_outliers(pooled,col):
-    upper= pooled[col].mean() + 3*pooled[col].std()
-    lower=pooled[col].mean() - 3*pooled[col].std()
-    count=0
-    outliers=[]
-    for val in pooled[col]:
-        if val < lower or val > upper:
-            count+=1
-            outliers=np.append(outliers,val)
-            
-    outliers=np.unique(outliers)
-    outlier_str=[str(outlier) for outlier in outliers]
-    outlier_vals=' '.join(outlier_str)
-    
-    return count,outlier_vals
 
-def identify_outliers(pooled_scaled):
+def calculate_outliers_zscore(pooled, col):
+    data = pooled[col]
+    upper = data.mean() + 3*data.std()
+    lower = data.mean() - 3*data.std()
+
+    outliers = [x for x in pooled[col] if x < lower or x > upper]
+    perc_outliers = (len(outliers) / len(data)) * 100
+    return perc_outliers
+
+    # count = 0
+    # outliers = []
+    # for val in pooled[col]:
+    #     if val < lower or val > upper:
+    #         count += 1
+    #         outliers = np.append(outliers, val)
+    #
+    # outliers = np.unique(outliers)
+    # outlier_str = [str(outlier) for outlier in outliers]
+    # outlier_vals=' '.join(outlier_str)
+    #
+    # return count, outlier_vals
+
+
+def calculate_outliers_iqr(pooled, col):
+    data = pooled[col]
+    q25, q75 = percentile(data, 25), percentile(data, 75)
+    iqr = q75 - q25
+    cut_off = iqr * 1.5
+    lower, upper = q25 - cut_off, q75 + cut_off
+
+    outliers = [x for x in data if x < lower or x > upper]
+    perc_outliers = (len(outliers)/len(data)) * 100
+    return perc_outliers
+
+
+def identify_outliers(pooled):
     ''' identify outliers using 3 ways
         all legal columns have 0% missing (with the exception of DAY_2
         which upon Dr. Khalil's recommendation, he said its safe
@@ -396,20 +421,18 @@ def identify_outliers(pooled_scaled):
     # df_numeric = pd.read_csv('../input/codebooks/numeric_new.csv')
     df_numeric = pd.read_excel('../input/codebooks/numeric.xlsx')
     erroneous_codebook = pd.read_csv('../input/codebooks/erroneous_codebook_legal.csv')
-    pooled = pd.read_csv('../input/pooled_new.csv')
-
-    for col in df_numeric['COLUMN']:
-        try:
-            count,outlier_vals=calculate_outliers(pooled,col)
-            erroneous_codebook.loc[erroneous_codebook['COLUMN'] == col,'%_outliers']=count/len(pooled)*100
-            erroneous_codebook.loc[erroneous_codebook['COLUMN'] == col,'outlier_vals']=outlier_vals
-
-            count,outlier_vals=calculate_outliers(pooled_scaled,col)
-            erroneous_codebook.loc[erroneous_codebook['COLUMN'] == col,'scaled_%_outliers']=count/len(pooled_scaled)*100
-            erroneous_codebook.loc[erroneous_codebook['COLUMN'] == col,'scaled_outlier_vals']=outlier_vals
-
-        except Exception as e:
-            print(e)
+    # pooled = pd.read_csv('../input/pooled_new.csv')
+        # try:
+        #     count,outlier_vals=calculate_outliers(pooled,col)
+        #     erroneous_codebook.loc[erroneous_codebook['COLUMN'] == col,'%_outliers']=count/len(pooled)*100
+        #     erroneous_codebook.loc[erroneous_codebook['COLUMN'] == col,'outlier_vals']=outlier_vals
+        #
+        #     count,outlier_vals=calculate_outliers(pooled_scaled,col)
+        #     erroneous_codebook.loc[erroneous_codebook['COLUMN'] == col,'scaled_%_outliers']=count/len(pooled_scaled)*100
+        #     erroneous_codebook.loc[erroneous_codebook['COLUMN'] == col,'scaled_outlier_vals']=outlier_vals
+        #
+        # except Exception as e:
+        #     print(e)
     
     # no outliers exist in categorical data types.
     # we can consider outliers as being the 'erroneous values'
@@ -435,23 +458,45 @@ def identify_outliers(pooled_scaled):
     col_types = []
     frequencies = []
     perc_misisng = []
+    outliers_zscore, outliers_iqr = [], []
     for col in list(erroneous_codebook['COLUMN']):
         type = columns2type[col]
         col_types.append(type)
-        frequencies.append(str(Counter(list(pooled[col].dropna().values))))
+        counter = Counter(list(pooled[col].dropna().values))
+        mycount = ''
+        for k, v in counter.items():
+            mycount += ', {}: {}%%'.format(k, v/len(pooled[col] * 100))
+        # frequencies.append(str(Counter(list(pooled[col].dropna().values))))
+        frequencies.append(mycount)
 
         # percentage of missing values
         pm = (pooled[col].isna().sum() / len(pooled)) * 100
         # perc_misisng.append(str(pm) + '%')
         perc_misisng.append(pm)
 
+        # outliers (only for numeric & ordinal)
+        if type in ['ordinal', 'numeric']:
+            outliers_zscore.append(calculate_outliers_zscore(pooled, col))
+            outliers_iqr.append(calculate_outliers_iqr(pooled, col))
+        else:
+            outliers_zscore.append('')
+            outliers_iqr.append('')
+
     # create a new column for data types in the erroneous code book
     erroneous_codebook.insert(1, 'data_type', col_types)
     erroneous_codebook.insert(2, 'frequencies', frequencies)
     erroneous_codebook.insert(3, 'perc_missing', perc_misisng)
+    erroneous_codebook.insert(4, 'outliers_zscore', outliers_zscore)
+    erroneous_codebook.insert(5, 'outliers_iqr', outliers_zscore)
 
     # sort by decreasing % missing
     erroneous_codebook = erroneous_codebook.sort_values(by='perc_missing', ascending=False)
+    erroneous_codebook = erroneous_codebook[['COLUMN', 'data_type', 'description', 'frequencies',
+                                             'perc_missing',
+                                             'erroneous', 'perc_erroneous', 'cut_off',
+                                             'outliers_zscore', 'outliers_iqr']]
+    # COLUMN,data_type,frequencies,perc_missing,outliers_zscore,outliers_iqr,cut_off,
+    # description,erroneous,perc_erroneous
     erroneous_codebook.to_csv('../input/codebooks/erroneous_codebook_legal_outliers.csv', index=False)
 
 
@@ -496,12 +541,12 @@ if __name__ == '__main__':
     copyofdem = pd.read_excel('../input/Copy of Dementia_baseline_questionnaire_V1.xlsx')
     erroneous = pd.read_csv('../input/codebooks/erroneous_codebook.csv')
 
-    # of = '../input/codebooks/'
-    # relations, legal_cols = drop_jumping_columns(beqaa_df=copyofdem, merged=numeric,
-    #                                              pooled=pooled, household_df=household)
-    # keep_legal(numeric, legal_cols, output_folder=of)
-    # print('===============================================================')
-    # legalize_erroneous(legal_cols=legal_cols, erroneous_df=erroneous, output_folder=of,copyofdem=copyofdem)
+    of = '../input/codebooks/'
+    relations, legal_cols = drop_jumping_columns(beqaa_df=copyofdem, merged=numeric,
+                                                 pooled=pooled, household_df=household)
+    keep_legal(numeric, legal_cols, pooled, output_folder=of)
+    print('===============================================================')
+    legalize_erroneous(legal_cols=legal_cols, erroneous_df=erroneous, output_folder=of,copyofdem=copyofdem)
 
     #  ============================== NEW PART STARTS BELOW =============================================
     # df = pd.read_csv('../input/codebooks/erroneous_codebook_legal_outliers.csv')
@@ -510,4 +555,4 @@ if __name__ == '__main__':
     # cols_numeric = _get_numeric(df)
     #
     # pooled_scaled = normalize_data(pooled, cols_numeric)
-    # identify_outliers(pooled_scaled)
+    identify_outliers(pooled)

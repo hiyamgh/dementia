@@ -1,402 +1,402 @@
-COLUMN,data_type,frequencies,perc_missing,cut_off,description,erroneous,perc_erroneous,%_outliers,outlier_vals,scaled_%_outliers,scaled_outlier_vals
-CKINCOM_2/3,not found,Counter(),100.0,,,,0.0,0.0,,0.0,
-CKINCOM_2/2,not found,"Counter({1.0: 4, 3.0: 1})",99.51171875,,,,0.0,0.0,,0.0,
-Q1421_2,categorical,"Counter({0.0: 4, 1.0: 2})",99.4140625,3.0,Suffered such effects from excessive drinking or stopping drinking.,,0.0,0.0,,0.0,
-Q1431_2,categorical,"Counter({0.0: 4, 1.0: 2})",99.4140625,3.0,Needs a drink,,0.0,0.0,,0.0,
-Q1291_2,categorical,"Counter({0.0: 5, 1.0: 3, 8.0: 1})",99.12109375,3.0,He/she thought it was real,8,0.18484288354898332,0.0,,0.0,
-Q1281_2,categorical,"Counter({0.0: 4, 1.0: 4, 8.0: 1})",99.12109375,3.0,The visions were made at a time when the participant was fully awake,8,0.18484288354898332,0.0,,0.0,
-CKINCOM_2/7,not found,Counter({1.0: 10}),99.0234375,,,,0.0,0.0,,0.0,
-Q1012_2,categorical,"Counter({1.0: 7, 0.0: 5, 9.0: 2})",98.6328125,3.0,"The elderly claims to be an ordinary person, known (celebraty) or unknown (not)",9,0.3696857670979667,0.0,,0.0,
-Q1001_2,ordinal,"Counter({0.0: 8, 1.0: 4, 2.0: 1, 9.0: 1})",98.6328125,4.0,"The elderly believes that people are trying to make him/her angry, frustrated or exploit him/her.",9,0.18484288354898332,0.09765625,9.0,0.09765625,9.0
-Q1002_2,ordinal,"Counter({0.0: 11, 2.0: 1, 9.0: 1, 1.0: 1})",98.6328125,4.0,The elderly believes that people are trying to cause him serious physical harm or to kill him/her.,9,0.18484288354898332,0.09765625,9.0,0.09765625,9.0
-Q1011_2,categorical,"Counter({0.0: 12, 9.0: 2})",98.6328125,3.0,"The elderly claims to be an official person or belonging to an organization (police, MI, KGB5 etc.)",9,0.3696857670979667,0.0,,0.0,
-Q1412_2,ordinal,"Counter({0.0: 12, 1.0: 4})",98.4375,4.0,Indicates that he/ she usually drinks alcohol for continuous periods every day (more than 3 hours),,0.0,0.0,,0.0,
-Q1411_2,ordinal,"Counter({0.0: 12, 1.0: 5})",98.33984375,4.0,Indicates that he/ she drinks alcohol on 4 occasions or more during separate times of the day,,0.0,0.0,,0.0,
-Q1401_2,ordinal,"Counter({0.0: 16, 1.0: 3})",98.14453125,4.0,"Says that when alone, he/she drinks three or more alcoholic beverages sequentially (one after the other)",,0.0,0.0,,0.0,
-CKINCOM_2/8,not found,Counter({1.0: 20}),98.046875,,,,0.0,0.0,,0.0,
-Q923_2,categorical,"Counter({1.0: 13, 0.0: 9, 8.0: 1})",97.75390625,3.0,Elderly is convinced that it is true,8,0.18484288354898332,0.09765625,8.0,0.09765625,8.0
-Q922_2,categorical,"Counter({0.0: 12, 1.0: 10, 8.0: 1})",97.75390625,3.0,Elderly considers it true,8,0.18484288354898332,0.09765625,8.0,0.09765625,8.0
-Q921_2,categorical,"Counter({0.0: 17, 1.0: 5, 8.0: 1})",97.75390625,3.0,It may not be true,8,0.18484288354898332,0.09765625,8.0,0.09765625,8.0
-Q321_2,categorical,"Counter({0.0: 23, 1.0: 1, 9.0: 1})",97.55859375,3.0,did attempt suicide ,9,0.18484288354898332,0.09765625,9.0,0.09765625,9.0
-Q322_2,categorical,"Counter({0.0: 13, 1.0: 11, 9.0: 1})",97.55859375,3.0,refused to be suicidal but wished for death because of feeling burdened by life,9,0.18484288354898332,0.09765625,9.0,0.09765625,9.0
-Q312_2,ordinal,"Counter({1.0: 21, 0.0: 5, 9.0: 1})",97.36328125,3.0,during the last year,9,0.18484288354898332,0.09765625,9.0,0.09765625,9.0
-Q313_2,ordinal,"Counter({0.0: 14, 1.0: 12, 9.0: 1})",97.36328125,3.0,felt like wanting to die for at least 2 weeks in the past month,9,0.18484288354898332,0.09765625,9.0,0.09765625,9.0
-CKINCOM_2/1,not found,Counter({1.0: 28}),97.265625,,,,0.0,0.0,,0.0,
-CKINCOM_2/5,not found,Counter({1.0: 32}),96.875,,,,0.0,0.0,,0.0,
-Q471_2,ordinal,"Counter({0.0: 14, 1.0: 13, 2.0: 7})",96.6796875,4.0,the elderly says that he/she had (or maybe had) a brain stroke in the past,,0.0,0.0,,0.0,
-Q1021_2,categorical,"Counter({0.0: 29, 1.0: 6, 8.0: 1})",96.484375,3.0,It is unlikely to be true but possible,8,0.18484288354898332,0.09765625,8.0,0.09765625,8.0
-Q1302_2,ordinal,"Counter({0.0: 32, 2.0: 2, 1.0: 2, 8.0: 1})",96.38671875,4.0,Feels with discontent that he/she does not deserve these experiences,8,0.18484288354898332,0.09765625,8.0,0.09765625,8.0
-Q1303_2,categorical,"Counter({0.0: 35, 2.0: 1, 8.0: 1})",96.38671875,4.0,"Feel that the experiences are a worthy punishment.
+COLUMN,data_type,description,frequencies,perc_missing,erroneous,perc_erroneous,cut_off,outliers_zscore,outliers_iqr
+CKINCOM_2/3,not found,,,100.0,,0.0,,,
+CKINCOM_2/2,not found,,", 1.0: 0.00390625%%, 3.0: 0.0009765625%%",99.51171875,,0.0,,,
+Q1421_2,categorical,Suffered such effects from excessive drinking or stopping drinking.,", 0.0: 0.00390625%%, 1.0: 0.001953125%%",99.4140625,,0.0,3.0,,
+Q1431_2,categorical,Needs a drink,", 0.0: 0.00390625%%, 1.0: 0.001953125%%",99.4140625,,0.0,3.0,,
+Q1291_2,categorical,He/she thought it was real,", 0.0: 0.0048828125%%, 1.0: 0.0029296875%%, 8.0: 0.0009765625%%",99.12109375,8,0.18484288354898332,3.0,,
+Q1281_2,categorical,The visions were made at a time when the participant was fully awake,", 0.0: 0.00390625%%, 1.0: 0.00390625%%, 8.0: 0.0009765625%%",99.12109375,8,0.18484288354898332,3.0,,
+CKINCOM_2/7,not found,,", 1.0: 0.009765625%%",99.0234375,,0.0,,,
+Q1012_2,categorical,"The elderly claims to be an ordinary person, known (celebraty) or unknown (not)",", 9.0: 0.001953125%%, 1.0: 0.0068359375%%, 0.0: 0.0048828125%%",98.6328125,9,0.3696857670979667,3.0,,
+Q1001_2,ordinal,"The elderly believes that people are trying to make him/her angry, frustrated or exploit him/her.",", 0.0: 0.0078125%%, 2.0: 0.0009765625%%, 1.0: 0.00390625%%, 9.0: 0.0009765625%%",98.6328125,9,0.18484288354898332,4.0,0.09765625,0.09765625
+Q1002_2,ordinal,The elderly believes that people are trying to cause him serious physical harm or to kill him/her.,", 0.0: 0.0107421875%%, 2.0: 0.0009765625%%, 9.0: 0.0009765625%%, 1.0: 0.0009765625%%",98.6328125,9,0.18484288354898332,4.0,0.09765625,0.09765625
+Q1011_2,categorical,"The elderly claims to be an official person or belonging to an organization (police, MI, KGB5 etc.)",", 9.0: 0.001953125%%, 0.0: 0.01171875%%",98.6328125,9,0.3696857670979667,3.0,,
+Q1412_2,ordinal,Indicates that he/ she usually drinks alcohol for continuous periods every day (more than 3 hours),", 0.0: 0.01171875%%, 1.0: 0.00390625%%",98.4375,,0.0,4.0,0.0,0.0
+Q1411_2,ordinal,Indicates that he/ she drinks alcohol on 4 occasions or more during separate times of the day,", 0.0: 0.01171875%%, 1.0: 0.0048828125%%",98.33984375,,0.0,4.0,0.0,0.0
+Q1401_2,ordinal,"Says that when alone, he/she drinks three or more alcoholic beverages sequentially (one after the other)",", 0.0: 0.015625%%, 1.0: 0.0029296875%%",98.14453125,,0.0,4.0,0.0,0.0
+CKINCOM_2/8,not found,,", 1.0: 0.01953125%%",98.046875,,0.0,,,
+Q923_2,categorical,Elderly is convinced that it is true,", 1.0: 0.0126953125%%, 0.0: 0.0087890625%%, 8.0: 0.0009765625%%",97.75390625,8,0.18484288354898332,3.0,,
+Q922_2,categorical,Elderly considers it true,", 1.0: 0.009765625%%, 0.0: 0.01171875%%, 8.0: 0.0009765625%%",97.75390625,8,0.18484288354898332,3.0,,
+Q921_2,categorical,It may not be true,", 1.0: 0.0048828125%%, 0.0: 0.0166015625%%, 8.0: 0.0009765625%%",97.75390625,8,0.18484288354898332,3.0,,
+Q321_2,categorical,did attempt suicide ,", 1.0: 0.0009765625%%, 0.0: 0.0224609375%%, 9.0: 0.0009765625%%",97.55859375,9,0.18484288354898332,3.0,,
+Q322_2,categorical,refused to be suicidal but wished for death because of feeling burdened by life,", 1.0: 0.0107421875%%, 0.0: 0.0126953125%%, 9.0: 0.0009765625%%",97.55859375,9,0.18484288354898332,3.0,,
+Q312_2,ordinal,during the last year,", 1.0: 0.0205078125%%, 0.0: 0.0048828125%%, 9.0: 0.0009765625%%",97.36328125,9,0.18484288354898332,3.0,0.09765625,0.09765625
+Q313_2,ordinal,felt like wanting to die for at least 2 weeks in the past month,", 0.0: 0.013671875%%, 1.0: 0.01171875%%, 9.0: 0.0009765625%%",97.36328125,9,0.18484288354898332,3.0,0.09765625,0.09765625
+CKINCOM_2/1,not found,,", 1.0: 0.02734375%%",97.265625,,0.0,,,
+CKINCOM_2/5,not found,,", 1.0: 0.03125%%",96.875,,0.0,,,
+Q471_2,ordinal,the elderly says that he/she had (or maybe had) a brain stroke in the past,", 2.0: 0.0068359375%%, 0.0: 0.013671875%%, 1.0: 0.0126953125%%",96.6796875,,0.0,4.0,0.0,0.0
+Q1021_2,categorical,It is unlikely to be true but possible,", 0.0: 0.0283203125%%, 8.0: 0.0009765625%%, 1.0: 0.005859375%%",96.484375,8,0.18484288354898332,3.0,,
+Q1302_2,ordinal,Feels with discontent that he/she does not deserve these experiences,", 0.0: 0.03125%%, 2.0: 0.001953125%%, 1.0: 0.001953125%%, 8.0: 0.0009765625%%",96.38671875,8,0.18484288354898332,4.0,0.09765625,0.09765625
+Q1303_2,categorical,"Feel that the experiences are a worthy punishment.
 
-",8,0.18484288354898332,0.09765625,8.0,0.09765625,8.0
-Q1304_2,ordinal,"Counter({0.0: 35, 1.0: 1, 8.0: 1})",96.38671875,4.0,The interviewer seems indifferent or does not speak much about emotional reactions.,8,0.18484288354898332,0.09765625,8.0,0.09765625,8.0
-Q1301_2,ordinal,"Counter({0.0: 31, 1.0: 4, 2.0: 1, 8.0: 1})",96.38671875,4.0,Marked effective response,8,0.18484288354898332,0.09765625,8.0,0.09765625,8.0
-Q1022_2,categorical,"Counter({0.0: 34, 1.0: 3})",96.38671875,3.0,"Mysterious, or almost certainly not true.",,0.0,0.29296875,1.0,0.29296875,1.0
-Q981_2,ordinal,"Counter({0.0: 33, 1.0: 4, 9.0: 1})",96.2890625,4.0,Elderly says he/she has a strong feeling about it,9,0.18484288354898332,0.09765625,9.0,0.09765625,9.0
-Q311_2,ordinal,"Counter({0.0: 19, 1.0: 18, 9.0: 1})",96.2890625,3.0,during the last month,9,0.18484288354898332,0.09765625,9.0,0.09765625,9.0
-Q1307_2,categorical,"Counter({0.0: 36, 1.0: 1, 8.0: 1})",96.2890625,3.0,Have there been hallucinations for a period of up to two weeks in the absence of clear symptoms of mood changes (ie before the appearance of symptoms or after they are gone),8,0.18484288354898332,0.09765625,8.0,0.09765625,8.0
-Q991_2,ordinal,"Counter({0.0: 23, 1.0: 10, 2.0: 3, 9.0: 2})",96.2890625,5.0,"Do you think you could be mistaken?
-Elderly does not believe he/she is mistaken",9,0.3696857670979667,0.1953125,9.0,0.1953125,9.0
-Q1305_2,ordinal,"Counter({0.0: 34, 1.0: 3, 8.0: 1})",96.2890625,4.0,"The content of delirium and / or hallucinations is annoying or oppressive, but does not provoke dissatisfaction thus it is compatible with depression.
-",8,0.18484288354898332,0.09765625,8.0,0.09765625,8.0
-Q982_2,ordinal,"Counter({0.0: 35, 1.0: 2, 9.0: 1})",96.2890625,4.0,Elderly says he/she deserves persecution.,9,0.18484288354898332,0.09765625,9.0,0.09765625,9.0
-Q1306_2,ordinal,"Counter({0.0: 36, 1.0: 1, 8.0: 1})",96.2890625,4.0,"The content of delirium and / or hallucinations is fun, appreciative or great, and therefore fits in with the joyful mood.",8,0.18484288354898332,0.09765625,8.0,0.09765625,8.0
-Q971_2,ordinal,"Counter({0.0: 30, 1.0: 6, 8.0: 1, 9.0: 1})",96.2890625,4.0,The elderly believes in an unrealistic way that people deliberately attempt to annoy or hurt him/her,"8,9",0.3696857670979667,0.1953125,8.0 9.0,0.1953125,8.0 9.0
-Q961_2,ordinal,"Counter({0.0: 28, 1.0: 10, 2.0: 1, 9.0: 1})",96.09375,4.0,The elderly believes it is true,9,0.18484288354898332,0.09765625,9.0,0.09765625,9.0
-Q952_2,categorical,"Counter({0.0: 27, 1.0: 12, 9.0: 1})",96.09375,3.0,"Elderly says ""it is their fault"", and the interviewer has no doubts.",9,0.18484288354898332,0.09765625,9.0,0.09765625,9.0
-Q951_2,categorical,"Counter({1.0: 20, 0.0: 19, 9.0: 1})",96.09375,3.0,"Elderly says ""it is their fault"", but the interviewer has doubts.",9,0.18484288354898332,0.09765625,9.0,0.09765625,9.0
-NOCTURN,categorical,"Counter({0.0: 40, 1.0: 2})",95.8984375,1.0,Is loss or delirium worse at night or dusk?,,0.0,0.1953125,1.0,0.1953125,1.0
-Q1582_2,ordinal,"Counter({0.0: 37, 1.0: 4, 8.0: 2})",95.80078125,4.0,The eyes are wet: filled with tears or crying,8,0.3696857670979667,0.1953125,8.0,0.1953125,8.0
-Q1581_2,ordinal,"Counter({0.0: 38, 1.0: 5, 2.0: 1})",95.703125,4.0,It seems by looking at/ listening to the participant that he/she is sad or depressed,,0.0,0.09765625,2.0,0.09765625,2.0
-Q1621_2,ordinal,"Counter({0.0: 39, 1.0: 3, 2.0: 2})",95.703125,4.0,Focus: obvious difficulties in listening to the interview.,,0.0,0.1953125,2.0,0.1953125,2.0
-Q1611_2,ordinal,"Counter({0.0: 41, 2.0: 3})",95.703125,4.0,Social disturbance: It seems by looking at / listening to the participant that he/she is skeptical for no real reason,,0.0,0.29296875,2.0,0.29296875,2.0
-Q1602_2,ordinal,"Counter({0.0: 35, 1.0: 8, 2.0: 1})",95.703125,4.0,Difficulties in thinking: participant seems hesitant,,0.0,0.09765625,2.0,0.09765625,2.0
-Q1601_2,ordinal,"Counter({0.0: 36, 1.0: 7, 2.0: 1})",95.703125,4.0,Difficulties in thinking: participant seems confused,,0.0,0.09765625,2.0,0.09765625,2.0
-Q1591_2,ordinal,"Counter({0.0: 35, 1.0: 7, 2.0: 2})",95.703125,4.0,Slow: Very slow in all movements,,0.0,0.1953125,2.0,0.1953125,2.0
-NPIMED,categorical,"Counter({0.0: 53, 1.0: 12, 98.0: 2})",93.45703125,2.0,Did the doctor or specialist prescribe any medication?,98,0.3696857670979667,0.1953125,98.0,0.1953125,98.0
-NPIADV,categorical,"Counter({0.0: 52, 1.0: 12, 98.0: 3})",93.45703125,2.0,Did the doctor or specialist give any advice?,98,0.5545286506469501,0.29296875,98.0,0.29296875,98.0
-Q1151_2,ordinal,"Counter({1.0: 62, 0.0: 22, 2.0: 11, 8.0: 2, 9.0: 1})",90.4296875,4.0,Gradually declining interests / enjoyment over the years.,"8,9",0.5545286506469501,0.29296875,8.0 9.0,0.29296875,8.0 9.0
-Q1152_2,categorical,"Counter({1.0: 54, 0.0: 40, 8.0: 2, 9.0: 2})",90.4296875,3.0,The decline in interests / enjoyment  has occurred over the past three months.,"8,9",0.7393715341959335,0.390625,8.0 9.0,0.390625,8.0 9.0
-Q1153_2,ordinal,"Counter({1.0: 44, 0.0: 39, 2.0: 11, 8.0: 2, 9.0: 2})",90.4296875,4.0,Lose interest or enjoyment most days for at least two weeks last month.,"8,9",0.7393715341959335,0.390625,8.0 9.0,0.390625,8.0 9.0
-Q1161_2,categorical,"Counter({0.0: 58, 1.0: 39, 9.0: 1, 8.0: 1})",90.33203125,3.0,Depressed and very tense.,"8,9",0.3696857670979667,0.1953125,8.0 9.0,0.1953125,8.0 9.0
-Q522_2,categorical,"Counter({0.0: 71, 1.0: 34, 8.0: 4})",89.35546875,3.0,Anorexia has been present for most days for at least two weeks last month.,8,0.7393715341959335,0.390625,8.0,0.390625,8.0
-Q521_2,categorical,"Counter({0.0: 56, 1.0: 50, 8.0: 3})",89.35546875,3.0,weak appetite in the absence of any known health condition and without nausea ,8,0.5545286506469501,0.29296875,8.0,0.29296875,8.0
-Q523_2,categorical,"Counter({0.0: 88, 1.0: 19, 8.0: 4})",89.16015625,3.0,An increase in appetite for most days for at least two weeks last month.,8,0.7393715341959335,0.390625,8.0,0.390625,8.0
-Q571_2,categorical,"Counter({1.0: 95, 0.0: 60})",84.86328125,3.0,Elderly wakes up about two or more hours before his/her usual waking time and can not go back to sleep most of the nights (this lasted for at least two weeks last month).,,0.0,0.0,,0.0,
-Q582_2,categorical,"Counter({0.0: 103, 1.0: 52})",84.86328125,3.0,"Mainly due to or arising from a physical cause in the body, or noise, etc. ",,0.0,0.0,,0.0,
-Q581_2,categorical,"Counter({1.0: 93, 0.0: 60, 9.0: 1, 8.0: 1})",84.86328125,3.0,"Difficulty is due to altered moods or thoughts, or tension (e.g. lies awake with depressed or anxious feelings or thoughts).","8,9",0.3696857670979667,0.1953125,8.0 9.0,0.1953125,8.0 9.0
-CKINCOM_2/4,not found,Counter({1.0: 172}),83.203125,,,,0.0,0.0,,0.0,
-Q54_2,categorical,"Counter({9.0: 71, 0.0: 62, 1.0: 37, 8.0: 2})",83.203125,3.0,the difference is more than 3 years,"8,9",13.493530499075785,0.0,,0.0,
-Q53_2,categorical,"Counter({9.0: 71, 0.0: 69, 1.0: 29, 8.0: 3})",83.203125,3.0,the difference is between 2 to 3 years ,"8,9",13.67837338262477,0.0,,0.0,
-Q51_2,categorical,"Counter({1.0: 106, 0.0: 64, 9.0: 2, 8.0: 1})",83.10546875,3.0,the participant shows clear hesitation when indicating age and year of birth,"8,9",0.5545286506469501,0.29296875,8.0 9.0,0.29296875,8.0 9.0
-Q52_2,categorical,"Counter({1.0: 66, 0.0: 54, 9.0: 52, 8.0: 1})",83.10546875,3.0,contradiction between year of birth and age provided by participant and not corrected (disregard if one year difference only),"8,9",9.796672828096119,0.0,,0.0,
-Q366_2,boolean,"Counter({0.0: 162, 1.0: 22})",82.03125,,did you visit a doctor or specialist to treat the problem,,0.0,0.0,,0.0,
-Q544_2,ordinal,"Counter({1.0: 107, 0.0: 53, 2.0: 24})",82.03125,4.0,Has been suffering from a noticeable concern for most nights for at least two weeks during the past month.,,0.0,0.0,,0.0,
-Q551_2,categorical,"Counter({0.0: 96, 1.0: 88, 9.0: 1})",81.93359375,3.0,"Difficulty in falling asleep.  If tablets taken, rate what interviewee feels would have happened without them.",9,0.18484288354898332,0.09765625,9.0,0.09765625,9.0
-Q561_2,ordinal,"Counter({1.0: 131, 0.0: 32, 2.0: 22})",81.93359375,4.0,"Sleep interrupted during the night.  (Include waking up after an initial cat nap and not being able to sleep again for some lengthy time).  
-If tablets taken rate what interviewee feels would have happened without them.",,0.0,0.0,,0.0,
-Q545_2,ordinal,"Counter({0.0: 180, 2.0: 3, 1.0: 2})",81.93359375,4.0,"Over the last few nights, there has been a noticeable increase in sleep over the last two weeks",,0.0,0.48828125,1.0 2.0,0.48828125,1.0 2.0
-Q543_2,ordinal,"Counter({0.0: 130, 1.0: 37, 2.0: 19})",81.8359375,4.0,Elderly suffers from anxiety for most of the night and often sleeps during the day.,,0.0,0.0,,0.0,
-Q542_2,ordinal,"Counter({1.0: 86, 0.0: 79, 2.0: 21})",81.8359375,4.0,"Sleeping problem (insomnia) or discontinued sleeping, or intake of medication or alcohol to help getting asleep.",,0.0,0.0,,0.0,
-CONFNITE,boolean,"Counter({0.0: 207, 1.0: 2})",79.58984375,,Does the elderly get confused during the night? Does he/she wander? speaks incomprehensible words?,,0.0,0.1953125,1.0,0.1953125,1.0
-CONFDAY,boolean,"Counter({0.0: 206, 1.0: 3})",79.58984375,,Does it happen during the day?,,0.0,0.29296875,1.0,0.29296875,1.0
-CLOUDING,boolean,"Counter({0.0: 200, 1.0: 8, 99.0: 1})",79.58984375,,Are there periods of more than 24 hours when the elderly is being alert at times and strayed at another times?,,0.0,0.09765625,99.0,0.09765625,99.0
-Q881_2,categorical,"Counter({0.0: 138, 1.0: 74, 8.0: 3})",79.00390625,3.0,elderly feels loneliness and can not escape it.,8,0.5545286506469501,0.29296875,8.0,0.29296875,8.0
-Q882_2,categorical,"Counter({0.0: 122, 1.0: 91, 8.0: 2})",79.00390625,3.0,Bothered or depressed by current loneliness.,8,0.3696857670979667,0.1953125,8.0,0.1953125,8.0
-Q891_2,categorical,"Counter({0.0: 123, 1.0: 85, 8.0: 7})",79.00390625,3.0,Worried about living alone in the future,8,1.2939001848428835,0.68359375,8.0,0.68359375,8.0
-CKINCOM_2/6,not found,Counter({1.0: 232}),77.34375,,,,0.0,0.0,,0.0,
-ageinfo,numeric,"Counter({75.0: 20, 69.0: 16, 77.0: 15, 65.0: 14, 66.0: 13, 84.0: 12, 79.0: 11, 82.0: 11, 81.0: 11, 67.0: 10, 72.0: 10, 86.0: 9, 80.0: 9, 76.0: 8, 73.0: 8, 70.0: 8, 74.0: 8, 71.0: 8, 78.0: 7, 68.0: 7, 85.0: 6, 999.0: 4, 83.0: 4, 88.0: 2, 87.0: 2, 1941.0: 1, 1962.0: 1, 1952.0: 1, 89.0: 1, 95.0: 1, 766.0: 1, 90.0: 1, 96.0: 1})",76.46484375,100.0,Age reported by informant:,"766,999",0.9242144177449167,0.68359375,999.0 1941.0 1952.0 1962.0,0.68359375,0.49235635213495 0.988929889298893 0.9947285187137586 1.0
-agedoc,numeric,"Counter({999.0: 16, 75.0: 15, 69.0: 14, 65.0: 13, 77.0: 12, 81.0: 11, 66.0: 11, 82.0: 10, 79.0: 10, 76.0: 9, 72.0: 8, 73.0: 8, 71.0: 8, 68.0: 7, 70.0: 7, 80.0: 7, 74.0: 7, 84.0: 7, 67.0: 7, 78.0: 6, 83.0: 6, 85.0: 6, 86.0: 5, 1951.0: 4, 1949.0: 4, 1934.0: 3, 1952.0: 2, 89.0: 2, 1946.0: 2, 1941.0: 2, 87.0: 2, 1940.0: 1, 1942.0: 1, 1930.0: 1, 1926.0: 1, 1932.0: 1, 1953.0: 1, 88.0: 1, 95.0: 1, 90.0: 1, 96.0: 1})",76.46484375,100.0,Age stated in document:,999,2.957486136783734,0.0,,0.0,
-agepart,numeric,"Counter({75.0: 20, 65.0: 17, 69.0: 16, 80.0: 13, 70.0: 12, 77.0: 12, 79.0: 11, 67.0: 11, 66.0: 11, 76.0: 10, 72.0: 10, 84.0: 10, 81.0: 10, 82.0: 9, 73.0: 8, 68.0: 8, 74.0: 8, 71.0: 8, 78.0: 6, 86.0: 6, 85.0: 6, 999.0: 4, 83.0: 3, 87.0: 3, 89.0: 2, 88.0: 2, 1941.0: 1, 0.0: 1, 1952.0: 1, 95.0: 1, 90.0: 1})",76.46484375,100.0,Age reported by participant:,999,0.7393715341959335,0.5859375,999.0 1941.0 1952.0,0.5859375,0.5117827868852459 0.9943647540983607 1.0
-Q93_2,categorical,"Counter({0.0: 238, 1.0: 26, 9.0: 14})",72.8515625,3.0,error in name (partial name given is accepted),9,2.5878003696857674,1.3671875,9.0,1.3671875,9.0
-Q91_2,categorical,"Counter({0.0: 248, 1.0: 30})",72.8515625,3.0,the participant says/points our that he/she doesn't know the place or address,,0.0,0.0,,0.0,
-Q92_2,categorical,"Counter({0.0: 249, 1.0: 28, 8.0: 1})",72.8515625,3.0,"incomplete, irrelevant, or no answer",8,0.18484288354898332,0.09765625,8.0,0.09765625,8.0
-Q363_2,categorical,"Counter({0.0: 205, 1.0: 75, 8.0: 3, 9.0: 2})",72.16796875,3.0,the past 3 to 4 years ,"8,9",0.9242144177449167,0.48828125,8.0 9.0,0.48828125,8.0 9.0
-Q364_2,categorical,"Counter({0.0: 247, 1.0: 33, 9.0: 3, 8.0: 3})",72.0703125,3.0,the past 5 to 10 years ,"8,9",1.1090573012939002,0.5859375,8.0 9.0,0.5859375,8.0 9.0
-Q365_2,categorical,"Counter({0.0: 252, 1.0: 28, 9.0: 3, 8.0: 3})",72.0703125,3.0,the past 10 years ,"8,9",1.1090573012939002,0.5859375,8.0 9.0,0.5859375,8.0 9.0
-Q362_2,categorical,"Counter({1.0: 141, 0.0: 140, 8.0: 3, 9.0: 2})",72.0703125,3.0,the past 2 years ,"8,9",0.9242144177449167,0.48828125,8.0 9.0,0.48828125,8.0 9.0
-Q243_2,categorical,"Counter({0.0: 292, 1.0: 51, 8.0: 4, 9.0: 1})",66.015625,3.0,the depressed mood/ crying presisted at least for two consecutive weeks in the last month,"8,9",0.9242144177449167,0.48828125,8.0 9.0,0.48828125,8.0 9.0
-Q241_2,categorical,"Counter({0.0: 176, 1.0: 168, 8.0: 3, 9.0: 1})",66.015625,3.0,"the depression, crying, or feeling the need to cry lasts for more than few hours ","8,9",0.7393715341959335,0.390625,8.0 9.0,0.390625,8.0 9.0
-Q242_2,categorical,"Counter({0.0: 273, 1.0: 71, 8.0: 4, 9.0: 1})",65.91796875,3.0,"the depression, crying, or feeling the need to cry is present most of the time","8,9",0.9242144177449167,0.48828125,8.0 9.0,0.48828125,8.0 9.0
-Q272_2,ordinal,"Counter({0.0: 299, 1.0: 37, 8.0: 7, 2.0: 5, 9.0: 2})",65.8203125,4.0,the depression lasts for hours even when seeing visitors or being intertained,"8,9",1.6635859519408502,0.87890625,8.0 9.0,0.87890625,8.0 9.0
-Q271_2,categorical,"Counter({0.0: 301, 1.0: 38, 8.0: 8, 9.0: 4})",65.72265625,3.0,nothing helps soothing the changing mood,"8,9",2.2181146025878005,1.171875,8.0 9.0,1.171875,8.0 9.0
-Q262_2,categorical,"Counter({0.0: 282, 1.0: 56, 8.0: 11, 9.0: 2})",65.72265625,3.0,mostly in the afternoon,"8,9",2.4029574861367835,1.26953125,8.0 9.0,1.26953125,8.0 9.0
-Q263_2,categorical,"Counter({0.0: 224, 1.0: 115, 8.0: 10, 9.0: 2})",65.72265625,3.0,mostly at night,"8,9",2.2181146025878005,1.171875,8.0 9.0,1.171875,8.0 9.0
-Q261_2,categorical,"Counter({0.0: 261, 1.0: 79, 8.0: 9, 9.0: 2})",65.72265625,3.0,mostly during the day/morning,"8,9",2.033271719038817,1.07421875,8.0 9.0,1.07421875,8.0 9.0
-Q251_2,ordinal,"Counter({0.0: 195, 1.0: 143, 2.0: 7, 8.0: 4, 9.0: 2})",65.72265625,4.0,Fluctuating mood ,"8,9",1.1090573012939002,0.5859375,8.0 9.0,0.5859375,8.0 9.0
-Q752_2,categorical,"Counter({0.0: 234, 1.0: 140, 8.0: 16, 9.0: 3})",61.62109375,3.0,Slowing down and lacking energy is worst in the evening.,"8,9",3.5120147874306835,1.85546875,8.0 9.0,1.85546875,8.0 9.0
-Q741_2,categorical,"Counter({0.0: 252, 1.0: 131, 8.0: 7, 9.0: 3})",61.62109375,3.0,Began or worsened during the past three months.,"8,9",1.8484288354898333,0.9765625,8.0 9.0,0.9765625,8.0 9.0
-Q771_2,categorical,"Counter({0.0: 250, 1.0: 123, 2.0: 14, 8.0: 5, 9.0: 2})",61.5234375,4.0,Sits or lies down due to lack of energy,"8,9",1.2939001848428835,0.68359375,8.0 9.0,0.68359375,8.0 9.0
-Q753_2,ordinal,"Counter({0.0: 202, 1.0: 163, 2.0: 17, 8.0: 10, 9.0: 2})",61.5234375,4.0,Slowing down exists most days for at least for two weeks.,"8,9",2.2181146025878005,1.171875,8.0 9.0,1.171875,8.0 9.0
-Q751_2,categorical,"Counter({0.0: 262, 1.0: 117, 8.0: 12, 9.0: 3})",61.5234375,3.0,Slowing down and lacking energy is worst in the morning.,"8,9",2.7726432532347505,1.46484375,8.0 9.0,1.46484375,8.0 9.0
-Q761_2,categorical,"Counter({0.0: 303, 1.0: 75, 8.0: 15, 9.0: 1})",61.5234375,3.0,does not get decreased in the presence of fun activities normally.,"8,9",2.957486136783734,1.5625,8.0 9.0,1.5625,8.0 9.0
-Q1451_2,categorical,"Counter({0.0: 347, 1.0: 74})",58.88671875,3.0,"Because of agitation, depression, self-admiration, etc.",,0.0,0.0,,0.0,
-Q1452_2,categorical,"Counter({0.0: 244, 1.0: 178})",58.7890625,3.0,Due to memory failure,,0.0,0.0,,0.0,
-Q1454_2,categorical,"Counter({0.0: 408, 1.0: 15})",58.69140625,3.0,"The participant's reaction to mistakes was characterized by joy, indifference, or lightness.",,0.0,1.46484375,1.0,1.46484375,1.0
-Q1453_2,categorical,"Counter({0.0: 422, 1.0: 1})",58.69140625,3.0,"Mistakes were made during partial consciousness (ie, the participant was falling asleep, under the influence of alcohol, drugs or delirium due to severe physical illness).",,0.0,0.09765625,1.0,0.09765625,1.0
-Q163_2,categorical,"Counter({0.0: 322, 1.0: 148, 8.0: 2, 9.0: 1})",53.80859375,3.0,worries about the financial status of the spouse (including rent),"8,9",0.5545286506469501,0.29296875,8.0 9.0,0.29296875,8.0 9.0
-Q142_2,categorical,"Counter({0.0: 408, 1.0: 64, 8.0: 2})",53.7109375,3.0,the participant worries in general about everything ,8,0.3696857670979667,0.1953125,8.0,0.1953125,8.0
-Q151_2,categorical,"Counter({0.0: 387, 1.0: 85, 8.0: 3})",53.61328125,3.0,unwarranted worry that comes repeatedly and cannot be stopped,8,0.5545286506469501,0.29296875,8.0,0.29296875,8.0
-Q164_2,categorical,"Counter({0.0: 354, 1.0: 117, 8.0: 3, 9.0: 1})",53.61328125,3.0,worries about family problems (other than health),"8,9",0.7393715341959335,0.390625,8.0 9.0,0.390625,8.0 9.0
-Q141_2,categorical,"Counter({1.0: 366, 0.0: 108, 8.0: 2})",53.515625,3.0,worries a lot (on one or two things),8,0.3696857670979667,0.1953125,8.0,0.1953125,8.0
-Q162_2,categorical,"Counter({1.0: 326, 0.0: 149, 8.0: 3, 9.0: 1})",53.22265625,3.0,worries about the health of others,"8,9",0.7393715341959335,0.390625,8.0 9.0,0.390625,8.0 9.0
-Q161_2,categorical,"Counter({1.0: 302, 0.0: 174, 8.0: 2, 9.0: 1})",53.22265625,3.0,worries about the health of the spouse,"8,9",0.5545286506469501,0.29296875,8.0 9.0,0.29296875,8.0 9.0
-NPIHELP,categorical,"Counter({0.0: 472, 1.0: 13, 98.0: 1})",52.5390625,2.0,Did you consult any doctor or specialist regarding any of the problems listed above?,98,0.18484288354898332,0.09765625,98.0,0.09765625,98.0
-Q1366_2,categorical,"Counter({0.0: 448, 1.0: 40})",52.34375,3.0,Other hypnotics and tranquilizers (eg hypnotic taking during nightime),,0.0,3.90625,1.0,3.90625,1.0
-HASCONF_2,ordinal,"Counter({0.0: 611, 1.0: 31, 2.0: 16, 3.0: 3, 4.0: 1})",35.3515625,4.0,overall rating of confidence in data,,0.0,1.953125,2.0 3.0 4.0,1.953125,2.0 3.0 4.0
-Q82_2,categorical,"Counter({0.0: 690, 1.0: 9, 9.0: 3, 8.0: 1})",31.34765625,3.0,the participant says/points our that he/she doesn't know,"8,9",0.7393715341959335,0.390625,8.0 9.0,0.390625,8.0 9.0
-Q83_2,categorical,"Counter({0.0: 684, 1.0: 13, 8.0: 3, 9.0: 3})",31.34765625,3.0,"incomplete, irrelevant, or no answer","8,9",1.1090573012939002,0.5859375,8.0 9.0,0.5859375,8.0 9.0
-Q81_2,categorical,"Counter({0.0: 681, 1.0: 19, 8.0: 2, 9.0: 1})",31.34765625,3.0,participant gave the wrong or incomplete address,"8,9",0.5545286506469501,0.29296875,8.0 9.0,0.29296875,8.0 9.0
-ENDIF_2,boolean,"Counter({1.0: 470, 0.0: 247})",29.98046875,,interviewer code - is the total csid score 2 or less?            ,,0.0,0.0,,0.0,
-NPI12,categorical,"Counter({0.0: 692, 1.0: 28, 98.0: 3})",29.39453125,2.0,"Has your (xxxx) lost or gained weight, or had a change in the food he she likes? ",98,0.5545286506469501,0.29296875,98.0,0.29296875,98.0
-NPI2,categorical,"Counter({0.0: 724, 1.0: 3, 98.0: 3})",28.7109375,2.0,Does your (xxxx) act as if he or she hears voices? Does he or she talk to people who are not there?,98,0.5545286506469501,0.29296875,98.0,0.29296875,98.0
-NPI1,categorical,"Counter({0.0: 723, 1.0: 5, 98.0: 2})",28.7109375,2.0,"Does your (xxxx) believe that others are stealing from him or her, or planning to harm him or her in some way?",98,0.3696857670979667,0.1953125,98.0,0.1953125,98.0
-NPI3,categorical,"Counter({0.0: 714, 1.0: 15, 98.0: 1})",28.7109375,2.0,Is your (xxxx) stubborn and resistive to help from others?,98,0.18484288354898332,0.09765625,98.0,0.09765625,98.0
-NPI5,categorical,"Counter({0.0: 710, 1.0: 16, 98.0: 4})",28.7109375,2.0,"Does your (xxxx) become upset when separated from you? Does he or she have any other signs of nervousness, such as shortness of breath, sighing, being unable to relax, or feeling excessively tense?",98,0.7393715341959335,0.390625,98.0,0.390625,98.0
-NPI7,categorical,"Counter({0.0: 683, 1.0: 46, 98.0: 2})",28.61328125,2.0,Does your (xxxx) seem less interested in his or her usual activities and plans of others?,98,0.3696857670979667,0.1953125,98.0,0.1953125,98.0
-NPI8,categorical,"Counter({0.0: 716, 1.0: 13, 98.0: 2})",28.61328125,2.0,"Does your (xxxx) seem to act impulsively? For example, does your (xxxx) talk to strangers as if he or she knows them, or does your (xxxx) say things that may hurt people’s feeling?",98,0.3696857670979667,0.1953125,98.0,0.1953125,98.0
-NPI9,categorical,"Counter({0.0: 713, 1.0: 16, 98.0: 2})",28.61328125,2.0,Is your (xxxx) impatient and cranky? Does he or she have difficulty coping with delays or waiting for planned activities?,98,0.3696857670979667,0.1953125,98.0,0.1953125,98.0
-NPI11,categorical,"Counter({0.0: 718, 1.0: 11, 98.0: 2})",28.61328125,2.0,"Does your (xxxx) awaken you during the night, rise too early in the morning, or take excessive naps during the day?",98,0.3696857670979667,0.1953125,98.0,0.1953125,98.0
-NPI6,categorical,"Counter({0.0: 724, 1.0: 6, 98.0: 1})",28.61328125,2.0,Does your (xxxx) appear to feel too good or act excessively happy?,98,0.18484288354898332,0.09765625,98.0,0.09765625,98.0
-NPI10,categorical,"Counter({0.0: 726, 98.0: 3, 1.0: 2})",28.61328125,2.0,"Does your (xxxx) engage in repetitive activities, such as pacing around the house, handling buttons, wrapping string, or doing other things repeatedly?",98,0.5545286506469501,0.29296875,98.0,0.29296875,98.0
-NPI4,categorical,"Counter({0.0: 689, 1.0: 38, 98.0: 4})",28.61328125,2.0,Does your (xxxx) act as if he or she is sad or in low spirits? Does he or she cry?,98,0.7393715341959335,0.390625,98.0,0.390625,98.0
-CARENEED_2,ordinal,"Counter({3.0: 587, 2.0: 100, 1.0: 44})",28.61328125,2.0,The older person,,0.0,4.296875,1.0,4.296875,1.0
-Q1551_2,ordinal,"Counter({1.0: 457, 0.0: 220, 2.0: 59, 8.0: 7})",27.44140625,4.0,"Taking everything into account, how would you describe your satisfaction with life at the present time: good, average, or weak?",8,1.2939001848428835,0.68359375,8.0,0.68359375,8.0
-Q1561_2,ordinal,"Counter({1.0: 555, 0.0: 86, 2.0: 66, 3.0: 34, 8.0: 2})",27.44140625,5.0,"In general, how happy are you: very happy, reasonably happy, not too happy, not happy at all?",8,0.3696857670979667,0.1953125,8.0,0.1953125,8.0
-ICINTCOM_2,categorical,"Counter({1.0: 744, 0.0: 9})",26.46484375,3.0,"* Interviewer's evaluation * Has the interview ended?
-",,0.0,0.87890625,0.0,0.87890625,0.0
-Q1821_2,ordinal,"Counter({0.0: 803, 1.0: 20, 8.0: 2, 2.0: 2})",19.23828125,4.0,"Exaggeration or tendency to say yes, indiscriminately.",8,0.3696857670979667,0.390625,2.0 8.0,0.390625,2.0 8.0
-Q1822_2,ordinal,"Counter({0.0: 790, 1.0: 31, 2.0: 6})",19.23828125,4.0,"Minimization or tendency to say no, indiscriminately.",,0.0,3.61328125,1.0 2.0,3.61328125,1.0 2.0
-Q781_2,ordinal,"Counter({0.0: 687, 1.0: 170, 2.0: 27, 9.0: 3, 8.0: 2})",13.18359375,4.0,Elderly seems very slow in all moves,"8,9",0.9242144177449167,0.48828125,8.0 9.0,0.48828125,8.0 9.0
-Q871_2,ordinal,"Counter({0.0: 676, 1.0: 177, 2.0: 32, 8.0: 6})",12.98828125,4.0,Admits feeling lonely,8,1.1090573012939002,0.5859375,8.0,0.5859375,8.0
-Q1351_2,categorical,"Counter({0.0: 919, 1.0: 14, 8.0: 2})",8.69140625,3.0,Note ** The participant is taking a doctor-prescribed medication to treat a mental problem,8,0.3696857670979667,0.1953125,8.0,0.1953125,8.0
-Q1709_2,ordinal,"Counter({0.0: 870, 1.0: 63, 2.0: 8, 9.0: 7})",7.421875,4.0,Takes slow shuffling steps,9,1.2939001848428835,0.68359375,9.0,0.68359375,9.0
-Q1708_2,ordinal,"Counter({0.0: 928, 1.0: 12, 9.0: 7, 2.0: 1})",7.421875,4.0,Staggers as if drunk,9,1.2939001848428835,0.68359375,9.0,0.68359375,9.0
-Q1707_2,ordinal,"Counter({0.0: 864, 1.0: 67, 2.0: 9, 9.0: 8})",7.421875,4.0,"Gait normal, just unsteady",9,1.478743068391867,0.78125,9.0,0.78125,9.0
-Q1361_2,categorical,"Counter({0.0: 954, 1.0: 1})",6.73828125,3.0,"Opium alkaloids, heroin, industrial analgesics similar to morphine (eg pythidine, methadone, dehydroquidine) and cocaine.",,0.0,0.09765625,1.0,0.09765625,1.0
-Q201_2,ordinal,"Counter({0.0: 940, 1.0: 30, 8.0: 6, 2.0: 2, 9.0: 1})",4.39453125,4.0,episode of anxiety which participant tries to terminate e.g. by running out of room.,"8,9",1.2939001848428835,0.68359375,8.0 9.0,0.68359375,8.0 9.0
-Q1742_2,ordinal,"Counter({0.0: 948, 1.0: 25, 2.0: 5, 9.0: 3})",4.19921875,4.0,"Patient talks fairly freely, but vaguely and ambiguously so that ideas communicated are not clear - vague wandering from idea to idea or point to point, e.g.
+",", 0.0: 0.0341796875%%, 2.0: 0.0009765625%%, 8.0: 0.0009765625%%",96.38671875,8,0.18484288354898332,4.0,,
+Q1304_2,ordinal,The interviewer seems indifferent or does not speak much about emotional reactions.,", 0.0: 0.0341796875%%, 1.0: 0.0009765625%%, 8.0: 0.0009765625%%",96.38671875,8,0.18484288354898332,4.0,0.09765625,0.09765625
+Q1301_2,ordinal,Marked effective response,", 0.0: 0.0302734375%%, 1.0: 0.00390625%%, 2.0: 0.0009765625%%, 8.0: 0.0009765625%%",96.38671875,8,0.18484288354898332,4.0,0.09765625,0.09765625
+Q1022_2,categorical,"Mysterious, or almost certainly not true.",", 0.0: 0.033203125%%, 1.0: 0.0029296875%%",96.38671875,,0.0,3.0,,
+Q981_2,ordinal,Elderly says he/she has a strong feeling about it,", 0.0: 0.0322265625%%, 9.0: 0.0009765625%%, 1.0: 0.00390625%%",96.2890625,9,0.18484288354898332,4.0,0.09765625,0.09765625
+Q311_2,ordinal,during the last month,", 0.0: 0.0185546875%%, 1.0: 0.017578125%%, 9.0: 0.0009765625%%",96.2890625,9,0.18484288354898332,3.0,0.09765625,0.09765625
+Q1307_2,categorical,Have there been hallucinations for a period of up to two weeks in the absence of clear symptoms of mood changes (ie before the appearance of symptoms or after they are gone),", 0.0: 0.03515625%%, 1.0: 0.0009765625%%, 8.0: 0.0009765625%%",96.2890625,8,0.18484288354898332,3.0,,
+Q991_2,ordinal,"Do you think you could be mistaken?
+Elderly does not believe he/she is mistaken",", 0.0: 0.0224609375%%, 2.0: 0.0029296875%%, 9.0: 0.001953125%%, 1.0: 0.009765625%%",96.2890625,9,0.3696857670979667,5.0,0.1953125,0.1953125
+Q1305_2,ordinal,"The content of delirium and / or hallucinations is annoying or oppressive, but does not provoke dissatisfaction thus it is compatible with depression.
+",", 0.0: 0.033203125%%, 1.0: 0.0029296875%%, 8.0: 0.0009765625%%",96.2890625,8,0.18484288354898332,4.0,0.09765625,0.09765625
+Q982_2,ordinal,Elderly says he/she deserves persecution.,", 0.0: 0.0341796875%%, 9.0: 0.0009765625%%, 1.0: 0.001953125%%",96.2890625,9,0.18484288354898332,4.0,0.09765625,0.09765625
+Q1306_2,ordinal,"The content of delirium and / or hallucinations is fun, appreciative or great, and therefore fits in with the joyful mood.",", 0.0: 0.03515625%%, 1.0: 0.0009765625%%, 8.0: 0.0009765625%%",96.2890625,8,0.18484288354898332,4.0,0.09765625,0.09765625
+Q971_2,ordinal,The elderly believes in an unrealistic way that people deliberately attempt to annoy or hurt him/her,", 0.0: 0.029296875%%, 8.0: 0.0009765625%%, 9.0: 0.0009765625%%, 1.0: 0.005859375%%",96.2890625,"8,9",0.3696857670979667,4.0,0.1953125,0.1953125
+Q961_2,ordinal,The elderly believes it is true,", 0.0: 0.02734375%%, 2.0: 0.0009765625%%, 1.0: 0.009765625%%, 9.0: 0.0009765625%%",96.09375,9,0.18484288354898332,4.0,0.09765625,0.09765625
+Q952_2,categorical,"Elderly says ""it is their fault"", and the interviewer has no doubts.",", 0.0: 0.0263671875%%, 1.0: 0.01171875%%, 9.0: 0.0009765625%%",96.09375,9,0.18484288354898332,3.0,,
+Q951_2,categorical,"Elderly says ""it is their fault"", but the interviewer has doubts.",", 0.0: 0.0185546875%%, 1.0: 0.01953125%%, 9.0: 0.0009765625%%",96.09375,9,0.18484288354898332,3.0,,
+NOCTURN,categorical,Is loss or delirium worse at night or dusk?,", 1.0: 0.001953125%%, 0.0: 0.0390625%%",95.8984375,,0.0,1.0,,
+Q1582_2,ordinal,The eyes are wet: filled with tears or crying,", 8.0: 0.001953125%%, 1.0: 0.00390625%%, 0.0: 0.0361328125%%",95.80078125,8,0.3696857670979667,4.0,0.1953125,0.1953125
+Q1581_2,ordinal,It seems by looking at/ listening to the participant that he/she is sad or depressed,", 1.0: 0.0048828125%%, 2.0: 0.0009765625%%, 0.0: 0.037109375%%",95.703125,,0.0,4.0,0.09765625,0.09765625
+Q1621_2,ordinal,Focus: obvious difficulties in listening to the interview.,", 2.0: 0.001953125%%, 0.0: 0.0380859375%%, 1.0: 0.0029296875%%",95.703125,,0.0,4.0,0.1953125,0.1953125
+Q1611_2,ordinal,Social disturbance: It seems by looking at / listening to the participant that he/she is skeptical for no real reason,", 2.0: 0.0029296875%%, 0.0: 0.0400390625%%",95.703125,,0.0,4.0,0.29296875,0.29296875
+Q1602_2,ordinal,Difficulties in thinking: participant seems hesitant,", 1.0: 0.0078125%%, 2.0: 0.0009765625%%, 0.0: 0.0341796875%%",95.703125,,0.0,4.0,0.09765625,0.09765625
+Q1601_2,ordinal,Difficulties in thinking: participant seems confused,", 1.0: 0.0068359375%%, 2.0: 0.0009765625%%, 0.0: 0.03515625%%",95.703125,,0.0,4.0,0.09765625,0.09765625
+Q1591_2,ordinal,Slow: Very slow in all movements,", 1.0: 0.0068359375%%, 2.0: 0.001953125%%, 0.0: 0.0341796875%%",95.703125,,0.0,4.0,0.1953125,0.1953125
+NPIMED,categorical,Did the doctor or specialist prescribe any medication?,", 0.0: 0.0517578125%%, 98.0: 0.001953125%%, 1.0: 0.01171875%%",93.45703125,98,0.3696857670979667,2.0,,
+NPIADV,categorical,Did the doctor or specialist give any advice?,", 0.0: 0.05078125%%, 98.0: 0.0029296875%%, 1.0: 0.01171875%%",93.45703125,98,0.5545286506469501,2.0,,
+Q1151_2,ordinal,Gradually declining interests / enjoyment over the years.,", 0.0: 0.021484375%%, 1.0: 0.060546875%%, 2.0: 0.0107421875%%, 8.0: 0.001953125%%, 9.0: 0.0009765625%%",90.4296875,"8,9",0.5545286506469501,4.0,0.29296875,0.29296875
+Q1152_2,categorical,The decline in interests / enjoyment  has occurred over the past three months.,", 0.0: 0.0390625%%, 1.0: 0.052734375%%, 8.0: 0.001953125%%, 9.0: 0.001953125%%",90.4296875,"8,9",0.7393715341959335,3.0,,
+Q1153_2,ordinal,Lose interest or enjoyment most days for at least two weeks last month.,", 0.0: 0.0380859375%%, 1.0: 0.04296875%%, 2.0: 0.0107421875%%, 8.0: 0.001953125%%, 9.0: 0.001953125%%",90.4296875,"8,9",0.7393715341959335,4.0,0.390625,0.390625
+Q1161_2,categorical,Depressed and very tense.,", 0.0: 0.056640625%%, 9.0: 0.0009765625%%, 1.0: 0.0380859375%%, 8.0: 0.0009765625%%",90.33203125,"8,9",0.3696857670979667,3.0,,
+Q522_2,categorical,Anorexia has been present for most days for at least two weeks last month.,", 0.0: 0.0693359375%%, 1.0: 0.033203125%%, 8.0: 0.00390625%%",89.35546875,8,0.7393715341959335,3.0,,
+Q521_2,categorical,weak appetite in the absence of any known health condition and without nausea ,", 0.0: 0.0546875%%, 1.0: 0.048828125%%, 8.0: 0.0029296875%%",89.35546875,8,0.5545286506469501,3.0,,
+Q523_2,categorical,An increase in appetite for most days for at least two weeks last month.,", 1.0: 0.0185546875%%, 0.0: 0.0859375%%, 8.0: 0.00390625%%",89.16015625,8,0.7393715341959335,3.0,,
+Q571_2,categorical,Elderly wakes up about two or more hours before his/her usual waking time and can not go back to sleep most of the nights (this lasted for at least two weeks last month).,", 1.0: 0.0927734375%%, 0.0: 0.05859375%%",84.86328125,,0.0,3.0,,
+Q582_2,categorical,"Mainly due to or arising from a physical cause in the body, or noise, etc. ",", 1.0: 0.05078125%%, 0.0: 0.1005859375%%",84.86328125,,0.0,3.0,,
+Q581_2,categorical,"Difficulty is due to altered moods or thoughts, or tension (e.g. lies awake with depressed or anxious feelings or thoughts).",", 9.0: 0.0009765625%%, 0.0: 0.05859375%%, 1.0: 0.0908203125%%, 8.0: 0.0009765625%%",84.86328125,"8,9",0.3696857670979667,3.0,,
+CKINCOM_2/4,not found,,", 1.0: 0.16796875%%",83.203125,,0.0,,,
+Q54_2,categorical,the difference is more than 3 years,", 0.0: 0.060546875%%, 1.0: 0.0361328125%%, 9.0: 0.0693359375%%, 8.0: 0.001953125%%",83.203125,"8,9",13.493530499075785,3.0,,
+Q53_2,categorical,the difference is between 2 to 3 years ,", 0.0: 0.0673828125%%, 1.0: 0.0283203125%%, 8.0: 0.0029296875%%, 9.0: 0.0693359375%%",83.203125,"8,9",13.67837338262477,3.0,,
+Q51_2,categorical,the participant shows clear hesitation when indicating age and year of birth,", 0.0: 0.0625%%, 1.0: 0.103515625%%, 9.0: 0.001953125%%, 8.0: 0.0009765625%%",83.10546875,"8,9",0.5545286506469501,3.0,,
+Q52_2,categorical,contradiction between year of birth and age provided by participant and not corrected (disregard if one year difference only),", 0.0: 0.052734375%%, 1.0: 0.064453125%%, 9.0: 0.05078125%%, 8.0: 0.0009765625%%",83.10546875,"8,9",9.796672828096119,3.0,,
+Q366_2,boolean,did you visit a doctor or specialist to treat the problem,", 0.0: 0.158203125%%, 1.0: 0.021484375%%",82.03125,,0.0,,,
+Q544_2,ordinal,Has been suffering from a noticeable concern for most nights for at least two weeks during the past month.,", 0.0: 0.0517578125%%, 2.0: 0.0234375%%, 1.0: 0.1044921875%%",82.03125,,0.0,4.0,0.0,0.0
+Q551_2,categorical,"Difficulty in falling asleep.  If tablets taken, rate what interviewee feels would have happened without them.",", 0.0: 0.09375%%, 1.0: 0.0859375%%, 9.0: 0.0009765625%%",81.93359375,9,0.18484288354898332,3.0,,
+Q561_2,ordinal,"Sleep interrupted during the night.  (Include waking up after an initial cat nap and not being able to sleep again for some lengthy time).  
+If tablets taken rate what interviewee feels would have happened without them.",", 1.0: 0.1279296875%%, 2.0: 0.021484375%%, 0.0: 0.03125%%",81.93359375,,0.0,4.0,0.0,0.0
+Q545_2,ordinal,"Over the last few nights, there has been a noticeable increase in sleep over the last two weeks",", 0.0: 0.17578125%%, 2.0: 0.0029296875%%, 1.0: 0.001953125%%",81.93359375,,0.0,4.0,0.48828125,0.48828125
+Q543_2,ordinal,Elderly suffers from anxiety for most of the night and often sleeps during the day.,", 0.0: 0.126953125%%, 2.0: 0.0185546875%%, 1.0: 0.0361328125%%",81.8359375,,0.0,4.0,0.0,0.0
+Q542_2,ordinal,"Sleeping problem (insomnia) or discontinued sleeping, or intake of medication or alcohol to help getting asleep.",", 0.0: 0.0771484375%%, 2.0: 0.0205078125%%, 1.0: 0.083984375%%",81.8359375,,0.0,4.0,0.0,0.0
+CONFNITE,boolean,Does the elderly get confused during the night? Does he/she wander? speaks incomprehensible words?,", 0.0: 0.2021484375%%, 1.0: 0.001953125%%",79.58984375,,0.0,,,
+CONFDAY,boolean,Does it happen during the day?,", 0.0: 0.201171875%%, 1.0: 0.0029296875%%",79.58984375,,0.0,,,
+CLOUDING,boolean,Are there periods of more than 24 hours when the elderly is being alert at times and strayed at another times?,", 0.0: 0.1953125%%, 1.0: 0.0078125%%, 99.0: 0.0009765625%%",79.58984375,,0.0,,,
+Q881_2,categorical,elderly feels loneliness and can not escape it.,", 1.0: 0.072265625%%, 8.0: 0.0029296875%%, 0.0: 0.134765625%%",79.00390625,8,0.5545286506469501,3.0,,
+Q882_2,categorical,Bothered or depressed by current loneliness.,", 1.0: 0.0888671875%%, 0.0: 0.119140625%%, 8.0: 0.001953125%%",79.00390625,8,0.3696857670979667,3.0,,
+Q891_2,categorical,Worried about living alone in the future,", 0.0: 0.1201171875%%, 8.0: 0.0068359375%%, 1.0: 0.0830078125%%",79.00390625,8,1.2939001848428835,3.0,,
+CKINCOM_2/6,not found,,", 1.0: 0.2265625%%",77.34375,,0.0,,,
+ageinfo,numeric,Age reported by informant:,", 999.0: 0.00390625%%, 69.0: 0.015625%%, 78.0: 0.0068359375%%, 79.0: 0.0107421875%%, 82.0: 0.0107421875%%, 86.0: 0.0087890625%%, 76.0: 0.0078125%%, 67.0: 0.009765625%%, 66.0: 0.0126953125%%, 72.0: 0.009765625%%, 75.0: 0.01953125%%, 84.0: 0.01171875%%, 77.0: 0.0146484375%%, 88.0: 0.001953125%%, 1941.0: 0.0009765625%%, 1962.0: 0.0009765625%%, 73.0: 0.0078125%%, 81.0: 0.0107421875%%, 68.0: 0.0068359375%%, 70.0: 0.0078125%%, 80.0: 0.0087890625%%, 74.0: 0.0078125%%, 71.0: 0.0078125%%, 65.0: 0.013671875%%, 85.0: 0.005859375%%, 83.0: 0.00390625%%, 1952.0: 0.0009765625%%, 87.0: 0.001953125%%, 89.0: 0.0009765625%%, 95.0: 0.0009765625%%, 766.0: 0.0009765625%%, 90.0: 0.0009765625%%, 96.0: 0.0009765625%%",76.46484375,"766,999",0.9242144177449167,100.0,0.68359375,0.68359375
+agedoc,numeric,Age stated in document:,", 1951.0: 0.00390625%%, 1949.0: 0.00390625%%, 1940.0: 0.0009765625%%, 81.0: 0.0107421875%%, 82.0: 0.009765625%%, 86.0: 0.0048828125%%, 76.0: 0.0087890625%%, 1952.0: 0.001953125%%, 89.0: 0.001953125%%, 1946.0: 0.001953125%%, 1942.0: 0.0009765625%%, 72.0: 0.0078125%%, 75.0: 0.0146484375%%, 1934.0: 0.0029296875%%, 1941.0: 0.001953125%%, 1930.0: 0.0009765625%%, 1926.0: 0.0009765625%%, 73.0: 0.0078125%%, 68.0: 0.0068359375%%, 66.0: 0.0107421875%%, 70.0: 0.0068359375%%, 80.0: 0.0068359375%%, 79.0: 0.009765625%%, 74.0: 0.0068359375%%, 78.0: 0.005859375%%, 71.0: 0.0078125%%, 84.0: 0.0068359375%%, 69.0: 0.013671875%%, 1932.0: 0.0009765625%%, 83.0: 0.005859375%%, 65.0: 0.0126953125%%, 85.0: 0.005859375%%, 1953.0: 0.0009765625%%, 67.0: 0.0068359375%%, 77.0: 0.01171875%%, 87.0: 0.001953125%%, 88.0: 0.0009765625%%, 95.0: 0.0009765625%%, 90.0: 0.0009765625%%, 96.0: 0.0009765625%%, 999.0: 0.015625%%",76.46484375,999,2.957486136783734,100.0,0.0,0.0
+agepart,numeric,Age reported by participant:,", 999.0: 0.00390625%%, 69.0: 0.015625%%, 78.0: 0.005859375%%, 79.0: 0.0107421875%%, 82.0: 0.0087890625%%, 86.0: 0.005859375%%, 76.0: 0.009765625%%, 67.0: 0.0107421875%%, 66.0: 0.0107421875%%, 89.0: 0.001953125%%, 72.0: 0.009765625%%, 65.0: 0.0166015625%%, 84.0: 0.009765625%%, 70.0: 0.01171875%%, 88.0: 0.001953125%%, 1941.0: 0.0009765625%%, 0.0: 0.0009765625%%, 75.0: 0.01953125%%, 73.0: 0.0078125%%, 68.0: 0.0078125%%, 80.0: 0.0126953125%%, 74.0: 0.0078125%%, 71.0: 0.0078125%%, 83.0: 0.0029296875%%, 81.0: 0.009765625%%, 85.0: 0.005859375%%, 77.0: 0.01171875%%, 1952.0: 0.0009765625%%, 87.0: 0.0029296875%%, 95.0: 0.0009765625%%, 90.0: 0.0009765625%%",76.46484375,999,0.7393715341959335,100.0,0.5859375,0.5859375
+Q93_2,categorical,error in name (partial name given is accepted),", 0.0: 0.232421875%%, 1.0: 0.025390625%%, 9.0: 0.013671875%%",72.8515625,9,2.5878003696857674,3.0,,
+Q91_2,categorical,the participant says/points our that he/she doesn't know the place or address,", 0.0: 0.2421875%%, 1.0: 0.029296875%%",72.8515625,,0.0,3.0,,
+Q92_2,categorical,"incomplete, irrelevant, or no answer",", 0.0: 0.2431640625%%, 8.0: 0.0009765625%%, 1.0: 0.02734375%%",72.8515625,8,0.18484288354898332,3.0,,
+Q363_2,categorical,the past 3 to 4 years ,", 1.0: 0.0732421875%%, 9.0: 0.001953125%%, 0.0: 0.2001953125%%, 8.0: 0.0029296875%%",72.16796875,"8,9",0.9242144177449167,3.0,,
+Q364_2,categorical,the past 5 to 10 years ,", 0.0: 0.2412109375%%, 9.0: 0.0029296875%%, 1.0: 0.0322265625%%, 8.0: 0.0029296875%%",72.0703125,"8,9",1.1090573012939002,3.0,,
+Q365_2,categorical,the past 10 years ,", 0.0: 0.24609375%%, 9.0: 0.0029296875%%, 1.0: 0.02734375%%, 8.0: 0.0029296875%%",72.0703125,"8,9",1.1090573012939002,3.0,,
+Q362_2,categorical,the past 2 years ,", 0.0: 0.13671875%%, 1.0: 0.1376953125%%, 9.0: 0.001953125%%, 8.0: 0.0029296875%%",72.0703125,"8,9",0.9242144177449167,3.0,,
+Q243_2,categorical,the depressed mood/ crying presisted at least for two consecutive weeks in the last month,", 1.0: 0.0498046875%%, 0.0: 0.28515625%%, 8.0: 0.00390625%%, 9.0: 0.0009765625%%",66.015625,"8,9",0.9242144177449167,3.0,,
+Q241_2,categorical,"the depression, crying, or feeling the need to cry lasts for more than few hours ",", 0.0: 0.171875%%, 1.0: 0.1640625%%, 8.0: 0.0029296875%%, 9.0: 0.0009765625%%",66.015625,"8,9",0.7393715341959335,3.0,,
+Q242_2,categorical,"the depression, crying, or feeling the need to cry is present most of the time",", 0.0: 0.2666015625%%, 1.0: 0.0693359375%%, 8.0: 0.00390625%%, 9.0: 0.0009765625%%",65.91796875,"8,9",0.9242144177449167,3.0,,
+Q272_2,ordinal,the depression lasts for hours even when seeing visitors or being intertained,", 9.0: 0.001953125%%, 2.0: 0.0048828125%%, 0.0: 0.2919921875%%, 1.0: 0.0361328125%%, 8.0: 0.0068359375%%",65.8203125,"8,9",1.6635859519408502,4.0,0.87890625,0.87890625
+Q271_2,categorical,nothing helps soothing the changing mood,", 9.0: 0.00390625%%, 8.0: 0.0078125%%, 0.0: 0.2939453125%%, 1.0: 0.037109375%%",65.72265625,"8,9",2.2181146025878005,3.0,,
+Q262_2,categorical,mostly in the afternoon,", 0.0: 0.275390625%%, 1.0: 0.0546875%%, 8.0: 0.0107421875%%, 9.0: 0.001953125%%",65.72265625,"8,9",2.4029574861367835,3.0,,
+Q263_2,categorical,mostly at night,", 0.0: 0.21875%%, 1.0: 0.1123046875%%, 8.0: 0.009765625%%, 9.0: 0.001953125%%",65.72265625,"8,9",2.2181146025878005,3.0,,
+Q261_2,categorical,mostly during the day/morning,", 1.0: 0.0771484375%%, 0.0: 0.2548828125%%, 8.0: 0.0087890625%%, 9.0: 0.001953125%%",65.72265625,"8,9",2.033271719038817,3.0,,
+Q251_2,ordinal,Fluctuating mood ,", 1.0: 0.1396484375%%, 0.0: 0.1904296875%%, 9.0: 0.001953125%%, 8.0: 0.00390625%%, 2.0: 0.0068359375%%",65.72265625,"8,9",1.1090573012939002,4.0,0.5859375,0.5859375
+Q752_2,categorical,Slowing down and lacking energy is worst in the evening.,", 1.0: 0.13671875%%, 9.0: 0.0029296875%%, 0.0: 0.228515625%%, 8.0: 0.015625%%",61.62109375,"8,9",3.5120147874306835,3.0,,
+Q741_2,categorical,Began or worsened during the past three months.,", 1.0: 0.1279296875%%, 9.0: 0.0029296875%%, 0.0: 0.24609375%%, 8.0: 0.0068359375%%",61.62109375,"8,9",1.8484288354898333,3.0,,
+Q771_2,categorical,Sits or lies down due to lack of energy,", 0.0: 0.244140625%%, 1.0: 0.1201171875%%, 2.0: 0.013671875%%, 8.0: 0.0048828125%%, 9.0: 0.001953125%%",61.5234375,"8,9",1.2939001848428835,4.0,,
+Q753_2,ordinal,Slowing down exists most days for at least for two weeks.,", 1.0: 0.1591796875%%, 9.0: 0.001953125%%, 2.0: 0.0166015625%%, 0.0: 0.197265625%%, 8.0: 0.009765625%%",61.5234375,"8,9",2.2181146025878005,4.0,1.171875,1.171875
+Q751_2,categorical,Slowing down and lacking energy is worst in the morning.,", 0.0: 0.255859375%%, 9.0: 0.0029296875%%, 1.0: 0.1142578125%%, 8.0: 0.01171875%%",61.5234375,"8,9",2.7726432532347505,3.0,,
+Q761_2,categorical,does not get decreased in the presence of fun activities normally.,", 0.0: 0.2958984375%%, 1.0: 0.0732421875%%, 9.0: 0.0009765625%%, 8.0: 0.0146484375%%",61.5234375,"8,9",2.957486136783734,3.0,,
+Q1451_2,categorical,"Because of agitation, depression, self-admiration, etc.",", 0.0: 0.3388671875%%, 1.0: 0.072265625%%",58.88671875,,0.0,3.0,,
+Q1452_2,categorical,Due to memory failure,", 0.0: 0.23828125%%, 1.0: 0.173828125%%",58.7890625,,0.0,3.0,,
+Q1454_2,categorical,"The participant's reaction to mistakes was characterized by joy, indifference, or lightness.",", 0.0: 0.3984375%%, 1.0: 0.0146484375%%",58.69140625,,0.0,3.0,,
+Q1453_2,categorical,"Mistakes were made during partial consciousness (ie, the participant was falling asleep, under the influence of alcohol, drugs or delirium due to severe physical illness).",", 0.0: 0.412109375%%, 1.0: 0.0009765625%%",58.69140625,,0.0,3.0,,
+Q163_2,categorical,worries about the financial status of the spouse (including rent),", 1.0: 0.14453125%%, 0.0: 0.314453125%%, 9.0: 0.0009765625%%, 8.0: 0.001953125%%",53.80859375,"8,9",0.5545286506469501,3.0,,
+Q142_2,categorical,the participant worries in general about everything ,", 1.0: 0.0625%%, 0.0: 0.3984375%%, 8.0: 0.001953125%%",53.7109375,8,0.3696857670979667,3.0,,
+Q151_2,categorical,unwarranted worry that comes repeatedly and cannot be stopped,", 1.0: 0.0830078125%%, 0.0: 0.3779296875%%, 8.0: 0.0029296875%%",53.61328125,8,0.5545286506469501,3.0,,
+Q164_2,categorical,worries about family problems (other than health),", 1.0: 0.1142578125%%, 0.0: 0.345703125%%, 9.0: 0.0009765625%%, 8.0: 0.0029296875%%",53.61328125,"8,9",0.7393715341959335,3.0,,
+Q141_2,categorical,worries a lot (on one or two things),", 1.0: 0.357421875%%, 0.0: 0.10546875%%, 8.0: 0.001953125%%",53.515625,8,0.3696857670979667,3.0,,
+Q162_2,categorical,worries about the health of others,", 1.0: 0.318359375%%, 0.0: 0.1455078125%%, 9.0: 0.0009765625%%, 8.0: 0.0029296875%%",53.22265625,"8,9",0.7393715341959335,3.0,,
+Q161_2,categorical,worries about the health of the spouse,", 1.0: 0.294921875%%, 0.0: 0.169921875%%, 9.0: 0.0009765625%%, 8.0: 0.001953125%%",53.22265625,"8,9",0.5545286506469501,3.0,,
+NPIHELP,categorical,Did you consult any doctor or specialist regarding any of the problems listed above?,", 0.0: 0.4609375%%, 1.0: 0.0126953125%%, 98.0: 0.0009765625%%",52.5390625,98,0.18484288354898332,2.0,,
+Q1366_2,categorical,Other hypnotics and tranquilizers (eg hypnotic taking during nightime),", 0.0: 0.4375%%, 1.0: 0.0390625%%",52.34375,,0.0,3.0,,
+HASCONF_2,ordinal,overall rating of confidence in data,", 0.0: 0.5966796875%%, 3.0: 0.0029296875%%, 2.0: 0.015625%%, 1.0: 0.0302734375%%, 4.0: 0.0009765625%%",35.3515625,,0.0,4.0,1.953125,1.953125
+Q82_2,categorical,the participant says/points our that he/she doesn't know,", 0.0: 0.673828125%%, 8.0: 0.0009765625%%, 9.0: 0.0029296875%%, 1.0: 0.0087890625%%",31.34765625,"8,9",0.7393715341959335,3.0,,
+Q83_2,categorical,"incomplete, irrelevant, or no answer",", 1.0: 0.0126953125%%, 0.0: 0.66796875%%, 8.0: 0.0029296875%%, 9.0: 0.0029296875%%",31.34765625,"8,9",1.1090573012939002,3.0,,
+Q81_2,categorical,participant gave the wrong or incomplete address,", 1.0: 0.0185546875%%, 0.0: 0.6650390625%%, 8.0: 0.001953125%%, 9.0: 0.0009765625%%",31.34765625,"8,9",0.5545286506469501,3.0,,
+ENDIF_2,boolean,interviewer code - is the total csid score 2 or less?            ,", 0.0: 0.2412109375%%, 1.0: 0.458984375%%",29.98046875,,0.0,,,
+NPI12,categorical,"Has your (xxxx) lost or gained weight, or had a change in the food he she likes? ",", 0.0: 0.67578125%%, 1.0: 0.02734375%%, 98.0: 0.0029296875%%",29.39453125,98,0.5545286506469501,2.0,,
+NPI2,categorical,Does your (xxxx) act as if he or she hears voices? Does he or she talk to people who are not there?,", 0.0: 0.70703125%%, 1.0: 0.0029296875%%, 98.0: 0.0029296875%%",28.7109375,98,0.5545286506469501,2.0,,
+NPI1,categorical,"Does your (xxxx) believe that others are stealing from him or her, or planning to harm him or her in some way?",", 0.0: 0.7060546875%%, 1.0: 0.0048828125%%, 98.0: 0.001953125%%",28.7109375,98,0.3696857670979667,2.0,,
+NPI3,categorical,Is your (xxxx) stubborn and resistive to help from others?,", 0.0: 0.697265625%%, 1.0: 0.0146484375%%, 98.0: 0.0009765625%%",28.7109375,98,0.18484288354898332,2.0,,
+NPI5,categorical,"Does your (xxxx) become upset when separated from you? Does he or she have any other signs of nervousness, such as shortness of breath, sighing, being unable to relax, or feeling excessively tense?",", 0.0: 0.693359375%%, 1.0: 0.015625%%, 98.0: 0.00390625%%",28.7109375,98,0.7393715341959335,2.0,,
+NPI7,categorical,Does your (xxxx) seem less interested in his or her usual activities and plans of others?,", 0.0: 0.6669921875%%, 1.0: 0.044921875%%, 98.0: 0.001953125%%",28.61328125,98,0.3696857670979667,2.0,,
+NPI8,categorical,"Does your (xxxx) seem to act impulsively? For example, does your (xxxx) talk to strangers as if he or she knows them, or does your (xxxx) say things that may hurt people’s feeling?",", 0.0: 0.69921875%%, 98.0: 0.001953125%%, 1.0: 0.0126953125%%",28.61328125,98,0.3696857670979667,2.0,,
+NPI9,categorical,Is your (xxxx) impatient and cranky? Does he or she have difficulty coping with delays or waiting for planned activities?,", 0.0: 0.6962890625%%, 98.0: 0.001953125%%, 1.0: 0.015625%%",28.61328125,98,0.3696857670979667,2.0,,
+NPI11,categorical,"Does your (xxxx) awaken you during the night, rise too early in the morning, or take excessive naps during the day?",", 0.0: 0.701171875%%, 1.0: 0.0107421875%%, 98.0: 0.001953125%%",28.61328125,98,0.3696857670979667,2.0,,
+NPI6,categorical,Does your (xxxx) appear to feel too good or act excessively happy?,", 0.0: 0.70703125%%, 1.0: 0.005859375%%, 98.0: 0.0009765625%%",28.61328125,98,0.18484288354898332,2.0,,
+NPI10,categorical,"Does your (xxxx) engage in repetitive activities, such as pacing around the house, handling buttons, wrapping string, or doing other things repeatedly?",", 0.0: 0.708984375%%, 98.0: 0.0029296875%%, 1.0: 0.001953125%%",28.61328125,98,0.5545286506469501,2.0,,
+NPI4,categorical,Does your (xxxx) act as if he or she is sad or in low spirits? Does he or she cry?,", 0.0: 0.6728515625%%, 1.0: 0.037109375%%, 98.0: 0.00390625%%",28.61328125,98,0.7393715341959335,2.0,,
+CARENEED_2,ordinal,The older person,", 2.0: 0.09765625%%, 3.0: 0.5732421875%%, 1.0: 0.04296875%%",28.61328125,,0.0,2.0,4.296875,4.296875
+Q1551_2,ordinal,"Taking everything into account, how would you describe your satisfaction with life at the present time: good, average, or weak?",", 0.0: 0.21484375%%, 1.0: 0.4462890625%%, 2.0: 0.0576171875%%, 8.0: 0.0068359375%%",27.44140625,8,1.2939001848428835,4.0,0.68359375,0.68359375
+Q1561_2,ordinal,"In general, how happy are you: very happy, reasonably happy, not too happy, not happy at all?",", 1.0: 0.5419921875%%, 0.0: 0.083984375%%, 2.0: 0.064453125%%, 3.0: 0.033203125%%, 8.0: 0.001953125%%",27.44140625,8,0.3696857670979667,5.0,0.1953125,0.1953125
+ICINTCOM_2,categorical,"* Interviewer's evaluation * Has the interview ended?
+",", 0.0: 0.0087890625%%, 1.0: 0.7265625%%",26.46484375,,0.0,3.0,,
+Q1821_2,ordinal,"Exaggeration or tendency to say yes, indiscriminately.",", 8.0: 0.001953125%%, 1.0: 0.01953125%%, 0.0: 0.7841796875%%, 2.0: 0.001953125%%",19.23828125,8,0.3696857670979667,4.0,0.390625,0.390625
+Q1822_2,ordinal,"Minimization or tendency to say no, indiscriminately.",", 2.0: 0.005859375%%, 1.0: 0.0302734375%%, 0.0: 0.771484375%%",19.23828125,,0.0,4.0,3.61328125,3.61328125
+Q781_2,ordinal,Elderly seems very slow in all moves,", 0.0: 0.6708984375%%, 1.0: 0.166015625%%, 2.0: 0.0263671875%%, 8.0: 0.001953125%%, 9.0: 0.0029296875%%",13.18359375,"8,9",0.9242144177449167,4.0,0.48828125,0.48828125
+Q871_2,ordinal,Admits feeling lonely,", 0.0: 0.66015625%%, 1.0: 0.1728515625%%, 2.0: 0.03125%%, 8.0: 0.005859375%%",12.98828125,8,1.1090573012939002,4.0,0.5859375,0.5859375
+Q1351_2,categorical,Note ** The participant is taking a doctor-prescribed medication to treat a mental problem,", 0.0: 0.8974609375%%, 1.0: 0.013671875%%, 8.0: 0.001953125%%",8.69140625,8,0.3696857670979667,3.0,,
+Q1709_2,ordinal,Takes slow shuffling steps,", 0.0: 0.849609375%%, 1.0: 0.0615234375%%, 2.0: 0.0078125%%, 9.0: 0.0068359375%%",7.421875,9,1.2939001848428835,4.0,0.68359375,0.68359375
+Q1708_2,ordinal,Staggers as if drunk,", 0.0: 0.90625%%, 1.0: 0.01171875%%, 2.0: 0.0009765625%%, 9.0: 0.0068359375%%",7.421875,9,1.2939001848428835,4.0,0.68359375,0.68359375
+Q1707_2,ordinal,"Gait normal, just unsteady",", 0.0: 0.84375%%, 1.0: 0.0654296875%%, 2.0: 0.0087890625%%, 9.0: 0.0078125%%",7.421875,9,1.478743068391867,4.0,0.78125,0.78125
+Q1361_2,categorical,"Opium alkaloids, heroin, industrial analgesics similar to morphine (eg pythidine, methadone, dehydroquidine) and cocaine.",", 0.0: 0.931640625%%, 1.0: 0.0009765625%%",6.73828125,,0.0,3.0,,
+Q201_2,ordinal,episode of anxiety which participant tries to terminate e.g. by running out of room.,", 0.0: 0.91796875%%, 2.0: 0.001953125%%, 1.0: 0.029296875%%, 8.0: 0.005859375%%, 9.0: 0.0009765625%%",4.39453125,"8,9",1.2939001848428835,4.0,0.68359375,0.68359375
+Q1742_2,ordinal,"Patient talks fairly freely, but vaguely and ambiguously so that ideas communicated are not clear - vague wandering from idea to idea or point to point, e.g.
 Question:  
 HOW DO YOU LIKE IT IN THE HOSPITAL?
 Response:  
-WELL, or ….NOT QUITE THE SAME AS, OR …DO NOT QUITE KNOW HOW TO SAY IT.  IT IS NOT THE SAME, BEING IN HOSPITAL AS, or....WORKING. ER….THE JOB IS NOT QUITE THE SAME or… VERY MUCH THE SAME, BUT OF COURSE, IT IS NOT EXACTLY THE SAME.",9,0.5545286506469501,0.78125,2.0 9.0,0.78125,2.0 9.0
-Q1744_2,ordinal,"Counter({0.0: 959, 1.0: 18, 2.0: 4, 9.0: 2})",4.00390625,4.0,"Circumstantial:  much unnecessary detail, but the object in view at the beginning is ultimately reached.",9,0.3696857670979667,0.5859375,2.0 9.0,0.5859375,2.0 9.0
-Q1745_2,ordinal,"Counter({0.0: 968, 1.0: 10, 2.0: 3, 9.0: 2})",4.00390625,4.0,Rambling:  talks in an aimless fashion.  Object in view at the beginning is not reached.,9,0.3696857670979667,0.48828125,2.0 9.0,0.48828125,2.0 9.0
-Q1743_2,ordinal,"Counter({0.0: 948, 1.0: 26, 2.0: 6, 9.0: 3})",4.00390625,4.0,"Irrelevance:  whole content of answer may have little to do with the question.  (Do not include wandering or rambling from the topic, or incoherence).",9,0.5545286506469501,0.87890625,2.0 9.0,0.87890625,2.0 9.0
-Q171_2,categorical,"Counter({1.0: 803, 0.0: 182})",3.80859375,3.0,do you have children,,0.0,0.0,,0.0,
-Q1031_2,ordinal,"Counter({0.0: 954, 1.0: 29, 2.0: 2})",3.80859375,4.0,It seems from looking at/ listening to the participant that he/she is overly skeptical,,0.0,3.02734375,1.0 2.0,3.02734375,1.0 2.0
-Q331_2,ordinal,"Counter({0.0: 734, 1.0: 156, 2.0: 89, 9.0: 6, 8.0: 2})",3.61328125,6.0,"seems very nervous, worried, depressed or scared","8,9",1.478743068391867,0.78125,8.0 9.0,0.78125,8.0 9.0
-Q75_2,ordinal,"Counter({0.0: 776, 1.0: 147, 2.0: 42, 8.0: 16, 9.0: 6})",3.61328125,4.0,evaluate: error in the year provided,"8,9",4.066543438077634,2.1484375,8.0 9.0,2.1484375,8.0 9.0
-Q1441_2,categorical,"Counter({0.0: 953, 9.0: 26, 1.0: 8})",3.61328125,3.0,The interviewer believes that the participant has a drinking problem.,9,4.805914972273566,2.5390625,9.0,2.5390625,9.0
-IRDISCR_2,boolean,"Counter({0.0: 828, 1.0: 152, 9.0: 5, 8.0: 2})",3.61328125,,"Interviewer rating: was there any discrepancy between stated birth date and stated age?
-",,0.0,0.68359375,8.0 9.0,0.68359375,8.0 9.0
-Q42_2,categorical,"Counter({0.0: 913, 1.0: 67, 9.0: 7})",3.61328125,3.0,"age is incomplete, irrelevant or no reply",9,1.2939001848428835,0.68359375,9.0,0.68359375,9.0
-Q1242_2,ordinal,"Counter({0.0: 981, 1.0: 4, 9.0: 2, 8.0: 1})",3.515625,4.0,Hallucinations related to taste,"8,9",0.5545286506469501,0.29296875,8.0 9.0,0.29296875,8.0 9.0
-Q32_2,categorical,"Counter({0.0: 912, 1.0: 68, 9.0: 7, 8.0: 1})",3.515625,3.0,"year of birth is incomplete, irrelevant or no reply","8,9",1.478743068391867,0.78125,8.0 9.0,0.78125,8.0 9.0
-Q73_2,categorical,"Counter({0.0: 873, 1.0: 102, 8.0: 9, 9.0: 4})",3.515625,3.0,evaluate: the participants says/points out that he doesn't know the month,"8,9",2.4029574861367835,1.26953125,8.0 9.0,1.26953125,8.0 9.0
-Q1041_2,ordinal,"Counter({0.0: 945, 1.0: 35, 8.0: 4, 2.0: 3, 9.0: 1})",3.515625,4.0,"There is a clear sense of excessive guilt or self-blame over past and present mistakes (do not affirm positively any self-blame that is justified or simple.)
-  ","8,9",0.9242144177449167,0.78125,2.0 8.0 9.0,0.78125,2.0 8.0 9.0
-IRERROR_2,categorical,"Counter({0.0: 553, 1.0: 434, 9.0: 1})",3.515625,3.0,"Interviewer's evaluation: In the Direction or Memory section, did you record ""Yes"" (an indication of memory errors) or ""Not applicable"" frequently during the interview? Or was there a lot of ""not applicable"" in the rest of the interview? """,9,0.18484288354898332,0.09765625,9.0,0.09765625,9.0
-Q1365_2,categorical,"Counter({0.0: 972, 1.0: 16})",3.515625,3.0,"Barbituric acid analgesic (Allobarbital, Amobarbital, Aprobarbital)",,0.0,1.5625,1.0,1.5625,1.0
-Q1191_2,ordinal,"Counter({0.0: 911, 1.0: 58, 2.0: 17, 9.0: 1, 8.0: 1})",3.515625,4.0, Note ** has a clear difficulty in focusing on the interview.,"8,9",0.3696857670979667,1.85546875,2.0 8.0 9.0,1.85546875,2.0 8.0 9.0
-Q1061_2,ordinal,"Counter({0.0: 867, 1.0: 108, 2.0: 10, 8.0: 3})",3.515625,4.0,Participant is angry with him/herself,8,0.5545286506469501,1.26953125,2.0 8.0,1.26953125,2.0 8.0
-Q71_2,ordinal,"Counter({0.0: 786, 1.0: 126, 2.0: 52, 8.0: 20, 9.0: 4})",3.515625,4.0,evaluate: there is an error in the date of the week provided,"8,9",4.436229205175602,2.34375,8.0 9.0,2.34375,8.0 9.0
-Q531_2,categorical,"Counter({0.0: 932, 1.0: 51, 8.0: 3, 9.0: 2})",3.515625,3.0,Elderly has lost 10 pounds (4.5 kilograms) or more in the past three months,"8,9",0.9242144177449167,0.48828125,8.0 9.0,0.48828125,8.0 9.0
-Q512_2,ordinal,"Counter({0.0: 954, 1.0: 30, 8.0: 3, 2.0: 1})",3.515625,4.0,increased appetite,8,0.5545286506469501,0.390625,2.0 8.0,0.390625,2.0 8.0
-Q72_2,ordinal,"Counter({0.0: 820, 1.0: 111, 2.0: 32, 8.0: 22, 9.0: 3})",3.515625,4.0,evaluate: there is an error in the month provided ,"8,9",4.621072088724584,2.44140625,8.0 9.0,2.44140625,8.0 9.0
-Q532_2,categorical,"Counter({0.0: 969, 1.0: 14, 8.0: 3, 9.0: 2})",3.515625,3.0,Elderly has lost 10 pounds (4.5 kilograms) or more during the past month,"8,9",0.9242144177449167,0.48828125,8.0 9.0,0.48828125,8.0 9.0
-Q1371_2,categorical,"Counter({0.0: 975, 1.0: 13, 9.0: 1})",3.41796875,3.0,Drink alcohol (in one form or another) at least five days a week,9,0.18484288354898332,1.3671875,1.0 9.0,1.3671875,1.0 9.0
-Q371_2,categorical,"Counter({0.0: 821, 1.0: 165, 9.0: 3})",3.41796875,3.0,does not remember well the interviewer's name (little mistakes are tolerable) ,9,0.5545286506469501,0.29296875,9.0,0.29296875,9.0
-Q1364_2,categorical,Counter({0.0: 989}),3.41796875,3.0,Other psychosocial stimulants (eg amphetamines / pep pills),,0.0,0.0,,0.0,
-Q1363_2,categorical,Counter({0.0: 989}),3.41796875,3.0,"Medicinal cannabis (cannabis, marijuana)",,0.0,0.0,,0.0,
-Q381_2,categorical,"Counter({0.0: 706, 1.0: 278, 8.0: 3, 9.0: 2})",3.41796875,3.0,does not remember the name of the current prime minister (if wrong give the right answer: Tamam Salam) ,"8,9",0.9242144177449167,0.48828125,8.0 9.0,0.48828125,8.0 9.0
-Q533_2,categorical,"Counter({0.0: 969, 1.0: 16, 9.0: 2, 8.0: 2})",3.41796875,3.0,Elderly gained 10 pounds (4.5 kilograms) or more during the past month,"8,9",0.7393715341959335,0.390625,8.0 9.0,0.390625,8.0 9.0
-Q491_2,ordinal,"Counter({0.0: 848, 1.0: 127, 8.0: 7, 2.0: 6, 9.0: 1})",3.41796875,4.0,difficulty to relax,"8,9",1.478743068391867,0.78125,8.0 9.0,0.78125,8.0 9.0
-Q722_2,ordinal,"Counter({0.0: 810, 1.0: 149, 2.0: 24, 8.0: 6})",3.41796875,4.0,It exists most days for at least two weeks,8,1.1090573012939002,0.5859375,8.0,0.5859375,8.0
-Q1042_2,ordinal,"Counter({0.0: 945, 1.0: 39, 2.0: 4, 8.0: 1})",3.41796875,4.0,The participant mentions to regret something from the past which may or may not be justified.,8,0.18484288354898332,0.48828125,2.0 8.0,0.48828125,2.0 8.0
-Q301_2,categorical,"Counter({0.0: 950, 1.0: 36, 8.0: 3})",3.41796875,3.0,already contemplated the idea of suicide or wished for death,8,0.5545286506469501,0.29296875,8.0,0.29296875,8.0
-Q911_2,ordinal,"Counter({0.0: 970, 1.0: 13, 8.0: 3, 2.0: 2, 9.0: 1})",3.41796875,4.0,Has this feeling,"8,9",0.7393715341959335,0.5859375,2.0 8.0 9.0,0.5859375,2.0 8.0 9.0
-Q1182_2,ordinal,"Counter({0.0: 872, 1.0: 71, 2.0: 22, 9.0: 13, 8.0: 11})",3.41796875,4.0,"Difficulty with some forms of concentration most days, at least for two weeks.","8,9",4.436229205175602,2.34375,8.0 9.0,2.34375,8.0 9.0
-Q1381_2,categorical,"Counter({0.0: 962, 9.0: 24, 1.0: 3})",3.41796875,3.0,He/she does this,9,4.436229205175602,2.34375,9.0,2.34375,9.0
-Q1391_2,ordinal,"Counter({0.0: 954, 9.0: 32, 1.0: 3})",3.41796875,4.0,The participant admits that it is a problem,9,5.914972273567468,3.125,9.0,3.125,9.0
-Q1043_2,ordinal,"Counter({0.0: 967, 1.0: 12, 8.0: 7, 2.0: 3})",3.41796875,4.0,Feeling excessive guilt or lack of self-value most days for at least two weeks.,8,1.2939001848428835,0.68359375,8.0,0.68359375,8.0
-Q1251_2,ordinal,"Counter({0.0: 983, 1.0: 4, 2.0: 1, 8.0: 1})",3.41796875,4.0,Indicates that he/she hears voices in the absence of any external influence that can be defined,8,0.18484288354898332,0.5859375,1.0 2.0 8.0,0.5859375,1.0 2.0 8.0
-Q1044_2,ordinal,"Counter({0.0: 974, 1.0: 8, 8.0: 7})",3.41796875,4.0,The imaginary feeling of lack of self-value and guilt most days.,8,1.2939001848428835,0.68359375,8.0,0.68359375,8.0
-Q642_2,ordinal,"Counter({0.0: 923, 1.0: 46, 8.0: 12, 2.0: 7, 9.0: 1})",3.41796875,4.0,"A feeling of confused thinking or hesitation is present for most days, for at least two weeks.","8,9",2.4029574861367835,1.26953125,8.0 9.0,1.26953125,8.0 9.0
-Q1362_2,categorical,Counter({0.0: 989}),3.41796875,3.0,"Heliosis (eg LSD, Mescaline)",,0.0,0.0,,0.0,
-Q74_2,categorical,"Counter({0.0: 871, 1.0: 106, 8.0: 10, 9.0: 2})",3.41796875,3.0,"evaluate: at least some answers are incomplete, irrelevant or no answer","8,9",2.2181146025878005,1.171875,8.0 9.0,1.171875,8.0 9.0
-Q1181_2,ordinal,"Counter({0.0: 717, 9.0: 167, 1.0: 75, 2.0: 20, 8.0: 10})",3.41796875,4.0,He/she has difficulty focusing on reading.,"8,9",32.71719038817005,0.0,,0.0,
-Q1368_2,categorical,"Counter({0.0: 962, 1.0: 27})",3.41796875,3.0,Other,,0.0,2.63671875,1.0,2.63671875,1.0
-Q1271_2,ordinal,"Counter({0.0: 980, 1.0: 6, 9.0: 1, 2.0: 1, 8.0: 1})",3.41796875,4.0,Says that he/she is testing visual perception in the absence of any identifiable external stimulus.,"8,9",0.3696857670979667,0.29296875,2.0 8.0 9.0,0.29296875,2.0 8.0 9.0
-Q1367_2,categorical,"Counter({0.0: 926, 1.0: 63})",3.41796875,3.0,"Nerves tranquilizers (Valium, Liberium, etc.)",,0.0,6.15234375,1.0,6.15234375,1.0
-Q1201_2,ordinal,"Counter({0.0: 975, 1.0: 9, 8.0: 3, 2.0: 1, 9.0: 1})",3.41796875,4.0,Describes an abnormal sensory experience,"8,9",0.7393715341959335,0.48828125,2.0 8.0 9.0,0.48828125,2.0 8.0 9.0
-Q281_2,categorical,"Counter({0.0: 834, 1.0: 130, 2.0: 14, 8.0: 11})",3.41796875,4.0,felt life not worth living,8,2.033271719038817,1.07421875,8.0,1.07421875,8.0
-Q541_2,categorical,"Counter({0.0: 801, 1.0: 186, 8.0: 2})",3.41796875,3.0,Problem sleeping or change in the sleeping pattern,8,0.3696857670979667,0.1953125,8.0,0.1953125,8.0
-Q101_2,categorical,"Counter({0.0: 835, 1.0: 143, 9.0: 9, 8.0: 2})",3.41796875,3.0,"give a positive answer and a short explanation like ""you examined me yesterday"". This answer is wrong","8,9",2.033271719038817,1.07421875,8.0 9.0,1.07421875,8.0 9.0
-Q76_2,categorical,"Counter({0.0: 844, 1.0: 137, 9.0: 4, 8.0: 4})",3.41796875,3.0,evaluate: the participant says/points out that he doesn't know the year,"8,9",1.478743068391867,0.78125,8.0 9.0,0.78125,8.0 9.0
-Q1141_2,ordinal,"Counter({0.0: 904, 1.0: 62, 2.0: 14, 9.0: 5, 8.0: 4})",3.41796875,4.0,Participant did not enjoy almost anything,"8,9",1.6635859519408502,0.87890625,8.0 9.0,0.87890625,8.0 9.0
-Q102_2,categorical,"Counter({0.0: 966, 1.0: 18, 9.0: 5})",3.41796875,3.0,mentioned wrong events (not imaginary and not specific in a wrong way),9,0.9242144177449167,0.48828125,9.0,0.48828125,9.0
-Q901_2,ordinal,"Counter({0.0: 928, 1.0: 38, 2.0: 21, 8.0: 2, 9.0: 1})",3.3203125,4.0,Feels disturbed,"8,9",0.5545286506469501,2.34375,2.0 8.0 9.0,2.34375,2.0 8.0 9.0
-Q502_2,ordinal,"Counter({0.0: 880, 1.0: 95, 9.0: 6, 2.0: 6, 8.0: 3})",3.3203125,4.0,"describes the headacke as the product of nervous tension: tension around the head, tension, stiff neck","8,9",1.6635859519408502,0.87890625,8.0 9.0,0.87890625,8.0 9.0
-Q1131_2,ordinal,"Counter({0.0: 921, 1.0: 53, 2.0: 9, 8.0: 5, 9.0: 2})",3.3203125,4.0,Participant has less interests in the past month than he/she usually has,"8,9",1.2939001848428835,0.68359375,8.0 9.0,0.68359375,8.0 9.0
-Q451_2,ordinal,"Counter({0.0: 914, 1.0: 67, 2.0: 9})",3.3203125,4.0,"the elderly seems week, skinny, sick or disabled",,0.0,0.87890625,2.0,0.87890625,2.0
-Q711_2,ordinal,"Counter({0.0: 600, 1.0: 345, 2.0: 44, 8.0: 1})",3.3203125,4.0,"From his/her point of view, the elderly is slower in motion",8,0.18484288354898332,0.09765625,8.0,0.09765625,8.0
-Q1231_2,ordinal,"Counter({0.0: 984, 1.0: 4, 9.0: 1, 8.0: 1})",3.3203125,4.0,Hallucinations have to do with smell,"8,9",0.3696857670979667,0.1953125,8.0 9.0,0.1953125,8.0 9.0
-Q652_2,ordinal,"Counter({0.0: 921, 1.0: 61, 2.0: 8})",3.3203125,4.0,Appears indecisive,,0.0,6.73828125,1.0 2.0,6.73828125,1.0 2.0
-Q643_2,ordinal,"Counter({0.0: 941, 1.0: 35, 8.0: 9, 2.0: 3, 9.0: 2})",3.3203125,4.0,The feeling of not coping well with the daily routine.,"8,9",2.033271719038817,1.07421875,8.0 9.0,1.07421875,8.0 9.0
-Q1221_2,ordinal,"Counter({0.0: 984, 1.0: 3, 8.0: 2, 9.0: 1})",3.3203125,4.0,Physical hallucinations,"8,9",0.5545286506469501,0.29296875,8.0 9.0,0.29296875,8.0 9.0
-Q452_2,categorical,"Counter({0.0: 960, 1.0: 29, 8.0: 1})",3.3203125,3.0,"One or more body parts appear paralyzed in whole or in part, or there is a sign of paralysis on one side of the face.",8,0.18484288354898332,2.9296875,1.0 8.0,2.9296875,1.0 8.0
-Q31_2,categorical,"Counter({0.0: 886, 1.0: 97, 9.0: 5, 8.0: 2})",3.3203125,3.0,States or indicates by gesture he/she does not know what year he/she was born,"8,9",1.2939001848428835,0.68359375,8.0 9.0,0.68359375,8.0 9.0
-Q641_2,ordinal,"Counter({0.0: 872, 1.0: 97, 2.0: 10, 8.0: 10, 9.0: 1})",3.3203125,4.0,Feels indecisive,"8,9",2.033271719038817,1.07421875,8.0 9.0,1.07421875,8.0 9.0
-Q1171_2,ordinal,"Counter({0.0: 876, 1.0: 94, 2.0: 12, 8.0: 5, 9.0: 3})",3.3203125,4.0,He/she finds it difficult to focus on entertainment material,"8,9",1.478743068391867,0.78125,8.0 9.0,0.78125,8.0 9.0
-Q611_2,ordinal,"Counter({0.0: 903, 1.0: 77, 8.0: 7, 2.0: 3})",3.3203125,4.0,"Palpitations (i.e. patient is conscious of his/her heartbeat which is not due to exercise, but usually accompanied by anxiety.",8,1.2939001848428835,0.68359375,8.0,0.68359375,8.0
-Q1241_2,ordinal,"Counter({0.0: 981, 1.0: 6, 9.0: 2, 8.0: 1})",3.3203125,4.0,"A bad taste, not necessarily due to hallucination, for example, bitter taste. ","8,9",0.5545286506469501,0.29296875,8.0 9.0,0.29296875,8.0 9.0
-Q651_2,ordinal,"Counter({0.0: 923, 1.0: 54, 2.0: 12, 8.0: 1})",3.3203125,4.0,The elderly seems confused ,8,0.18484288354898332,1.26953125,2.0 8.0,1.26953125,2.0 8.0
-Q612_2,ordinal,"Counter({0.0: 927, 1.0: 53, 8.0: 7, 2.0: 3})",3.3203125,4.0,Trembling or tremulous feeling due to anxiety.,8,1.2939001848428835,0.68359375,8.0,0.68359375,8.0
-Q292_2,categorical,"Counter({0.0: 889, 1.0: 88, 8.0: 11, 9.0: 2})",3.3203125,3.0,"is pessimistic, doesn’t see a future ahead/ the future is unbearable","8,9",2.4029574861367835,1.26953125,8.0 9.0,1.26953125,8.0 9.0
-Q352_2,categorical,"Counter({0.0: 849, 1.0: 114, 2.0: 20, 8.0: 6, 9.0: 1})",3.3203125,4.0,forgets were he/she puts stuff,"8,9",1.2939001848428835,0.68359375,8.0 9.0,0.68359375,8.0 9.0
-Q481_2,ordinal,"Counter({0.0: 669, 1.0: 298, 2.0: 16, 8.0: 7})",3.3203125,4.0,Gets worn out or exhausted during daytime or evening,8,1.2939001848428835,0.68359375,8.0,0.68359375,8.0
-Q1051_2,ordinal,"Counter({0.0: 789, 1.0: 187, 2.0: 11, 8.0: 3})",3.3203125,4.0,Participant admits to feel annoyed (angry),8,0.5545286506469501,0.29296875,8.0,0.29296875,8.0
-Q1222_2,ordinal,"Counter({0.0: 980, 9.0: 4, 8.0: 3, 1.0: 3})",3.3203125,4.0,"Illusions that involve sexual sensations, for example, from telepathy, an imaginary lover having sex with the participant during the night, etc.
-(If the answer is positive, evaluate as ""yes, simple"" or  ""yes, severe"").","8,9",1.2939001848428835,0.68359375,8.0 9.0,0.68359375,8.0 9.0
-Q613_2,ordinal,"Counter({0.0: 967, 1.0: 13, 8.0: 7, 2.0: 3})",3.3203125,4.0,Other physical manifestations of anxiety,8,1.2939001848428835,0.68359375,8.0,0.68359375,8.0
-Q341_2,categorical,"Counter({0.0: 663, 1.0: 299, 2.0: 21, 8.0: 7})",3.3203125,4.0,difficulties from his/her point of view; the memory problem is a true problem for him/her,8,1.2939001848428835,0.68359375,8.0,0.68359375,8.0
-Q221_2,ordinal,"Counter({0.0: 720, 1.0: 247, 2.0: 15, 8.0: 6, 9.0: 2})",3.3203125,4.0,Have you cried at all? How often? Has cried:,"8,9",1.478743068391867,0.78125,8.0 9.0,0.78125,8.0 9.0
-Q351_2,categorical,"Counter({0.0: 900, 1.0: 75, 2.0: 9, 8.0: 6})",3.3203125,4.0,"forgets the names of friends, family or calls them with other names ",8,1.1090573012939002,0.5859375,8.0,0.5859375,8.0
-Q721_2,ordinal,"Counter({0.0: 726, 1.0: 235, 2.0: 25, 8.0: 4})",3.3203125,4.0,Listlessness or subjective   restriction of energy.,8,0.7393715341959335,0.390625,8.0,0.390625,8.0
-Q111_2,categorical,"Counter({0.0: 971, 1.0: 15, 9.0: 4})",3.3203125,3.0,observation: the participant speaks without a purpose. Did not get to the point being made,9,0.7393715341959335,0.390625,9.0,0.390625,9.0
-Q511_2,ordinal,"Counter({0.0: 904, 1.0: 78, 2.0: 5, 8.0: 3})",3.3203125,4.0,loss or decreased appetite ,8,0.5545286506469501,0.78125,2.0 8.0,0.78125,2.0 8.0
-Q291_2,categorical,"Counter({0.0: 809, 1.0: 167, 8.0: 13, 9.0: 1})",3.3203125,3.0,not pessimistic but doesn’t have something to do/wait for (lives day by day),"8,9",2.5878003696857674,1.3671875,8.0 9.0,1.3671875,8.0 9.0
-Q293_2,categorical,"Counter({0.0: 896, 1.0: 80, 8.0: 11, 9.0: 3})",3.3203125,3.0,genenral status of hoplessness or depression,"8,9",2.5878003696857674,1.3671875,8.0 9.0,1.3671875,8.0 9.0
-Q631_2,ordinal,"Counter({0.0: 866, 1.0: 100, 8.0: 15, 2.0: 9})",3.3203125,4.0,Feeling confused,8,2.7726432532347505,1.46484375,8.0,1.46484375,8.0
-Q1211_2,ordinal,"Counter({0.0: 982, 9.0: 3, 1.0: 3, 8.0: 2})",3.3203125,4.0,Baffled by something strange happening,"8,9",0.9242144177449167,0.48828125,8.0 9.0,0.48828125,8.0 9.0
-Q1233_2,ordinal,"Counter({0.0: 984, 9.0: 3, 8.0: 2, 1.0: 1})",3.3203125,4.0,"The participant claims to be farting. (If the answer is positive, evaluate it as ""yes, simple"" or ""yes, severe"")","8,9",0.9242144177449167,0.48828125,8.0 9.0,0.48828125,8.0 9.0
-Q211_2,ordinal,"Counter({0.0: 704, 1.0: 261, 2.0: 21, 8.0: 4})",3.3203125,4.0,depressed mood,8,0.7393715341959335,0.390625,8.0,0.390625,8.0
-Q621_2,ordinal,"Counter({0.0: 822, 1.0: 143, 8.0: 14, 2.0: 11})",3.3203125,4.0,Subjective slowing in thinking.,8,2.5878003696857674,1.3671875,8.0,1.3671875,8.0
-Q731_2,ordinal,"Counter({0.0: 734, 1.0: 226, 2.0: 28, 8.0: 2})",3.3203125,4.0,"Move less than usual.
+WELL, or ….NOT QUITE THE SAME AS, OR …DO NOT QUITE KNOW HOW TO SAY IT.  IT IS NOT THE SAME, BEING IN HOSPITAL AS, or....WORKING. ER….THE JOB IS NOT QUITE THE SAME or… VERY MUCH THE SAME, BUT OF COURSE, IT IS NOT EXACTLY THE SAME.",", 0.0: 0.92578125%%, 9.0: 0.0029296875%%, 1.0: 0.0244140625%%, 2.0: 0.0048828125%%",4.19921875,9,0.5545286506469501,4.0,0.78125,0.78125
+Q1744_2,ordinal,"Circumstantial:  much unnecessary detail, but the object in view at the beginning is ultimately reached.",", 0.0: 0.9365234375%%, 1.0: 0.017578125%%, 9.0: 0.001953125%%, 2.0: 0.00390625%%",4.00390625,9,0.3696857670979667,4.0,0.5859375,0.5859375
+Q1745_2,ordinal,Rambling:  talks in an aimless fashion.  Object in view at the beginning is not reached.,", 0.0: 0.9453125%%, 1.0: 0.009765625%%, 9.0: 0.001953125%%, 2.0: 0.0029296875%%",4.00390625,9,0.3696857670979667,4.0,0.48828125,0.48828125
+Q1743_2,ordinal,"Irrelevance:  whole content of answer may have little to do with the question.  (Do not include wandering or rambling from the topic, or incoherence).",", 0.0: 0.92578125%%, 9.0: 0.0029296875%%, 2.0: 0.005859375%%, 1.0: 0.025390625%%",4.00390625,9,0.5545286506469501,4.0,0.87890625,0.87890625
+Q171_2,categorical,do you have children,", 1.0: 0.7841796875%%, 0.0: 0.177734375%%",3.80859375,,0.0,3.0,,
+Q1031_2,ordinal,It seems from looking at/ listening to the participant that he/she is overly skeptical,", 0.0: 0.931640625%%, 1.0: 0.0283203125%%, 2.0: 0.001953125%%",3.80859375,,0.0,4.0,3.02734375,3.02734375
+Q331_2,ordinal,"seems very nervous, worried, depressed or scared",", 2.0: 0.0869140625%%, 9.0: 0.005859375%%, 0.0: 0.716796875%%, 1.0: 0.15234375%%, 8.0: 0.001953125%%",3.61328125,"8,9",1.478743068391867,6.0,0.78125,0.78125
+Q75_2,ordinal,evaluate: error in the year provided,", 0.0: 0.7578125%%, 1.0: 0.1435546875%%, 2.0: 0.041015625%%, 9.0: 0.005859375%%, 8.0: 0.015625%%",3.61328125,"8,9",4.066543438077634,4.0,2.1484375,2.1484375
+Q1441_2,categorical,The interviewer believes that the participant has a drinking problem.,", 0.0: 0.9306640625%%, 9.0: 0.025390625%%, 1.0: 0.0078125%%",3.61328125,9,4.805914972273566,3.0,,
+IRDISCR_2,boolean,"Interviewer rating: was there any discrepancy between stated birth date and stated age?
+",", 0.0: 0.80859375%%, 1.0: 0.1484375%%, 9.0: 0.0048828125%%, 8.0: 0.001953125%%",3.61328125,,0.0,,,
+Q42_2,categorical,"age is incomplete, irrelevant or no reply",", 0.0: 0.8916015625%%, 1.0: 0.0654296875%%, 9.0: 0.0068359375%%",3.61328125,9,1.2939001848428835,3.0,,
+Q1242_2,ordinal,Hallucinations related to taste,", 0.0: 0.9580078125%%, 9.0: 0.001953125%%, 1.0: 0.00390625%%, 8.0: 0.0009765625%%",3.515625,"8,9",0.5545286506469501,4.0,0.29296875,0.29296875
+Q32_2,categorical,"year of birth is incomplete, irrelevant or no reply",", 1.0: 0.06640625%%, 0.0: 0.890625%%, 9.0: 0.0068359375%%, 8.0: 0.0009765625%%",3.515625,"8,9",1.478743068391867,3.0,,
+Q73_2,categorical,evaluate: the participants says/points out that he doesn't know the month,", 0.0: 0.8525390625%%, 1.0: 0.099609375%%, 9.0: 0.00390625%%, 8.0: 0.0087890625%%",3.515625,"8,9",2.4029574861367835,3.0,,
+Q1041_2,ordinal,"There is a clear sense of excessive guilt or self-blame over past and present mistakes (do not affirm positively any self-blame that is justified or simple.)
+  ",", 0.0: 0.9228515625%%, 1.0: 0.0341796875%%, 9.0: 0.0009765625%%, 8.0: 0.00390625%%, 2.0: 0.0029296875%%",3.515625,"8,9",0.9242144177449167,4.0,0.78125,0.78125
+IRERROR_2,categorical,"Interviewer's evaluation: In the Direction or Memory section, did you record ""Yes"" (an indication of memory errors) or ""Not applicable"" frequently during the interview? Or was there a lot of ""not applicable"" in the rest of the interview? """,", 0.0: 0.5400390625%%, 9.0: 0.0009765625%%, 1.0: 0.423828125%%",3.515625,9,0.18484288354898332,3.0,,
+Q1365_2,categorical,"Barbituric acid analgesic (Allobarbital, Amobarbital, Aprobarbital)",", 0.0: 0.94921875%%, 1.0: 0.015625%%",3.515625,,0.0,3.0,,
+Q1191_2,ordinal, Note ** has a clear difficulty in focusing on the interview.,", 0.0: 0.8896484375%%, 1.0: 0.056640625%%, 2.0: 0.0166015625%%, 9.0: 0.0009765625%%, 8.0: 0.0009765625%%",3.515625,"8,9",0.3696857670979667,4.0,1.85546875,1.85546875
+Q1061_2,ordinal,Participant is angry with him/herself,", 0.0: 0.8466796875%%, 1.0: 0.10546875%%, 8.0: 0.0029296875%%, 2.0: 0.009765625%%",3.515625,8,0.5545286506469501,4.0,1.26953125,1.26953125
+Q71_2,ordinal,evaluate: there is an error in the date of the week provided,", 0.0: 0.767578125%%, 1.0: 0.123046875%%, 9.0: 0.00390625%%, 8.0: 0.01953125%%, 2.0: 0.05078125%%",3.515625,"8,9",4.436229205175602,4.0,2.34375,2.34375
+Q531_2,categorical,Elderly has lost 10 pounds (4.5 kilograms) or more in the past three months,", 0.0: 0.91015625%%, 1.0: 0.0498046875%%, 9.0: 0.001953125%%, 8.0: 0.0029296875%%",3.515625,"8,9",0.9242144177449167,3.0,,
+Q512_2,ordinal,increased appetite,", 1.0: 0.029296875%%, 2.0: 0.0009765625%%, 0.0: 0.931640625%%, 8.0: 0.0029296875%%",3.515625,8,0.5545286506469501,4.0,0.390625,0.390625
+Q72_2,ordinal,evaluate: there is an error in the month provided ,", 0.0: 0.80078125%%, 1.0: 0.1083984375%%, 2.0: 0.03125%%, 8.0: 0.021484375%%, 9.0: 0.0029296875%%",3.515625,"8,9",4.621072088724584,4.0,2.44140625,2.44140625
+Q532_2,categorical,Elderly has lost 10 pounds (4.5 kilograms) or more during the past month,", 0.0: 0.9462890625%%, 9.0: 0.001953125%%, 1.0: 0.013671875%%, 8.0: 0.0029296875%%",3.515625,"8,9",0.9242144177449167,3.0,,
+Q1371_2,categorical,Drink alcohol (in one form or another) at least five days a week,", 0.0: 0.9521484375%%, 9.0: 0.0009765625%%, 1.0: 0.0126953125%%",3.41796875,9,0.18484288354898332,3.0,,
+Q371_2,categorical,does not remember well the interviewer's name (little mistakes are tolerable) ,", 0.0: 0.8017578125%%, 1.0: 0.1611328125%%, 9.0: 0.0029296875%%",3.41796875,9,0.5545286506469501,3.0,,
+Q1364_2,categorical,Other psychosocial stimulants (eg amphetamines / pep pills),", 0.0: 0.9658203125%%",3.41796875,,0.0,3.0,,
+Q1363_2,categorical,"Medicinal cannabis (cannabis, marijuana)",", 0.0: 0.9658203125%%",3.41796875,,0.0,3.0,,
+Q381_2,categorical,does not remember the name of the current prime minister (if wrong give the right answer: Tamam Salam) ,", 1.0: 0.271484375%%, 0.0: 0.689453125%%, 8.0: 0.0029296875%%, 9.0: 0.001953125%%",3.41796875,"8,9",0.9242144177449167,3.0,,
+Q533_2,categorical,Elderly gained 10 pounds (4.5 kilograms) or more during the past month,", 0.0: 0.9462890625%%, 9.0: 0.001953125%%, 1.0: 0.015625%%, 8.0: 0.001953125%%",3.41796875,"8,9",0.7393715341959335,3.0,,
+Q491_2,ordinal,difficulty to relax,", 0.0: 0.828125%%, 1.0: 0.1240234375%%, 2.0: 0.005859375%%, 8.0: 0.0068359375%%, 9.0: 0.0009765625%%",3.41796875,"8,9",1.478743068391867,4.0,0.78125,0.78125
+Q722_2,ordinal,It exists most days for at least two weeks,", 0.0: 0.791015625%%, 8.0: 0.005859375%%, 1.0: 0.1455078125%%, 2.0: 0.0234375%%",3.41796875,8,1.1090573012939002,4.0,0.5859375,0.5859375
+Q1042_2,ordinal,The participant mentions to regret something from the past which may or may not be justified.,", 0.0: 0.9228515625%%, 2.0: 0.00390625%%, 1.0: 0.0380859375%%, 8.0: 0.0009765625%%",3.41796875,8,0.18484288354898332,4.0,0.48828125,0.48828125
+Q301_2,categorical,already contemplated the idea of suicide or wished for death,", 0.0: 0.927734375%%, 8.0: 0.0029296875%%, 1.0: 0.03515625%%",3.41796875,8,0.5545286506469501,3.0,,
+Q911_2,ordinal,Has this feeling,", 0.0: 0.947265625%%, 1.0: 0.0126953125%%, 2.0: 0.001953125%%, 8.0: 0.0029296875%%, 9.0: 0.0009765625%%",3.41796875,"8,9",0.7393715341959335,4.0,0.5859375,0.5859375
+Q1182_2,ordinal,"Difficulty with some forms of concentration most days, at least for two weeks.",", 0.0: 0.8515625%%, 1.0: 0.0693359375%%, 9.0: 0.0126953125%%, 8.0: 0.0107421875%%, 2.0: 0.021484375%%",3.41796875,"8,9",4.436229205175602,4.0,2.34375,2.34375
+Q1381_2,categorical,He/she does this,", 0.0: 0.939453125%%, 9.0: 0.0234375%%, 1.0: 0.0029296875%%",3.41796875,9,4.436229205175602,3.0,,
+Q1391_2,ordinal,The participant admits that it is a problem,", 0.0: 0.931640625%%, 1.0: 0.0029296875%%, 9.0: 0.03125%%",3.41796875,9,5.914972273567468,4.0,3.125,3.125
+Q1043_2,ordinal,Feeling excessive guilt or lack of self-value most days for at least two weeks.,", 0.0: 0.9443359375%%, 1.0: 0.01171875%%, 8.0: 0.0068359375%%, 2.0: 0.0029296875%%",3.41796875,8,1.2939001848428835,4.0,0.68359375,0.68359375
+Q1251_2,ordinal,Indicates that he/she hears voices in the absence of any external influence that can be defined,", 0.0: 0.9599609375%%, 1.0: 0.00390625%%, 2.0: 0.0009765625%%, 8.0: 0.0009765625%%",3.41796875,8,0.18484288354898332,4.0,0.5859375,0.5859375
+Q1044_2,ordinal,The imaginary feeling of lack of self-value and guilt most days.,", 0.0: 0.951171875%%, 8.0: 0.0068359375%%, 1.0: 0.0078125%%",3.41796875,8,1.2939001848428835,4.0,0.68359375,0.68359375
+Q642_2,ordinal,"A feeling of confused thinking or hesitation is present for most days, for at least two weeks.",", 0.0: 0.9013671875%%, 2.0: 0.0068359375%%, 1.0: 0.044921875%%, 8.0: 0.01171875%%, 9.0: 0.0009765625%%",3.41796875,"8,9",2.4029574861367835,4.0,1.26953125,1.26953125
+Q1362_2,categorical,"Heliosis (eg LSD, Mescaline)",", 0.0: 0.9658203125%%",3.41796875,,0.0,3.0,,
+Q74_2,categorical,"evaluate: at least some answers are incomplete, irrelevant or no answer",", 0.0: 0.8505859375%%, 1.0: 0.103515625%%, 8.0: 0.009765625%%, 9.0: 0.001953125%%",3.41796875,"8,9",2.2181146025878005,3.0,,
+Q1181_2,ordinal,He/she has difficulty focusing on reading.,", 0.0: 0.7001953125%%, 9.0: 0.1630859375%%, 1.0: 0.0732421875%%, 8.0: 0.009765625%%, 2.0: 0.01953125%%",3.41796875,"8,9",32.71719038817005,4.0,0.0,0.0
+Q1368_2,categorical,Other,", 0.0: 0.939453125%%, 1.0: 0.0263671875%%",3.41796875,,0.0,3.0,,
+Q1271_2,ordinal,Says that he/she is testing visual perception in the absence of any identifiable external stimulus.,", 0.0: 0.95703125%%, 9.0: 0.0009765625%%, 1.0: 0.005859375%%, 2.0: 0.0009765625%%, 8.0: 0.0009765625%%",3.41796875,"8,9",0.3696857670979667,4.0,0.29296875,0.29296875
+Q1367_2,categorical,"Nerves tranquilizers (Valium, Liberium, etc.)",", 0.0: 0.904296875%%, 1.0: 0.0615234375%%",3.41796875,,0.0,3.0,,
+Q1201_2,ordinal,Describes an abnormal sensory experience,", 0.0: 0.9521484375%%, 8.0: 0.0029296875%%, 1.0: 0.0087890625%%, 2.0: 0.0009765625%%, 9.0: 0.0009765625%%",3.41796875,"8,9",0.7393715341959335,4.0,0.48828125,0.48828125
+Q281_2,categorical,felt life not worth living,", 0.0: 0.814453125%%, 8.0: 0.0107421875%%, 2.0: 0.013671875%%, 1.0: 0.126953125%%",3.41796875,8,2.033271719038817,4.0,,
+Q541_2,categorical,Problem sleeping or change in the sleeping pattern,", 0.0: 0.7822265625%%, 1.0: 0.181640625%%, 8.0: 0.001953125%%",3.41796875,8,0.3696857670979667,3.0,,
+Q101_2,categorical,"give a positive answer and a short explanation like ""you examined me yesterday"". This answer is wrong",", 1.0: 0.1396484375%%, 0.0: 0.8154296875%%, 9.0: 0.0087890625%%, 8.0: 0.001953125%%",3.41796875,"8,9",2.033271719038817,3.0,,
+Q76_2,categorical,evaluate: the participant says/points out that he doesn't know the year,", 0.0: 0.82421875%%, 9.0: 0.00390625%%, 1.0: 0.1337890625%%, 8.0: 0.00390625%%",3.41796875,"8,9",1.478743068391867,3.0,,
+Q1141_2,ordinal,Participant did not enjoy almost anything,", 1.0: 0.060546875%%, 0.0: 0.8828125%%, 9.0: 0.0048828125%%, 8.0: 0.00390625%%, 2.0: 0.013671875%%",3.41796875,"8,9",1.6635859519408502,4.0,0.87890625,0.87890625
+Q102_2,categorical,mentioned wrong events (not imaginary and not specific in a wrong way),", 0.0: 0.943359375%%, 1.0: 0.017578125%%, 9.0: 0.0048828125%%",3.41796875,9,0.9242144177449167,3.0,,
+Q901_2,ordinal,Feels disturbed,", 0.0: 0.90625%%, 2.0: 0.0205078125%%, 1.0: 0.037109375%%, 9.0: 0.0009765625%%, 8.0: 0.001953125%%",3.3203125,"8,9",0.5545286506469501,4.0,2.34375,2.34375
+Q502_2,ordinal,"describes the headacke as the product of nervous tension: tension around the head, tension, stiff neck",", 0.0: 0.859375%%, 1.0: 0.0927734375%%, 9.0: 0.005859375%%, 2.0: 0.005859375%%, 8.0: 0.0029296875%%",3.3203125,"8,9",1.6635859519408502,4.0,0.87890625,0.87890625
+Q1131_2,ordinal,Participant has less interests in the past month than he/she usually has,", 0.0: 0.8994140625%%, 1.0: 0.0517578125%%, 2.0: 0.0087890625%%, 8.0: 0.0048828125%%, 9.0: 0.001953125%%",3.3203125,"8,9",1.2939001848428835,4.0,0.68359375,0.68359375
+Q451_2,ordinal,"the elderly seems week, skinny, sick or disabled",", 0.0: 0.892578125%%, 1.0: 0.0654296875%%, 2.0: 0.0087890625%%",3.3203125,,0.0,4.0,0.87890625,0.87890625
+Q711_2,ordinal,"From his/her point of view, the elderly is slower in motion",", 0.0: 0.5859375%%, 1.0: 0.3369140625%%, 8.0: 0.0009765625%%, 2.0: 0.04296875%%",3.3203125,8,0.18484288354898332,4.0,0.09765625,0.09765625
+Q1231_2,ordinal,Hallucinations have to do with smell,", 0.0: 0.9609375%%, 1.0: 0.00390625%%, 9.0: 0.0009765625%%, 8.0: 0.0009765625%%",3.3203125,"8,9",0.3696857670979667,4.0,0.1953125,0.1953125
+Q652_2,ordinal,Appears indecisive,", 0.0: 0.8994140625%%, 1.0: 0.0595703125%%, 2.0: 0.0078125%%",3.3203125,,0.0,4.0,6.73828125,6.73828125
+Q643_2,ordinal,The feeling of not coping well with the daily routine.,", 0.0: 0.9189453125%%, 1.0: 0.0341796875%%, 9.0: 0.001953125%%, 8.0: 0.0087890625%%, 2.0: 0.0029296875%%",3.3203125,"8,9",2.033271719038817,4.0,1.07421875,1.07421875
+Q1221_2,ordinal,Physical hallucinations,", 0.0: 0.9609375%%, 8.0: 0.001953125%%, 1.0: 0.0029296875%%, 9.0: 0.0009765625%%",3.3203125,"8,9",0.5545286506469501,4.0,0.29296875,0.29296875
+Q452_2,categorical,"One or more body parts appear paralyzed in whole or in part, or there is a sign of paralysis on one side of the face.",", 0.0: 0.9375%%, 1.0: 0.0283203125%%, 8.0: 0.0009765625%%",3.3203125,8,0.18484288354898332,3.0,,
+Q31_2,categorical,States or indicates by gesture he/she does not know what year he/she was born,", 1.0: 0.0947265625%%, 0.0: 0.865234375%%, 9.0: 0.0048828125%%, 8.0: 0.001953125%%",3.3203125,"8,9",1.2939001848428835,3.0,,
+Q641_2,ordinal,Feels indecisive,", 0.0: 0.8515625%%, 1.0: 0.0947265625%%, 2.0: 0.009765625%%, 8.0: 0.009765625%%, 9.0: 0.0009765625%%",3.3203125,"8,9",2.033271719038817,4.0,1.07421875,1.07421875
+Q1171_2,ordinal,He/she finds it difficult to focus on entertainment material,", 0.0: 0.85546875%%, 9.0: 0.0029296875%%, 2.0: 0.01171875%%, 1.0: 0.091796875%%, 8.0: 0.0048828125%%",3.3203125,"8,9",1.478743068391867,4.0,0.78125,0.78125
+Q611_2,ordinal,"Palpitations (i.e. patient is conscious of his/her heartbeat which is not due to exercise, but usually accompanied by anxiety.",", 0.0: 0.8818359375%%, 1.0: 0.0751953125%%, 2.0: 0.0029296875%%, 8.0: 0.0068359375%%",3.3203125,8,1.2939001848428835,4.0,0.68359375,0.68359375
+Q1241_2,ordinal,"A bad taste, not necessarily due to hallucination, for example, bitter taste. ",", 0.0: 0.9580078125%%, 9.0: 0.001953125%%, 1.0: 0.005859375%%, 8.0: 0.0009765625%%",3.3203125,"8,9",0.5545286506469501,4.0,0.29296875,0.29296875
+Q651_2,ordinal,The elderly seems confused ,", 0.0: 0.9013671875%%, 8.0: 0.0009765625%%, 1.0: 0.052734375%%, 2.0: 0.01171875%%",3.3203125,8,0.18484288354898332,4.0,1.26953125,1.26953125
+Q612_2,ordinal,Trembling or tremulous feeling due to anxiety.,", 0.0: 0.9052734375%%, 1.0: 0.0517578125%%, 2.0: 0.0029296875%%, 8.0: 0.0068359375%%",3.3203125,8,1.2939001848428835,4.0,0.68359375,0.68359375
+Q292_2,categorical,"is pessimistic, doesn’t see a future ahead/ the future is unbearable",", 0.0: 0.8681640625%%, 9.0: 0.001953125%%, 8.0: 0.0107421875%%, 1.0: 0.0859375%%",3.3203125,"8,9",2.4029574861367835,3.0,,
+Q352_2,categorical,forgets were he/she puts stuff,", 0.0: 0.8291015625%%, 1.0: 0.111328125%%, 8.0: 0.005859375%%, 9.0: 0.0009765625%%, 2.0: 0.01953125%%",3.3203125,"8,9",1.2939001848428835,4.0,,
+Q481_2,ordinal,Gets worn out or exhausted during daytime or evening,", 0.0: 0.6533203125%%, 1.0: 0.291015625%%, 2.0: 0.015625%%, 8.0: 0.0068359375%%",3.3203125,8,1.2939001848428835,4.0,0.68359375,0.68359375
+Q1051_2,ordinal,Participant admits to feel annoyed (angry),", 0.0: 0.7705078125%%, 1.0: 0.1826171875%%, 2.0: 0.0107421875%%, 8.0: 0.0029296875%%",3.3203125,8,0.5545286506469501,4.0,0.29296875,0.29296875
+Q1222_2,ordinal,"Illusions that involve sexual sensations, for example, from telepathy, an imaginary lover having sex with the participant during the night, etc.
+(If the answer is positive, evaluate as ""yes, simple"" or  ""yes, severe"").",", 0.0: 0.95703125%%, 8.0: 0.0029296875%%, 1.0: 0.0029296875%%, 9.0: 0.00390625%%",3.3203125,"8,9",1.2939001848428835,4.0,0.68359375,0.68359375
+Q613_2,ordinal,Other physical manifestations of anxiety,", 0.0: 0.9443359375%%, 1.0: 0.0126953125%%, 2.0: 0.0029296875%%, 8.0: 0.0068359375%%",3.3203125,8,1.2939001848428835,4.0,0.68359375,0.68359375
+Q341_2,categorical,difficulties from his/her point of view; the memory problem is a true problem for him/her,", 0.0: 0.6474609375%%, 1.0: 0.2919921875%%, 8.0: 0.0068359375%%, 2.0: 0.0205078125%%",3.3203125,8,1.2939001848428835,4.0,,
+Q221_2,ordinal,Have you cried at all? How often? Has cried:,", 0.0: 0.703125%%, 1.0: 0.2412109375%%, 9.0: 0.001953125%%, 8.0: 0.005859375%%, 2.0: 0.0146484375%%",3.3203125,"8,9",1.478743068391867,4.0,0.78125,0.78125
+Q351_2,categorical,"forgets the names of friends, family or calls them with other names ",", 0.0: 0.87890625%%, 1.0: 0.0732421875%%, 8.0: 0.005859375%%, 2.0: 0.0087890625%%",3.3203125,8,1.1090573012939002,4.0,,
+Q721_2,ordinal,Listlessness or subjective   restriction of energy.,", 0.0: 0.708984375%%, 1.0: 0.2294921875%%, 8.0: 0.00390625%%, 2.0: 0.0244140625%%",3.3203125,8,0.7393715341959335,4.0,0.390625,0.390625
+Q111_2,categorical,observation: the participant speaks without a purpose. Did not get to the point being made,", 0.0: 0.9482421875%%, 9.0: 0.00390625%%, 1.0: 0.0146484375%%",3.3203125,9,0.7393715341959335,3.0,,
+Q511_2,ordinal,loss or decreased appetite ,", 0.0: 0.8828125%%, 2.0: 0.0048828125%%, 1.0: 0.076171875%%, 8.0: 0.0029296875%%",3.3203125,8,0.5545286506469501,4.0,0.78125,0.78125
+Q291_2,categorical,not pessimistic but doesn’t have something to do/wait for (lives day by day),", 0.0: 0.7900390625%%, 1.0: 0.1630859375%%, 8.0: 0.0126953125%%, 9.0: 0.0009765625%%",3.3203125,"8,9",2.5878003696857674,3.0,,
+Q293_2,categorical,genenral status of hoplessness or depression,", 0.0: 0.875%%, 9.0: 0.0029296875%%, 8.0: 0.0107421875%%, 1.0: 0.078125%%",3.3203125,"8,9",2.5878003696857674,3.0,,
+Q631_2,ordinal,Feeling confused,", 0.0: 0.845703125%%, 1.0: 0.09765625%%, 8.0: 0.0146484375%%, 2.0: 0.0087890625%%",3.3203125,8,2.7726432532347505,4.0,1.46484375,1.46484375
+Q1211_2,ordinal,Baffled by something strange happening,", 0.0: 0.958984375%%, 9.0: 0.0029296875%%, 8.0: 0.001953125%%, 1.0: 0.0029296875%%",3.3203125,"8,9",0.9242144177449167,4.0,0.48828125,0.48828125
+Q1233_2,ordinal,"The participant claims to be farting. (If the answer is positive, evaluate it as ""yes, simple"" or ""yes, severe"")",", 0.0: 0.9609375%%, 9.0: 0.0029296875%%, 8.0: 0.001953125%%, 1.0: 0.0009765625%%",3.3203125,"8,9",0.9242144177449167,4.0,0.48828125,0.48828125
+Q211_2,ordinal,depressed mood,", 0.0: 0.6875%%, 1.0: 0.2548828125%%, 2.0: 0.0205078125%%, 8.0: 0.00390625%%",3.3203125,8,0.7393715341959335,4.0,0.390625,0.390625
+Q621_2,ordinal,Subjective slowing in thinking.,", 0.0: 0.802734375%%, 8.0: 0.013671875%%, 1.0: 0.1396484375%%, 2.0: 0.0107421875%%",3.3203125,8,2.5878003696857674,4.0,1.3671875,1.3671875
+Q731_2,ordinal,"Move less than usual.
 
-",8,0.3696857670979667,0.1953125,8.0,0.1953125,8.0
-Q361_2,categorical,"Counter({0.0: 693, 1.0: 285, 8.0: 10, 9.0: 2})",3.3203125,3.0,needs to make more efforts to remember things,"8,9",2.2181146025878005,1.171875,8.0 9.0,1.171875,8.0 9.0
-IRHOME_2,categorical,"Counter({1.0: 683, 0.0: 306, 9.0: 1})",3.3203125,3.0,did the interview take place in the participant's home,9,0.18484288354898332,0.09765625,9.0,0.09765625,9.0
-Q644_2,ordinal,"Counter({0.0: 934, 1.0: 39, 8.0: 9, 2.0: 5, 9.0: 3})",3.3203125,4.0,Lack of self-confidence,"8,9",2.2181146025878005,1.171875,8.0 9.0,1.171875,8.0 9.0
-Q11_2,categorical,"Counter({0.0: 871, 1.0: 114, 9.0: 5})",3.3203125,3.0,Cannot repeat interviewer’s name correctly even after three repetitions,9,0.9242144177449167,0.48828125,9.0,0.48828125,9.0
-Q294_2,categorical,"Counter({0.0: 871, 1.0: 102, 8.0: 11, 9.0: 6})",3.3203125,3.0,the circumstances of the participant explains the pessimism,"8,9",3.1423290203327165,1.66015625,8.0 9.0,1.66015625,8.0 9.0
-Q931_2,categorical,"Counter({0.0: 949, 1.0: 36, 8.0: 4, 9.0: 1})",3.3203125,3.0,There are people like this,"8,9",0.9242144177449167,0.48828125,8.0 9.0,0.48828125,8.0 9.0
-Q1232_2,ordinal,"Counter({0.0: 983, 1.0: 3, 9.0: 2, 8.0: 2})",3.3203125,4.0,"Hallucinations are related to smell, for example the participant smells an odor or gas in the room, etc. which is not really present. (If the answer is positive, evaluate it as ""yes, simple"" or ""yes, severe"")","8,9",0.7393715341959335,0.390625,8.0 9.0,0.390625,8.0 9.0
-Q21_2,categorical,"Counter({0.0: 829, 9.0: 81, 1.0: 78, 8.0: 2})",3.3203125,3.0,Cannot spell both his/her first and last names correctly,"8,9",15.341959334565619,7.91015625,9.0,7.91015625,9.0
-Q191_2,ordinal,"Counter({0.0: 852, 1.0: 125, 2.0: 11, 8.0: 2})",3.3203125,4.0,subjective fear or anxiety our of proportion to the event if any that provoked the feeling.,8,0.3696857670979667,1.26953125,2.0 8.0,1.26953125,2.0 8.0
-Q1052_2,ordinal,"Counter({0.0: 927, 1.0: 51, 2.0: 9, 8.0: 3})",3.3203125,4.0,Feeling disturbed for most of the days during at least two weeks last month,8,0.5545286506469501,1.171875,2.0 8.0,1.171875,2.0 8.0
-Q391_2,categorical,"Counter({0.0: 689, 1.0: 297, 9.0: 3, 8.0: 1})",3.3203125,3.0,does not remember the name of the past prime minister (if wrong give the right answer: Najib Mikati) ,"8,9",0.7393715341959335,0.390625,8.0 9.0,0.390625,8.0 9.0
-Q401_2,ordinal,"Counter({0.0: 718, 1.0: 225, 2.0: 47})",3.3203125,4.0,the interviewer's believes that the elderly has a memory problem,,0.0,0.0,,0.0,
-Q41_2,categorical,"Counter({0.0: 910, 1.0: 74, 9.0: 6})",3.3203125,3.0,States or indicates by  gesture he/she does not know how old he/she is,9,1.1090573012939002,0.5859375,9.0,0.5859375,9.0
-Q501_2,ordinal,"Counter({0.0: 827, 1.0: 150, 2.0: 8, 8.0: 3, 9.0: 2})",3.3203125,4.0,describe the headache,"8,9",0.9242144177449167,0.48828125,8.0 9.0,0.48828125,8.0 9.0
-Q1751_2,ordinal,"Counter({0.0: 978, 1.0: 10, 2.0: 3, 9.0: 2})",3.02734375,4.0,"rate of speech: Extremely rapid speech, but can be interrupted.",9,0.3696857670979667,0.48828125,2.0 9.0,0.48828125,2.0 9.0
-Q1752_2,ordinal,"Counter({0.0: 985, 1.0: 5, 9.0: 2, 2.0: 1})",3.02734375,4.0,"Pressure of speech:  too many words, rapid and keeps resisting interruption.",9,0.3696857670979667,0.29296875,2.0 9.0,0.29296875,2.0 9.0
-Q18020_2,categorical,"Counter({0.0: 992, 1.0: 3, 9.0: 1})",2.734375,3.0,Other.,9,0.18484288354898332,0.390625,1.0 9.0,0.390625,1.0 9.0
-Q1671_2,ordinal,"Counter({0.0: 982, 1.0: 12, 9.0: 2})",2.734375,4.0,"UNCO-OPERATIVE, ETC.: Tries to start an argument.",9,0.3696857670979667,0.1953125,9.0,0.1953125,9.0
-Q1781_2,ordinal,"Counter({0.0: 835, 1.0: 137, 2.0: 23, 9.0: 1})",2.734375,4.0,Judgment: Problems with memory are more prominent than problems with thinking i.e. more difficulty with remembering things than working things out.,9,0.18484288354898332,2.34375,2.0 9.0,2.34375,2.0 9.0
-Q1661_2,ordinal,"Counter({0.0: 987, 1.0: 7, 9.0: 2})",2.734375,4.0,"OTHER AFFECT: Facetious:  silly jokes, flippant remarks.",9,0.3696857670979667,0.1953125,9.0,0.1953125,9.0
-Q1811_2,ordinal,"Counter({0.0: 901, 1.0: 50, 2.0: 35, 3.0: 10})",2.734375,4.0,Rating,,0.0,4.39453125,2.0 3.0,4.39453125,2.0 3.0
-Q1705_2,ordinal,"Counter({0.0: 976, 9.0: 8, 1.0: 8, 2.0: 5})",2.63671875,4.0,Obvious evidence of paralysis or stroke.,9,1.478743068391867,0.78125,9.0,0.78125,9.0
-Q17922_2,categorical,"Counter({0.0: 992, 9.0: 2, 1.0: 2, 8.0: 1})",2.63671875,3.0,"Patient appears generally sleepy, but does not actually fall asleep.","8,9",0.5545286506469501,0.29296875,8.0 9.0,0.29296875,8.0 9.0
-Q1704_2,ordinal,"Counter({0.0: 949, 1.0: 26, 9.0: 21, 2.0: 1})",2.63671875,4.0,Obvious abnormality of walking.,9,3.8817005545286505,2.05078125,9.0,2.05078125,9.0
-Q1796_2,categorical,"Counter({0.0: 989, 1.0: 6, 9.0: 2})",2.63671875,3.0,Deafness - severe.,9,0.3696857670979667,0.1953125,9.0,0.1953125,9.0
-Q18014_2,categorical,"Counter({0.0: 985, 1.0: 11, 9.0: 1})",2.63671875,3.0,Withdrawal or apparent apathy possibly due to indifference OR to deep depression.,9,0.18484288354898332,1.171875,1.0 9.0,1.171875,1.0 9.0
-Q1755_2,ordinal,"Counter({0.0: 966, 1.0: 29, 9.0: 1, 2.0: 1})",2.63671875,4.0,Long pauses before replying a characteristic feature.,9,0.18484288354898332,0.1953125,2.0 9.0,0.1953125,2.0 9.0
-Q1641_2,ordinal,"Counter({0.0: 962, 1.0: 27, 2.0: 6, 9.0: 2})",2.63671875,4.0,Uncontrollable short bouts of crying.,9,0.3696857670979667,0.78125,2.0 9.0,0.78125,2.0 9.0
-Q1803_2,categorical,"Counter({0.0: 980, 1.0: 16, 9.0: 1})",2.63671875,3.0,"Incoherent in clear consciousness (e.g. not sleepy) i.e. irrelevant or bizarre or random answers, disjointed ideas, gibberish, neologisms, perseveration, flight of ideas.",9,0.18484288354898332,1.66015625,1.0 9.0,1.66015625,1.0 9.0
-Q1802_2,categorical,"Counter({0.0: 952, 1.0: 44, 9.0: 1})",2.63671875,3.0,"Memory defect (dubious) e.g. hazy recall, unconvincingly claims not to remember, makes little attempt to recall.",9,0.18484288354898332,0.09765625,9.0,0.09765625,9.0
-Q1703_2,ordinal,"Counter({0.0: 986, 1.0: 8, 9.0: 2, 2.0: 1})",2.63671875,4.0,"Parkinsonian movements (characteristic repeated regular tremor of the hands at rest.  Described as 'pill rolling', as if the interviewee was rolling a pill between the thumb and finger tips).",9,0.3696857670979667,0.29296875,2.0 9.0,0.29296875,2.0 9.0
-Q17911_2,categorical,"Counter({0.0: 994, 9.0: 2, 1.0: 1})",2.63671875,3.0,Other.,9,0.3696857670979667,0.1953125,9.0,0.1953125,9.0
-Q18019_2,categorical,"Counter({0.0: 978, 1.0: 18, 9.0: 1})",2.63671875,3.0,Distractibility (interviewee's attention is frequently drawn to trivial and irrelevant events in the environment).,9,0.18484288354898332,1.85546875,1.0 9.0,1.85546875,1.0 9.0
-Q17912_2,categorical,"Counter({0.0: 988, 1.0: 7, 9.0: 2})",2.63671875,3.0,Low intelligence.,9,0.3696857670979667,0.1953125,9.0,0.1953125,9.0
-Q17920_2,categorical,"Counter({0.0: 990, 1.0: 5, 9.0: 2})",2.63671875,3.0,"Interview conditions unfavourable, e.g. noisy, distracting environment.",9,0.3696857670979667,0.1953125,9.0,0.1953125,9.0
-Q17910_2,categorical,"Counter({0.0: 988, 1.0: 7, 9.0: 2})",2.63671875,3.0,Weakness - severe.,9,0.3696857670979667,0.1953125,9.0,0.1953125,9.0
-Q1791_2,categorical,"Counter({0.0: 992, 1.0: 3, 8.0: 1, 9.0: 1})",2.63671875,3.0,Foreign language e.g. poor command of language in which interview is conducted interpreter required.,"8,9",0.3696857670979667,0.1953125,8.0 9.0,0.1953125,8.0 9.0
-Q1741_2,ordinal,"Counter({0.0: 962, 1.0: 23, 2.0: 9, 9.0: 3})",2.63671875,4.0,Vague quality to speech.  No completion of a thought or idea.,9,0.5545286506469501,1.171875,2.0 9.0,1.171875,2.0 9.0
-Q1771_2,ordinal,"Counter({0.0: 976, 1.0: 12, 2.0: 7, 9.0: 2})",2.63671875,4.0,"Perseveration: Repeats answer inappropriately
+",", 1.0: 0.220703125%%, 0.0: 0.716796875%%, 2.0: 0.02734375%%, 8.0: 0.001953125%%",3.3203125,8,0.3696857670979667,4.0,0.1953125,0.1953125
+Q361_2,categorical,needs to make more efforts to remember things,", 0.0: 0.6767578125%%, 1.0: 0.2783203125%%, 8.0: 0.009765625%%, 9.0: 0.001953125%%",3.3203125,"8,9",2.2181146025878005,3.0,,
+IRHOME_2,categorical,did the interview take place in the participant's home,", 1.0: 0.6669921875%%, 0.0: 0.298828125%%, 9.0: 0.0009765625%%",3.3203125,9,0.18484288354898332,3.0,,
+Q644_2,ordinal,Lack of self-confidence,", 0.0: 0.912109375%%, 9.0: 0.0029296875%%, 1.0: 0.0380859375%%, 8.0: 0.0087890625%%, 2.0: 0.0048828125%%",3.3203125,"8,9",2.2181146025878005,4.0,1.171875,1.171875
+Q11_2,categorical,Cannot repeat interviewer’s name correctly even after three repetitions,", 1.0: 0.111328125%%, 0.0: 0.8505859375%%, 9.0: 0.0048828125%%",3.3203125,9,0.9242144177449167,3.0,,
+Q294_2,categorical,the circumstances of the participant explains the pessimism,", 0.0: 0.8505859375%%, 9.0: 0.005859375%%, 8.0: 0.0107421875%%, 1.0: 0.099609375%%",3.3203125,"8,9",3.1423290203327165,3.0,,
+Q931_2,categorical,There are people like this,", 1.0: 0.03515625%%, 0.0: 0.9267578125%%, 8.0: 0.00390625%%, 9.0: 0.0009765625%%",3.3203125,"8,9",0.9242144177449167,3.0,,
+Q1232_2,ordinal,"Hallucinations are related to smell, for example the participant smells an odor or gas in the room, etc. which is not really present. (If the answer is positive, evaluate it as ""yes, simple"" or ""yes, severe"")",", 0.0: 0.9599609375%%, 9.0: 0.001953125%%, 1.0: 0.0029296875%%, 8.0: 0.001953125%%",3.3203125,"8,9",0.7393715341959335,4.0,0.390625,0.390625
+Q21_2,categorical,Cannot spell both his/her first and last names correctly,", 1.0: 0.076171875%%, 0.0: 0.8095703125%%, 9.0: 0.0791015625%%, 8.0: 0.001953125%%",3.3203125,"8,9",15.341959334565619,3.0,,
+Q191_2,ordinal,subjective fear or anxiety our of proportion to the event if any that provoked the feeling.,", 0.0: 0.83203125%%, 1.0: 0.1220703125%%, 2.0: 0.0107421875%%, 8.0: 0.001953125%%",3.3203125,8,0.3696857670979667,4.0,1.26953125,1.26953125
+Q1052_2,ordinal,Feeling disturbed for most of the days during at least two weeks last month,", 0.0: 0.9052734375%%, 1.0: 0.0498046875%%, 2.0: 0.0087890625%%, 8.0: 0.0029296875%%",3.3203125,8,0.5545286506469501,4.0,1.171875,1.171875
+Q391_2,categorical,does not remember the name of the past prime minister (if wrong give the right answer: Najib Mikati) ,", 1.0: 0.2900390625%%, 0.0: 0.6728515625%%, 8.0: 0.0009765625%%, 9.0: 0.0029296875%%",3.3203125,"8,9",0.7393715341959335,3.0,,
+Q401_2,ordinal,the interviewer's believes that the elderly has a memory problem,", 0.0: 0.701171875%%, 1.0: 0.2197265625%%, 2.0: 0.0458984375%%",3.3203125,,0.0,4.0,0.0,0.0
+Q41_2,categorical,States or indicates by  gesture he/she does not know how old he/she is,", 0.0: 0.888671875%%, 1.0: 0.072265625%%, 9.0: 0.005859375%%",3.3203125,9,1.1090573012939002,3.0,,
+Q501_2,ordinal,describe the headache,", 0.0: 0.8076171875%%, 1.0: 0.146484375%%, 9.0: 0.001953125%%, 2.0: 0.0078125%%, 8.0: 0.0029296875%%",3.3203125,"8,9",0.9242144177449167,4.0,0.48828125,0.48828125
+Q1751_2,ordinal,"rate of speech: Extremely rapid speech, but can be interrupted.",", 0.0: 0.955078125%%, 1.0: 0.009765625%%, 9.0: 0.001953125%%, 2.0: 0.0029296875%%",3.02734375,9,0.3696857670979667,4.0,0.48828125,0.48828125
+Q1752_2,ordinal,"Pressure of speech:  too many words, rapid and keeps resisting interruption.",", 0.0: 0.9619140625%%, 1.0: 0.0048828125%%, 9.0: 0.001953125%%, 2.0: 0.0009765625%%",3.02734375,9,0.3696857670979667,4.0,0.29296875,0.29296875
+Q18020_2,categorical,Other.,", 0.0: 0.96875%%, 9.0: 0.0009765625%%, 1.0: 0.0029296875%%",2.734375,9,0.18484288354898332,3.0,,
+Q1671_2,ordinal,"UNCO-OPERATIVE, ETC.: Tries to start an argument.",", 0.0: 0.958984375%%, 9.0: 0.001953125%%, 1.0: 0.01171875%%",2.734375,9,0.3696857670979667,4.0,0.1953125,0.1953125
+Q1781_2,ordinal,Judgment: Problems with memory are more prominent than problems with thinking i.e. more difficulty with remembering things than working things out.,", 0.0: 0.8154296875%%, 1.0: 0.1337890625%%, 9.0: 0.0009765625%%, 2.0: 0.0224609375%%",2.734375,9,0.18484288354898332,4.0,2.34375,2.34375
+Q1661_2,ordinal,"OTHER AFFECT: Facetious:  silly jokes, flippant remarks.",", 0.0: 0.9638671875%%, 9.0: 0.001953125%%, 1.0: 0.0068359375%%",2.734375,9,0.3696857670979667,4.0,0.1953125,0.1953125
+Q1811_2,ordinal,Rating,", 0.0: 0.8798828125%%, 3.0: 0.009765625%%, 2.0: 0.0341796875%%, 1.0: 0.048828125%%",2.734375,,0.0,4.0,4.39453125,4.39453125
+Q1705_2,ordinal,Obvious evidence of paralysis or stroke.,", 0.0: 0.953125%%, 9.0: 0.0078125%%, 1.0: 0.0078125%%, 2.0: 0.0048828125%%",2.63671875,9,1.478743068391867,4.0,0.78125,0.78125
+Q17922_2,categorical,"Patient appears generally sleepy, but does not actually fall asleep.",", 0.0: 0.96875%%, 8.0: 0.0009765625%%, 9.0: 0.001953125%%, 1.0: 0.001953125%%",2.63671875,"8,9",0.5545286506469501,3.0,,
+Q1704_2,ordinal,Obvious abnormality of walking.,", 0.0: 0.9267578125%%, 9.0: 0.0205078125%%, 1.0: 0.025390625%%, 2.0: 0.0009765625%%",2.63671875,9,3.8817005545286505,4.0,2.05078125,2.05078125
+Q1796_2,categorical,Deafness - severe.,", 0.0: 0.9658203125%%, 9.0: 0.001953125%%, 1.0: 0.005859375%%",2.63671875,9,0.3696857670979667,3.0,,
+Q18014_2,categorical,Withdrawal or apparent apathy possibly due to indifference OR to deep depression.,", 0.0: 0.9619140625%%, 9.0: 0.0009765625%%, 1.0: 0.0107421875%%",2.63671875,9,0.18484288354898332,3.0,,
+Q1755_2,ordinal,Long pauses before replying a characteristic feature.,", 0.0: 0.943359375%%, 1.0: 0.0283203125%%, 9.0: 0.0009765625%%, 2.0: 0.0009765625%%",2.63671875,9,0.18484288354898332,4.0,0.1953125,0.1953125
+Q1641_2,ordinal,Uncontrollable short bouts of crying.,", 0.0: 0.939453125%%, 9.0: 0.001953125%%, 1.0: 0.0263671875%%, 2.0: 0.005859375%%",2.63671875,9,0.3696857670979667,4.0,0.78125,0.78125
+Q1803_2,categorical,"Incoherent in clear consciousness (e.g. not sleepy) i.e. irrelevant or bizarre or random answers, disjointed ideas, gibberish, neologisms, perseveration, flight of ideas.",", 0.0: 0.95703125%%, 9.0: 0.0009765625%%, 1.0: 0.015625%%",2.63671875,9,0.18484288354898332,3.0,,
+Q1802_2,categorical,"Memory defect (dubious) e.g. hazy recall, unconvincingly claims not to remember, makes little attempt to recall.",", 0.0: 0.9296875%%, 9.0: 0.0009765625%%, 1.0: 0.04296875%%",2.63671875,9,0.18484288354898332,3.0,,
+Q1703_2,ordinal,"Parkinsonian movements (characteristic repeated regular tremor of the hands at rest.  Described as 'pill rolling', as if the interviewee was rolling a pill between the thumb and finger tips).",", 0.0: 0.962890625%%, 9.0: 0.001953125%%, 2.0: 0.0009765625%%, 1.0: 0.0078125%%",2.63671875,9,0.3696857670979667,4.0,0.29296875,0.29296875
+Q17911_2,categorical,Other.,", 0.0: 0.970703125%%, 9.0: 0.001953125%%, 1.0: 0.0009765625%%",2.63671875,9,0.3696857670979667,3.0,,
+Q18019_2,categorical,Distractibility (interviewee's attention is frequently drawn to trivial and irrelevant events in the environment).,", 0.0: 0.955078125%%, 1.0: 0.017578125%%, 9.0: 0.0009765625%%",2.63671875,9,0.18484288354898332,3.0,,
+Q17912_2,categorical,Low intelligence.,", 0.0: 0.96484375%%, 1.0: 0.0068359375%%, 9.0: 0.001953125%%",2.63671875,9,0.3696857670979667,3.0,,
+Q17920_2,categorical,"Interview conditions unfavourable, e.g. noisy, distracting environment.",", 0.0: 0.966796875%%, 9.0: 0.001953125%%, 1.0: 0.0048828125%%",2.63671875,9,0.3696857670979667,3.0,,
+Q17910_2,categorical,Weakness - severe.,", 0.0: 0.96484375%%, 9.0: 0.001953125%%, 1.0: 0.0068359375%%",2.63671875,9,0.3696857670979667,3.0,,
+Q1791_2,categorical,Foreign language e.g. poor command of language in which interview is conducted interpreter required.,", 0.0: 0.96875%%, 1.0: 0.0029296875%%, 8.0: 0.0009765625%%, 9.0: 0.0009765625%%",2.63671875,"8,9",0.3696857670979667,3.0,,
+Q1741_2,ordinal,Vague quality to speech.  No completion of a thought or idea.,", 0.0: 0.939453125%%, 1.0: 0.0224609375%%, 9.0: 0.0029296875%%, 2.0: 0.0087890625%%",2.63671875,9,0.5545286506469501,4.0,1.171875,1.171875
+Q1771_2,ordinal,"Perseveration: Repeats answer inappropriately
 e.g.      Question:  Weekday?
             Response: Tuesday
             Questions:  Month?
-            Response:   Tuesday",9,0.3696857670979667,0.87890625,2.0 9.0,0.87890625,2.0 9.0
-Q1702_2,ordinal,"Counter({0.0: 990, 1.0: 5, 9.0: 2})",2.63671875,4.0,"Athetoid movements (continuous, purposeless, slow writhing movements of tongue, jaws or limbs).",9,0.3696857670979667,0.1953125,9.0,0.1953125,9.0
-Q1701_2,ordinal,"Counter({0.0: 992, 1.0: 3, 9.0: 2})",2.63671875,4.0,"Choreiform movements (continuous, purposeless, jerky, involuntary movements of the head, body or limbs while at rest)",9,0.3696857670979667,0.1953125,9.0,0.1953125,9.0
-Q1652_2,ordinal,"Counter({0.0: 988, 1.0: 7, 9.0: 2})",2.63671875,4.0,Infectious gaiety.,9,0.3696857670979667,0.1953125,9.0,0.1953125,9.0
-Q1651_2,ordinal,"Counter({0.0: 988, 1.0: 7, 9.0: 2})",2.63671875,4.0,"Elated, euphoric, even though perhaps changing to irritability or depression.",9,0.3696857670979667,0.1953125,9.0,0.1953125,9.0
-Q1642_2,ordinal,"Counter({0.0: 987, 1.0: 8, 9.0: 2})",2.63671875,4.0,Uncontrollable short bouts of laughing.,9,0.3696857670979667,0.1953125,9.0,0.1953125,9.0
-Q1801_2,categorical,"Counter({0.0: 944, 1.0: 51, 9.0: 1, 8.0: 1})",2.63671875,3.0,"Memory defect (clear-cut) e.g. disorientated, gross memory loss, clear-cut blackout, etc.","8,9",0.3696857670979667,0.1953125,8.0 9.0,0.1953125,8.0 9.0
-Q1634_2,ordinal,"Counter({0.0: 975, 1.0: 15, 2.0: 5, 9.0: 2})",2.63671875,4.0,No appropriate emotion shown when delusional or normal material is discussed which would usually bring out emotion,9,0.3696857670979667,0.68359375,2.0 9.0,0.68359375,2.0 9.0
-Q1635_2,ordinal,"Counter({0.0: 964, 1.0: 24, 2.0: 7, 9.0: 2})",2.63671875,4.0,"Uniform blunting of mood, 
-whatever the tone of conversation (indifference, apathetic acceptance).",9,0.3696857670979667,0.87890625,2.0 9.0,0.87890625,2.0 9.0
-Q1804_2,categorical,"Counter({0.0: 994, 1.0: 2, 9.0: 1})",2.63671875,3.0,Keeps referring to delusions or hallucinations.,9,0.18484288354898332,0.29296875,1.0 9.0,0.29296875,1.0 9.0
-Q1805_2,categorical,"Counter({0.0: 996, 9.0: 1})",2.63671875,3.0,Incorporates interviewer in delusions.,9,0.18484288354898332,0.09765625,9.0,0.09765625,9.0
-Q1807_2,categorical,"Counter({0.0: 996, 9.0: 1})",2.63671875,3.0,Speaks coherently to self; speaks to voices.,9,0.18484288354898332,0.09765625,9.0,0.09765625,9.0
-Q1753_2,ordinal,"Counter({0.0: 981, 1.0: 10, 2.0: 4, 9.0: 2})",2.63671875,4.0,"Flight of ideas:  one idea suggests another in rapid succession, so that patient is soon far from the point, e.g.
+            Response:   Tuesday",", 0.0: 0.953125%%, 9.0: 0.001953125%%, 2.0: 0.0068359375%%, 1.0: 0.01171875%%",2.63671875,9,0.3696857670979667,4.0,0.87890625,0.87890625
+Q1702_2,ordinal,"Athetoid movements (continuous, purposeless, slow writhing movements of tongue, jaws or limbs).",", 0.0: 0.966796875%%, 9.0: 0.001953125%%, 1.0: 0.0048828125%%",2.63671875,9,0.3696857670979667,4.0,0.1953125,0.1953125
+Q1701_2,ordinal,"Choreiform movements (continuous, purposeless, jerky, involuntary movements of the head, body or limbs while at rest)",", 0.0: 0.96875%%, 9.0: 0.001953125%%, 1.0: 0.0029296875%%",2.63671875,9,0.3696857670979667,4.0,0.1953125,0.1953125
+Q1652_2,ordinal,Infectious gaiety.,", 0.0: 0.96484375%%, 1.0: 0.0068359375%%, 9.0: 0.001953125%%",2.63671875,9,0.3696857670979667,4.0,0.1953125,0.1953125
+Q1651_2,ordinal,"Elated, euphoric, even though perhaps changing to irritability or depression.",", 0.0: 0.96484375%%, 1.0: 0.0068359375%%, 9.0: 0.001953125%%",2.63671875,9,0.3696857670979667,4.0,0.1953125,0.1953125
+Q1642_2,ordinal,Uncontrollable short bouts of laughing.,", 0.0: 0.9638671875%%, 9.0: 0.001953125%%, 1.0: 0.0078125%%",2.63671875,9,0.3696857670979667,4.0,0.1953125,0.1953125
+Q1801_2,categorical,"Memory defect (clear-cut) e.g. disorientated, gross memory loss, clear-cut blackout, etc.",", 0.0: 0.921875%%, 9.0: 0.0009765625%%, 8.0: 0.0009765625%%, 1.0: 0.0498046875%%",2.63671875,"8,9",0.3696857670979667,3.0,,
+Q1634_2,ordinal,No appropriate emotion shown when delusional or normal material is discussed which would usually bring out emotion,", 0.0: 0.9521484375%%, 9.0: 0.001953125%%, 2.0: 0.0048828125%%, 1.0: 0.0146484375%%",2.63671875,9,0.3696857670979667,4.0,0.68359375,0.68359375
+Q1635_2,ordinal,"Uniform blunting of mood, 
+whatever the tone of conversation (indifference, apathetic acceptance).",", 0.0: 0.94140625%%, 1.0: 0.0234375%%, 9.0: 0.001953125%%, 2.0: 0.0068359375%%",2.63671875,9,0.3696857670979667,4.0,0.87890625,0.87890625
+Q1804_2,categorical,Keeps referring to delusions or hallucinations.,", 0.0: 0.970703125%%, 9.0: 0.0009765625%%, 1.0: 0.001953125%%",2.63671875,9,0.18484288354898332,3.0,,
+Q1805_2,categorical,Incorporates interviewer in delusions.,", 0.0: 0.97265625%%, 9.0: 0.0009765625%%",2.63671875,9,0.18484288354898332,3.0,,
+Q1807_2,categorical,Speaks coherently to self; speaks to voices.,", 0.0: 0.97265625%%, 9.0: 0.0009765625%%",2.63671875,9,0.18484288354898332,3.0,,
+Q1753_2,ordinal,"Flight of ideas:  one idea suggests another in rapid succession, so that patient is soon far from the point, e.g.
 Question:  
 WHAT IS THE TIME?
 Response:  
 IT IS THREE O'CLOCK BY MY H. SAMUEL EVERRIGHT GOLD WATCH, BUT IT IS NOT ON THE GOLD STANDARD, WAVE 
-THE FLAGS A LIFE ON THE BRINY WAVE.",9,0.3696857670979667,0.5859375,2.0 9.0,0.5859375,2.0 9.0
-Q18016_2,categorical,"Counter({0.0: 984, 1.0: 12, 9.0: 1})",2.63671875,3.0,Lack of insight.  Total denial of symptoms or illness.,9,0.18484288354898332,1.26953125,1.0 9.0,1.26953125,1.0 9.0
-Q18015_2,categorical,"Counter({0.0: 979, 1.0: 17, 9.0: 1})",2.63671875,3.0,"Over talkative, but not pressure of speech.",9,0.18484288354898332,1.7578125,1.0 9.0,1.7578125,1.0 9.0
-Q1795_2,categorical,"Counter({0.0: 988, 1.0: 7, 9.0: 2})",2.63671875,3.0,Dysarthria (due to speech organs) e.g. coarse tremor of the tongue or paralysis of vocal chords.,9,0.3696857670979667,0.1953125,9.0,0.1953125,9.0
-Q1706_2,ordinal,"Counter({0.0: 952, 1.0: 32, 9.0: 7, 2.0: 6})",2.63671875,4.0,"Obvious evidence of physical abnormality of the legs like arthritis, amputation, or gross swelling.",9,1.2939001848428835,0.68359375,9.0,0.68359375,9.0
-Q18017_2,categorical,"Counter({0.0: 988, 1.0: 8, 9.0: 1})",2.63671875,3.0,"Excited or agitated or obviously elated (cannot sit still, or frequently interrupts with fatuous jokes or remarks).",9,0.18484288354898332,0.87890625,1.0 9.0,0.87890625,1.0 9.0
-Q18018_2,categorical,"Counter({0.0: 992, 1.0: 4, 9.0: 1})",2.63671875,3.0,Pre-occupied with inner experiences which are not vocalised (unspecified pre-occupation).,9,0.18484288354898332,0.48828125,1.0 9.0,0.48828125,1.0 9.0
-Q1806_2,categorical,"Counter({0.0: 995, 9.0: 1, 1.0: 1})",2.63671875,3.0,Posturing (maintains an unusual or odd position of any part of the body repeatedly or for several minutes at a time) bizarre behaviour.,9,0.18484288354898332,0.1953125,1.0 9.0,0.1953125,1.0 9.0
-Q18012_2,categorical,"Counter({0.0: 995, 9.0: 1, 1.0: 1})",2.63671875,3.0,Mutism not specified as due to physical defect.,9,0.18484288354898332,0.1953125,1.0 9.0,0.1953125,1.0 9.0
-Q1754_2,ordinal,"Counter({0.0: 963, 1.0: 32, 9.0: 2})",2.63671875,4.0,Speech very slow.  Distinct pauses between words.,9,0.3696857670979667,0.1953125,9.0,0.1953125,9.0
-Q1808_2,categorical,"Counter({0.0: 990, 1.0: 6, 9.0: 1})",2.63671875,3.0,Cries uncontrollably.,9,0.18484288354898332,0.68359375,1.0 9.0,0.68359375,1.0 9.0
-Q1792_2,categorical,"Counter({0.0: 987, 1.0: 8, 9.0: 2})",2.63671875,3.0,Unclear dialect or accent.,9,0.3696857670979667,0.1953125,9.0,0.1953125,9.0
-Q1633_2,ordinal,"Counter({0.0: 964, 1.0: 28, 2.0: 4, 9.0: 1})",2.63671875,4.0,No gesture accompanying speech,9,0.18484288354898332,0.48828125,2.0 9.0,0.48828125,2.0 9.0
-Q1632_2,ordinal,"Counter({0.0: 941, 1.0: 49, 2.0: 6, 9.0: 1})",2.63671875,4.0,Monotonous VOICE.  No play of expression in conversation.,9,0.18484288354898332,0.68359375,2.0 9.0,0.68359375,2.0 9.0
-Q1631_2,ordinal,"Counter({0.0: 953, 1.0: 38, 2.0: 5, 9.0: 1})",2.63671875,4.0,Face without expression. Does not show expressions during conversation.,9,0.18484288354898332,0.5859375,2.0 9.0,0.5859375,2.0 9.0
-Q18013_2,categorical,"Counter({0.0: 994, 1.0: 2, 9.0: 1})",2.63671875,3.0,Suspicious.  Negativistic (clearly does the opposite of what the interviewer asks or expects).,9,0.18484288354898332,0.29296875,1.0 9.0,0.29296875,1.0 9.0
-Q18011_2,categorical,"Counter({0.0: 996, 9.0: 1})",2.63671875,3.0,Other.,9,0.18484288354898332,0.09765625,9.0,0.09765625,9.0
-Q18010_2,categorical,"Counter({0.0: 994, 1.0: 2, 9.0: 1})",2.63671875,3.0,Gross suspiciousness.,9,0.18484288354898332,0.29296875,1.0 9.0,0.29296875,1.0 9.0
-Q1809_2,categorical,"Counter({0.0: 995, 9.0: 1, 1.0: 1})",2.63671875,3.0,"Pressure of speech (cannot be interrupted in the usual manner, talks the interviewer down).",9,0.18484288354898332,0.1953125,1.0 9.0,0.1953125,1.0 9.0
-Q1798_2,categorical,"Counter({0.0: 977, 1.0: 18, 9.0: 2})",2.63671875,3.0,Stuttering.,9,0.3696857670979667,0.1953125,9.0,0.1953125,9.0
-TRIALNO_2,numeric,"Counter({1.0: 472, 3.0: 185, 2.0: 148, 4.0: 106, 5.0: 50, 6.0: 31, 0.0: 4, 8.0: 1, 97.0: 1})",2.5390625,,number of trials needed by participant to remember all 3 words,,0.0,0.09765625,97.0,0.09765625,1.0
-PENTAG_2,categorical,"Counter({0.0: 739, 1.0: 260})",2.44140625,1.0,score of drawing the pentagones,,0.0,0.0,,0.0,
-CIRCLE_2,categorical,"Counter({1.0: 624, 0.0: 375})",2.44140625,1.0,score of drawing the circle,,0.0,0.0,,0.0,
-PAPER_2,numeric,"Counter({3.0: 783, 2.0: 166, 1.0: 26, 0.0: 24})",2.44140625,,score of paper folding/ handling,,0.0,2.34375,0.0,2.34375,0.0
-STORY_2,ordinal,"Counter({6.0: 245, 4.0: 237, 3.0: 209, 5.0: 143, 2.0: 87, 0.0: 47, 1.0: 31})",2.44140625,,score of repeating story,,0.0,0.0,,0.0,
-HAMMER_2,categorical,"Counter({1.0: 975, 0.0: 25})",2.34375,1.0,what is the function of a hammer,,0.0,2.44140625,0.0,2.44140625,0.0
-SHOULD_2,categorical,"Counter({1.0: 983, 0.0: 17})",2.34375,1.0,what is this called (interviewer shows a shoulder),,0.0,1.66015625,0.0,1.66015625,0.0
-ELBOW_2,categorical,"Counter({1.0: 981, 0.0: 19})",2.34375,1.0,what is this called (interviewer shows an elbow),,0.0,1.85546875,0.0,1.85546875,0.0
-LEARN1_2,numeric,"Counter({5.0: 198, 3.0: 177, 4.0: 176, 6.0: 129, 2.0: 93, 0.0: 74, 7.0: 65, 1.0: 54, 8.0: 14, 9.0: 4, 10.0: 4, 66.0: 3, 33.0: 2, 777.0: 1, 35.0: 1, 76.0: 1, 53.0: 1, 56.0: 1, 22.0: 1, 24.0: 1})",2.34375,10.0,please repeat the words you can remember (first trial),"22,24,33,35,53,56,66,76,777",2.2181146025878005,0.09765625,777.0,0.09765625,1.0
-Chin_2,categorical,"Counter({1.0: 985, 0.0: 15})",2.34375,1.0,what is this called (interviewer shows a chin),,0.0,1.46484375,0.0,1.46484375,0.0
-WATCH_2,categorical,"Counter({1.0: 992, 0.0: 8})",2.34375,1.0,what is this called (interviewer shows a watch),,0.0,0.78125,0.0,0.78125,0.0
-SHOES_2,categorical,"Counter({1.0: 986, 0.0: 14})",2.34375,1.0,what is this called (interviewer shows a shoe),,0.0,1.3671875,0.0,1.3671875,0.0
-CHAIR_2,categorical,"Counter({1.0: 986, 0.0: 14})",2.34375,1.0,what is this called (interviewer shows a chair),,0.0,1.3671875,0.0,1.3671875,0.0
-ANIMALS_2,categorical,"Counter({1.0: 967, 0.0: 33})",2.34375,1.0,participant was able to mention the names of the animals during the one minute provided,"3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,26,27,28,30,32,34,35,40",136.22920517560073,3.22265625,0.0,1.07421875,26.0 27.0 28.0 30.0 32.0 34.0 35.0 40.0
-PENCIL_2,categorical,"Counter({1.0: 992, 0.0: 8})",2.34375,1.0,what is this called (interviewer shows a pencil),,0.0,0.78125,0.0,0.78125,0.0
-LONGMEM_2,categorical,"Counter({1.0: 580, 0.0: 420})",2.34375,1.0,what was the name of the elected president who was assasinated during the israeli occupation in 1982,,0.0,0.0,,0.0,
-REPEAT_2,categorical,"Counter({1.0: 738, 0.0: 262})",2.34375,1.0,please repeat this proverb (it might be difficult to pronounce for some),,0.0,0.0,,0.0,
-NRECALL_2,categorical,"Counter({1.0: 806, 0.0: 194})",2.34375,1.0,do you remember my name (interviewer's),,0.0,0.0,,0.0,
-WORDIMM_2,categorical,"Counter({3.0: 703, 2.0: 193, 1.0: 60, 0.0: 44})",2.34375,3.0,"3-word list recall (boat, house, fish)",,0.0,4.296875,0.0,4.296875,0.0
-TOWN_2,categorical,"Counter({1.0: 950, 0.0: 50})",2.34375,1.0,what is the name of this city/village you are currently living in,,0.0,4.8828125,0.0,4.8828125,0.0
-CHIEF_2,categorical,"Counter({1.0: 731, 0.0: 269})",2.34375,1.0,what is the name of the current president,,0.0,0.0,,0.0,
-STREET_2,categorical,"Counter({1.0: 889, 0.0: 111})",2.34375,1.0,give me the names of 2 streets near your home,,0.0,0.0,,0.0,
-STORE_2,categorical,"Counter({1.0: 916, 0.0: 84})",2.34375,1.0,where is the local market shop located,,0.0,8.203125,0.0,8.203125,0.0
-ADDRESS_2,categorical,"Counter({1.0: 956, 0.0: 44})",2.34375,1.0,what is your homeaddress,,0.0,4.296875,0.0,4.296875,0.0
-WORDDEL_2,categorical,"Counter({3.0: 317, 2.0: 283, 0.0: 270, 1.0: 130})",2.34375,3.0,do you remember the 3 word-list,,0.0,0.0,,0.0,
-MONTH_2,categorical,"Counter({1.0: 836, 0.0: 164})",2.34375,1.0,In what month are we,,0.0,0.0,,0.0,
-YEAR_2,categorical,"Counter({1.0: 755, 0.0: 245})",2.34375,1.0,in what year are we,,0.0,0.0,,0.0,
-SEASON_2,categorical,"Counter({1.0: 862, 0.0: 138})",2.34375,1.0,in what season are we,,0.0,0.0,,0.0,
-NOD_2,categorical,"Counter({1.0: 980, 0.0: 20})",2.34375,1.0,please move your head as if you are giving a nod,,0.0,1.953125,0.0,1.953125,0.0
-POINT_2,categorical,"Counter({1.0: 980, 0.0: 20})",2.34375,1.0,can you point out to the window and the door in this room,,0.0,1.953125,0.0,1.953125,0.0
-RECALL_2,numeric,"Counter({5.0: 182, 6.0: 171, 4.0: 166, 0.0: 118, 7.0: 111, 3.0: 108, 2.0: 67, 1.0: 36, 8.0: 25, 9.0: 10, 10.0: 4, 31.0: 1, 83.0: 1})",2.34375,,number of words remembered correctly,,0.0,0.1953125,31.0 83.0,0.1953125,0.3734939759036145 1.0
-CHEMIST_2,categorical,"Counter({1.0: 970, 0.0: 30})",2.34375,1.0,where do we go to buy medicine/drugs,,0.0,2.9296875,0.0,2.9296875,0.0
-PRAY_2,categorical,"Counter({1.0: 980, 0.0: 20})",2.34375,1.0,what do people do at the church/ mosque,,0.0,1.953125,0.0,1.953125,0.0
-LEARN2_2,numeric,"Counter({5.0: 220, 6.0: 217, 4.0: 147, 7.0: 105, 3.0: 104, 0.0: 65, 2.0: 62, 8.0: 46, 1.0: 18, 9.0: 8, 76.0: 2, 88.0: 1, 688.0: 1, 66.0: 1, 54.0: 1, 45.0: 1, 10.0: 1})",2.34375,10.0,please repeat the words you can remember (second trial),"45,54,66,76,88,688",1.2939001848428835,0.390625,76.0 88.0 688.0,0.390625,0.11046511627906977 0.12790697674418605 1.0
-LEARN3_2,numeric,"Counter({6.0: 211, 5.0: 180, 7.0: 164, 4.0: 120, 8.0: 89, 3.0: 67, 0.0: 64, 2.0: 53, 9.0: 26, 10.0: 14, 1.0: 12})",2.34375,10.0,please repeat the words you can remember (third trial),,0.0,0.0,,0.0,
-NAME_2,categorical,"Counter({1.0: 934, 0.0: 66})",2.34375,1.0,my name is x can you please repeat it,,0.0,6.4453125,0.0,6.4453125,0.0
-REASON_2,categorical,"Counter({0.0: 861, 1.0: 135, 98.0: 10, 99.0: 1})",1.66015625,2.0,Have you noticed a change in his/her ability to think and reason?,"98,99",2.033271719038817,1.07421875,98.0 99.0,1.07421875,98.0 99.0
-MISTAKE_2,boolean,"Counter({0.0: 930, 1.0: 77})",1.66015625,,Does he/she ever mistake you (or other family or friends) for someone else? ,,0.0,7.51953125,1.0,7.51953125,1.0
-DRESS_2,ordinal,"Counter({0.0: 948, 3.0: 34, 1.0: 22, 2.0: 5})",1.46484375,5.0,Does he/she have difficulty dressing?,,0.0,3.80859375,2.0 3.0,3.80859375,2.0 3.0
-LOSTIN_2,ordinal,"Counter({0.0: 975, 1.0: 16, 0.5: 10, 2.0: 9})",1.3671875,5.0,"Does he/she get lost at home, e.g finding the toilet?",,0.0,2.44140625,1.0 2.0,2.44140625,1.0 2.0
-TOILET_2,ordinal,"Counter({0.0: 982, 3.0: 15, 1.0: 9, 2.0: 5})",1.26953125,4.0,Does he/she have difficulty using the toilet? Does he/she wet or soil him/herself?,,0.0,1.953125,2.0 3.0,1.953125,2.0 3.0
-LASTSEE_2,ordinal,"Counter({0.0: 856, 1.0: 67, 2.0: 48, 0.5: 34, 0.0001: 6})",1.26953125,5.0,Does he/she forget when he/she last saw you?,,0.0,4.6875,2.0,4.6875,2.0
-PAST_2,ordinal,"Counter({0.0: 877, 1.0: 68, 2.0: 37, 0.5: 26, 0.0001: 3})",1.26953125,5.0,Does he/she tend to talk about what happened long ago rather than the present?,,0.0,3.61328125,2.0,3.61328125,2.0
-LASTDAY_2,ordinal,"Counter({0.0: 825, 1.0: 102, 2.0: 55, 0.5: 27, 0.0001: 2})",1.26953125,5.0,Does he/she forget what happened the day before?,,0.0,5.37109375,2.0,5.37109375,2.0
-MENTAL_2,ordinal,"Counter({0.0: 879, 1.0: 95, 0.0001: 38})",1.171875,2.0,Has there been a general decline in his/her mental functioning?  ,,0.0,9.27734375,1.0,9.27734375,1.0
-KEPT_2,ordinal,"Counter({0.0: 701, 1.0: 198, 0.5: 64, 2.0: 47, 0.0001: 2})",1.171875,5.0,Does he/she forget where things are usually kept?,,0.0,4.58984375,2.0,4.58984375,2.0
-MUDDLED_2,categorical,"Counter({0.0: 836, 1.0: 174, 98.0: 1, 99.0: 1})",1.171875,2.0,Does his/her thinking ever seem muddled?                    ,"98,99",0.3696857670979667,0.1953125,98.0 99.0,0.1953125,98.0 99.0
-MEMORY_2,categorical,"Counter({0.0: 728, 1.0: 279, 98.0: 5})",1.171875,2.0,"We all have slight difficulties in remembering things as we get older, but has this been a particular problem for him/her?",98,0.9242144177449167,0.48828125,98.0,0.48828125,98.0
-LOSTOUT_2,ordinal,"Counter({0.0: 957, 1.0: 27, 2.0: 18, 0.5: 9, 99.0: 1})",1.171875,5.0,Does he/she get lost in the community/road?,99,0.18484288354898332,0.09765625,99.0,0.09765625,99.0
-MONEY_2,ordinal,"Counter({0.0: 872, 2.0: 64, 1.0: 57, 0.5: 13, 0.0001: 5, 99.0: 1})",1.171875,3.0,Has there been a change in his/her ability to handle money?,99,0.18484288354898332,0.09765625,99.0,0.09765625,99.0
-HOBBY_2,categorical,"Counter({0.0: 877, 1.0: 126, 98.0: 7, 99.0: 2})",1.171875,2.0,"Has there been a loss of a special skill or hobby he/she could manage before? 
-","98,99",1.6635859519408502,0.87890625,98.0 99.0,0.87890625,98.0 99.0
-ACTIV_2,ordinal,"Counter({0.0: 736, 1.0: 259, 0.0001: 16, 99.0: 1})",1.171875,2.0,"Have you seen a change in his/her daily activities in the past several years? 
-",99,0.18484288354898332,0.09765625,99.0,0.09765625,99.0
-WORDFIND_2,ordinal,"Counter({0.0: 916, 1.0: 58, 0.5: 17, 2.0: 17, 0.0001: 4})",1.171875,5.0,When speaking does he/she have difficulty saying the right words?,,0.0,1.66015625,2.0,1.66015625,2.0
-CONVERS_2,ordinal,"Counter({0.0: 832, 1.0: 104, 0.5: 37, 2.0: 31, 0.0001: 8})",1.171875,5.0,Does he/she forget what he/she wanted to say in the middle of the conversation?,,0.0,3.02734375,2.0,3.02734375,2.0
-CHANGE_2,ordinal,"Counter({0.0: 908, 1.0: 54, 0.5: 23, 2.0: 16, 0.0001: 11})",1.171875,5.0,does he/she have difficulty in adjusting to change in her daily routine?,,0.0,1.5625,2.0,1.5625,2.0
-WORDWRG_2,ordinal,"Counter({0.0: 941, 1.0: 46, 2.0: 15, 0.5: 8, 0.0001: 2})",1.171875,5.0,Does he/she use the wrong words?,,0.0,1.46484375,2.0,1.46484375,2.0
-PUT_2,ordinal,"Counter({0.0: 581, 1.0: 281, 0.5: 79, 2.0: 71})",1.171875,5.0,Does he/she forget where he/she has put things?,,0.0,0.0,,0.0,
-ORIENT_2,ordinal,"Counter({0.0: 958, 1.0: 26, 2.0: 20, 0.5: 8})",1.171875,5.0,Does he/she forget where he/she is?,,0.0,1.953125,2.0,1.953125,2.0
-FEED_2,ordinal,"Counter({0.0: 979, 1.0: 18, 3.0: 11, 2.0: 3, 0.0001: 1})",1.171875,4.0,Does he/she have difficulty feeding him/herself? ,,0.0,1.3671875,2.0 3.0,1.3671875,2.0 3.0
-CHORES_2,ordinal,"Counter({0.0: 908, 0.5: 40, 1.0: 40, 2.0: 24})",1.171875,5.0,"Does he/she have difficulty performing household chores that he/she is used to do, such as preparing food or boiling a pot of tea?",,0.0,2.34375,2.0,2.34375,2.0
-FRDNAME_2,ordinal,"Counter({0.0: 841, 1.0: 102, 2.0: 38, 0.5: 27, 0.0001: 4})",1.171875,5.0,Does he/she forget the names of friends?,,0.0,3.7109375,2.0,3.7109375,2.0
-FAMNAME_2,ordinal,"Counter({0.0: 940, 1.0: 40, 2.0: 18, 0.5: 12, 0.0001: 2})",1.171875,5.0,Does he/she forget the names of members of the family?,,0.0,1.7578125,2.0,1.7578125,2.0
+THE FLAGS A LIFE ON THE BRINY WAVE.",", 0.0: 0.9580078125%%, 1.0: 0.009765625%%, 9.0: 0.001953125%%, 2.0: 0.00390625%%",2.63671875,9,0.3696857670979667,4.0,0.5859375,0.5859375
+Q18016_2,categorical,Lack of insight.  Total denial of symptoms or illness.,", 0.0: 0.9609375%%, 9.0: 0.0009765625%%, 1.0: 0.01171875%%",2.63671875,9,0.18484288354898332,3.0,,
+Q18015_2,categorical,"Over talkative, but not pressure of speech.",", 0.0: 0.9560546875%%, 1.0: 0.0166015625%%, 9.0: 0.0009765625%%",2.63671875,9,0.18484288354898332,3.0,,
+Q1795_2,categorical,Dysarthria (due to speech organs) e.g. coarse tremor of the tongue or paralysis of vocal chords.,", 0.0: 0.96484375%%, 9.0: 0.001953125%%, 1.0: 0.0068359375%%",2.63671875,9,0.3696857670979667,3.0,,
+Q1706_2,ordinal,"Obvious evidence of physical abnormality of the legs like arthritis, amputation, or gross swelling.",", 0.0: 0.9296875%%, 1.0: 0.03125%%, 9.0: 0.0068359375%%, 2.0: 0.005859375%%",2.63671875,9,1.2939001848428835,4.0,0.68359375,0.68359375
+Q18017_2,categorical,"Excited or agitated or obviously elated (cannot sit still, or frequently interrupts with fatuous jokes or remarks).",", 0.0: 0.96484375%%, 9.0: 0.0009765625%%, 1.0: 0.0078125%%",2.63671875,9,0.18484288354898332,3.0,,
+Q18018_2,categorical,Pre-occupied with inner experiences which are not vocalised (unspecified pre-occupation).,", 0.0: 0.96875%%, 9.0: 0.0009765625%%, 1.0: 0.00390625%%",2.63671875,9,0.18484288354898332,3.0,,
+Q1806_2,categorical,Posturing (maintains an unusual or odd position of any part of the body repeatedly or for several minutes at a time) bizarre behaviour.,", 0.0: 0.9716796875%%, 9.0: 0.0009765625%%, 1.0: 0.0009765625%%",2.63671875,9,0.18484288354898332,3.0,,
+Q18012_2,categorical,Mutism not specified as due to physical defect.,", 0.0: 0.9716796875%%, 9.0: 0.0009765625%%, 1.0: 0.0009765625%%",2.63671875,9,0.18484288354898332,3.0,,
+Q1754_2,ordinal,Speech very slow.  Distinct pauses between words.,", 0.0: 0.9404296875%%, 9.0: 0.001953125%%, 1.0: 0.03125%%",2.63671875,9,0.3696857670979667,4.0,0.1953125,0.1953125
+Q1808_2,categorical,Cries uncontrollably.,", 0.0: 0.966796875%%, 9.0: 0.0009765625%%, 1.0: 0.005859375%%",2.63671875,9,0.18484288354898332,3.0,,
+Q1792_2,categorical,Unclear dialect or accent.,", 0.0: 0.9638671875%%, 9.0: 0.001953125%%, 1.0: 0.0078125%%",2.63671875,9,0.3696857670979667,3.0,,
+Q1633_2,ordinal,No gesture accompanying speech,", 0.0: 0.94140625%%, 1.0: 0.02734375%%, 9.0: 0.0009765625%%, 2.0: 0.00390625%%",2.63671875,9,0.18484288354898332,4.0,0.48828125,0.48828125
+Q1632_2,ordinal,Monotonous VOICE.  No play of expression in conversation.,", 0.0: 0.9189453125%%, 1.0: 0.0478515625%%, 9.0: 0.0009765625%%, 2.0: 0.005859375%%",2.63671875,9,0.18484288354898332,4.0,0.68359375,0.68359375
+Q1631_2,ordinal,Face without expression. Does not show expressions during conversation.,", 0.0: 0.9306640625%%, 9.0: 0.0009765625%%, 1.0: 0.037109375%%, 2.0: 0.0048828125%%",2.63671875,9,0.18484288354898332,4.0,0.5859375,0.5859375
+Q18013_2,categorical,Suspicious.  Negativistic (clearly does the opposite of what the interviewer asks or expects).,", 0.0: 0.970703125%%, 1.0: 0.001953125%%, 9.0: 0.0009765625%%",2.63671875,9,0.18484288354898332,3.0,,
+Q18011_2,categorical,Other.,", 0.0: 0.97265625%%, 9.0: 0.0009765625%%",2.63671875,9,0.18484288354898332,3.0,,
+Q18010_2,categorical,Gross suspiciousness.,", 0.0: 0.970703125%%, 9.0: 0.0009765625%%, 1.0: 0.001953125%%",2.63671875,9,0.18484288354898332,3.0,,
+Q1809_2,categorical,"Pressure of speech (cannot be interrupted in the usual manner, talks the interviewer down).",", 0.0: 0.9716796875%%, 9.0: 0.0009765625%%, 1.0: 0.0009765625%%",2.63671875,9,0.18484288354898332,3.0,,
+Q1798_2,categorical,Stuttering.,", 0.0: 0.9541015625%%, 9.0: 0.001953125%%, 1.0: 0.017578125%%",2.63671875,9,0.3696857670979667,3.0,,
+TRIALNO_2,numeric,number of trials needed by participant to remember all 3 words,", 8.0: 0.0009765625%%, 3.0: 0.1806640625%%, 2.0: 0.14453125%%, 1.0: 0.4609375%%, 97.0: 0.0009765625%%, 0.0: 0.00390625%%, 4.0: 0.103515625%%, 6.0: 0.0302734375%%, 5.0: 0.048828125%%",2.5390625,,0.0,,0.09765625,0.09765625
+PENTAG_2,categorical,score of drawing the pentagones,", 0.0: 0.7216796875%%, 1.0: 0.25390625%%",2.44140625,,0.0,1.0,,
+CIRCLE_2,categorical,score of drawing the circle,", 1.0: 0.609375%%, 0.0: 0.3662109375%%",2.44140625,,0.0,1.0,,
+PAPER_2,numeric,score of paper folding/ handling,", 3.0: 0.7646484375%%, 2.0: 0.162109375%%, 0.0: 0.0234375%%, 1.0: 0.025390625%%",2.44140625,,0.0,,2.34375,2.34375
+STORY_2,ordinal,score of repeating story,", 6.0: 0.2392578125%%, 5.0: 0.1396484375%%, 2.0: 0.0849609375%%, 1.0: 0.0302734375%%, 4.0: 0.2314453125%%, 3.0: 0.2041015625%%, 0.0: 0.0458984375%%",2.44140625,,0.0,,0.0,0.0
+HAMMER_2,categorical,what is the function of a hammer,", 1.0: 0.9521484375%%, 0.0: 0.0244140625%%",2.34375,,0.0,1.0,,
+SHOULD_2,categorical,what is this called (interviewer shows a shoulder),", 1.0: 0.9599609375%%, 0.0: 0.0166015625%%",2.34375,,0.0,1.0,,
+ELBOW_2,categorical,what is this called (interviewer shows an elbow),", 1.0: 0.9580078125%%, 0.0: 0.0185546875%%",2.34375,,0.0,1.0,,
+LEARN1_2,numeric,please repeat the words you can remember (first trial),", 7.0: 0.0634765625%%, 777.0: 0.0009765625%%, 66.0: 0.0029296875%%, 8.0: 0.013671875%%, 3.0: 0.1728515625%%, 6.0: 0.1259765625%%, 4.0: 0.171875%%, 5.0: 0.193359375%%, 35.0: 0.0009765625%%, 0.0: 0.072265625%%, 1.0: 0.052734375%%, 2.0: 0.0908203125%%, 33.0: 0.001953125%%, 9.0: 0.00390625%%, 76.0: 0.0009765625%%, 53.0: 0.0009765625%%, 56.0: 0.0009765625%%, 22.0: 0.0009765625%%, 24.0: 0.0009765625%%, 10.0: 0.00390625%%",2.34375,"22,24,33,35,53,56,66,76,777",2.2181146025878005,10.0,0.09765625,0.09765625
+Chin_2,categorical,what is this called (interviewer shows a chin),", 1.0: 0.9619140625%%, 0.0: 0.0146484375%%",2.34375,,0.0,1.0,,
+WATCH_2,categorical,what is this called (interviewer shows a watch),", 1.0: 0.96875%%, 0.0: 0.0078125%%",2.34375,,0.0,1.0,,
+SHOES_2,categorical,what is this called (interviewer shows a shoe),", 1.0: 0.962890625%%, 0.0: 0.013671875%%",2.34375,,0.0,1.0,,
+CHAIR_2,categorical,what is this called (interviewer shows a chair),", 1.0: 0.962890625%%, 0.0: 0.013671875%%",2.34375,,0.0,1.0,,
+ANIMALS_2,categorical,participant was able to mention the names of the animals during the one minute provided,", 0.0: 0.0322265625%%, 1.0: 0.2109375%%, 13.0: 0.01953125%%, 21.0: 0.0068359375%%, 35.0: 0.001953125%%, 15.0: 0.029296875%%, 27.0: 0.001953125%%, 20.0: 0.0126953125%%, 16.0: 0.0205078125%%, 7.0: 0.0517578125%%, 19.0: 0.015625%%, 17.0: 0.013671875%%, 14.0: 0.017578125%%, 5.0: 0.0771484375%%, 8.0: 0.0712890625%%, 12.0: 0.048828125%%, 6.0: 0.1142578125%%, 9.0: 0.0400390625%%, 3.0: 0.0185546875%%, 22.0: 0.005859375%%, 10.0: 0.0703125%%, 2.0: 0.013671875%%, 11.0: 0.01953125%%, 18.0: 0.005859375%%, 4.0: 0.0439453125%%, 24.0: 0.0029296875%%, 34.0: 0.0009765625%%, 23.0: 0.0029296875%%, 28.0: 0.0009765625%%, 32.0: 0.0009765625%%, 40.0: 0.0009765625%%, 30.0: 0.001953125%%, 26.0: 0.0009765625%%",2.34375,"11,12,13,14,15,16,17,18,19,20,21,22,23,24,26,27,28,30,32,34,35,40",43.99260628465805,10.0,,
+PENCIL_2,categorical,what is this called (interviewer shows a pencil),", 1.0: 0.96875%%, 0.0: 0.0078125%%",2.34375,,0.0,1.0,,
+LONGMEM_2,categorical,what was the name of the elected president who was assasinated during the israeli occupation in 1982,", 0.0: 0.41015625%%, 1.0: 0.56640625%%",2.34375,,0.0,1.0,,
+REPEAT_2,categorical,please repeat this proverb (it might be difficult to pronounce for some),", 1.0: 0.720703125%%, 0.0: 0.255859375%%",2.34375,,0.0,1.0,,
+NRECALL_2,categorical,do you remember my name (interviewer's),", 1.0: 0.787109375%%, 0.0: 0.189453125%%",2.34375,,0.0,1.0,,
+WORDIMM_2,categorical,"3-word list recall (boat, house, fish)",", 3.0: 0.6865234375%%, 2.0: 0.1884765625%%, 1.0: 0.05859375%%, 0.0: 0.04296875%%",2.34375,,0.0,3.0,,
+TOWN_2,categorical,what is the name of this city/village you are currently living in,", 1.0: 0.927734375%%, 0.0: 0.048828125%%",2.34375,,0.0,1.0,,
+CHIEF_2,categorical,what is the name of the current president,", 1.0: 0.7138671875%%, 0.0: 0.2626953125%%",2.34375,,0.0,1.0,,
+STREET_2,categorical,give me the names of 2 streets near your home,", 1.0: 0.8681640625%%, 0.0: 0.1083984375%%",2.34375,,0.0,1.0,,
+STORE_2,categorical,where is the local market shop located,", 1.0: 0.89453125%%, 0.0: 0.08203125%%",2.34375,,0.0,1.0,,
+ADDRESS_2,categorical,what is your homeaddress,", 1.0: 0.93359375%%, 0.0: 0.04296875%%",2.34375,,0.0,1.0,,
+WORDDEL_2,categorical,do you remember the 3 word-list,", 3.0: 0.3095703125%%, 2.0: 0.2763671875%%, 1.0: 0.126953125%%, 0.0: 0.263671875%%",2.34375,,0.0,3.0,,
+MONTH_2,categorical,In what month are we,", 1.0: 0.81640625%%, 0.0: 0.16015625%%",2.34375,,0.0,1.0,,
+YEAR_2,categorical,in what year are we,", 1.0: 0.7373046875%%, 0.0: 0.2392578125%%",2.34375,,0.0,1.0,,
+SEASON_2,categorical,in what season are we,", 1.0: 0.841796875%%, 0.0: 0.134765625%%",2.34375,,0.0,1.0,,
+NOD_2,categorical,please move your head as if you are giving a nod,", 1.0: 0.95703125%%, 0.0: 0.01953125%%",2.34375,,0.0,1.0,,
+POINT_2,categorical,can you point out to the window and the door in this room,", 1.0: 0.95703125%%, 0.0: 0.01953125%%",2.34375,,0.0,1.0,,
+RECALL_2,numeric,number of words remembered correctly,", 7.0: 0.1083984375%%, 5.0: 0.177734375%%, 6.0: 0.1669921875%%, 1.0: 0.03515625%%, 8.0: 0.0244140625%%, 3.0: 0.10546875%%, 31.0: 0.0009765625%%, 4.0: 0.162109375%%, 0.0: 0.115234375%%, 2.0: 0.0654296875%%, 9.0: 0.009765625%%, 83.0: 0.0009765625%%, 10.0: 0.00390625%%",2.34375,,0.0,,0.1953125,0.1953125
+CHEMIST_2,categorical,where do we go to buy medicine/drugs,", 1.0: 0.947265625%%, 0.0: 0.029296875%%",2.34375,,0.0,1.0,,
+PRAY_2,categorical,what do people do at the church/ mosque,", 1.0: 0.95703125%%, 0.0: 0.01953125%%",2.34375,,0.0,1.0,,
+LEARN2_2,numeric,please repeat the words you can remember (second trial),", 88.0: 0.0009765625%%, 76.0: 0.001953125%%, 688.0: 0.0009765625%%, 7.0: 0.1025390625%%, 8.0: 0.044921875%%, 3.0: 0.1015625%%, 66.0: 0.0009765625%%, 6.0: 0.2119140625%%, 4.0: 0.1435546875%%, 5.0: 0.21484375%%, 0.0: 0.0634765625%%, 2.0: 0.060546875%%, 9.0: 0.0078125%%, 1.0: 0.017578125%%, 54.0: 0.0009765625%%, 45.0: 0.0009765625%%, 10.0: 0.0009765625%%",2.34375,"45,54,66,76,88,688",1.2939001848428835,10.0,0.390625,0.390625
+LEARN3_2,numeric,please repeat the words you can remember (third trial),", 8.0: 0.0869140625%%, 7.0: 0.16015625%%, 6.0: 0.2060546875%%, 10.0: 0.013671875%%, 3.0: 0.0654296875%%, 5.0: 0.17578125%%, 9.0: 0.025390625%%, 4.0: 0.1171875%%, 0.0: 0.0625%%, 2.0: 0.0517578125%%, 1.0: 0.01171875%%",2.34375,,0.0,10.0,0.0,0.0
+NAME_2,categorical,my name is x can you please repeat it,", 1.0: 0.912109375%%, 0.0: 0.064453125%%",2.34375,,0.0,1.0,,
+REASON_2,categorical,Have you noticed a change in his/her ability to think and reason?,", 0.0: 0.8408203125%%, 1.0: 0.1318359375%%, 98.0: 0.009765625%%, 99.0: 0.0009765625%%",1.66015625,"98,99",2.033271719038817,2.0,,
+MISTAKE_2,boolean,Does he/she ever mistake you (or other family or friends) for someone else? ,", 0.0: 0.908203125%%, 1.0: 0.0751953125%%",1.66015625,,0.0,,,
+DRESS_2,ordinal,Does he/she have difficulty dressing?,", 0.0: 0.92578125%%, 3.0: 0.033203125%%, 1.0: 0.021484375%%, 2.0: 0.0048828125%%",1.46484375,,0.0,5.0,3.80859375,3.80859375
+LOSTIN_2,ordinal,"Does he/she get lost at home, e.g finding the toilet?",", 0.0: 0.9521484375%%, 0.5: 0.009765625%%, 1.0: 0.015625%%, 2.0: 0.0087890625%%",1.3671875,,0.0,5.0,2.44140625,2.44140625
+TOILET_2,ordinal,Does he/she have difficulty using the toilet? Does he/she wet or soil him/herself?,", 0.0: 0.958984375%%, 1.0: 0.0087890625%%, 3.0: 0.0146484375%%, 2.0: 0.0048828125%%",1.26953125,,0.0,4.0,1.953125,1.953125
+LASTSEE_2,ordinal,Does he/she forget when he/she last saw you?,", 0.0: 0.8359375%%, 0.5: 0.033203125%%, 1.0: 0.0654296875%%, 0.0001: 0.005859375%%, 2.0: 0.046875%%",1.26953125,,0.0,5.0,4.6875,4.6875
+PAST_2,ordinal,Does he/she tend to talk about what happened long ago rather than the present?,", 0.5: 0.025390625%%, 0.0: 0.8564453125%%, 1.0: 0.06640625%%, 0.0001: 0.0029296875%%, 2.0: 0.0361328125%%",1.26953125,,0.0,5.0,3.61328125,3.61328125
+LASTDAY_2,ordinal,Does he/she forget what happened the day before?,", 0.0: 0.8056640625%%, 0.5: 0.0263671875%%, 1.0: 0.099609375%%, 0.0001: 0.001953125%%, 2.0: 0.0537109375%%",1.26953125,,0.0,5.0,5.37109375,5.37109375
+MENTAL_2,ordinal,Has there been a general decline in his/her mental functioning?  ,", 0.0: 0.8583984375%%, 1.0: 0.0927734375%%, 0.0001: 0.037109375%%",1.171875,,0.0,2.0,9.27734375,9.27734375
+KEPT_2,ordinal,Does he/she forget where things are usually kept?,", 0.0: 0.6845703125%%, 0.5: 0.0625%%, 1.0: 0.193359375%%, 0.0001: 0.001953125%%, 2.0: 0.0458984375%%",1.171875,,0.0,5.0,4.58984375,4.58984375
+MUDDLED_2,categorical,Does his/her thinking ever seem muddled?                    ,", 0.0: 0.81640625%%, 1.0: 0.169921875%%, 98.0: 0.0009765625%%, 99.0: 0.0009765625%%",1.171875,"98,99",0.3696857670979667,2.0,,
+MEMORY_2,categorical,"We all have slight difficulties in remembering things as we get older, but has this been a particular problem for him/her?",", 1.0: 0.2724609375%%, 0.0: 0.7109375%%, 98.0: 0.0048828125%%",1.171875,98,0.9242144177449167,2.0,,
+LOSTOUT_2,ordinal,Does he/she get lost in the community/road?,", 0.0: 0.9345703125%%, 1.0: 0.0263671875%%, 0.5: 0.0087890625%%, 2.0: 0.017578125%%, 99.0: 0.0009765625%%",1.171875,99,0.18484288354898332,5.0,0.09765625,0.09765625
+MONEY_2,ordinal,Has there been a change in his/her ability to handle money?,", 0.0: 0.8515625%%, 0.5: 0.0126953125%%, 1.0: 0.0556640625%%, 0.0001: 0.0048828125%%, 2.0: 0.0625%%, 99.0: 0.0009765625%%",1.171875,99,0.18484288354898332,3.0,0.09765625,0.09765625
+HOBBY_2,categorical,"Has there been a loss of a special skill or hobby he/she could manage before? 
+",", 0.0: 0.8564453125%%, 1.0: 0.123046875%%, 98.0: 0.0068359375%%, 99.0: 0.001953125%%",1.171875,"98,99",1.6635859519408502,2.0,,
+ACTIV_2,ordinal,"Have you seen a change in his/her daily activities in the past several years? 
+",", 0.0001: 0.015625%%, 1.0: 0.2529296875%%, 0.0: 0.71875%%, 99.0: 0.0009765625%%",1.171875,99,0.18484288354898332,2.0,0.09765625,0.09765625
+WORDFIND_2,ordinal,When speaking does he/she have difficulty saying the right words?,", 0.0: 0.89453125%%, 0.5: 0.0166015625%%, 0.0001: 0.00390625%%, 1.0: 0.056640625%%, 2.0: 0.0166015625%%",1.171875,,0.0,5.0,1.66015625,1.66015625
+CONVERS_2,ordinal,Does he/she forget what he/she wanted to say in the middle of the conversation?,", 0.0: 0.8125%%, 0.5: 0.0361328125%%, 0.0001: 0.0078125%%, 1.0: 0.1015625%%, 2.0: 0.0302734375%%",1.171875,,0.0,5.0,3.02734375,3.02734375
+CHANGE_2,ordinal,does he/she have difficulty in adjusting to change in her daily routine?,", 1.0: 0.052734375%%, 0.0: 0.88671875%%, 0.5: 0.0224609375%%, 0.0001: 0.0107421875%%, 2.0: 0.015625%%",1.171875,,0.0,5.0,1.5625,1.5625
+WORDWRG_2,ordinal,Does he/she use the wrong words?,", 0.0: 0.9189453125%%, 0.0001: 0.001953125%%, 1.0: 0.044921875%%, 0.5: 0.0078125%%, 2.0: 0.0146484375%%",1.171875,,0.0,5.0,1.46484375,1.46484375
+PUT_2,ordinal,Does he/she forget where he/she has put things?,", 0.0: 0.5673828125%%, 0.5: 0.0771484375%%, 1.0: 0.2744140625%%, 2.0: 0.0693359375%%",1.171875,,0.0,5.0,0.0,0.0
+ORIENT_2,ordinal,Does he/she forget where he/she is?,", 0.0: 0.935546875%%, 0.5: 0.0078125%%, 1.0: 0.025390625%%, 2.0: 0.01953125%%",1.171875,,0.0,5.0,1.953125,1.953125
+FEED_2,ordinal,Does he/she have difficulty feeding him/herself? ,", 0.0001: 0.0009765625%%, 0.0: 0.9560546875%%, 3.0: 0.0107421875%%, 2.0: 0.0029296875%%, 1.0: 0.017578125%%",1.171875,,0.0,4.0,1.3671875,1.3671875
+CHORES_2,ordinal,"Does he/she have difficulty performing household chores that he/she is used to do, such as preparing food or boiling a pot of tea?",", 0.0: 0.88671875%%, 0.5: 0.0390625%%, 1.0: 0.0390625%%, 2.0: 0.0234375%%",1.171875,,0.0,5.0,2.34375,2.34375
+FRDNAME_2,ordinal,Does he/she forget the names of friends?,", 0.0: 0.8212890625%%, 0.5: 0.0263671875%%, 0.0001: 0.00390625%%, 1.0: 0.099609375%%, 2.0: 0.037109375%%",1.171875,,0.0,5.0,3.7109375,3.7109375
+FAMNAME_2,ordinal,Does he/she forget the names of members of the family?,", 0.0: 0.91796875%%, 0.5: 0.01171875%%, 0.0001: 0.001953125%%, 1.0: 0.0390625%%, 2.0: 0.017578125%%",1.171875,,0.0,5.0,1.7578125,1.7578125
