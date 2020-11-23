@@ -210,56 +210,6 @@ def get_erroneous_codebook(features, data):
 
     return features, erroneous_codebook
 
-# def get_erroneous_codebook(features,data):
-#     nb_erroneous=[]
-#     erroneous_vals=[]
-#     cut_off=[]
-#     for _,row in features.iterrows():
-#         col=row['COLUMN']
-#         if 'age' in col.lower():
-#             erroneous=data[(data[col] > 100) & (2020 - data[col] > 100)]
-#             nb_erroneous.append((len(erroneous)/len(features))*100)
-#             erroneous_vals.append(','.join(str(v).replace('.0','') for v in np.unique(erroneous[col])))
-#             cut_off.append('100')
-#         elif row['data_type']=='categorical' or row['data_type']=='ordinal':
-#             if isinstance(row['cat_options'], str) and col != 'CKINCOM_2':
-#                 erroneous=data[data[col]>len(row['cat_options'].split(','))]
-#                 nb_erroneous.append((len(erroneous)/len(features))*100)
-#                 erroneous_vals.append(','.join(str(v).replace('.0','') for v in np.unique(erroneous[col])))
-#                 cut_off.append('%d'%(len(row['cat_options'].split(','))-1))
-#             else:
-#                 nb_erroneous.append(0)
-#                 erroneous_vals.append('')
-#                 cut_off.append('')
-#         else:
-#             data[col]=data[col].fillna(-1)
-#             if col == 'HELPHOUR_2':
-#                 erroneous=data[data[col]>168]
-#                 nb_erroneous.append((len(erroneous)/len(features))*100)
-#                 erroneous_vals.append(','.join(str(v).replace('.0','') for v in np.unique(erroneous[col])))
-#                 cut_off.append('168 i.e. number of hours per week')
-#
-#             elif 'LEARN' in col:
-#                 erroneous=data[data[col]>10]
-#                 nb_erroneous.append((len(erroneous)/len(features))*100)
-#                 erroneous_vals.append(','.join(str(v).replace('.0','') for v in np.unique(erroneous[col])))
-#                 cut_off.append('10')
-#
-#             elif 'DAY1A' in col:
-#                 erroneous=data[data[col]>24]
-#                 nb_erroneous.append((len(erroneous)/len(features))*100)
-#                 erroneous_vals.append(','.join(str(v).replace('.0','') for v in np.unique(erroneous[col])))
-#                 cut_off.append('24')
-#             else:
-#                 nb_erroneous.append(0)
-#                 erroneous_vals.append('')
-#                 cut_off.append('')
-#
-#     features['perc_erroneous']=nb_erroneous
-#     features['erroneous']=erroneous_vals
-#     features['cut_off']=cut_off
-#     return features
-
 
 def get_missing_rows_codebook(pooled):
     ''' Please write a loop that goes over all the rows, and produces the following:
@@ -306,8 +256,8 @@ if __name__ == '__main__':
     dest = '../input/codebooks/'
     check_create_dir(dest)
 
-    # save datasets as csv files in input folder
-    merged.to_excel(os.path.join(dest, 'numeric.xlsx'), index=False)
-    nrme_codebook.to_csv(os.path.join(dest, 'num_rows_missing_entries_codebook.csv'), index=False)
-    missing_codebook.to_csv(os.path.join(dest, 'missing_40_codebook.csv'))
+    # # save datasets as csv files in input folder
+    # merged.to_excel(os.path.join(dest, 'numeric.xlsx'), index=False)
+    # nrme_codebook.to_csv(os.path.join(dest, 'num_rows_missing_entries_codebook.csv'), index=False)
+    # missing_codebook.to_csv(os.path.join(dest, 'missing_40_codebook.csv'))
     erroneous_codebook.to_csv(os.path.join(dest, 'erroneous_codebook.csv'))
