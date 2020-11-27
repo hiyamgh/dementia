@@ -41,6 +41,7 @@ import os
 from utils import get_col_name_in_pooled
 from collections import Counter
 from sklearn.preprocessing import StandardScaler, MinMaxScaler
+from sklearn.impute import SimpleImputer
 from sklearn.neighbors import LocalOutlierFactor
 
 
@@ -539,6 +540,24 @@ def _get_numeric(df):
     return list(df['COLUMN'])
 
 
+def impute_missing_values(data):
+    ''' simple imputation strategy that works for categorical '''
+    print('before imputation: Nans: {}'.format(sum(data.isna().sum())))
+    # fillna by the most frequent values
+    imputed_data = data.fillna(data.mode().iloc[0])
+    print('after imputation: Nans: {}'.format(sum(imputed_data.isna().sum())))
+    return imputed_data
+
+
+def create_pooled_legal_filtered(pooled, filtered_codebook):
+    ''' filter pooled by legal columns after removing legal columns having > 40% missing '''
+    print('pooled data dim - before filtering: {}'.format((len(pooled), len(pooled.columns))))
+    cols_legal_filtered = filtered_codebook['COLUMN']
+    pooled = pooled[list(cols_legal_filtered) + ['dem1066']]
+    print('pooled data dim - after filtering: {}'.format((len(pooled), len(pooled.columns))))
+    pooled.to_csv('../input/pooled_data_filtered.csv')
+
+
 if __name__ == '__main__':
     path = '../input/codebooks/'
     mc = pd.read_csv(os.path.join(path, 'missing_40_codebook.csv'))
@@ -556,10 +575,8 @@ if __name__ == '__main__':
     legalize_erroneous(legal_cols=legal_cols, erroneous_df=erroneous, output_folder=of,copyofdem=copyofdem)
 
     #  ============================== NEW PART STARTS BELOW =============================================
-    # df = pd.read_csv('../input/codebooks/erroneous_codebook_legal_outliers.csv')
-    # cols_ordinal = _get_ordinal(df)
-    # cols_categorical = _get_categorical(df)
-    # cols_numeric = _get_numeric(df)
-    #
-    # pooled_scaled = normalize_data(pooled, cols_numeric)
     identify_outliers(pooled)
+
+    filtered = pd.read_csv('../input/codebooks/erroneous_codebook_legal_outliers_filtered.csv')
+    pooled_imputed = impute_missing_values(data=pooled)
+    create_pooled_legal_filtered(pooled_imputed, filtered)
