@@ -555,7 +555,7 @@ def create_pooled_legal_filtered(pooled, filtered_codebook):
     cols_legal_filtered = filtered_codebook['COLUMN']
     pooled = pooled[list(cols_legal_filtered) + ['dem1066']]
     print('pooled data dim - after filtering: {}'.format((len(pooled), len(pooled.columns))))
-    pooled.to_csv('../input/pooled_data_filtered.csv')
+    pooled.to_csv('../input/pooled_data_filtered.csv', index=False)
 
 
 if __name__ == '__main__':
