@@ -1,0 +1,19 @@
+\contentsline {section}{\numberline {1}Data Sources}{1}{section.1}%
+\contentsline {subsection}{\numberline {1.1}Datasets Used}{1}{subsection.1.1}%
+\contentsline {subsection}{\numberline {1.2}Dementia Output}{2}{subsection.1.2}%
+\contentsline {section}{\numberline {2}Split Into numeric and textual}{2}{section.2}%
+\contentsline {section}{\numberline {3}Numeric Features}{2}{section.3}%
+\contentsline {subsection}{\numberline {3.1}Informant and High Percentage of Missing}{3}{subsection.3.1}%
+\contentsline {subsection}{\numberline {3.2}Nested Questions and High percentage of missing}{3}{subsection.3.2}%
+\contentsline {subsection}{\numberline {3.3}Treating Features with High Percentage of Missing}{4}{subsection.3.3}%
+\contentsline {subsection}{\numberline {3.4}Detecting Erroneous Values Inside Features}{5}{subsection.3.4}%
+\contentsline {subsection}{\numberline {3.5}Working with Legal Features}{5}{subsection.3.5}%
+\contentsline {subsection}{\numberline {3.6}Filtering Legal Features with Erroneous Values - Erroneous Code-Book}{5}{subsection.3.6}%
+\contentsline {subsection}{\numberline {3.7}Detecting Outliers}{6}{subsection.3.7}%
+\contentsline {subsection}{\numberline {3.8}Outlier Detection and Scaling}{6}{subsection.3.8}%
+\contentsline {subsection}{\numberline {3.9}Feature Cross}{7}{subsection.3.9}%
+\contentsline {section}{\numberline {4}Data Transforms (Hiyam)}{7}{section.4}%
+\contentsline {subsection}{\numberline {4.1}Scaling Numeric Data (chapter 17)}{7}{subsection.4.1}%
+\contentsline {subsection}{\numberline {4.2}Scaling Data with Outliers (chapter 18)}{7}{subsection.4.2}%
+\contentsline {subsection}{\numberline {4.3}How to Encode Categorical Data (chapter 19)}{8}{subsection.4.3}%
+\contentsline {subsection}{\numberline {4.4}How to Make Distributions Look More Gaussian (chapter 20)}{8}{subsection.4.4}%
