@@ -41,6 +41,7 @@ import os
 from utils import get_col_name_in_pooled
 from collections import Counter
 from sklearn.preprocessing import StandardScaler, MinMaxScaler
+import pickle
 from sklearn.impute import SimpleImputer
 from sklearn.neighbors import LocalOutlierFactor
 
@@ -412,7 +413,7 @@ def calculate_outliers_iqr(pooled, col):
     return perc_outliers
 
 
-def identify_outliers(pooled):
+def identify_outliers(pooled, copy_of_dem):
     ''' identify outliers using 3 ways
         all legal columns have 0% missing (with the exception of DAY_2
         which upon Dr. Khalil's recommendation, he said its safe
@@ -422,37 +423,6 @@ def identify_outliers(pooled):
     # df_numeric = pd.read_csv('../input/codebooks/numeric_new.csv')
     df_numeric = pd.read_excel('../input/codebooks/numeric.xlsx')
     erroneous_codebook = pd.read_csv('../input/codebooks/erroneous_codebook_legal.csv')
-    # pooled = pd.read_csv('../input/pooled_new.csv')
-        # try:
-        #     count,outlier_vals=calculate_outliers(pooled,col)
-        #     erroneous_codebook.loc[erroneous_codebook['COLUMN'] == col,'%_outliers']=count/len(pooled)*100
-        #     erroneous_codebook.loc[erroneous_codebook['COLUMN'] == col,'outlier_vals']=outlier_vals
-        #
-        #     count,outlier_vals=calculate_outliers(pooled_scaled,col)
-        #     erroneous_codebook.loc[erroneous_codebook['COLUMN'] == col,'scaled_%_outliers']=count/len(pooled_scaled)*100
-        #     erroneous_codebook.loc[erroneous_codebook['COLUMN'] == col,'scaled_outlier_vals']=outlier_vals
-        #
-        # except Exception as e:
-        #     print(e)
-    
-    # no outliers exist in categorical data types.
-    # we can consider outliers as being the 'erroneous values'
-    # are there outliers in ordinal data ?
-
-    # for an ordinal variable corresponding to a ranking,
-    # no unit can be considered as an outlier, because the
-    # observations take on values (ranks) from 1 to n.
-    # In an ordered categorical variable with k levels,
-    # a unit may have each of k, a priori, defined categories
-    # and therefore no outlier could be detected. However, in
-    # a few special cases the frequency distribution of a variable
-    # may show univariate outliers.
-
-    # all legal columns are either categorical or ordinal (we have no numeric
-    # and the book deals with outliers in numeric data) types
-    # we will print the frequency of all unique variables
-    # the ones with the lowest frequency are either normally
-    # like this or outliers
 
     # dictionary mapping each column to its data type
     columns2type = dict(zip(df_numeric['COLUMN'], df_numeric['data_type']))
@@ -502,10 +472,34 @@ def identify_outliers(pooled):
 
     # remove columns with > 40% missing
     erroneous_codebook = erroneous_codebook[erroneous_codebook['perc_missing'] <= 40]
-    erroneous_codebook.to_csv('../input/codebooks/erroneous_codebook_legal_outliers_filtered.csv', index=False)
+    # erroneous_codebook.to_csv('../input/codebooks/erroneous_codebook_legal_outliers_filtered.csv', index=False)
 
     print('\nMax outlier %%: {}%%'.format(min(erroneous_codebook[erroneous_codebook['outliers_zscore'] != '']['outliers_zscore'])))
     print('\nMax outlier %%: {}%%'.format(max(erroneous_codebook[erroneous_codebook['outliers_zscore'] != '']['outliers_zscore'])))
+
+    # return list of filtered legal cols
+    legal_cols_filtered = list(erroneous_codebook['COLUMN'])
+    with open("../input/codebooks/legal_cols_filtered.txt", "wb") as fp:
+        pickle.dump(legal_cols_filtered, fp)
+
+    print('saved filtered legal columns as legal_cols_filtered.txt in input/codebooks')
+
+    # dictionary that gets the theme of each of the legal columns
+    col_legal_themes = add_themes(copy_of_dem)
+    themes = []
+    for index, row in erroneous_codebook.iterrows():
+        col_name = row['COLUMN']
+        themes.append(col_legal_themes[col_name])
+    erroneous_codebook['theme'] = themes
+
+    erroneous_codebook = erroneous_codebook[['COLUMN', 'data_type', 'theme', 'description', 'frequencies',
+                                             'perc_missing',
+                                             'erroneous', 'perc_erroneous', 'cut_off',
+                                             'outliers_zscore', 'outliers_iqr']]
+
+    erroneous_codebook.to_csv('../input/codebooks/erroneous_codebook_legal_outliers_filtered.csv', index=False)
+
+
 
 
 def normalize_data(df, cols_to_scale):
@@ -558,6 +552,39 @@ def create_pooled_legal_filtered(pooled, filtered_codebook):
     pooled.to_csv('../input/pooled_data_filtered.csv', index=False)
 
 
+def add_themes(copy_of_dem):
+    with open("../input/codebooks/legal_cols_filtered.txt", "rb") as fp:  # Unpickling
+        legal_cols = pickle.load(fp)
+
+        col_themes = {}
+        col_legal_themes = {}
+        ''' add the theme next to each column(feature)'''
+        themes = ['Introduction', 'Household questionnaire', 'Ten pictures recall exercise',
+                  'Cognitive reserve index questionnaire', 'Participant cognative  survey',
+                  'Participant rudas survey', 'Participant neuro survey',
+                  'Participant GMS', 'Participant risk factor survey',
+                  'Informant  survey', 'Informant IQCODE', 'interview outcome']
+
+        col_theme = ''
+        for index, row in copy_of_dem.iterrows():
+            col_name = str(row['name'])
+            col_section = str(row['label::English']).strip()
+
+            if col_section in themes:
+                col_theme = col_section
+
+            col_themes[col_name] = col_theme
+
+        # [1 if col in col_themes.keys() else 0 for col in legal_cols]
+        for k, v in col_themes.items():
+            col_alt_name = get_col_name_in_pooled(k, pooled)
+            if col_alt_name in legal_cols:
+                col_legal_themes[col_alt_name] = v
+
+        print(len(col_legal_themes) == len(legal_cols))
+        return col_legal_themes
+
+
 if __name__ == '__main__':
     path = '../input/codebooks/'
     mc = pd.read_csv(os.path.join(path, 'missing_40_codebook.csv'))
@@ -575,8 +602,10 @@ if __name__ == '__main__':
     legalize_erroneous(legal_cols=legal_cols, erroneous_df=erroneous, output_folder=of,copyofdem=copyofdem)
 
     #  ============================== NEW PART STARTS BELOW =============================================
-    identify_outliers(pooled)
+    identify_outliers(pooled, copyofdem)
+    #
+    # filtered = pd.read_csv('../input/codebooks/erroneous_codebook_legal_outliers_filtered.csv')
+    # pooled_imputed = impute_missing_values(data=pooled)
+    # create_pooled_legal_filtered(pooled_imputed, filtered)
 
-    filtered = pd.read_csv('../input/codebooks/erroneous_codebook_legal_outliers_filtered.csv')
-    pooled_imputed = impute_missing_values(data=pooled)
-    create_pooled_legal_filtered(pooled_imputed, filtered)
+    # add_themes(copy_of_dem=copyofdem)
