@@ -43,23 +43,24 @@ def get_col_name_in_pooled(col, pooled):
     else:
         if col[-2:] == '_2' or col in mapping or col in mapping_inv:
             if col in mapping:
-                print('col {} in mapping, transformed to {}'.format(col, mapping[col]))
+                # print('col {} in mapping, transformed to {}'.format(col, mapping[col]))
                 col_temp = mapping[col]
                 if col_temp in pooled.columns:
-                    print('{} in pooled'.format(col_temp))
+                    # print('{} in pooled'.format(col_temp))
                     col_pooled = col_temp
                 else:
                     raise ValueError('col_temp {} not found in pooled'.format(col_temp))
             elif col in mapping_inv:
-                print('col {} in mapping, transformed to {}'.format(col, mapping_inv[col]))
+                # print('col {} in mapping, transformed to {}'.format(col, mapping_inv[col]))
                 col_temp = mapping_inv[col]
                 if col_temp in pooled.columns:
-                    print('{} in pooled'.format(col_temp))
+                    # print('{} in pooled'.format(col_temp))
                     col_pooled = col_temp
                 else:
-                    raise ValueError('col_temp {} not found in pooled'.format(col_temp))
+                    # raise ValueError('col_temp {} not found in pooled'.format(col_temp))
                     # if the column, after transformation, is still not found
-                    # return -1
+                    print('col_temp {} not found in pooled'.format(col_temp))
+                    return -1
 
             else:
                 if col not in pooled.columns:
