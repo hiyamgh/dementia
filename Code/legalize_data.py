@@ -500,8 +500,6 @@ def identify_outliers(pooled, copy_of_dem):
     erroneous_codebook.to_csv('../input/codebooks/erroneous_codebook_legal_outliers_filtered.csv', index=False)
 
 
-
-
 def normalize_data(df, cols_to_scale):
     # cols_not_to_scale = list(set(df.columns) - set(cols_to_scale))
     scaler = MinMaxScaler()
@@ -603,6 +601,7 @@ if __name__ == '__main__':
 
     #  ============================== NEW PART STARTS BELOW =============================================
     identify_outliers(pooled, copyofdem)
+
     #
     # filtered = pd.read_csv('../input/codebooks/erroneous_codebook_legal_outliers_filtered.csv')
     # pooled_imputed = impute_missing_values(data=pooled)
