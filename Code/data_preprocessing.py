@@ -1,7 +1,5 @@
 import pandas as pd
-import numpy as np
 import pickle
-from sklearn.preprocessing import OrdinalEncoder
 from legalize_data import impute_missing_values
 from sklearn.preprocessing import *
 
