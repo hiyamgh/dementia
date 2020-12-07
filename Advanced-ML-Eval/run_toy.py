@@ -1,30 +1,26 @@
 import pandas as pd
+import pickle
 import os
-from AdvancedEvaluateClassification import ShallowModel
+from AdvancedEvaluation import ShallowModel
 
 if __name__ == '__main__':
-    training_data_path = 'input/fake_news_datasets/feature_extraction_train_updated.csv'
-    testing_data_path = 'input/fake_news_datasets/feature_extraction_test_updated.csv'
+    df = pd.read_csv('input/toy_data/simulated_data.csv')
+    df = df.drop(['id'], axis=1)
+    train = pd.read_csv('input/toy_data/df_train.csv')
+    test = pd.read_csv('input/toy_data/df_test.csv')
 
-    train_df = pd.read_csv(training_data_path, encoding='latin-1')
-    test_df = pd.read_csv(testing_data_path, encoding='latin-1')
-    df = pd.concat([train_df, test_df], axis=`)
-    cols_drop = ['article_title', 'article_content', 'source', 'source_category', 'unit_id']
+    from models_container import shallow_models
 
     sm = ShallowModel(df=df, df_train=train, df_test=test,
                       target_variable='nograd',
-                      plots_output_folder='plots', trained_models_dir='trained_models',
-                      scaling='robust')
+                      plots_output_folder='plots/toy/',
+                      trained_models_dir='trained_models',
+                      models_dict=shallow_models,
+                      scaling='robust',
+                      cols_drop=None)
 
     # identify frequent patterns in data
     sm.identify_frequent_patterns()
-
-    # for model_name in clfs:
-    #     print('\n~~~~~~~~~~~~~~~~~~~~~~~~ Model: {} ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~'.format(model_name))
-    #     # print('Without SMOTE')
-    #     # sm.classify(model=clfs[model_name], model_name=model_name, applySmote=False)
-    #     print('\nWith SMOTE')
-    #     sm.classify(model=clfs[model_name], model_name=model_name, applySmote=True, nb_bins=8)
 
     for shallow_model in shallow_models:
         print('\n~~~~~~~~~~~~~~~~~~~~~~~~ Model: {} ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~'.format(shallow_model))
@@ -51,3 +47,5 @@ if __name__ == '__main__':
 
     # produce jaccard similarity at topK
     sm.compute_jaccard_similarity(topKs=list(range(20, 200, 20)))
+
+

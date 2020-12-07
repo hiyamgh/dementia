@@ -9,7 +9,6 @@ import matplotlib.pyplot as plt
 from sklearn.metrics import *
 from sklearn.preprocessing import MinMaxScaler, StandardScaler, RobustScaler
 from fpgrowth_py import fpgrowth
-from models_container import shallow_models
 import warnings
 warnings.filterwarnings("ignore")
 
@@ -18,13 +17,28 @@ class ShallowModel:
 
     def __init__(self, df, df_train, df_test, target_variable,
                  plots_output_folder, trained_models_dir,
-                 scaling='robust'):
+                 models_dict,
+                 scaling='robust', 
+                 cols_drop=None):
 
         # main df, train df, test df, and target variable
         self.df = df
         self.df_train = df_train
         self.df_test = df_test
         self.target_variable = target_variable
+
+        # columns to drop -- if any
+        # drop columns - check if they exist
+        self.all_cols = list(df_train.columns)
+        if cols_drop:
+            # make sure all passed columns exist in the dataset
+            for col in cols_drop:
+                if col not in self.all_cols:
+                    raise ValueError('Column {} you are trying to drop does not exist'.format(col))
+
+            self.df = self.df.drop(cols_drop, axis=1)
+            self.df_train = self.df_train.drop(cols_drop, axis=1)
+            self.df_test = self.df_test.drop(cols_drop, axis=1)
 
         # train/test input/output features
         # we will be using trained models so no need for training data but just in case
@@ -48,7 +62,10 @@ class ShallowModel:
         # directory for dumping output plots
         self.mkdir(output_folder=plots_output_folder)
         self.plots_output_folder = plots_output_folder
-
+        
+        # get models dictionary
+        self.models_dict = models_dict
+        
         #  scaling mechanism
         if scaling not in ['minmax', 'z-score', 'robust']:
             raise ValueError('Scaling mechanism {} not found. Choose from: {}'.format(scaling, ['minmax', 'z-score', 'robust']))
@@ -125,10 +142,10 @@ class ShallowModel:
         self.risk_dfs.append(risk_df)
 
     def compute_jaccard_similarity(self, topKs):
-        combinations = list(itertools.combinations(list(shallow_models.keys()), 2))
+        combinations = list(itertools.combinations(list(self.models_dict.keys()), 2))
         models_indexes = {}
 
-        for index, (key, value) in enumerate(shallow_models.items()):
+        for index, (key, value) in enumerate(self.models_dict.items()):
             models_indexes[key] = index
 
         for combn in combinations:
@@ -196,7 +213,7 @@ class ShallowModel:
 
     def produce_empirical_risk_curves(self):
 
-        for i in range(len(shallow_models)):
+        for i in range(len(self.models_dict)):
             # xaxis = list(range(len(self.mean_empirical_risks[i])))
             plt.plot(range(1, self.nb_bins + 1), self.mean_empirical_risks[i], marker='o', label=self.model_names[i])
         plt.legend(loc='best')
@@ -207,7 +224,7 @@ class ShallowModel:
 
     def produce_curves_topK(self, topKs, metric):
         fig, ax = plt.subplots()
-        for i in range(len(shallow_models)):
+        for i in range(len(self.models_dict)):
             risk_df = self.risk_dfs[i]
             metrics = []
             for topk in topKs:
@@ -248,7 +265,7 @@ class ShallowModel:
         df = self.df
         itemSetList = []
         df_cols = list(df.columns)
-        df_cols.remove('nograd')
+        df_cols.remove(self.target_variable)
 
         #  get the 25th, 50th, and 75th quartiles of each column
         self.cols_meta = {}
@@ -317,7 +334,7 @@ class ShallowModel:
     def pattern_probability_of_mistake(self):
         self.create_freq_pattern_dict()
         probabilities_per_fp = {}
-        for index, model in enumerate(shallow_models):
+        for index, model in enumerate(self.models_dict):
             probabilities_per_fp[model] = {}
             for freq_pattern in self.freq_patterns:
 
@@ -332,53 +349,3 @@ class ShallowModel:
                 probabilities_per_fp[model][freq_pattern] = prob_mistake
 
         return probabilities_per_fp
-
-
-if __name__ == '__main__':
-    df = pd.read_csv('input/simulated_data.csv')
-    df = df.drop(['id'], axis=1)
-    train = pd.read_csv('input/df_train.csv')
-    test = pd.read_csv('input/df_test.csv')
-
-    sm = ShallowModel(df=df, df_train=train, df_test=test,
-                      target_variable='nograd',
-                      plots_output_folder='plots', trained_models_dir='trained_models',
-                      scaling='robust')
-
-    # identify frequent patterns in data
-    sm.identify_frequent_patterns()
-
-    # for model_name in clfs:
-    #     print('\n~~~~~~~~~~~~~~~~~~~~~~~~ Model: {} ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~'.format(model_name))
-    #     # print('Without SMOTE')
-    #     # sm.classify(model=clfs[model_name], model_name=model_name, applySmote=False)
-    #     print('\nWith SMOTE')
-    #     sm.classify(model=clfs[model_name], model_name=model_name, applySmote=True, nb_bins=8)
-
-    for shallow_model in shallow_models:
-        print('\n~~~~~~~~~~~~~~~~~~~~~~~~ Model: {} ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~'.format(shallow_model))
-        # load the model from disk
-        file_name = os.path.join(sm.trained_models_dir, '{}.sav'.format(shallow_model))
-        trained_model = pickle.load(open(file_name, 'rb'))
-        sm.classify(trained_model=trained_model, trained_model_name=shallow_model)
-
-    # add mistake
-    sm.add_mistake()
-    #
-    # generate probabilities of mistakes per model per frequent pattern
-    probabilities_per_fp = sm.pattern_probability_of_mistake()
-
-    # produce roc curves when applying classification using all models
-    sm.produce_roc_curves()
-
-    # produce mean empirical risk curves
-    sm.produce_empirical_risk_curves()
-
-    # produce precision/recall at topK curves
-    sm.produce_curves_topK(topKs=[60, 50, 40, 30, 20, 10], metric='precision')
-    sm.produce_curves_topK(topKs=[60, 50, 40, 30, 20, 10], metric='recall')
-
-    # produce jaccard similarity at topK
-    sm.compute_jaccard_similarity(topKs=list(range(20, 200, 20)))
-
-

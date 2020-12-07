@@ -36,12 +36,12 @@ def mkdir(output_folder):
 
 
 if __name__ == '__main__':
-    df = pd.read_csv('input/simulated_data.csv')
+    df = pd.read_csv('input/toy_data/simulated_data.csv')
     df_train, df_test = stratified_split(df,
                                          target_variable='nograd',
                                          test_ratio=0.2,
                                          cols_drop=['id'])
 
     mkdir(output_folder='input')
-    df_train.to_csv(os.path.join('input', 'df_train.csv'), index=False)
-    df_test.to_csv(os.path.join('input', 'df_test.csv'), index=False)
+    df_train.to_csv(os.path.join('input/toy_data/', 'df_train.csv'), index=False)
+    df_test.to_csv(os.path.join('input/toy_data/', 'df_test.csv'), index=False)
