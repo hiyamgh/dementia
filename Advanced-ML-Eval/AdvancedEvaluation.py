@@ -19,7 +19,8 @@ class ShallowModel:
                  plots_output_folder, trained_models_dir,
                  models_dict,
                  scaling='robust', 
-                 cols_drop=None):
+                 cols_drop=None,
+                 pos_class_label=1):
 
         # main df, train df, test df, and target variable
         self.df = df
@@ -53,6 +54,10 @@ class ShallowModel:
         self.mean_empirical_risks = []
         self.risk_dfs = []
         self.y_preds = []
+
+        # the label of the positive classes -- usually its 1 but with the exception of fake news data,
+        # the positive (fake) is 0
+        self.pos_class_label = pos_class_label
 
         # directory to load trained models from
         if not os.path.exists(trained_models_dir):
@@ -96,8 +101,10 @@ class ShallowModel:
 
         # predict classes/labels
         y_pred = trained_model.predict(X_test)
-        probas = trained_model.predict_proba(X_test)[:, 1]
-
+        if self.pos_class_label == 1:
+            probas = trained_model.predict_proba(X_test)[:, 1]
+        else:
+            probas = trained_model.predict_proba(X_test)[:, 0]
         self.evaluate_predictions(y_test=y_test, y_pred=y_pred)
         self.y_preds.append(y_pred)
 

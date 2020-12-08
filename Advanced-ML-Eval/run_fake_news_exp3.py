@@ -11,14 +11,15 @@ def removekey(d, key):
 
 
 def apply_analysis(df, train_df, test_df, models_passed, models_dictionary, trained_models_dir,
-                   cols_to_drop, nb_bins_passed, testing):
+                   cols_to_drop, nb_bins_passed, testing, pos_class_label=1):
     sm = ShallowModel(df=df, df_train=train_df, df_test=test_df,
                        target_variable='label',
                        plots_output_folder='plots/fake_news/{}_test_{}/'.format(exp, testing),
                        trained_models_dir=trained_models_dir,
                        models_dict=models_dictionary,
                        scaling='z-score',
-                       cols_drop=cols_to_drop)
+                       cols_drop=cols_to_drop,
+                      pos_class_label=pos_class_label)
 
     # identify frequent patterns in data
     # sm.identify_frequent_patterns()
@@ -112,12 +113,12 @@ if __name__ == '__main__':
     # test on buzz feed
     apply_analysis(df=df_buzzbuzz, train_df=buzz_train, test_df=buzz_test,
                    models_passed=models, models_dictionary=models_dict, trained_models_dir=trained_models_dir,
-                   cols_to_drop=cols_drop, nb_bins_passed=3, testing='buzzfeed')
+                   cols_to_drop=cols_drop, nb_bins_passed=3, testing='buzzfeed', pos_class_label=0)
 
     # test on fakes
     apply_analysis(df=df_buzzfakes, train_df=buzz_train.drop(['article_content'], axis=1), test_df=fakes_test,
                    models_passed=models2, models_dictionary=models_dict2, trained_models_dir=trained_models_dir,
-                   cols_to_drop=None, nb_bins_passed=2, testing='fakes')
+                   cols_to_drop=None, nb_bins_passed=2, testing='fakes', pos_class_label=0)
 
 
 

@@ -39,7 +39,8 @@ if __name__ == '__main__':
                           trained_models_dir='input/fake_news_trained_models/{}/'.format(exp),
                           models_dict=models_dict,
                           scaling='z-score',
-                          cols_drop=cols_drop)
+                          cols_drop=cols_drop,
+                          pos_class_label=0)
 
         # identify frequent patterns in data
         sm.identify_frequent_patterns()
