@@ -533,4 +533,126 @@ After doing this, we get the following results:
 \label{Fig:jaccardtopk}
 \caption{Jaccard Similarity of students at risk for various algorithms}
 \end{figure}
+
+
+\section{Advanced ML Evaluation of Fake News Experiments}
+We have already done the fake news experiments before, and for each experiment \textbf{with the exception of Expriment 2}, we have saved the \textbf{trained models}. We have made our code \textbf{accept trained models}, and assess their performance on \textbf{testing dataset} passed by the user, with the performace asssessed, hereafter, by advanced ML Evaluation techniques presented in this report.
+
+\subsection*{Fake News Repository}
+The fake news repository with latest experiments is found here on bitbucket in the latest folder called \textit{Hiyam}: \url{https://bitbucket.org/rba15/fake_news_detection/src/master/Hiyam/} 
+
+\subsection{Experiment 1}
+In Experiment 1, we have trained a suit of \textbf{shallow} ML models on the FA-KES training data and tested it on the FA-KES testing data as well. Ofcourse, it is important to note that we have split the original FA-KES data in a \textbf{stratified manner}, hereafter, maintaining the same class distribution between training and testing dataset splits.
+
+\noindent We have chosen the \textbf{number of bins to be equal to 3}. By the number of bins, we mean the bins were the probabilistic risk scores fall in, in ascending order (smaller bins have smaller risk scores; higher bins have higher risk scores)
+
+\subsubsection{Mean Empirical Risks}
+\begin{figure}[H]
+\includegraphics[scale=0.6]{fakeexp1/meanempiricalrisks.png}
+\caption{plot that shows the mean empirical risks across the 3 bins}
+\end{figure}
+
+\textbf{Unfortunately}, this is not a good plot at all. The mean empirical risk, which defines the mean of the risk scores at each bin, decreases as we get to higher order bins. This is indicative that the models trained on FA-KES and tested on FA-KES are not good at all, they are assigning \textbf{lower risk scores for instances that are actually, as per ground truth, FAKE, and higher risk scores for instances that are actually, as per ground truth, not FAKE}. The trained algorithms are doing a bad job. it is important to note that a good mean empirical risk curve should me monotonically non-decreasing. Here we invert it :) 
+
+\subsubsection{Precision at Top K}
+\begin{figure}[H]
+\includegraphics[scale=0.6]{fakeexp1/precisionstopK.png}
+\caption{Precison at Top K instances that have the highest risk scores}
+\end{figure}
+This plot is not good. Something is a bit off as the precision remains at 0 ??
+
+\subsection{Recall at Top K}
+\begin{figure}[H]
+\includegraphics[scale=0.6]{fakeexp1/recallstopK.png}
+\caption{Recall at Top K instances that have the highest risk scores}
+\end{figure}
+This plot is not good. Something is a bit off as the precision remains at 0 ??
+
+
+\subsection{Jaccard Similarity at Top K}
+\begin{figure}[H]
+\includegraphics[scale=0.6]{fakeexp1/jaccardtopK.png}
+\caption{Jaccard Similarity at Top K instances that have the highest risk scores}
+\end{figure}
+Some light in this plot. For any given K, the algorithms return the set of K news that are likely to be fake based on the risk scores. Good algorithms must return the same set of K instances that are likely to be fake. 
+\noindent We realize that as the number of instances K increases, the similarity between all model pairs increase, with the highest similarity is between the Ada Boost and the Random Forest models.
+
+\subsection{ROC Curves}
+\begin{figure}[H]
+\includegraphics[scale=0.6]{fakeexp1/roccurves.png}
+\caption{ROC Curves of predictions}
+\end{figure}
+The AUC ROC is low.
+
+
+\subsection{Experiment 3}
+For this experiment, we train on BuzzFeed then:
+\begin{enumerate}
+\item test on BuzzFeed
+\item test on FA-KES
+\end{enumerate}
+
+
+\subsection{Train on BuzzFeed, Test on BuzzFeed}
+\subsubsection{Mean Empirical Risks}
+\begin{figure}[H]
+\includegraphics[scale=0.6]{fakeexp3buzz/meanempiricalrisks.png}
+\caption{plot that shows the mean empirical risks across the 3 bins}
+\end{figure}
+
+\subsubsection{Precision at Top K}
+\begin{figure}[H]
+\includegraphics[scale=0.6]{fakeexp3buzz/precisionstopK.png}
+\caption{Precison at Top K instances that have the highest risk scores}
+\end{figure}
+Precision is decreasing for extra trees and ada boost as the number of Top K decreases. This is good. It means at the top K instances that have the highest risk of being Fake, the precision is high, and as the risk score decreases precision decreases.
+
+The random forest model is not good.
+
+\subsection{Recall at Top K}
+\begin{figure}[H]
+\includegraphics[scale=0.6]{fakeexp3buzz/recallstopK.png}
+\caption{Recall at Top K instances that have the highest risk scores}
+\end{figure}
+Recall is not increasing as K decreases. This is not really good.
+
+\subsection{Jaccard Similarity at Top K}
+\begin{figure}[H]
+\includegraphics[scale=0.6]{fakeexp3buzz/jaccardtopK.png}
+\caption{Jaccard Similarity at Top K instances that have the highest risk scores}
+\end{figure}
+
+
+\subsection{Train on BuzzFeed, Test on FA-KES}
+\subsubsection{Mean Empirical Risks}
+\begin{figure}[H]
+\includegraphics[scale=0.6]{fakeexp3fakes/meanempiricalrisks.png}
+\caption{plot that shows the mean empirical risks across the 2 bins}
+\end{figure}
+
+Its good that the mean empirical risks for extra trees, decision tree, and logistic regression is increasing, but we cannot do our judgment with 2 bins only. The \textbf{bins problem must be solved for better assessment}
+
+\subsubsection{Precision at Top K}
+\begin{figure}[H]
+\includegraphics[scale=0.6]{fakeexp3fakes/precisionstopK.png}
+\caption{Precison at Top K instances that have the highest risk scores}
+\end{figure}
+Precision is decreasing for extra trees and ada boost as the number of Top K decreases. This is good. It means at the top K instances that have the highest risk of being Fake, the precision is high, and as the risk score decreases precision decreases.
+
+The logistic regression model is not good.
+
+\subsection{Recall at Top K}
+\begin{figure}[H]
+\includegraphics[scale=0.6]{fakeexp3fakes/recallstopK.png}
+\caption{Recall at Top K instances that have the highest risk scores}
+\end{figure}
+Recall is not increasing as K decreases. This is not really good.
+
+\subsection{Jaccard Similarity at Top K}
+\begin{figure}[H]
+\includegraphics[scale=0.6]{fakeexp3fakes/jaccardtopK.png}
+\caption{Jaccard Similarity at Top K instances that have the highest risk scores}
+\end{figure}
+
+
 \end{document}

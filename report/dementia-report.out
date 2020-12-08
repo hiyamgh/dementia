@@ -53,3 +53,21 @@
 \BOOKMARK [2][-]{subsection.14.7}{Technicalities}{section.14}% 53
 \BOOKMARK [2][-]{subsection.14.8}{Characterizing Prediction Mistakes}{section.14}% 54
 \BOOKMARK [2][-]{subsection.14.9}{Comparing Classifier Predictions}{section.14}% 55
+\BOOKMARK [1][-]{section.15}{Advanced ML Evaluation of Fake News Experiments}{}% 56
+\BOOKMARK [2][-]{subsection.15.1}{Experiment 1}{section.15}% 57
+\BOOKMARK [3][-]{subsubsection.15.1.1}{Mean Empirical Risks}{subsection.15.1}% 58
+\BOOKMARK [3][-]{subsubsection.15.1.2}{Precision at Top K}{subsection.15.1}% 59
+\BOOKMARK [2][-]{subsection.15.2}{Recall at Top K}{section.15}% 60
+\BOOKMARK [2][-]{subsection.15.3}{Jaccard Similarity at Top K}{section.15}% 61
+\BOOKMARK [2][-]{subsection.15.4}{ROC Curves}{section.15}% 62
+\BOOKMARK [2][-]{subsection.15.5}{Experiment 3}{section.15}% 63
+\BOOKMARK [2][-]{subsection.15.6}{Train on BuzzFeed, Test on BuzzFeed}{section.15}% 64
+\BOOKMARK [3][-]{subsubsection.15.6.1}{Mean Empirical Risks}{subsection.15.6}% 65
+\BOOKMARK [3][-]{subsubsection.15.6.2}{Precision at Top K}{subsection.15.6}% 66
+\BOOKMARK [2][-]{subsection.15.7}{Recall at Top K}{section.15}% 67
+\BOOKMARK [2][-]{subsection.15.8}{Jaccard Similarity at Top K}{section.15}% 68
+\BOOKMARK [2][-]{subsection.15.9}{Train on BuzzFeed, Test on FA-KES}{section.15}% 69
+\BOOKMARK [3][-]{subsubsection.15.9.1}{Mean Empirical Risks}{subsection.15.9}% 70
+\BOOKMARK [3][-]{subsubsection.15.9.2}{Precision at Top K}{subsection.15.9}% 71
+\BOOKMARK [2][-]{subsection.15.10}{Recall at Top K}{section.15}% 72
+\BOOKMARK [2][-]{subsection.15.11}{Jaccard Similarity at Top K}{section.15}% 73
