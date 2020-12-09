@@ -63,8 +63,8 @@ if __name__ == '__main__':
         sm.produce_empirical_risk_curves()
 
         # produce precision/recall at topK curves
-        sm.produce_curves_topK(topKs=[60, 50, 40, 30, 20, 10], metric='precision')
-        sm.produce_curves_topK(topKs=[60, 50, 40, 30, 20, 10], metric='recall')
+        sm.produce_curves_topK(topKs=[10, 20, 30, 40, 50, 60], metric='precision')
+        sm.produce_curves_topK(topKs=[10, 20, 30, 40, 50, 60], metric='recall')
 
         # produce jaccard similarity at topK
         sm.compute_jaccard_similarity(topKs=list(range(20, 200, 20)))

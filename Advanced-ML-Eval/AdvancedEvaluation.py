@@ -260,7 +260,7 @@ class ShallowModel:
 
         plt.legend(loc='best')
         plt.xlabel('Top K')
-        ax.set_xlim(ax.get_xlim()[::-1])
+        # ax.set_xlim(ax.get_xlim()[::-1])
         if metric == 'precision':
             plt.ylabel('Precision')
             plt.savefig(os.path.join(self.plots_output_folder, 'precisions_topK.png'))
