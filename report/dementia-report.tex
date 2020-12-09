@@ -373,12 +373,12 @@ School districts are interested in identifying those students who are are at ris
 
 \item In this paper they only use shallow models, this what I also do (just for now because my focus is on the implementation of the ideas in sections 5 \& 6)
 
-\item In Figure \ref{Fig:roccurves} below, I show the ROC curves of various models
+\item In Figure \ref{plots/toydata/Fig:roccurves} below, I show the ROC curves of various models
 \end{itemize}
 
 \begin{figure}[H]
 \centering
-\includegraphics[scale=0.5]{roccurves.png}
+\includegraphics[scale=0.5]{plots/toydata/roccurves.png}
 \caption{ROC Curves of various shallow models trained on the data provided}
 \label{Fig:roccurves}
 \end{figure}
@@ -423,6 +423,10 @@ Estimates}
 \item One solution is to distribute them into bins but \textbf{without guaranteeing the same number of instances in each bin  }
 \item Even if we are able to produce such a plot, the 10 bins won't be unique (in terms of lower and upper limits) for each algorithm. Is that valid to work with ?  
 \end{itemize}
+
+\item \textcolor{blue}{SOLUTION: I fixed this problem. I enforced the same number of items to happen in each bin \textbf{according to the number of predictions}. Number of items per bin $= number of predictions // nb bins $. The $//$ in python is an \textbf{integer division} operator to divide two numbers and round their quotient down to nearest integer. This will make sure that all bins have the same number of instances (except for 1 bin if it happens that the $number of predictions$ and $nb bins$ are not divisible)}
+
+
 \item For each bin, we produce the \textbf{mean empirical risk} which is the fraction of students, from that bin, who actually (as per ground truth) fail to graduate on time.
 \item This curve is called \textbf{mean empirical risk} curve
 \item An algorithm is considered to be producing good predictions if its empirical risk curve is \textbf{monotonically non-decreasing} (as the risk scores increase, we have more \textbf{correct} predictions about the positive class (more students who actually - as per ground truth - fail to graduate on time))
@@ -431,7 +435,7 @@ Estimates}
 I present below the empirical risk curve of the shallow models I trained on - \textbf{with incorporating SMOTE} and MinMax Scaling
 \begin{figure}[H]
 \centering
-\includegraphics[scale=0.5]{meanempiricalrisks.png}
+\includegraphics[scale=0.5]{plots/toydata/meanempiricalrisks.png}
 \caption{Mean Empirical Risks per Model}
 \label{Fig:MeanEmpiricalRisks}
 \end{figure}
@@ -452,7 +456,7 @@ It is good to see the models performances on the \textbf{Top K} students \textbf
 
 \begin{figure}[H]
 \centering
-\includegraphics[scale=0.5]{precisionstopK.png}
+\includegraphics[scale=0.5]{plots/toydata/precisionstopK.png}
 \caption{Precision at Top K}
 \label{Fig:prectopk}
 \end{figure}
@@ -460,7 +464,7 @@ It is good to see the models performances on the \textbf{Top K} students \textbf
 
 \begin{figure}[H]
 \centering
-\includegraphics[scale=0.5]{recallstopK.png}
+\includegraphics[scale=0.5]{plots/toydata/recallstopK.png}
 \caption{Recall at Top K}
 \label{Fig:prectopk}
 \end{figure}
@@ -529,7 +533,7 @@ Let's say we have 200 testing instances (students). One model might put the high
 After doing this, we get the following results:
 \begin{figure}[H]
 \centering
-\includegraphics[scale=0.6]{jaccardtopK.png}
+\includegraphics[scale=0.6]{plots/toydata/jaccardtopK.png}
 \label{Fig:jaccardtopk}
 \caption{Jaccard Similarity of students at risk for various algorithms}
 \end{figure}
@@ -548,111 +552,48 @@ In Experiment 1, we have trained a suit of \textbf{shallow} ML models on the FA-
 
 \subsubsection{Mean Empirical Risks}
 \begin{figure}[H]
-\includegraphics[scale=0.6]{fakeexp1/meanempiricalrisks.png}
+\includegraphics[scale=0.6]{plots/fakenewsexp1/meanempiricalrisks.png}
 \caption{plot that shows the mean empirical risks across the 3 bins}
 \end{figure}
 
-\textbf{Unfortunately}, this is not a good plot at all. The mean empirical risk, which defines the mean of the risk scores at each bin, decreases as we get to higher order bins. This is indicative that the models trained on FA-KES and tested on FA-KES are not good at all, they are assigning \textbf{lower risk scores for instances that are actually, as per ground truth, FAKE, and higher risk scores for instances that are actually, as per ground truth, not FAKE}. The trained algorithms are doing a bad job. it is important to note that a good mean empirical risk curve should me monotonically non-decreasing. Here we invert it :) 
+We realize that the mean empirical risks for all models is non-decreasing, indicating that our \textbf{trained models} are successful at giving higher risks to instances who are actually, \textbf{as per ground truth}, classified as being \textbf{true}
+
+\noindent We realize that the logistic regression model's mean empirical risk curve decreases when the number of bins is 9.
+
+\noindent In general, several models have their mean empirical risk decrease for a high bin number, suggesting that the models at extreme cases were the instances classified as being \textbf{true} do not assign very high probabilities.
 
 \subsubsection{Precision at Top K}
 \begin{figure}[H]
-\includegraphics[scale=0.6]{fakeexp1/precisionstopK.png}
+\includegraphics[scale=0.6]{plots/fakenewsexp1/precisionstopK.png}
 \caption{Precison at Top K instances that have the highest risk scores}
 \end{figure}
-This plot is not good. Something is a bit off as the precision remains at 0 ??
+the precision scores for some models decrease for higher K, some increase and some remain constant.
 
-\subsection{Recall at Top K}
+\subsubsection{Recall at Top K}
 \begin{figure}[H]
-\includegraphics[scale=0.6]{fakeexp1/recallstopK.png}
+\includegraphics[scale=0.6]{plots/fakenewsexp1/recallstopK.png}
 \caption{Recall at Top K instances that have the highest risk scores}
 \end{figure}
-This plot is not good. Something is a bit off as the precision remains at 0 ??
+This plot is not good. Something is a bit off as the recall \textbf{remains at 1 }? Or perhaps all models are predicting only 1 class and not predicting for the other class. This is bad though. We must dig up the \textbf{contingency matrices} of the predictions of these models in the 2019 report
 
 
-\subsection{Jaccard Similarity at Top K}
+\subsubsection{Jaccard Similarity at Top K}
 \begin{figure}[H]
-\includegraphics[scale=0.6]{fakeexp1/jaccardtopK.png}
+\includegraphics[scale=0.6]{plots/fakenewsexp1/jaccardtopK.png}
 \caption{Jaccard Similarity at Top K instances that have the highest risk scores}
 \end{figure}
 Some light in this plot. For any given K, the algorithms return the set of K news that are likely to be fake based on the risk scores. Good algorithms must return the same set of K instances that are likely to be fake. 
-\noindent We realize that as the number of instances K increases, the similarity between all model pairs increase, with the highest similarity is between the Ada Boost and the Random Forest models.
+\noindent We realize that as the number of instances K increases, the similarity between all model pairs increase, with the highest similarity is between the Logistic Regression and the Random Forest models.
 
-\subsection{ROC Curves}
+\subsubsection{ROC Curves}
 \begin{figure}[H]
-\includegraphics[scale=0.6]{fakeexp1/roccurves.png}
+\includegraphics[scale=0.6]{plots/fakenewsexp1/roccurves.png}
 \caption{ROC Curves of predictions}
 \end{figure}
-The AUC ROC is low.
+The area under the curves for our models are good.
 
 
-\subsection{Experiment 3}
-For this experiment, we train on BuzzFeed then:
-\begin{enumerate}
-\item test on BuzzFeed
-\item test on FA-KES
-\end{enumerate}
 
-
-\subsection{Train on BuzzFeed, Test on BuzzFeed}
-\subsubsection{Mean Empirical Risks}
-\begin{figure}[H]
-\includegraphics[scale=0.6]{fakeexp3buzz/meanempiricalrisks.png}
-\caption{plot that shows the mean empirical risks across the 3 bins}
-\end{figure}
-
-\subsubsection{Precision at Top K}
-\begin{figure}[H]
-\includegraphics[scale=0.6]{fakeexp3buzz/precisionstopK.png}
-\caption{Precison at Top K instances that have the highest risk scores}
-\end{figure}
-Precision is decreasing for extra trees and ada boost as the number of Top K decreases. This is good. It means at the top K instances that have the highest risk of being Fake, the precision is high, and as the risk score decreases precision decreases.
-
-The random forest model is not good.
-
-\subsection{Recall at Top K}
-\begin{figure}[H]
-\includegraphics[scale=0.6]{fakeexp3buzz/recallstopK.png}
-\caption{Recall at Top K instances that have the highest risk scores}
-\end{figure}
-Recall is not increasing as K decreases. This is not really good.
-
-\subsection{Jaccard Similarity at Top K}
-\begin{figure}[H]
-\includegraphics[scale=0.6]{fakeexp3buzz/jaccardtopK.png}
-\caption{Jaccard Similarity at Top K instances that have the highest risk scores}
-\end{figure}
-
-
-\subsection{Train on BuzzFeed, Test on FA-KES}
-\subsubsection{Mean Empirical Risks}
-\begin{figure}[H]
-\includegraphics[scale=0.6]{fakeexp3fakes/meanempiricalrisks.png}
-\caption{plot that shows the mean empirical risks across the 2 bins}
-\end{figure}
-
-Its good that the mean empirical risks for extra trees, decision tree, and logistic regression is increasing, but we cannot do our judgment with 2 bins only. The \textbf{bins problem must be solved for better assessment}
-
-\subsubsection{Precision at Top K}
-\begin{figure}[H]
-\includegraphics[scale=0.6]{fakeexp3fakes/precisionstopK.png}
-\caption{Precison at Top K instances that have the highest risk scores}
-\end{figure}
-Precision is decreasing for extra trees and ada boost as the number of Top K decreases. This is good. It means at the top K instances that have the highest risk of being Fake, the precision is high, and as the risk score decreases precision decreases.
-
-The logistic regression model is not good.
-
-\subsection{Recall at Top K}
-\begin{figure}[H]
-\includegraphics[scale=0.6]{fakeexp3fakes/recallstopK.png}
-\caption{Recall at Top K instances that have the highest risk scores}
-\end{figure}
-Recall is not increasing as K decreases. This is not really good.
-
-\subsection{Jaccard Similarity at Top K}
-\begin{figure}[H]
-\includegraphics[scale=0.6]{fakeexp3fakes/jaccardtopK.png}
-\caption{Jaccard Similarity at Top K instances that have the highest risk scores}
-\end{figure}
 
 
 \end{document}
