@@ -86,7 +86,7 @@ class ShallowModel:
         if not os.path.exists(output_folder):
             os.makedirs(output_folder)
 
-    def classify(self, trained_model, trained_model_name, nb_bins=3):
+    def classify(self, trained_model, trained_model_name, nb_bins=10):
         X_train, y_train, X_test, y_test = self.X_train, self.y_train, self.X_test, self.y_test
 
         # scale the data so that you can predict on scaled testing data directly
@@ -125,11 +125,21 @@ class ShallowModel:
         risk_df = pd.DataFrame(np.column_stack((test_indexes, y_test, y_pred, risk_scores)), columns=['test_indices', 'y_test', 'y_pred', 'risk_scores'])
         risk_df = risk_df.sort_values(by='risk_scores', ascending=False)
 
-        # # create 4 bins of the data (like in the paper)
-        # risk_df['quantiles'] = pd.qcut(risk_df['risk_scores'], q=4, duplicates='drop')
-        risk_df['quantiles'] = pd.cut(risk_df['risk_scores'], self.nb_bins)
-        print(pd.cut(risk_df['risk_scores'], self.nb_bins).value_counts())
+        # # # create 4 bins of the data (like in the paper)
+        # # risk_df['quantiles'] = pd.qcut(risk_df['risk_scores'], q=4, duplicates='drop')
+        # risk_df['quantiles'] = pd.cut(risk_df['risk_scores'], self.nb_bins)
+        # print(pd.cut(risk_df['risk_scores'], self.nb_bins).value_counts())
+        items_per_bin = len(risk_df) // self.nb_bins
+        bin_category = [0] * len(risk_df)
+        for i in range(self.nb_bins):
+            lower = i * items_per_bin
+            if i != self.nb_bins - 1:
+                upper = (i + 1) * items_per_bin
+                bin_category[lower:upper] = [i] * (upper - lower)
+            else:
+                bin_category[lower:] = [i] * (len(range(lower, len(risk_df))))
 
+        risk_df['quantiles'] = list(reversed(bin_category))
         # calculate mean empirical risk
         # which is the fraction of students from that bin who actually (as per ground truth)
         # failed to graduate on time (actually positive)

@@ -40,7 +40,7 @@ if __name__ == '__main__':
                           models_dict=models_dict,
                           scaling='z-score',
                           cols_drop=cols_drop,
-                          pos_class_label=0)
+                          pos_class_label=1)
 
         # identify frequent patterns in data
         sm.identify_frequent_patterns()
@@ -48,7 +48,7 @@ if __name__ == '__main__':
         # advanced ML classification
         for model in models:
             print('\n~~~~~~~~~~~~~~~~~~~~~~~~ Model: {} ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~'.format(model))
-            sm.classify(trained_model=models_dict[model], trained_model_name=model)
+            sm.classify(trained_model=models_dict[model], trained_model_name=model, nb_bins=10)
 
         # add mistake
         sm.add_mistake()

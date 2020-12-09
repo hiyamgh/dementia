@@ -113,12 +113,12 @@ if __name__ == '__main__':
     # test on buzz feed
     apply_analysis(df=df_buzzbuzz, train_df=buzz_train, test_df=buzz_test,
                    models_passed=models, models_dictionary=models_dict, trained_models_dir=trained_models_dir,
-                   cols_to_drop=cols_drop, nb_bins_passed=3, testing='buzzfeed', pos_class_label=0)
+                   cols_to_drop=cols_drop, nb_bins_passed=10, testing='buzzfeed', pos_class_label=1)
 
     # test on fakes
     apply_analysis(df=df_buzzfakes, train_df=buzz_train.drop(['article_content'], axis=1), test_df=fakes_test,
                    models_passed=models2, models_dictionary=models_dict2, trained_models_dir=trained_models_dir,
-                   cols_to_drop=None, nb_bins_passed=2, testing='fakes', pos_class_label=0)
+                   cols_to_drop=None, nb_bins_passed=10, testing='fakes', pos_class_label=1)
 
 
 
