@@ -20,7 +20,7 @@ def select_K(pooled):
     # rfecv.fit(X_arr,Y_arr)
     # print("Optimal number of features : %d" % rfecv.n_features_)
     
-    rfe=RFE(model,20,step=1) 
+    rfe=RFE(model,10,step=1) 
     res=rfe.fit(X_arr,Y_arr)
     names=pd.DataFrame(pooled.columns[:-1])
 
@@ -29,9 +29,9 @@ def select_K(pooled):
     ranked.columns=["Feature","Rank"]
 
     selected=ranked.loc[ranked['Rank']==1]
-    selected.to_csv('../input/k_best_features.csv',index=False)
+    ranked.to_csv('../input/k_best_features.csv',index=False)
 
 if __name__=='__main__':
     pooled=pd.read_csv('../input/pooled_processed.csv')
-    # feature_importance(pooled)
-    select_K(pooled)
+    feature_importance(pooled)
+    # select_K(pooled)
