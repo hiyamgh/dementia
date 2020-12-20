@@ -327,6 +327,11 @@ class AdvancedEvaluator:
         # create a dictionary of frequent patterns
         self.fp_dict = dict(zip(fps, list(self.freqItemSet)))
 
+        # write the frequent patterns to a txt file
+        with open(os.path.join(self.fp_growth_output_folder, 'frequent_patterns.txt'), 'w') as txt_file:
+            for fp in self.freqItemSet:
+                txt_file.write(str(fp) + '\n')
+
     def add_mistake(self):
         ''' adds the mistake next to each prediction '''
         risk_dfs_updated = []
