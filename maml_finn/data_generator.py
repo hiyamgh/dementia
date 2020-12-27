@@ -5,170 +5,119 @@ import random
 import tensorflow as tf
 
 from tensorflow.python.platform import flags
-from utils import get_images
 
 FLAGS = flags.FLAGS
+
+""""
+n_way is the number of classes 
+n_shot is the number of ?
+n_query is the number of ?
+
+n_train_iters 
+n_test_iters
+
+meta_batch
+meta_lr
+
+parser.add_argument('--n_train_iters', type=int, default=60000)
+parser.add_argument('--n_test_iters', type=int, default=1000)
+
+parser.add_argument('--dataset', type=str, default='omniglot')
+parser.add_argument('--way', type=int, default=20) # number of classes
+parser.add_argument('--shot', type=int, default=1)
+parser.add_argument('--query', type=int, default=5)
+
+for omniglot, he made n_way = 20 & self.N = 20,
+n_shot=1 and n_query=5
+"""
+
 
 class DataGenerator(object):
     """
     Data Generator capable of generating batches of sinusoid or Omniglot data.
     A "class" is considered a class of omniglot digits or a particular sinusoid function.
     """
-    def __init__(self, num_samples_per_class, batch_size, config={}):
+    def __init__(self, args):
         """
         Args:
             num_samples_per_class: num samples to generate per class in one batch
             batch_size: size of meta batch size (e.g. number of functions)
         """
-        self.batch_size = batch_size
-        self.num_samples_per_class = num_samples_per_class
-        self.num_classes = 1  # by default 1 (only relevant for classification problems)
 
-        if FLAGS.datasource == 'sinusoid':
-            self.generate = self.generate_sinusoid_batch
-            self.amp_range = config.get('amp_range', [0.1, 5.0])
-            self.phase_range = config.get('phase_range', [0, np.pi])
-            self.input_range = config.get('input_range', [-5.0, 5.0])
-            self.dim_input = 1
-            self.dim_output = 1
-        elif 'omniglot' in FLAGS.datasource:
-            self.num_classes = config.get('num_classes', FLAGS.num_classes)
-            self.img_size = config.get('img_size', (28, 28))
-            self.dim_input = np.prod(self.img_size)
-            self.dim_output = self.num_classes
-            # data that is pre-resized using PIL with lanczos filter
-            data_folder = config.get('data_folder', './data/omniglot_resized')
+        self.N = args.examples_per_class # examples/instances per class
+        self.Ktr = args.Ktr # total number of training classes (in my case it will be always 2)
+        self.Kte = args.Kte # total number of testing classes (in my case it will be always 2)
 
-            character_folders = [os.path.join(data_folder, family, character) \
-                for family in os.listdir(data_folder) \
-                if os.path.isdir(os.path.join(data_folder, family)) \
-                for character in os.listdir(os.path.join(data_folder, family))]
-            random.seed(1)
-            random.shuffle(character_folders)
-            num_val = 100
-            num_train = config.get('num_train', 1200) - num_val
-            self.metatrain_character_folders = character_folders[:num_train]
-            if FLAGS.test_set:
-                self.metaval_character_folders = character_folders[num_train+num_val:]
-            else:
-                self.metaval_character_folders = character_folders[num_train:num_train+num_val]
-            self.rotations = config.get('rotations', [0, 90, 180, 270])
-        elif FLAGS.datasource == 'miniimagenet':
-            self.num_classes = config.get('num_classes', FLAGS.num_classes)
-            self.img_size = config.get('img_size', (84, 84))
-            self.dim_input = np.prod(self.img_size)*3
-            self.dim_output = self.num_classes
-            metatrain_folder = config.get('metatrain_folder', './data/miniImagenet/train')
-            if FLAGS.test_set:
-                metaval_folder = config.get('metaval_folder', './data/miniImagenet/test')
-            else:
-                metaval_folder = config.get('metaval_folder', './data/miniImagenet/val')
+        # TODO fill the xtr and xte with data
+        # self.xtr = args.df_train
+        # self.xte = args.df_test
 
-            metatrain_folders = [os.path.join(metatrain_folder, label) \
-                for label in os.listdir(metatrain_folder) \
-                if os.path.isdir(os.path.join(metatrain_folder, label)) \
-                ]
-            metaval_folders = [os.path.join(metaval_folder, label) \
-                for label in os.listdir(metaval_folder) \
-                if os.path.isdir(os.path.join(metaval_folder, label)) \
-                ]
-            self.metatrain_character_folders = metatrain_folders
-            self.metaval_character_folders = metaval_folders
-            self.rotations = config.get('rotations', [0])
-        else:
-            raise ValueError('Unrecognized data source')
+        self.xtr, self.xte = [[] * args.num_calsses], [[] * args.num_calsses]
+        # we have an X for each class
+        for i in range(args.num_calsses):
+            self.xtr[i] = args.train[i]
+            self.xte[i] = args.test[i]
 
+    def generate_episode(self, args, training=True, n_episodes=1):
+        '''
+        n_way: num_classes
+        n_shot: ?
+        n_query: ?
+        K: total number of classes in train/test
+        N: examples/instances per class
+        n_episodes was num_total_batches (finn)  i.e. number of tasks
+        In our case K_tr == K_te == 2
+        In our case n_way = 2
+        In our case N is number of samples per class
+        n_shot is number of instances in support set
+        n_query is number of instances in query set
+        '''
+        # generate_label = lambda way, n_samp: np.repeat(np.eye(way), n_samp, axis=0)
+        def generate_label(n_way, n_samp):
+            labels = []
+            for i in range(n_way):
+                labels.extend([i]*n_samp)
+            return labels
 
-    def make_data_tensor(self, train=True):
-        if train:
-            folders = self.metatrain_character_folders
-            # number of tasks, not number of meta-iterations. (divide by metabatch size to measure)
-            num_total_batches = 200000
-        else:
-            folders = self.metaval_character_folders
-            num_total_batches = 600
+        n_way, n_shot, n_query = args.way, args.shot, args.query
+        K = self.Ktr if training else self.Kte # total number of classes in training/testing
+        # x0 = self.xtr0 if training else self.xte0 # training/testing class 0
+        # x1 = self.xtr1 if training else self.xte1 # training/testing class 1
+        x = self.xtr if training else self.xte
 
-        # make list of files
-        print('Generating filenames')
-        all_filenames = []
-        for _ in range(num_total_batches):
-            sampled_character_folders = random.sample(folders, self.num_classes)
-            random.shuffle(sampled_character_folders)
-            labels_and_images = get_images(sampled_character_folders, range(self.num_classes), nb_samples=self.num_samples_per_class, shuffle=False)
-            # make sure the above isn't randomized order
-            labels = [li[0] for li in labels_and_images]
-            filenames = [li[1] for li in labels_and_images]
-            all_filenames.extend(filenames)
+        # query and support sets (xs and ys for inputs and labels)
+        xs, ys, xq, yq = [], [], [], []
 
-        # make queue for tensorflow to read from
-        filename_queue = tf.train.string_input_producer(tf.convert_to_tensor(all_filenames), shuffle=False)
-        print('Generating image processing ops')
-        image_reader = tf.WholeFileReader()
-        _, image_file = image_reader.read(filename_queue)
-        if FLAGS.datasource == 'miniimagenet':
-            image = tf.image.decode_jpeg(image_file, channels=3)
-            image.set_shape((self.img_size[0],self.img_size[1],3))
-            image = tf.reshape(image, [self.dim_input])
-            image = tf.cast(image, tf.float32) / 255.0
-        else:
-            image = tf.image.decode_png(image_file)
-            image.set_shape((self.img_size[0],self.img_size[1],1))
-            image = tf.reshape(image, [self.dim_input])
-            image = tf.cast(image, tf.float32) / 255.0
-            image = 1.0 - image  # invert
-        num_preprocess_threads = 1 # TODO - enable this to be set to >1
-        min_queue_examples = 256
-        examples_per_batch = self.num_classes * self.num_samples_per_class
-        batch_image_size = self.batch_size  * examples_per_batch
-        print('Batching images')
-        images = tf.train.batch(
-                [image],
-                batch_size = batch_image_size,
-                num_threads=num_preprocess_threads,
-                capacity=min_queue_examples + 3 * batch_image_size,
-                )
-        all_image_batches, all_label_batches = [], []
-        print('Manipulating image data to be right shape')
-        for i in range(self.batch_size):
-            image_batch = images[i*examples_per_batch:(i+1)*examples_per_batch]
+        # number of episodes in number of tasks .. in cbfinn, it was called num_total_batches
+        for t in range(n_episodes):
+            # sample WAY classes
+            classes = np.random.choice(range(K), size=n_way, replace=False) # choose n_way classes out of the
+                                                                            # total number of classes
+                                                                            # assuming there are like 500 classes
+                                                                            # but in our case (binary classification)
+                                                                            # we will choose always 2(n_way) out of 2(K)
 
-            if FLAGS.datasource == 'omniglot':
-                # omniglot augments the dataset by rotating digits to create new classes
-                # get rotation per class (e.g. 0,1,2,0,0 if there are 5 classes)
-                rotations = tf.multinomial(tf.log([[1., 1.,1.,1.]]), self.num_classes)
-            label_batch = tf.convert_to_tensor(labels)
-            new_list, new_label_list = [], []
-            for k in range(self.num_samples_per_class):
-                class_idxs = tf.range(0, self.num_classes)
-                class_idxs = tf.random_shuffle(class_idxs)
+            support_set = []
+            query_set = []
 
-                true_idxs = class_idxs*self.num_samples_per_class + k
-                new_list.append(tf.gather(image_batch,true_idxs))
-                if FLAGS.datasource == 'omniglot': # and FLAGS.train:
-                    new_list[-1] = tf.stack([tf.reshape(tf.image.rot90(
-                        tf.reshape(new_list[-1][ind], [self.img_size[0],self.img_size[1],1]),
-                        k=tf.cast(rotations[0,class_idxs[ind]], tf.int32)), (self.dim_input,))
-                        for ind in range(self.num_classes)])
-                new_label_list.append(tf.gather(label_batch, true_idxs))
-            new_list = tf.concat(new_list, 0)  # has shape [self.num_classes*self.num_samples_per_class, self.dim_input]
-            new_label_list = tf.concat(new_label_list, 0)
-            all_image_batches.append(new_list)
-            all_label_batches.append(new_label_list)
-        all_image_batches = tf.stack(all_image_batches)
-        all_label_batches = tf.stack(all_label_batches)
-        all_label_batches = tf.one_hot(all_label_batches, self.num_classes)
-        return all_image_batches, all_label_batches
+            # from each 'sampled' class, create support and query sets
+            for k in list(classes):
+                # sample SHOT and QUERY instances
+                idx = np.random.choice(range(self.N), size=n_shot + n_query, replace=False)
+                x_k = x[k][idx]
+                support_set.append(x_k[:n_shot])
+                query_set.append(x_k[n_shot:])
 
-    def generate_sinusoid_batch(self, train=True, input_idx=None):
-        # Note train arg is not used (but it is used for omniglot method.
-        # input_idx is used during qualitative testing --the number of examples used for the grad update
-        amp = np.random.uniform(self.amp_range[0], self.amp_range[1], [self.batch_size])
-        phase = np.random.uniform(self.phase_range[0], self.phase_range[1], [self.batch_size])
-        outputs = np.zeros([self.batch_size, self.num_samples_per_class, self.dim_output])
-        init_inputs = np.zeros([self.batch_size, self.num_samples_per_class, self.dim_input])
-        for func in range(self.batch_size):
-            init_inputs[func] = np.random.uniform(self.input_range[0], self.input_range[1], [self.num_samples_per_class, 1])
-            if input_idx is not None:
-                init_inputs[:,input_idx:,0] = np.linspace(self.input_range[0], self.input_range[1], num=self.num_samples_per_class-input_idx, retstep=False)
-            outputs[func] = amp[func] * np.sin(init_inputs[func]-phase[func])
-        return init_inputs, outputs, amp, phase
+            xs_k = np.concatenate(support_set, 0)
+            xq_k = np.concatenate(query_set, 0)
+            ys_k = generate_label(n_way, n_shot)
+            yq_k = generate_label(n_way, n_query)
+
+            xs.append(xs_k)
+            xq.append(xq_k)
+            ys.append(ys_k)
+            yq.append(yq_k)
+
+        xs, ys = np.stack(xs, 0), np.stack(ys, 0)
+        xq, yq = np.stack(xq, 0), np.stack(yq, 0)
+        return [xs, ys, xq, yq]
