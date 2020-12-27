@@ -11,7 +11,7 @@ Table of Content
 - [Imputation and Scaling](#imputation-and-scaling)
 - [Colro Code](#color-code)
 - [Run the code properly](#run-the-code-properly)
-- [Advanced ML Evaluation Metrics] (#advanced-ml-evaluation-metrics)
+- [Advanced ML Evaluation Metrics](#advanced-ml-evaluation-metrics)
 - [Requirements](#requirements)
 
 This is the repository for the dementia project
