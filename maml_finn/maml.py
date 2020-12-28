@@ -115,15 +115,34 @@ class MAML:
                         task_accuraciesb.append(tf.contrib.metrics.accuracy(tf.argmax(tf.nn.softmax(task_outputbs[j]), 1), tf.argmax(labelb, 1)))
                     task_output.extend([task_accuracya, task_accuraciesb])
 
-                return task_output
+                # return task_output
+                task_output_mod = []
+                for out in task_output:
+                    if isinstance(out, list):
+                        out_mod = []
+                        for sub in out:
+                            out_mod.append(tf.cast(sub, tf.float64))
+                        task_output_mod.append(out_mod)
+                    else:
+                        task_output_mod.append(tf.cast(out, tf.float64))
+
+                return task_output_mod
+
 
             if FLAGS.norm is not 'None':
                 # to initialize the batch norm vars, might want to combine this, and not run idx 0 twice.
                 unused = task_metalearn((self.inputa[0], self.inputb[0], self.labela[0], self.labelb[0]), False)
 
-            out_dtype = [tf.float32, [tf.float32]*num_updates, tf.float32, [tf.float32]*num_updates]
+            # out_dtype = [tf.float32, [tf.float32]*num_updates, tf.float32, [tf.float32]*num_updates]
+            # if self.classification:
+            #     out_dtype.extend([tf.float32, [tf.float32]*num_updates])
+            out_dtype = [tf.float64, [tf.float64] * num_updates, tf.float64, [tf.float64] * num_updates]
             if self.classification:
-                out_dtype.extend([tf.float32, [tf.float32]*num_updates])
+                out_dtype.extend([tf.float64, [tf.float64] * num_updates])
+            # Hiyam adding the 2 lines below
+            self.labela = tf.cast(self.labela, tf.float64)
+            self.labelb = tf.cast(self.labelb, tf.float64)
+
             result = tf.map_fn(task_metalearn, elems=(self.inputa, self.inputb, self.labela, self.labelb), dtype=out_dtype, parallel_iterations=FLAGS.meta_batch_size)
             if self.classification:
                 outputas, outputbs, lossesa, lossesb, accuraciesa, accuraciesb = result
@@ -131,14 +150,20 @@ class MAML:
                 outputas, outputbs, lossesa, lossesb  = result
 
         ## Performance & Optimization
+        meta_batch_siz64 = tf.cast(tf.to_float(FLAGS.meta_batch_size), tf.float64)
         if 'train' in prefix:
-            self.total_loss1 = total_loss1 = tf.reduce_sum(lossesa) / tf.to_float(FLAGS.meta_batch_size)
-            self.total_losses2 = total_losses2 = [tf.reduce_sum(lossesb[j]) / tf.to_float(FLAGS.meta_batch_size) for j in range(num_updates)]
+            # self.total_loss1 = total_loss1 = tf.reduce_sum(lossesa) / tf.to_float(FLAGS.meta_batch_size)
+            self.total_loss1 = total_loss1 = tf.reduce_sum(lossesa) / meta_batch_siz64
+            self.total_losses2 = total_losses2 = [tf.reduce_sum(lossesb[j]) / meta_batch_siz64 for j in range(num_updates)]
             # after the map_fn
             self.outputas, self.outputbs = outputas, outputbs
             if self.classification:
-                self.total_accuracy1 = total_accuracy1 = tf.reduce_sum(accuraciesa) / tf.to_float(FLAGS.meta_batch_size)
-                self.total_accuracies2 = total_accuracies2 = [tf.reduce_sum(accuraciesb[j]) / tf.to_float(FLAGS.meta_batch_size) for j in range(num_updates)]
+                # self.total_accuracy1 = total_accuracy1 = tf.reduce_sum(accuraciesa) / tf.to_float(FLAGS.meta_batch_size)
+                # self.total_accuracies2 = total_accuracies2 = [tf.reduce_sum(accuraciesb[j]) / tf.to_float(FLAGS.meta_batch_size) for j in range(num_updates)]
+                self.total_accuracy1 = total_accuracy1 = tf.reduce_sum(accuraciesa) / meta_batch_siz64
+                self.total_accuracies2 = total_accuracies2 = [
+                    tf.reduce_sum(accuraciesb[j]) / meta_batch_siz64 for j in range(num_updates)]
+
             self.pretrain_op = tf.train.AdamOptimizer(self.meta_lr).minimize(total_loss1)
 
             if FLAGS.metatrain_iterations > 0:
@@ -148,11 +173,11 @@ class MAML:
                     gvs = [(tf.clip_by_value(grad, -10, 10), var) for grad, var in gvs]
                 self.metatrain_op = optimizer.apply_gradients(gvs)
         else:
-            self.metaval_total_loss1 = total_loss1 = tf.reduce_sum(lossesa) / tf.to_float(FLAGS.meta_batch_size)
-            self.metaval_total_losses2 = total_losses2 = [tf.reduce_sum(lossesb[j]) / tf.to_float(FLAGS.meta_batch_size) for j in range(num_updates)]
+            self.metaval_total_loss1 = total_loss1 = tf.reduce_sum(lossesa) / meta_batch_siz64
+            self.metaval_total_losses2 = total_losses2 = [tf.reduce_sum(lossesb[j]) /meta_batch_siz64 for j in range(num_updates)]
             if self.classification:
-                self.metaval_total_accuracy1 = total_accuracy1 = tf.reduce_sum(accuraciesa) / tf.to_float(FLAGS.meta_batch_size)
-                self.metaval_total_accuracies2 = total_accuracies2 =[tf.reduce_sum(accuraciesb[j]) / tf.to_float(FLAGS.meta_batch_size) for j in range(num_updates)]
+                self.metaval_total_accuracy1 = total_accuracy1 = tf.reduce_sum(accuraciesa) / meta_batch_siz64
+                self.metaval_total_accuracies2 = total_accuracies2 =[tf.reduce_sum(accuraciesb[j]) /meta_batch_siz64 for j in range(num_updates)]
 
         ## Summaries
         tf.summary.scalar(prefix+'Pre-update loss', total_loss1)
@@ -177,9 +202,13 @@ class MAML:
         return weights
 
     def forward_fc(self, inp, weights, reuse=False):
+        for key in weights:
+            weights[key] = tf.cast(weights[key], tf.float64)
         hidden = normalize(tf.matmul(inp, weights['w1']) + weights['b1'], activation=tf.nn.relu, reuse=reuse, scope='0')
         for i in range(1,len(self.dim_hidden)):
+            hidden = tf.cast(hidden, tf.float64)
             hidden = normalize(tf.matmul(hidden, weights['w'+str(i+1)]) + weights['b'+str(i+1)], activation=tf.nn.relu, reuse=reuse, scope=str(i+1))
+            hidden = tf.cast(hidden, tf.float64)
         return tf.matmul(hidden, weights['w'+str(len(self.dim_hidden)+1)]) + weights['b'+str(len(self.dim_hidden)+1)]
 
     def construct_conv_weights(self):
