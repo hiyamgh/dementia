@@ -8,8 +8,10 @@ Table of Content
 - [Repository Structure](#repository-structure)
 - [Datasets](#datasets)
 - [Codebooks](#codebooks)
+- [Imputation and Scaling](#imputation-and-scaling)
 - [Colro Code](#color-code)
 - [Run the code properly](#run-the-code-properly)
+- [Advanced ML Evaluation Metrics](#advanced-ml-evaluation-metrics)
 - [Requirements](#requirements)
 
 This is the repository for the dementia project
@@ -39,9 +41,26 @@ This is the repository for the dementia project
   - [jump_informant_columns.csv](https://bitbucket.org/HiyamGh/dementia/src/master/input/codebooks/jump_informant_columns.csv): Code-book for all columns that require jumps to other columns along with the informant ones. The columns are **sorted by increasing order of missing values**. For each column we indicate whether it is **INFORMANT** or not. A description is also included for these columns.
   >  Please write a loop that goes over all the rows, and produces the following: for $i= 1$ to $n$ where $n$ is the total number of columns, produce x_i, the number of rows with $i$ missing entries.
 
+# Imputation and Scaling
+
+  - Imputed missing values of all **numeric/ordinal** features using KNN
+  - Imputed missing values of all **categorical** features by replacing all **nan**s with a new **category**.
+
+
 # Color-Code
 
   The **yellow color** stands for **carer**, the **red color** stands for **patient**
+
+# Advanced ML Evaluation Metrics
+  - Quantifying 'risk' as being the probability of the positive class
+  - Mean Empirical Risk Curves
+  - Precision/Recall Curves at Top K
+  - Probability of Mistake per model per **Frequent Pattern** Using FP-growth technique
+    * Use percentiles(distribution) to "itemize"/"categorize" values inside column
+  - Jaccard Similarity curves between model pairs
+  - All models used here are shallow models - Could incorporate Deep Learning Models soon.
+  - SMOTE used to oversample **training data** before testing (DO NOT APPLY SMOTE ON THE WHOLE DATA THEN DO A TRAIN-TEST SPLIY)
+
 
 # Run the Code properly
 ```

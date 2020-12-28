@@ -1,0 +1,9 @@
+{'0.00<sectarian_language<0.01'}
+{'0.00<sectarian_language<0.01', '0.00<factive_verbs<0.02'}
+{'0.00<hedges<0.00'}
+{'0.00<factive_verbs<0.02', '0.00<hedges<0.00'}
+{'1.00<quoted_sources<1.00'}
+{'1.00<quoted_sources<1.00', '0.00<factive_verbs<0.02'}
+{'0.00<implicative_verbs<0.00'}
+{'0.00<factive_verbs<0.02', '0.00<implicative_verbs<0.00'}
+{'0.00<factive_verbs<0.02'}

@@ -13,10 +13,12 @@ import warnings
 warnings.filterwarnings("ignore")
 
 
-class ShallowModel:
+class AdvancedEvaluator:
 
     def __init__(self, df, df_train, df_test, target_variable,
-                 plots_output_folder, trained_models_dir,
+                 plots_output_folder,
+                 fp_growth_output_folder,
+                 trained_models_dir,
                  models_dict,
                  scaling='robust', 
                  cols_drop=None,
@@ -66,7 +68,9 @@ class ShallowModel:
 
         # directory for dumping output plots
         self.mkdir(output_folder=plots_output_folder)
+        self.mkdir(output_folder=fp_growth_output_folder)
         self.plots_output_folder = plots_output_folder
+        self.fp_growth_output_folder = fp_growth_output_folder
         
         # get models dictionary
         self.models_dict = models_dict
@@ -159,6 +163,7 @@ class ShallowModel:
         self.risk_dfs.append(risk_df)
 
     def compute_jaccard_similarity(self, topKs):
+        ''' Jaccard Similarity at Top K '''
         combinations = list(itertools.combinations(list(self.models_dict.keys()), 2))
         models_indexes = {}
 
@@ -198,6 +203,7 @@ class ShallowModel:
         plt.close()
 
     def evaluate_predictions(self, y_test, y_pred):
+        ''' Evaluate predictions using standard error metrics like accuracy, precision, recall, F1, AUC '''
         accuracy = accuracy_score(y_test, y_pred)
         precision = precision_score(y_test, y_pred)
         recall = recall_score(y_test, y_pred)
@@ -216,6 +222,7 @@ class ShallowModel:
         print('FN = {}    TP = {}'.format(fn, tp))
 
     def produce_roc_curves(self):
+        ''' ROC AUC Curves '''
         # plot roc curves
         for i in range(len(self.fprs)):
             plt.plot(self.fprs[i], self.tprs[i], linestyle='--', label=self.model_names[i])
@@ -229,7 +236,7 @@ class ShallowModel:
         plt.close()
 
     def produce_empirical_risk_curves(self):
-
+        ''' produce plot of mean empirical risks '''
         for i in range(len(self.models_dict)):
             # xaxis = list(range(len(self.mean_empirical_risks[i])))
             plt.plot(range(1, self.nb_bins + 1), self.mean_empirical_risks[i], marker='o', label=self.model_names[i])
@@ -240,6 +247,7 @@ class ShallowModel:
         plt.close()
 
     def produce_curves_topK(self, topKs, metric):
+        ''' precision & recall at top K curves '''
         fig, ax = plt.subplots()
         for i in range(len(self.models_dict)):
             risk_df = self.risk_dfs[i]
@@ -288,25 +296,44 @@ class ShallowModel:
         self.cols_meta = {}
         for col in df_cols:
             self.cols_meta[col] = {
+                'min': df[col].min(),
                 '25th': df[col].quantile(0.25),
                 '50th': df[col].quantile(0.50),
-                '75th': df[col].quantile(0.75)
+                '75th': df[col].quantile(0.75),
+                'max': df[col].max()
             }
         # use these quantiles for categorizing data
         for index, row in df.iterrows():
             curr_items = []
             for col in df_cols:
-                if row[col] <= self.cols_meta[col]['25th']:
-                    curr_items.append('{}<={:.2f}(25th)'.format(col, self.cols_meta[col]['25th']))
-                elif self.cols_meta[col]['25th'] < row[col] <= self.cols_meta[col]['50th']:
-                    curr_items.append('{}<={:.2f}(50th)'.format(col, self.cols_meta[col]['50th']))
+                if self.cols_meta[col]['min'] <= row[col] < self.cols_meta[col]['25th']:
+                    curr_items.append('{:.2f}<{}<{:.2f}'.format(self.cols_meta[col]['min'], col, self.cols_meta[col]['25th']))
+
+                elif self.cols_meta[col]['25th'] <= row[col] < self.cols_meta[col]['50th']:
+                    curr_items.append('{:.2f}<{}<{:.2f}'.format(self.cols_meta[col]['25th'], col, self.cols_meta[col]['50th']))
+
+                elif self.cols_meta[col]['50th'] <= row[col] < self.cols_meta[col]['75th']:
+                    curr_items.append('{:.2f}<{}<{:.2f}'.format(self.cols_meta[col]['50th'], col, self.cols_meta[col]['75th']))
+
                 else:
-                    curr_items.append('{}<={:.2f}(75th)'.format(col, self.cols_meta[col]['75th']))
+                    curr_items.append('{:.2f}<{}<{:.2f}'.format(self.cols_meta[col]['75th'], col, self.cols_meta[col]['max']))
+
             itemSetList.append(curr_items)
 
+        # get the frequent patterns
         self.freqItemSet, self.rules = fpgrowth(itemSetList, minSupRatio=0.5, minConf=0.5)
+        fps = ['fp{}'.format(i) for i in range(1, len(self.freqItemSet) + 1)]
+
+        # create a dictionary of frequent patterns
+        self.fp_dict = dict(zip(fps, list(self.freqItemSet)))
+
+        # write the frequent patterns to a txt file
+        with open(os.path.join(self.fp_growth_output_folder, 'frequent_patterns.txt'), 'w') as txt_file:
+            for fp in self.freqItemSet:
+                txt_file.write(str(fp) + '\n')
 
     def add_mistake(self):
+        ''' adds the mistake next to each prediction '''
         risk_dfs_updated = []
         for index, risk_df in enumerate(self.risk_dfs):
             risk_df['mistake'] = risk_df.apply(lambda row: 0 if row['y_test'] == row['y_pred'] else 1, axis=1)
@@ -314,55 +341,90 @@ class ShallowModel:
             risk_dfs_updated.append(risk_df)
 
         self.risk_dfs = risk_dfs_updated
-        self.pattern_probability_of_mistake()
-
-    def create_freq_pattern_dict(self):
-        self.freq_patterns = {}
-        for freq_pattern in self.freqItemSet:
-            fp = next(iter(freq_pattern))
-            col, val = fp.split('<=')[0], float(fp.split('<=')[1][:-6])
-            self.freq_patterns[fp] = [col, val]
+        # self.pattern_probability_of_mistake()
 
     def fp_in_df(self, fp, df):
-        cols_vals = self.freq_patterns[fp]
-        col, val = cols_vals[0], cols_vals[1]
-        indices_who_has_fp = []
-        # 25th, 50th, or 75th
-        percentile = fp[-5:-1]
-        for index, row in df.iterrows():
-            if percentile == '25th':
-                if row[col] <= self.cols_meta[col]['25th']:
-                    indices_who_has_fp.append(index)
-                else:
-                    continue
-            elif percentile == '50th':
-                if self.cols_meta[col]['25th'] < row[col] <= self.cols_meta[col]['50th']:
-                    indices_who_has_fp.append(index)
-                else:
-                    continue
+
+        ''' check if the frequent pattern is in the passed df -- return a df
+            sub-setted by the rows that include the passed fp
+        '''
+        def get_bounds(col, lower, upper):
+            main_dict = self.cols_meta[col]
+            # min-25th
+            if main_dict['min'] == float(lower) and main_dict['25th'] == float(upper):
+                return ['min', '25th']
+            elif main_dict['25th'] == float(lower) and main_dict['50th'] == float(upper):
+                return ['25th', '50th']
+            elif main_dict['50th'] == float(lower) and main_dict['75th'] == float(upper):
+                return ['50th', '75th']
             else:
-                if row[col] <= self.cols_meta[col]['75th']:
-                    indices_who_has_fp.append(index)
+                return ['75th', 'max']
+
+        fps = list(self.fp_dict[fp])
+        col_names, lower_bounds, upper_bounds = [], [], []
+        for fp in fps:
+            col = fp.split('<')[1]
+            lower = fp.split('<')[0]
+            upper = fp.split('<')[2]
+
+            lb, ub = get_bounds(col, lower, upper)
+
+            # add to the list of current fps
+            col_names.append(col)
+            lower_bounds.append(lb)
+            upper_bounds.append(ub)
+
+        indices_who_has_fp = []
+        for index, row in df.iterrows():
+            add_index = True
+            for i, col in enumerate(col_names):
+                valuec = row[col] # current value
+                lbc, ubc = lower_bounds[i], upper_bounds[i] # lower bound current, upper bound current
+                if lbc == '75th':
+                    if self.cols_meta[col][lbc] <= valuec <= self.cols_meta[col][ubc]:
+                        pass
+                    else:
+                        add_index = False
+                        break
                 else:
-                    continue
+                    if self.cols_meta[col][lbc] <= valuec < self.cols_meta[col][ubc]:
+                        pass
+                    else:
+                        add_index = False
+                        break
+            if add_index:
+                indices_who_has_fp.append(index)
 
         return df[df.index.isin(indices_who_has_fp)]
 
     def pattern_probability_of_mistake(self):
-        self.create_freq_pattern_dict()
+        # self.create_freq_pattern_dict()
         probabilities_per_fp = {}
         for index, model in enumerate(self.models_dict):
             probabilities_per_fp[model] = {}
-            for freq_pattern in self.freq_patterns:
+            # for freq_pattern in self.freq_patterns:
+            # for freq_pattern in self.freqItemSet:
+            for freq_pattern in self.fp_dict:
 
                 df_test = self.df[self.df.index.isin(self.test_indexes)]
                 df_test_fp = self.fp_in_df(freq_pattern, df_test)
                 indices_fp = list(df_test_fp.index)
 
-                risk_df = self.risk_dfs[index]
-                risk_df = risk_df[risk_df['test_indices'].isin(indices_fp)]
-                prob_mistake = len(risk_df[risk_df['mistake'] == 1]) / len(risk_df)
-                # if not probabilities_per_fp[model]:
-                probabilities_per_fp[model][freq_pattern] = prob_mistake
+                if not indices_fp:
+                    probabilities_per_fp[model][freq_pattern] = -1
+                else:
+                    risk_df = self.risk_dfs[index]
+                    risk_df = risk_df[risk_df['test_indices'].isin(indices_fp)]
+                    prob_mistake = len(risk_df[risk_df['mistake'] == 1]) / len(risk_df)
+                    # if not probabilities_per_fp[model]:
+                    probabilities_per_fp[model][freq_pattern] = prob_mistake
+
+        df_probas = pd.DataFrame()
+        df_probas['FP'] = [v for k, v in self.fp_dict.items()]
+        for model in self.models_dict:
+            df_probas[model] = [v for k, v in probabilities_per_fp[model].items()]
+
+        self.mkdir(output_folder=self.fp_growth_output_folder)
+        df_probas.to_csv(os.path.join(self.fp_growth_output_folder, 'fp_growth.csv'), index=False)
 
         return probabilities_per_fp
