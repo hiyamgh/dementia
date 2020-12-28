@@ -4,9 +4,7 @@ import numpy as np
 import os
 import random
 import tensorflow as tf
-
 from tensorflow.python.platform import flags
-from utils import get_images
 
 FLAGS = flags.FLAGS
 
@@ -57,30 +55,6 @@ class DataGenerator(object):
         self.X_test = np.array(self.df_test.loc[:, self.df_test.columns != self.target_variable])
         self.y_test = np.array(self.df_test.loc[:, self.df_test.columns == self.target_variable])
 
-
-        # self.img_size = config.get('img_size', (28, 28))
-        # self.dim_input = np.prod(self.img_size)
-        # self.dim_output = self.num_classes
-        # # data that is pre-resized using PIL with lanczos filter
-        # data_folder = config.get('data_folder', './data/omniglot_resized/')
-        #
-        # character_folders = [os.path.join(data_folder, family, character) \
-        #                      for family in os.listdir(data_folder) \
-        #                      if os.path.isdir(os.path.join(data_folder, family)) \
-        #                      for character in os.listdir(os.path.join(data_folder, family))]
-        # random.seed(1)
-        # random.shuffle(character_folders)
-        # # num_val = 100
-        # # num_train = config.get('num_train', 1200) - num_val
-        # num_val = 20
-        # num_train = config.get('num_train', 100) - num_val
-        # self.metatrain_character_folders = character_folders[:num_train]
-        # if FLAGS.test_set:
-        #     self.metaval_character_folders = character_folders[num_train + num_val:]
-        # else:
-        #     self.metaval_character_folders = character_folders[num_train:num_train + num_val]
-        # self.rotations = config.get('rotations', [0, 90, 180, 270])
-
     def generate_episode_data(self, x, y, n_shots):
         data = []
         labels = []
@@ -115,76 +89,3 @@ class DataGenerator(object):
             all_data_labels.append(labels)
 
         return all_data, all_data_labels
-
-        # # make queue for tensorflow to read from
-        # filename_queue = tf.train.string_input_producer(tf.convert_to_tensor(all_filenames), shuffle=False)
-        # print('Generating image processing ops')
-        # image_reader = tf.WholeFileReader()
-        # _, image_file = image_reader.read(filename_queue)
-        # if FLAGS.datasource == 'miniimagenet':
-        #     image = tf.image.decode_jpeg(image_file, channels=3)
-        #     image.set_shape((self.img_size[0],self.img_size[1],3))
-        #     image = tf.reshape(image, [self.dim_input])
-        #     image = tf.cast(image, tf.float32) / 255.0
-        # else:
-        #     image = tf.image.decode_png(image_file)
-        #     image.set_shape((self.img_size[0],self.img_size[1],1))
-        #     image = tf.reshape(image, [self.dim_input])
-        #     image = tf.cast(image, tf.float32) / 255.0
-        #     image = 1.0 - image  # invert
-        # num_preprocess_threads = 1 # TODO - enable this to be set to >1
-        # min_queue_examples = 256
-        # examples_per_batch = self.num_classes * self.num_samples_per_class  # examples_per_class = 5 * 2 = 10
-        # batch_image_size = self.batch_size  * examples_per_batch # batch size: 32 * 10 = 320
-        # print('Batching images')
-        # images = tf.train.batch(
-        #         [image],
-        #         batch_size = batch_image_size,
-        #         num_threads=num_preprocess_threads,
-        #         capacity=min_queue_examples + 3 * batch_image_size,
-        #         ) # tensor of shape: (320, 784) ... 320 is the batch_image_size, 784 is 28*28
-        # all_image_batches, all_label_batches = [], []
-        # print('Manipulating image data to be right shape')
-        # for i in range(self.batch_size):
-        #     image_batch = images[i*examples_per_batch:(i+1)*examples_per_batch] # tensor of shape (10, 784) (take 10 10 until 320)
-        #
-        #     if FLAGS.datasource == 'omniglot':
-        #         # omniglot augments the dataset by rotating digits to create new classes
-        #         # get rotation per class (e.g. 0,1,2,0,0 if there are 5 classes)
-        #         rotations = tf.multinomial(tf.log([[1., 1.,1.,1.]]), self.num_classes)
-        #     label_batch = tf.convert_to_tensor(labels) # labels are the 10 labels we generated
-        #     new_list, new_label_list = [], []
-        #     for k in range(self.num_samples_per_class):
-        #         class_idxs = tf.range(0, self.num_classes) # tensor (list) of [0, 1, 2, 3, 4]
-        #         class_idxs = tf.random_shuffle(class_idxs) # tensor (list) of [3, 2, 0, 1, 4]
-        #
-        #         true_idxs = class_idxs*self.num_samples_per_class + k # [2, 8, 6, 0, 4]
-        #         new_list.append(tf.gather(image_batch,true_idxs))
-        #         if FLAGS.datasource == 'omniglot': # and FLAGS.train:
-        #             new_list[-1] = tf.stack([tf.reshape(tf.image.rot90(
-        #                 tf.reshape(new_list[-1][ind], [self.img_size[0],self.img_size[1],1]),
-        #                 k=tf.cast(rotations[0,class_idxs[ind]], tf.int32)), (self.dim_input,))
-        #                 for ind in range(self.num_classes)])
-        #         new_label_list.append(tf.gather(label_batch, true_idxs))
-        #     new_list = tf.concat(new_list, 0)  # has shape [self.num_classes*self.num_samples_per_class, self.dim_input]
-        #     new_label_list = tf.concat(new_label_list, 0)
-        #     all_image_batches.append(new_list)
-        #     all_label_batches.append(new_label_list)
-        # all_image_batches = tf.stack(all_image_batches) # Tensor of shape (32, 10, 784)
-        # all_label_batches = tf.stack(all_label_batches)
-        # all_label_batches = tf.one_hot(all_label_batches, self.num_classes) # Tensor of shape  (32, 10, 5) (32 is batch size, 10 is examples per batch, 5 is nb of classes)
-        # return all_image_batches, all_label_batches
-
-    def generate_sinusoid_batch(self, train=True, input_idx=None):
-        # Note train arg is not used (but it is used for omniglot method.
-        # input_idx is used during qualitative testing --the number of examples used for the grad update
-        amp = np.random.uniform(self.amp_range[0], self.amp_range[1], [self.batch_size])
-        phase = np.random.uniform(self.phase_range[0], self.phase_range[1], [self.batch_size])
-        outputs = np.zeros([self.batch_size, self.num_samples_per_class, self.dim_output])
-        init_inputs = np.zeros([self.batch_size, self.num_samples_per_class, self.dim_input])
-        for func in range(self.batch_size):
-            init_inputs[func] = np.random.uniform(self.input_range[0], self.input_range[1], [self.num_samples_per_class, 1])
-            if input_idx is not None:
-                init_inputs[:,input_idx:,0] = np.linspace(self.input_range[0], self.input_range[1], num=self.num_samples_per_class-input_idx, retstep=False)
-            outputs[func] = amp[func] * np.sin(init_inputs[func]-phase[func])
-        return init_inputs, outputs, amp, phase
