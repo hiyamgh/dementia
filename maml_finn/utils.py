@@ -36,7 +36,9 @@ def conv_block(inp, cweight, bweight, reuse, scope, activation=tf.nn.relu, max_p
         normed = tf.nn.max_pool(normed, stride, stride, max_pool_pad)
     return normed
 
+
 def normalize(inp, activation, reuse, scope):
+    inp = tf.cast(inp, tf.float32)
     if FLAGS.norm == 'batch_norm':
         return tf_layers.batch_norm(inp, activation_fn=activation, reuse=reuse, scope=scope)
     elif FLAGS.norm == 'layer_norm':
