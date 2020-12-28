@@ -1,7 +1,11 @@
 import pandas as pd
+import numpy as np
 import pickle
 from legalize_data import impute_missing_values
 from sklearn.preprocessing import *
+import os
+import matplotlib.pyplot as plt
+from scipy.special import boxcox
 
 
 def get_columns(erroneous_codebook):
@@ -35,13 +39,40 @@ def apply_one_hot_encoding(pooled_categorical_sub):
     all_cols = list(pooled_categorical_sub.columns)
     df = pooled_categorical_sub
     for col in all_cols:
-        df = pd.concat([df, pd.get_dummies(df[col], prefix=col)], axis=1).drop([col], axis=1)
+        # apply dummy variable encoding (NOT one hot encoding)
+        df = pd.concat([df, pd.get_dummies(df[col], prefix=col, drop_first=True)], axis=1).drop([col], axis=1)
     df = df.sample(frac=1).reset_index(drop=True)
     return df
 
 
 def apply_dummy_imputation(df):
     return impute_missing_values(df)
+
+
+def mkdir(directory):
+    ''' creates a directory if it does not already exist '''
+    if not os.path.exists(directory):
+        os.makedirs(directory)
+
+
+def generate_histograms(df, output_folder):
+    mkdir(output_folder)
+    all_cols = list(df.columns)
+    for col in all_cols:
+        plt.hist(df[col], bins=100)
+        plt.xlabel(col)
+        plt.ylabel('Frequency')
+        plt.savefig(os.path.join(output_folder, '{}.png'.format(col)))
+        plt.close()
+
+
+def apply_boxcox(df):
+    pos_df = df[df > 0]
+    # pp = PowerTransformer()
+    bcdata, lam = boxcox(pos_df, 0.5)
+    x = np.empty_like(df)
+    x[df > 0] = bcdata
+    x[df == 0] = -1 / lam
 
 
 def scale_numeric(df):
@@ -79,6 +110,12 @@ if __name__ == '__main__':
         # remove missing values using dummy imputation (impute by replacing
         # with the majority) + apply scaling
         numeric_df_imp = apply_dummy_imputation(df=numeric_df)
+
+        # generate histograms of all numeric columns
+        # apply_boxcox(numeric_df_imp)
+        generate_histograms(numeric_df_imp, output_folder='../output/numeric/before_boxcox/')
+
+        # scale numeric data
         numeric_df_imp = scale_numeric(df=numeric_df_imp)
 
         # remove missing values using dummy imputation (impute by replacing
@@ -96,7 +133,7 @@ if __name__ == '__main__':
 
         # save processed data
         pooled_processed = pd.concat([numeric_df_imp, ordinal_df_imp, categorical_df_imp, target], axis=1)
-        pooled_processed.to_csv('../input/pooled_processed.csv', index=False)
+        pooled_processed.to_csv('../input/pooled_proc_scimp.csv', index=False)
 
 
 
