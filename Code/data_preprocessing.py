@@ -43,7 +43,8 @@ def create_new_category(pooled_categorical_sub):
 
     # loop over all categorical columns
     for col in all_cols:
-        last_category = max(df[col])
+        vals = list(set(df[col].dropna().values))
+        last_category = max(vals)
         new_category = last_category + 1
         df[col] = df[col].fillna(new_category)
 
