@@ -1,8 +1,8 @@
 from imblearn.pipeline import Pipeline
+from imblearn.combine import SMOTENC
 from imblearn.over_sampling import RandomOverSampler
 from imblearn.under_sampling import RandomUnderSampler
 from imblearn.combine import SMOTEENN
-from imblearn.combine import SMOTENC
 from imblearn.combine import SMOTETomek
 from imblearn.under_sampling import TomekLinks
 
