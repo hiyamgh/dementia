@@ -36,11 +36,22 @@ from data_generator_tabular2 import DataGenerator
 from maml import MAML
 from tensorflow.python.platform import flags
 
-training_data_path = '../Advanced-ML-Eval/input/fake_news_datasets/feature_extraction_train_updated.csv'
-testing_data_path = '../Advanced-ML-Eval/input/fake_news_datasets/feature_extraction_test_updated.csv'
+
+# training and testing data paths for BuzzFeed datasets
+training_data_path = '../Advanced-ML-Eval/input/fake_news_datasets/buzzfeed_feature_extraction_train_80_updated.csv'
+testing_data_path = '../Advanced-ML-Eval/input/fake_news_datasets/buzzfeed_feature_extraction_test_20_updated.csv'
+
+# # BuzzFeed train and test datasets
+# buzz_train = pd.read_csv(training_data_path, encoding='latin-1')
+# buzz_test = pd.read_csv(testing_data_path, encoding='latin-1')
+
+
+# training_data_path = '../Advanced-ML-Eval/input/fake_news_datasets/feature_extraction_train_updated.csv'
+# testing_data_path = '../Advanced-ML-Eval/input/fake_news_datasets/feature_extraction_test_updated.csv'
 df_train = pd.read_csv(training_data_path, encoding='latin-1')
 df_test = pd.read_csv(testing_data_path, encoding='latin-1')
-cols_drop = ['article_title', 'article_content', 'source', 'source_category', 'unit_id']
+# cols_drop = ['article_title', 'article_content', 'source', 'source_category', 'unit_id']
+cols_drop = ['article_content']
 target_variable = 'label'
 
 
@@ -59,6 +70,7 @@ flags.DEFINE_string('testing_path', testing_data_path, 'path to testing dataset'
 flags.DEFINE_string('target_variable', target_variable, 'target variable to predict')
 flags.DEFINE_list('cols_drop', cols_drop, 'columns to drop from the data')
 flags.DEFINE_string('special_encoding', special_encoding, 'special encoding needed to read the data')
+flags.DEFINE_string('scaling', 'robust', 'scaling mechanism to apply to the data')
 
 # kshot = 1
 # 	kquery = 15
@@ -70,18 +82,22 @@ flags.DEFINE_string('special_encoding', special_encoding, 'special encoding need
 ## Dataset/method options
 flags.DEFINE_string('datasource', 'omniglot', 'sinusoid or omniglot or miniimagenet')
 flags.DEFINE_integer('num_classes', 2, 'number of classes used in classification (e.g. 5-way classification).')
-flags.DEFINE_integer('kshot', 8, 'number of samples in support set')
-flags.DEFINE_integer('kquery', 8, 'number of samples in query set')
+# flags.DEFINE_integer('kshot', 8, 'number of samples in support set')
+# flags.DEFINE_integer('kquery', 8, 'number of samples in query set')
+flags.DEFINE_integer('kshot', 4, 'number of samples in support set')
+flags.DEFINE_integer('kquery', 4, 'number of samples in query set')
+
 # oracle means task id is input (only suitable for sinusoid)
 flags.DEFINE_string('baseline', None, 'oracle, or None')
 
 ## Training options
 flags.DEFINE_integer('pretrain_iterations', 0, 'number of pre-training iterations.')
-flags.DEFINE_integer('metatrain_iterations', 50, 'number of metatraining iterations.') # 15k for omniglot, 50k for sinusoid
-flags.DEFINE_integer('meta_batch_size', 4, 'number of tasks sampled per meta-update')
+flags.DEFINE_integer('metatrain_iterations', 4000, 'number of metatraining iterations.') # 15k for omniglot, 50k for sinusoid
+flags.DEFINE_integer('meta_batch_size', 64, 'number of tasks sampled per meta-update')
 flags.DEFINE_float('meta_lr', 0.01, 'the base learning rate of the generator')
 flags.DEFINE_integer('update_batch_size', 5, 'number of examples used for inner gradient update (K for K-shot learning).')
-flags.DEFINE_float('update_lr', 1e-3, 'step size alpha for inner gradient update.') # 0.1 for omniglot
+flags.DEFINE_float('update_lr', 0.1, 'step size alpha for inner gradient update.') # 0.1 for omniglot
+# flags.DEFINE_float('update_lr', 1e-3, 'step size alpha for inner gradient update.') # 0.1 for omniglot
 flags.DEFINE_integer('num_updates', 1, 'number of inner gradient updates during training.')
 
 ## Model options
@@ -95,7 +111,7 @@ flags.DEFINE_bool('stop_grad', False, 'if True, do not use second derivatives in
 flags.DEFINE_bool('log', True, 'if false, do not log summaries, for debugging code.')
 flags.DEFINE_string('logdir', 'logs/FAKES/', 'directory for summaries and checkpoints.')
 flags.DEFINE_bool('resume', True, 'resume training if there is a model available')
-flags.DEFINE_bool('train', False, 'True to train, False to test.')
+flags.DEFINE_bool('train', True, 'True to train, False to test.')
 flags.DEFINE_integer('test_iter', -1, 'iteration to load model (-1 for latest model)')
 flags.DEFINE_bool('test_set', True, 'Set to true to test on the the test set, False for the validation set.')
 flags.DEFINE_integer('train_update_batch_size', -1, 'number of examples used for gradient update during training (use if you want to test with a different number).')
@@ -280,7 +296,7 @@ def main():
     metaval_input_tensors = {'inputa': inputa, 'inputb': inputb, 'labela': labela, 'labelb': labelb}
 
     # model = MAML(dim_input, dim_output, test_num_updates=test_num_updates)
-    model = MAML(dim_input=data_generator.X_train.shape[1], dim_output=1, test_num_updates=test_num_updates)
+    model = MAML(dim_input=data_generator.dim_input, dim_output=data_generator.dim_output, test_num_updates=test_num_updates)
     if FLAGS.train or not tf_data_load:
         model.construct_model(input_tensors=input_tensors, prefix='metatrain_')
     if tf_data_load:
