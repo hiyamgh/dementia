@@ -1,6 +1,7 @@
 from sklearn.tree import DecisionTreeRegressor
 from sklearn.ensemble import RandomForestClassifier
 from sklearn.feature_selection import RFE,RFECV
+from create_textual import get_description,get_col_name_in_pooled
 import numpy as np
 import pandas as pd
 
@@ -16,6 +17,21 @@ def feature_importance(pooled):
     importance = pd.DataFrame({'Feature': all_cols, 'Importance': feature_impotances})
     # sort the feature importances
     importance = importance.sort_values(by=['Importance'], ascending=False)
+    copyofdem = pd.read_excel('../input/Copy of Dementia_baseline_questionnaire_V1.xlsx').set_index('name')
+    
+    descriptions = []
+    copyofdemcols = list(copyofdem.index)
+    for col in list(importance['Feature']):
+        if col in copyofdemcols:
+            descriptions.append(get_description(copyofdem, col))
+        else:
+            col_renamed = get_col_name_in_pooled(col, pooled)
+            if col_renamed in copyofdemcols:
+                descriptions.append(get_description(copyofdem, col))
+            else:
+                descriptions.append('not found')
+    importance['description'] = descriptions
+
     importance.to_csv('../input/feature_importance.csv',index=False)
 
 
@@ -38,6 +54,9 @@ def select_K(pooled):
     selected=ranked.loc[ranked['Rank']==1]
     ranked.to_csv('../input/k_best_features.csv',index=False)
     return ranked
+
+def set_descriptions():
+    copyofdem = pd.read_excel('../input/Copy of Dementia_baseline_questionnaire_V1.xlsx').set_index('name')
 
 if __name__=='__main__':
     pooled=pd.read_csv('../input/pooled_imputed_scaled.csv')

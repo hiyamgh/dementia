@@ -17,6 +17,15 @@ from imblearn.metrics import geometric_mean_score
 # from xgboost import XGBClassifier
 from sklearn.neighbors import KNeighborsClassifier
 from imblearn.ensemble import BalancedRandomForestClassifier
+from sklearn.metrics import fbeta_score,make_scorer
+
+f2_score=make_scorer(fbeta_score, beta=2)
+
+def brier_skill_score(y, yhat):
+    probabilities = [0.01 for _ in range(len(y))]
+    brier_ref=metrics.brier_score_loss(y, probabilities)
+    bs=metrics.brier_score_loss(y, yhat)
+    return 1.0 - (bs / brier_ref)
 
 def train_validate_test():
     split_save('../input/pooled_imputed_scaled.csv','../input/train.csv','../input/test.csv')
@@ -64,7 +73,7 @@ def create_model(y,model):
     counter = Counter(y)
     reverse_counter={0:counter[1],1:counter[0]}
     balance = [{0:1,1:10}, {0:1,1:100},reverse_counter]
-    param_grid = {'m__class_weight':[reverse_counter]}
+    param_grid = {'m__class_weight':[reverse_counter],'s__sampling_strategy':['minority','not minority','all']}
     # param_grid = {}
     
                     #   solver=['newton-cg', 'lbfgs', 'liblinear','sag', 'saga'],
@@ -73,11 +82,11 @@ def create_model(y,model):
                     
     return model,param_grid
 
-def print_results(model_name,y,y_predicted):
+def print_results(model_name,best_params,y,y_predicted):
     roc=metrics.roc_auc_score(y,y_predicted)
     gmean=geometric_mean_score(y, y_predicted, average='weighted')
-    fscore=metrics.f1_score(y,y_predicted)
-    bss=metrics.brier_score_loss(y,y_predicted)
+    fscore=fbeta_score(y, y_predicted, beta=2)
+    bss=brier_skill_score(y,y_predicted)
     pr_auc=metrics.average_precision_score(y, y_predicted)
     tn, fp, fn, tp = metrics.confusion_matrix(y,y_predicted).ravel()
     f=open(f"../output/cost_sensitive_results/{model_name}.txt", "w")
@@ -87,24 +96,24 @@ def print_results(model_name,y,y_predicted):
     f.write('%s f-score: %.3f\n' % ('',fscore))
     f.write('%s bss: %.3f\n' % ('',bss))
     f.write('%s PR AUC: %.3f\n' % ('',pr_auc))
-    f.write('Cost Matrix (assuming cost = 0 for correct labels and cost = 1 for wrong labels)\n')
+    f.write(f'best params:{best_params}')
+    f.write('\nCost Matrix (assuming cost = 0 for correct labels and cost = 1 for wrong labels)\n')
     f.write('\t\t  |Actual Negative|Actual Positive\n')
     f.write(f'Predicted Negative|0\t\t  |{fn}\n')
     f.write(f'Predicted Positive|{fp}\t\t  |0\n')
     f.close()
     
 def test_model(X,y,model_class,model_name,test_X,test_y):
-    model,model_grid=create_model(y,model_class)
-    grid=[{'s__sampling_strategy':['auto']},model_grid]
+    model,grid=create_model(y,model_class)
     pipeline=create_pipeline(model,X.columns)
     cv = RepeatedStratifiedKFold(n_splits=10, n_repeats=3, random_state=1)
-    grid = GridSearchCV(estimator=pipeline,param_grid=grid,cv=cv,scoring='roc_auc')
+    grid = GridSearchCV(estimator=pipeline,param_grid=grid,cv=cv,scoring=f2_score)
     grid_result = grid.fit(X, y)
     # print('Best Weighted logistic regression: %f using %s' % (grid_result.best_score_, grid_result.best_params_))
     estimator=grid_result.best_estimator_
     estimator.fit(X,y)
     y_predicted=estimator.predict(test_X)
-    print_results(model_name,test_y,y_predicted)
+    print_results(model_name,grid_result.best_params_,test_y,y_predicted)
     
 if __name__=='__main__':
     df=pd.read_csv('../input/train.csv')
@@ -115,13 +124,13 @@ if __name__=='__main__':
     test_X=test_df[df.columns[:-1]]
     test_y=test_df['dem1066']
     
-    baseline_logistic(X,y,test_X,test_y)
+    # baseline_logistic(X,y,test_X,test_y)
     for model,model_name in [
         # (XGBClassifier(),'XGBoost'),
                             # (KNeighborsClassifier(),'KNeighbors'),
                             # (BalancedRandomForestClassifier(),'Balanced Random Forest')
                              (LogisticRegression(),'Weighted Logistic Regression'),
-                             (DecisionTreeClassifier(),'Weighted Decision Tree Classifier'),
-                             (SVC(),'Weighted SVM')
+                            #  (DecisionTreeClassifier(),'Weighted Decision Tree Classifier'),
+                            #  (SVC(),'Weighted SVM')
                              ]:
         test_model(X,y,model,model_name,test_X,test_y)
