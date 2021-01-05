@@ -38,8 +38,8 @@ from tensorflow.python.platform import flags
 
 
 # training and testing data paths for BuzzFeed datasets
-training_data_path = '../Advanced-ML-Eval/input/fake_news_datasets/buzzfeed_feature_extraction_train_80_updated.csv'
-testing_data_path = '../Advanced-ML-Eval/input/fake_news_datasets/buzzfeed_feature_extraction_test_20_updated.csv'
+training_data_path = '../Advanced-ML-Eval/input/fake_news_datasets/feature_extraction_train_updated.csv'
+testing_data_path = '../Advanced-ML-Eval/input/fake_news_datasets/feature_extraction_test_updated.csv'
 
 # # BuzzFeed train and test datasets
 # buzz_train = pd.read_csv(training_data_path, encoding='latin-1')
@@ -50,8 +50,8 @@ testing_data_path = '../Advanced-ML-Eval/input/fake_news_datasets/buzzfeed_featu
 # testing_data_path = '../Advanced-ML-Eval/input/fake_news_datasets/feature_extraction_test_updated.csv'
 df_train = pd.read_csv(training_data_path, encoding='latin-1')
 df_test = pd.read_csv(testing_data_path, encoding='latin-1')
-# cols_drop = ['article_title', 'article_content', 'source', 'source_category', 'unit_id']
-cols_drop = ['article_content']
+cols_drop = ['article_title', 'article_content', 'source', 'source_category', 'unit_id']
+# cols_drop = ['article_content']
 target_variable = 'label'
 
 
@@ -84,17 +84,17 @@ flags.DEFINE_string('datasource', 'omniglot', 'sinusoid or omniglot or miniimage
 flags.DEFINE_integer('num_classes', 2, 'number of classes used in classification (e.g. 5-way classification).')
 # flags.DEFINE_integer('kshot', 8, 'number of samples in support set')
 # flags.DEFINE_integer('kquery', 8, 'number of samples in query set')
-flags.DEFINE_integer('kshot', 4, 'number of samples in support set')
-flags.DEFINE_integer('kquery', 4, 'number of samples in query set')
+flags.DEFINE_integer('kshot', 8, 'number of samples in support set')
+flags.DEFINE_integer('kquery', 8, 'number of samples in query set')
 
 # oracle means task id is input (only suitable for sinusoid)
 flags.DEFINE_string('baseline', None, 'oracle, or None')
 
 ## Training options
-flags.DEFINE_integer('pretrain_iterations', 0, 'number of pre-training iterations.')
+flags.DEFINE_integer('pretrain_iterations', 100, 'number of pre-training iterations.')
 flags.DEFINE_integer('metatrain_iterations', 4000, 'number of metatraining iterations.') # 15k for omniglot, 50k for sinusoid
-flags.DEFINE_integer('meta_batch_size', 64, 'number of tasks sampled per meta-update')
-flags.DEFINE_float('meta_lr', 0.01, 'the base learning rate of the generator')
+flags.DEFINE_integer('meta_batch_size', 32, 'number of tasks sampled per meta-update')
+flags.DEFINE_float('meta_lr', 0.0001, 'the base learning rate of the generator')
 flags.DEFINE_integer('update_batch_size', 5, 'number of examples used for inner gradient update (K for K-shot learning).')
 flags.DEFINE_float('update_lr', 0.1, 'step size alpha for inner gradient update.') # 0.1 for omniglot
 # flags.DEFINE_float('update_lr', 1e-3, 'step size alpha for inner gradient update.') # 0.1 for omniglot

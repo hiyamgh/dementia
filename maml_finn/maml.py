@@ -36,8 +36,9 @@ class MAML:
                 self.forward = self.forward_conv
                 self.construct_weights = self.construct_conv_weights
             else:
-                # self.dim_hidden = [256, 128, 64, 64]
-                self.dim_hidden = [256, 128, 64]
+                self.dim_hidden = [256, 128, 64, 64]
+                # self.dim_hidden = [256, 128, 64]
+                # self.dim_hidden = [10, 10]
                 self.forward=self.forward_fc
                 self.construct_weights = self.construct_fc_weights
             if FLAGS.datasource == 'miniimagenet':
@@ -182,13 +183,18 @@ class MAML:
 
         ## Summaries
         tf.summary.scalar(prefix+'Pre-update loss', total_loss1)
+        # print('Pre-update loss: {}'.format(total_loss1))
         if self.classification:
             tf.summary.scalar(prefix+'Pre-update accuracy', total_accuracy1)
+            # print('Pre-update accuracy: {}'.format(total_accuracy1))
 
         for j in range(num_updates):
             tf.summary.scalar(prefix+'Post-update loss, step ' + str(j+1), total_losses2[j])
+            # print('Post-update loss: {}'.format(total_losses2[j]))
             if self.classification:
                 tf.summary.scalar(prefix+'Post-update accuracy, step ' + str(j+1), total_accuracies2[j])
+                # print('Post-update accuracy: {}'.format(total_accuracies2[j]))
+
 
     ### Network construction functions (fc networks and conv networks)
     def construct_fc_weights(self):
