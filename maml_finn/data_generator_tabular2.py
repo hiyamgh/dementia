@@ -6,6 +6,7 @@ import tensorflow as tf
 import tqdm
 import pickle
 from tensorflow.python.platform import flags
+from sklearn.preprocessing import RobustScaler, MinMaxScaler, StandardScaler
 
 FLAGS = flags.FLAGS
 
@@ -61,6 +62,21 @@ class DataGenerator(object):
         self.X_test = np.array(self.df_test.loc[:, self.df_test.columns != self.target_variable])
         self.y_test = np.array(self.df_test.loc[:, self.df_test.columns == self.target_variable])
 
+        # specify dimensions of input and output for neural network (feed forward)
+        self.dim_input = self.X_train.shape[1]
+        self.dim_output = self.num_classes
+
+        # scale the data
+        if FLAGS.scaling == 'robust':
+            scaler = RobustScaler()
+        elif FLAGS.scaling == 'minmax':
+            scaler = MinMaxScaler()
+        else:
+            scaler = StandardScaler()
+
+        self.X_train = scaler.fit_transform(self.X_train)
+        self.X_test = scaler.transform(self.X_test)
+
     def get_data_tasks(self, labels, nb_samples=None, shuffle=True, training=True):
 
         if nb_samples is not None:
@@ -84,7 +100,11 @@ class DataGenerator(object):
             idxs_chosen = sampler(idxs_curr)
             # add the indexes and labels
             all_idxs.extend(idxs_chosen)
-            all_labels.extend([i] * len(idxs_chosen))
+            labels_curr = [i] * len(idxs_chosen)
+            # convert labels to one hot encoded vectors -- this is how they must
+            # be understood in the neural net
+            labels_curr = np.array([labels_curr, -(np.array(labels_curr)-1)]).T
+            all_labels.extend(labels_curr)
 
         # flatten the list of indxs
         # all_idxs = [item for sublist in all_idxs for item in sublist]
@@ -94,7 +114,8 @@ class DataGenerator(object):
             random.shuffle(zipped)
             all_idxs, all_labels = zip(*zipped)
 
-        return x[all_idxs, :], np.array(all_labels).reshape(-1, 1)
+        # return x[all_idxs, :], np.array(all_labels).reshape(-1, 1)
+        return x[all_idxs, :], np.array(all_labels)
 
     def make_data_tensor(self, train=True):
         if train:
@@ -122,7 +143,7 @@ class DataGenerator(object):
             all_label_batches.append(np.array(labels_batch))
 
         all_image_batches = np.array(all_data_batches) # (4, 32, nb_cols)
-        all_label_batches = np.array(all_label_batches) # (4, 32, 1)
+        all_label_batches = np.array(all_label_batches) # (4, 32, num_classes)
 
         return all_image_batches, all_label_batches
 
