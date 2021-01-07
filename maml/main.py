@@ -10,7 +10,7 @@ from maml import MAML
 
 
 parser = argparse.ArgumentParser()
-parser.add_argument('-t', '--test', action='store_true', default=False, help='set for test, otherwise train')
+parser.add_argument('-t', '--test', action='store_true', default=True, help='set for test, otherwise train')
 args = parser.parse_args()
 
 os.environ['TF_CPP_MIN_LOG_LEVEL'] = '3'
@@ -32,7 +32,8 @@ def train(model, saver, sess):
 	best_acc = 0
 
 	# train for meta_iteartion epoches
-	for iteration in range(600000):
+	# for iteration in range(600000):
+	for iteration in range(10000):
 		# this is the main op
 		ops = [model.meta_op]
 
@@ -111,6 +112,8 @@ def test(model, sess):
 	print('stds:', stds)
 	print('ci95:', ci95)
 
+	print('mean of all accuracies: {}'.format(np.mean(means)))
+
 
 def main():
 	training = not args.test
@@ -118,6 +121,7 @@ def main():
 	kquery = 8
 	nway = 2
 	meta_batchsz = 4
+	# meta_batchsz = 16
 	K = 5
 
 
@@ -186,6 +190,8 @@ def main():
 
 	if training:
 		train(model, saver, sess)
+		# print('\n DONE TRAINING --------------------- NOW TESTING THE MODEL...')
+		# test(model, sess)
 	else:
 		test(model, sess)
 
