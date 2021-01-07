@@ -55,9 +55,6 @@ def select_K(pooled):
     ranked.to_csv('../input/k_best_features.csv',index=False)
     return ranked
 
-def set_descriptions():
-    copyofdem = pd.read_excel('../input/Copy of Dementia_baseline_questionnaire_V1.xlsx').set_index('name')
-
 if __name__=='__main__':
     pooled=pd.read_csv('../input/pooled_imputed_scaled.csv')
     feature_importance(pooled)

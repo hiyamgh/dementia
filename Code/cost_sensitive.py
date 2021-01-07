@@ -18,6 +18,7 @@ from imblearn.metrics import geometric_mean_score
 from sklearn.neighbors import KNeighborsClassifier
 from imblearn.ensemble import BalancedRandomForestClassifier
 from sklearn.metrics import fbeta_score,make_scorer
+from AdvancedEvaluation import AdvancedEvaluator
 
 f2_score=make_scorer(fbeta_score, beta=2)
 
@@ -67,19 +68,20 @@ def baseline_logistic(X,y,test_X,test_y):
     model = LogisticRegression()
     model.fit(X,y)
     y_predicted=model.predict(test_X)
-    print_results('baseline logistic regression',test_y,y_predicted)
+    print_results('baseline logistic regression','',test_y,y_predicted)
 
 def create_model(y,model):
     counter = Counter(y)
     reverse_counter={0:counter[1],1:counter[0]}
     balance = [{0:1,1:10}, {0:1,1:100},reverse_counter]
-    param_grid = {'m__class_weight':[reverse_counter],'s__sampling_strategy':['minority','not minority','all']}
-    # param_grid = {}
-    
+    param_grid = {
+        # 'm__class_weight':balance,
+                #   's__sampling_strategy':['minority','not minority','all',0.5,1,0.75],
                     #   solver=['newton-cg', 'lbfgs', 'liblinear','sag', 'saga'],
                     #   C=[0.01,0.1,1,10,100]
-                    #   penalty=['l1', 'l2', 'elasticnet', 'none']
-                    
+                    #   penalty=['l1', 'l2', 'elasticnet', 'none']              
+                  }
+    param_grid={'m__class_weight':[reverse_counter],'s__sampling_strategy':['minority']}
     return model,param_grid
 
 def print_results(model_name,best_params,y,y_predicted):
@@ -102,35 +104,74 @@ def print_results(model_name,best_params,y,y_predicted):
     f.write(f'Predicted Negative|0\t\t  |{fn}\n')
     f.write(f'Predicted Positive|{fp}\t\t  |0\n')
     f.close()
+
+def advanced_metrics(train_df,test_df,trained_model,trained_model_name):
     
-def test_model(X,y,model_class,model_name,test_X,test_y):
-    model,grid=create_model(y,model_class)
-    pipeline=create_pipeline(model,X.columns)
-    cv = RepeatedStratifiedKFold(n_splits=10, n_repeats=3, random_state=1)
-    grid = GridSearchCV(estimator=pipeline,param_grid=grid,cv=cv,scoring=f2_score)
-    grid_result = grid.fit(X, y)
-    # print('Best Weighted logistic regression: %f using %s' % (grid_result.best_score_, grid_result.best_params_))
-    estimator=grid_result.best_estimator_
-    estimator.fit(X,y)
-    y_predicted=estimator.predict(test_X)
-    print_results(model_name,grid_result.best_params_,test_y,y_predicted)
+    df = pd.concat([train_df, test_df]).sample(frac=1).reset_index(drop=True)
+    sm = AdvancedEvaluator(df=df, 
+                           df_train=train_df, 
+                           df_test=test_df,
+                           target_variable='dem1066',
+                           plots_output_folder='../output/cost_sensitive_results/advanced_plots/',
+                           fp_growth_output_folder='../output/cost_sensitive_results/fp_growth/',
+                           models_dict={trained_model_name:trained_model},
+                           scaling='z-score',
+                           cols_drop=None,
+                           pos_class_label=1)
+
+    print('frequent patterns')
+    sm.identify_frequent_patterns()
+    print('classfiy')
+    sm.classify(trained_model=trained_model, trained_model_name=trained_model_name, nb_bins=10)
+    print('add mistake')
+    sm.add_mistake()
+    print('proba per fp')
+    probabilities_per_fp = sm.pattern_probability_of_mistake()
+    print('ROC')
+    sm.produce_roc_curves()
+    print('produce_empirical_risk_curves')
+    sm.produce_empirical_risk_curves()
+    print('produce_curves_topK 1')
+    sm.produce_curves_topK(topKs=[10, 20, 30, 40, 50, 60], metric='precision')
+    print('produce_curves_topK 2')
+    sm.produce_curves_topK(topKs=[10, 20, 30, 40, 50, 60], metric='recall')
+    print('compute_jaccard_similarity')
+    sm.compute_jaccard_similarity(topKs=list(range(20, 200, 20)))
+            
+def test_model(train_df,test_df,model_class,model_name):
+    X=train_df[df.columns[:-1]]
+    y=train_df['dem1066']
     
-if __name__=='__main__':
-    df=pd.read_csv('../input/train.csv')
-    X=df[df.columns[:-1]]
-    y=df['dem1066']
-    
-    test_df=pd.read_csv('../input/test.csv')
     test_X=test_df[df.columns[:-1]]
     test_y=test_df['dem1066']
     
+    model,param_grid=create_model(y,model_class)
+    pipeline=create_pipeline(model,X.columns)
+    cv = RepeatedStratifiedKFold(n_splits=10, n_repeats=3, random_state=1)
+    
+    grid = GridSearchCV(estimator=pipeline,param_grid=param_grid,cv=cv,scoring=f2_score)
+    grid_result = grid.fit(X,y)
+    print('Best Weighted logistic regression: %f using %s' % (grid_result.best_score_, grid_result.best_params_))
+    estimator=grid_result.best_estimator_
+    estimator.fit(X,y)
+    y_predicted=estimator.predict(test_X)
+    print('printing results')
+    print_results(model_name,grid_result.best_params_,test_y,y_predicted)
+    print('performing advanced')
+    advanced_metrics(train_df,test_df,estimator,model_name)
+    
+if __name__=='__main__':
+    
+    df=pd.read_csv('../input/train.csv')
+    test_df=pd.read_csv('../input/test.csv')
     # baseline_logistic(X,y,test_X,test_y)
     for model,model_name in [
         # (XGBClassifier(),'XGBoost'),
                             # (KNeighborsClassifier(),'KNeighbors'),
-                            # (BalancedRandomForestClassifier(),'Balanced Random Forest')
-                             (LogisticRegression(),'Weighted Logistic Regression'),
-                            #  (DecisionTreeClassifier(),'Weighted Decision Tree Classifier'),
-                            #  (SVC(),'Weighted SVM')
-                             ]:
-        test_model(X,y,model,model_name,test_X,test_y)
+                            # (BalancedRandomForestClassifier(),'Balanced Random Forest'),
+                            (LogisticRegression(),'Weighted Logistic Regression'),
+                            # (DecisionTreeClassifier(),'Weighted Decision Tree Classifier'),
+                            # (SVC(),'Weighted SVM')
+                            ]:
+        
+        test_model(df,test_df,model,model_name)
