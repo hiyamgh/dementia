@@ -120,7 +120,7 @@ def advanced_metrics(train_df,test_df,trained_model,trained_model_name):
                            pos_class_label=1)
 
     print('frequent patterns')
-    sm.identify_frequent_patterns()
+    # sm.identify_frequent_patterns()
     print('classfiy')
     sm.classify(trained_model=trained_model, trained_model_name=trained_model_name, nb_bins=10)
     print('add mistake')

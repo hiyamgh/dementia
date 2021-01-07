@@ -1,0 +1,11 @@
+Balanced Random Forest Results:
+ ROC AUC: 0.765
+ GMEAN: 0.765
+ f-score: 0.664
+ bss: -0.070
+ PR AUC: 0.409
+best params:{'s__sampling_strategy': 'not minority'}
+Cost Matrix (assuming cost = 0 for correct labels and cost = 1 for wrong labels)
+		  |Actual Negative|Actual Positive
+Predicted Negative|0		  |11
+Predicted Positive|32		  |0
