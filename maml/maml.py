@@ -56,6 +56,7 @@ class MAML:
 			support_x, support_y, query_x, query_y = input
 			# to record the op in t update step.
 			query_preds, query_losses, query_accs = [], [], []
+			self.query_precs, self.query_recs = [], []
 
 			# ==================================
 			# REUSE       True        False
@@ -103,11 +104,32 @@ class MAML:
 				query_preds.append(query_pred)
 				query_losses.append(query_loss)
 
-
 			# compute every steps' accuracy on query set
 			for i in range(K):
+				# tf.contrib.metrics.precision_at_recall(tf.cast(tf.argmax(tf.nn.softmax(query_preds[i], dim=1), axis=1), tf.float64),
+				#                                        tf.cast(tf.argmax(query_y, axis=1), tf.float64),
+				#                                        target_recall=0.5)
+
 				query_accs.append(tf.contrib.metrics.accuracy(tf.argmax(tf.nn.softmax(query_preds[i], dim=1), axis=1),
 					                                            tf.argmax(query_y, axis=1)))
+
+
+				# # precision, precision_op = tf.metrics.precision(tf.argmax(tf.nn.softmax(query_preds[i], dim=1), axis=1), tf.argmax(query_y, axis=1))
+				# self.query_precs.append(tf.metrics.precision(tf.argmax(tf.nn.softmax(query_preds[i], dim=1), axis=1), tf.argmax(query_y, axis=1)))
+				# # recall, recall_op = tf.metrics.recall(tf.argmax(tf.nn.softmax(query_preds[i], dim=1), axis=1), tf.argmax(query_y, axis=1))
+				# self.query_recs.append(tf.metrics.recall(tf.argmax(tf.nn.softmax(query_preds[i], dim=1), axis=1), tf.argmax(query_y, axis=1)))
+
+				predicted = tf.argmax(tf.nn.softmax(query_preds[i], dim=1), axis=1)
+				actual = tf.argmax(query_y, axis=1)
+
+				acc, acc_op = tf.metrics.accuracy(labels=actual, predictions=predicted)
+				rec, rec_op = tf.metrics.recall(labels=actual, predictions=predicted)
+				pre, pre_op = tf.metrics.precision(labels=actual, predictions=predicted)
+
+				self.query_recs.append(rec_op)
+				self.query_precs.append(pre_op)
+				self.query_y = query_y
+
 			# we just use the first step support op: support_pred & support_loss, but igonre these support op
 			# at step 1:K-1.
 			# however, we return all pred&loss&acc op at each time steps.
@@ -139,6 +161,8 @@ class MAML:
 		                   dtype=out_dtype, parallel_iterations=meta_batchsz, name='map_fn')
 		support_pred_tasks, support_loss_tasks, support_acc_tasks, \
 			query_preds_tasks, query_losses_tasks, query_accs_tasks = result
+		# query_precs_tasks, query_recs_tasks
+
 
 
 		if mode is 'train':
@@ -152,6 +176,8 @@ class MAML:
 			# average accuracies
 			self.query_accs = query_accs = [tf.reduce_sum(query_accs_tasks[j]) / meta_batchsz
 			                                        for j in range(K)]
+
+
 
 			# # add batch_norm ops before meta_op
 			# update_ops = tf.get_collection(tf.GraphKeys.UPDATE_OPS)
@@ -183,12 +209,31 @@ class MAML:
 			self.test_query_accs = query_accs = [tf.reduce_sum(query_accs_tasks[j]) / meta_batchsz
 			                                        for j in range(K)]
 
+			# self.source_pred = source_pred_tasks
+		#         self.target_preds = target_preds_tasks[FLAGS.num_updates-1]
+		#         self.target_represent = target_represents_tasks[FLAGS.num_updates-1]
+
+			self.test_support_pred = support_pred_tasks
+			# self.test_query_pred = query_preds_tasks
+			self.test_query_pred = tf.argmax(query_preds_tasks, axis=1)
+
+			# # average precisions
+			# self.test_query_precs = [tf.reduce_sum(query_precs_tasks[j]) / meta_batchsz
+			# 								  for j in range(K)]
+			#
+			# # average recalls
+			# self.test_query_recs = [tf.reduce_sum(query_recs_tasks[j]) / meta_batchsz
+			# 								 for j in range(K)]
+
+
 		# NOTICE: every time build model, support_loss will be added to the summary, but it's different.
 		tf.summary.scalar(mode + '：support loss', support_loss)
 		tf.summary.scalar(mode + '：support acc', support_acc)
 		for j in range(K):
 			tf.summary.scalar(mode + '：query loss, step ' + str(j + 1), query_losses[j])
 			tf.summary.scalar(mode + '：query acc, step ' + str(j + 1), query_accs[j])
+
+		# init = tf.global_variables_initializer()
 
 	def construct_fc_weights(self):
 		weights = {}

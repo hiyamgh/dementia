@@ -3,6 +3,7 @@ import numpy as np
 import pandas as pd
 import argparse
 import random
+import sklearn
 import tensorflow as tf
 
 from data_generator import DataGenerator
@@ -84,14 +85,42 @@ def train(model, saver, sess):
 				print('saved into ckpt:', acc)
 
 
+def evaluate(sess, model):
+	input_tensors = [model.test_query_pred]
+	metaval_target_preds = sess.run(input_tensors)
+
+	target_vals = np.array(model.query_y).flatten()
+	target_preds = np.array([np.argmax(preds, axis=2) for preds in metaval_target_preds]).flatten()
+
+	target_auc, target_ap, target_ar, target_f1 = compute_metrics(target_preds, target_vals)
+	print('precision: {:.3f}'.format(target_ap))
+	print('recall: {:.3f}'.format(target_ar))
+	print('F1: {:.3f}'.format(target_f1))
+	print('AUC: {:.3f}'.format(target_auc))
+
+
+def compute_metrics(predictions, labels):
+	'''compute metrics score'''
+	fpr, tpr, _ = sklearn.metrics.roc_curve(labels, predictions)
+	auc = sklearn.metrics.auc(fpr, tpr)
+	ncorrects = sum(predictions == labels)
+	accuracy = sklearn.metrics.accuracy_score(labels, predictions)
+	ap = sklearn.metrics.average_precision_score(labels, predictions, 'micro')
+	ar = sklearn.metrics.recall_score(labels, predictions)
+	f1score = sklearn.metrics.f1_score(labels, predictions, 'micro')
+	return auc, ap, ar, f1score
+
+
 def test(model, sess):
 
+	K = 5
 	np.random.seed(1)
 	random.seed(1)
 
 	# repeat test accuracy for 600 times
 	test_accs = []
-	for i in range(600):
+	# for i in range(600):
+	for i in range(200):
 		if i % 100 == 1:
 			print(i)
 		# extend return None!!!
@@ -99,6 +128,11 @@ def test(model, sess):
 		ops.extend(model.test_query_accs)
 		result = sess.run(ops)
 		test_accs.append(result)
+
+		# ops1 = [model.test_query_precs]
+		# result1 = sess.run(ops1)
+		# test_precs.append(result1)
+
 
 	# [600, K+1]
 	test_accs = np.array(test_accs)
@@ -113,6 +147,16 @@ def test(model, sess):
 	print('ci95:', ci95)
 
 	print('mean of all accuracies: {}'.format(np.mean(means)))
+
+	# predicted = sess.run([model.test_query_pred])
+	# target_vals = np.array(model.query_y).flatten()
+	# # target_preds = np.array([np.argmax(preds, axis=2) for preds in metaval_target_preds]).flatten()
+	#
+	# target_auc, target_ap, target_ar, target_f1 = compute_metrics(target_preds, target_vals)
+	# print('precision: {:.3f}'.format(target_ap))
+	# print('recall: {:.3f}'.format(target_ar))
+	# print('F1: {:.3f}'.format(target_f1))
+	# print('AUC: {:.3f}'.format(target_auc))
 
 
 def main():
