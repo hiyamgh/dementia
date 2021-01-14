@@ -34,7 +34,7 @@ def train(model, saver, sess):
 
 	# train for meta_iteartion epoches
 	# for iteration in range(600000):
-	for iteration in range(10000):
+	for iteration in range(20000):
 		# this is the main op
 		ops = [model.meta_op]
 
@@ -119,8 +119,11 @@ def test(model, sess):
 
 	# repeat test accuracy for 600 times
 	test_accs = []
+	test_precisions = []
+	test_recalls = []
+
 	# for i in range(600):
-	for i in range(200):
+	for i in range(600):
 		if i % 100 == 1:
 			print(i)
 		# extend return None!!!
@@ -129,24 +132,35 @@ def test(model, sess):
 		result = sess.run(ops)
 		test_accs.append(result)
 
-		# ops1 = [model.test_query_precs]
-		# result1 = sess.run(ops1)
-		# test_precs.append(result1)
+		ops = [model.test_support_prec]
+		ops.extend(model.test_query_precisions)
+		result = sess.run(ops)
+		test_precisions.append(result)
+
+		ops = [model.test_support_rec]
+		ops.extend(model.test_query_recalls)
+		result = sess.run(ops)
+		test_recalls.append(result)
 
 
 	# [600, K+1]
-	test_accs = np.array(test_accs)
-	# [K+1]
-	means = np.mean(test_accs, 0)
-	stds = np.std(test_accs, 0)
-	ci95 = 1.96 * stds / np.sqrt(600)
+	for all_results in list(zip(['accuracy', 'precision', 'recall'], [test_accs, test_precisions, test_recalls])):
 
-	print('[support_t0, query_t0 - \t\t\tK] ')
-	print('mean:', means)
-	print('stds:', stds)
-	print('ci95:', ci95)
+		metric = all_results[0]
+		test_accs = all_results[1]
+		test_accs = np.array(test_accs)
+		# [K+1]
+		means = np.mean(test_accs, 0)
+		stds = np.std(test_accs, 0)
+		ci95 = 1.96 * stds / np.sqrt(600)
 
-	print('mean of all accuracies: {}'.format(np.mean(means)))
+		print('\nMetric: {}'.format(metric))
+		print('[support_t0, query_t0 - \t\t\tK] ')
+		print('mean:', means)
+		print('stds:', stds)
+		print('ci95:', ci95)
+
+		print('mean of all {}: {}'.format(metric, np.mean(means)))
 
 	# predicted = sess.run([model.test_query_pred])
 	# target_vals = np.array(model.query_y).flatten()
@@ -157,6 +171,7 @@ def test(model, sess):
 	# print('recall: {:.3f}'.format(target_ar))
 	# print('F1: {:.3f}'.format(target_f1))
 	# print('AUC: {:.3f}'.format(target_auc))
+
 
 
 def main():
@@ -223,6 +238,9 @@ def main():
 
 	# initialize, under interative session
 	tf.global_variables_initializer().run()
+	####################################### Hiyam
+	sess.run([tf.initialize_local_variables()])
+	#####################################################
 	tf.train.start_queue_runners()
 
 	if os.path.exists(os.path.join('ckpt', 'checkpoint')):

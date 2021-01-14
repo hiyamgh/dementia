@@ -56,7 +56,7 @@ class MAML:
 			support_x, support_y, query_x, query_y = input
 			# to record the op in t update step.
 			query_preds, query_losses, query_accs = [], [], []
-			self.query_precs, self.query_recs = [], []
+			query_precisions, query_recalls = [], []
 
 			# ==================================
 			# REUSE       True        False
@@ -68,6 +68,13 @@ class MAML:
 			support_loss = tf.nn.softmax_cross_entropy_with_logits(logits=support_pred, labels=support_y)
 			support_acc = tf.contrib.metrics.accuracy(tf.argmax(tf.nn.softmax(support_pred, dim=1), axis=1),
 			                                             tf.argmax(support_y, axis=1))
+
+			_, support_prec = tf.contrib.metrics.streaming_precision(tf.argmax(tf.nn.softmax(support_pred, dim=1), axis=1),
+			                                             tf.argmax(support_y, axis=1))
+
+			_, support_rec = tf.contrib.metrics.streaming_recall(tf.argmax(tf.nn.softmax(support_pred, dim=1), axis=1),
+																	tf.argmax(support_y, axis=1))
+
 			# compute gradients
 			grads = tf.gradients(support_loss, list(self.weights.values()))
 			# grad and variable dict
@@ -106,34 +113,33 @@ class MAML:
 
 			# compute every steps' accuracy on query set
 			for i in range(K):
-				# tf.contrib.metrics.precision_at_recall(tf.cast(tf.argmax(tf.nn.softmax(query_preds[i], dim=1), axis=1), tf.float64),
-				#                                        tf.cast(tf.argmax(query_y, axis=1), tf.float64),
-				#                                        target_recall=0.5)
-
 				query_accs.append(tf.contrib.metrics.accuracy(tf.argmax(tf.nn.softmax(query_preds[i], dim=1), axis=1),
 					                                            tf.argmax(query_y, axis=1)))
 
+				precision, precision_op = tf.contrib.metrics.streaming_precision(tf.argmax(tf.nn.softmax(query_preds[i], dim=1), axis=1),
+                                                                tf.argmax(query_y, axis=1))
 
-				# # precision, precision_op = tf.metrics.precision(tf.argmax(tf.nn.softmax(query_preds[i], dim=1), axis=1), tf.argmax(query_y, axis=1))
-				# self.query_precs.append(tf.metrics.precision(tf.argmax(tf.nn.softmax(query_preds[i], dim=1), axis=1), tf.argmax(query_y, axis=1)))
-				# # recall, recall_op = tf.metrics.recall(tf.argmax(tf.nn.softmax(query_preds[i], dim=1), axis=1), tf.argmax(query_y, axis=1))
-				# self.query_recs.append(tf.metrics.recall(tf.argmax(tf.nn.softmax(query_preds[i], dim=1), axis=1), tf.argmax(query_y, axis=1)))
+				recall, recall_op = tf.contrib.metrics.streaming_recall(tf.argmax(tf.nn.softmax(query_preds[i], dim=1), axis=1),
+															   tf.argmax(query_y, axis=1))
 
-				predicted = tf.argmax(tf.nn.softmax(query_preds[i], dim=1), axis=1)
-				actual = tf.argmax(query_y, axis=1)
+				query_precisions.append(precision_op)
+				query_recalls.append(recall_op)
+				# query_precisions.append(precision)
+				# query_recalls.append(recall)
 
-				acc, acc_op = tf.metrics.accuracy(labels=actual, predictions=predicted)
-				rec, rec_op = tf.metrics.recall(labels=actual, predictions=predicted)
-				pre, pre_op = tf.metrics.precision(labels=actual, predictions=predicted)
-
-				self.query_recs.append(rec_op)
-				self.query_precs.append(pre_op)
+				# query_precisions.append(
+				# 	tf.keras.metrics.Precision()(tf.argmax(tf.nn.softmax(support_pred, dim=1), axis=1),
+				# 								 tf.argmax(support_y, axis=1)))
+				#
+				# query_recalls.append(tf.keras.metrics.Recall()(tf.argmax(tf.nn.softmax(support_pred, dim=1), axis=1),
+				# 							tf.argmax(support_y, axis=1)))
 				self.query_y = query_y
 
 			# we just use the first step support op: support_pred & support_loss, but igonre these support op
 			# at step 1:K-1.
 			# however, we return all pred&loss&acc op at each time steps.
-			result = [support_pred, support_loss, support_acc, query_preds, query_losses, query_accs]
+			# result = [support_pred, support_loss, support_acc, query_preds, query_losses, query_accs]
+			result = [support_pred, support_loss, support_acc, support_prec, support_rec, query_preds, query_losses, query_accs, query_precisions, query_recalls]
 
 			# return task_output
 			result_mod = []
@@ -150,7 +156,7 @@ class MAML:
 			# return result
 
 		# return: [support_pred, support_loss, support_acc, query_preds, query_losses, query_accs]
-		out_dtype = [tf.float64, tf.float64, tf.float64, [tf.float64] * K, [tf.float64] * K, [tf.float64] * K]
+		out_dtype = [tf.float64, tf.float64, tf.float64, tf.float64, tf.float64, [tf.float64] * K, [tf.float64] * K, [tf.float64] * K, [tf.float64] * K, [tf.float64] * K]
 		# out_dtype = [tf.float64, [tf.float64] * num_updates, tf.float64, [tf.float64] * num_updates]
 
 		# Hiyam adding the 2 lines below
@@ -159,11 +165,8 @@ class MAML:
 
 		result = tf.map_fn(meta_task, elems=(support_xb, support_yb, query_xb, query_yb),
 		                   dtype=out_dtype, parallel_iterations=meta_batchsz, name='map_fn')
-		support_pred_tasks, support_loss_tasks, support_acc_tasks, \
-			query_preds_tasks, query_losses_tasks, query_accs_tasks = result
-		# query_precs_tasks, query_recs_tasks
-
-
+		support_pred_tasks, support_loss_tasks, support_acc_tasks, support_prec_tasks, support_rec_tasks, \
+			query_preds_tasks, query_losses_tasks, query_accs_tasks, query_precisions_tasks, query_recalls_tasks = result
 
 		if mode is 'train':
 			# average loss
@@ -173,9 +176,24 @@ class MAML:
 			                                        for j in range(K)]
 			# average accuracy
 			self.support_acc = support_acc = tf.reduce_sum(support_acc_tasks) / meta_batchsz
+
+			# average precision
+			self.support_prec = support_prec = tf.reduce_sum(support_prec_tasks) / meta_batchsz
+
+			# average recall
+			self.support_rec = support_rec = tf.reduce_sum(support_rec_tasks) / meta_batchsz
+
 			# average accuracies
 			self.query_accs = query_accs = [tf.reduce_sum(query_accs_tasks[j]) / meta_batchsz
 			                                        for j in range(K)]
+
+			# average precisions
+			self.query_precs = query_precs = [tf.reduce_sum(query_precisions_tasks[j]) / meta_batchsz
+											for j in range(K)]
+
+			# average precisions
+			self.query_recs = query_recs = [tf.reduce_sum(query_recalls_tasks[j]) / meta_batchsz
+											  for j in range(K)]
 
 
 
@@ -195,7 +213,6 @@ class MAML:
 			# update theta
 			self.meta_op = optimizer.apply_gradients(gvs)
 
-
 		else: # test & eval
 
 			# average loss
@@ -205,26 +222,31 @@ class MAML:
 			                                        for j in range(K)]
 			# average accuracy
 			self.test_support_acc = support_acc = tf.reduce_sum(support_acc_tasks) / meta_batchsz
+
+			# average precision
+			self.test_support_prec = support_prec = tf.reduce_sum(support_prec_tasks) / meta_batchsz
+
+			# average recall
+			self.test_support_rec = support_rec = tf.reduce_sum(support_rec_tasks) / meta_batchsz
+
 			# average accuracies
 			self.test_query_accs = query_accs = [tf.reduce_sum(query_accs_tasks[j]) / meta_batchsz
 			                                        for j in range(K)]
+
+			self.test_query_precisions  = [tf.reduce_sum(query_precisions_tasks[j]) / meta_batchsz
+			                                        for j in range(K)]
+
+			self.test_query_recalls  = [tf.reduce_sum(query_recalls_tasks[j]) / meta_batchsz
+										  for j in range(K)]
 
 			# self.source_pred = source_pred_tasks
 		#         self.target_preds = target_preds_tasks[FLAGS.num_updates-1]
 		#         self.target_represent = target_represents_tasks[FLAGS.num_updates-1]
 
+			# Hiyam commented the below and replaced it
 			self.test_support_pred = support_pred_tasks
 			# self.test_query_pred = query_preds_tasks
 			self.test_query_pred = tf.argmax(query_preds_tasks, axis=1)
-
-			# # average precisions
-			# self.test_query_precs = [tf.reduce_sum(query_precs_tasks[j]) / meta_batchsz
-			# 								  for j in range(K)]
-			#
-			# # average recalls
-			# self.test_query_recs = [tf.reduce_sum(query_recs_tasks[j]) / meta_batchsz
-			# 								 for j in range(K)]
-
 
 		# NOTICE: every time build model, support_loss will be added to the summary, but it's different.
 		tf.summary.scalar(mode + '：support loss', support_loss)
@@ -233,7 +255,6 @@ class MAML:
 			tf.summary.scalar(mode + '：query loss, step ' + str(j + 1), query_losses[j])
 			tf.summary.scalar(mode + '：query acc, step ' + str(j + 1), query_accs[j])
 
-		# init = tf.global_variables_initializer()
 
 	def construct_fc_weights(self):
 		weights = {}
