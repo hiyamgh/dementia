@@ -58,6 +58,15 @@ class MAML:
 			query_preds, query_losses, query_accs = [], [], []
 			query_precisions, query_recalls = [], []
 
+			# for FP, FN, TP, TN we will report not on the average
+			# but rather on the values of the last update
+			query_fns, query_fps, query_tns, query_tps = [], [], [], []
+
+			# fn, fn_op = tf.contrib.metrics.streaming_false_negatives(a_argmax, b_argmax)
+			# fp, fp_op = tf.contrib.metrics.streaming_false_positives(a_argmax, b_argmax)
+			# tn, tn_op = tf.contrib.metrics.streaming_true_negatives(a_argmax, b_argmax)
+			# tp, tp_op = tf.contrib.metrics.streaming_true_positives(a_argmax, b_argmax)
+
 			# ==================================
 			# REUSE       True        False
 			# Not exist   Error       Create one
@@ -73,6 +82,14 @@ class MAML:
 			                                             tf.argmax(support_y, axis=1))
 
 			_, support_rec = tf.contrib.metrics.streaming_recall(tf.argmax(tf.nn.softmax(support_pred, dim=1), axis=1),
+																	tf.argmax(support_y, axis=1))
+			_, support_fn = tf.contrib.metrics.streaming_false_negatives(tf.argmax(tf.nn.softmax(support_pred, dim=1), axis=1),
+																	tf.argmax(support_y, axis=1))
+			_, support_fp = tf.contrib.metrics.streaming_false_positives(tf.argmax(tf.nn.softmax(support_pred, dim=1), axis=1),
+																	tf.argmax(support_y, axis=1))
+			_, support_tn = tf.contrib.metrics.streaming_true_negatives(tf.argmax(tf.nn.softmax(support_pred, dim=1), axis=1),
+																	tf.argmax(support_y, axis=1))
+			_, support_tp = tf.contrib.metrics.streaming_true_positives(tf.argmax(tf.nn.softmax(support_pred, dim=1), axis=1),
 																	tf.argmax(support_y, axis=1))
 
 			# compute gradients
@@ -121,9 +138,21 @@ class MAML:
 
 				recall, recall_op = tf.contrib.metrics.streaming_recall(tf.argmax(tf.nn.softmax(query_preds[i], dim=1), axis=1),
 															   tf.argmax(query_y, axis=1))
+				_, fn_op = tf.contrib.metrics.streaming_false_negatives(tf.argmax(tf.nn.softmax(query_preds[i], dim=1), axis=1),
+															   tf.argmax(query_y, axis=1))
+				_, fp_op = tf.contrib.metrics.streaming_false_positives(tf.argmax(tf.nn.softmax(query_preds[i], dim=1), axis=1),
+															   tf.argmax(query_y, axis=1))
+				_, tn_op = tf.contrib.metrics.streaming_true_negatives(tf.argmax(tf.nn.softmax(query_preds[i], dim=1), axis=1),
+															   tf.argmax(query_y, axis=1))
+				_, tp_op = tf.contrib.metrics.streaming_true_positives(tf.argmax(tf.nn.softmax(query_preds[i], dim=1), axis=1),
+															   tf.argmax(query_y, axis=1))
 
 				query_precisions.append(precision_op)
 				query_recalls.append(recall_op)
+				query_fns.append(fn_op)
+				query_fps.append(fp_op)
+				query_tns.append(tn_op)
+				query_tps.append(tp_op)
 				# query_precisions.append(precision)
 				# query_recalls.append(recall)
 
@@ -139,7 +168,10 @@ class MAML:
 			# at step 1:K-1.
 			# however, we return all pred&loss&acc op at each time steps.
 			# result = [support_pred, support_loss, support_acc, query_preds, query_losses, query_accs]
-			result = [support_pred, support_loss, support_acc, support_prec, support_rec, query_preds, query_losses, query_accs, query_precisions, query_recalls]
+			result = [support_pred, support_loss, support_acc, support_prec, support_rec,
+					  support_fn, support_fp, support_tn, support_tp,
+					  query_preds, query_losses, query_accs, query_precisions, query_recalls,
+					  query_fns, query_fps, query_tns, query_tps]
 
 			# return task_output
 			result_mod = []
@@ -156,7 +188,10 @@ class MAML:
 			# return result
 
 		# return: [support_pred, support_loss, support_acc, query_preds, query_losses, query_accs]
-		out_dtype = [tf.float64, tf.float64, tf.float64, tf.float64, tf.float64, [tf.float64] * K, [tf.float64] * K, [tf.float64] * K, [tf.float64] * K, [tf.float64] * K]
+		out_dtype = [tf.float64, tf.float64, tf.float64, tf.float64, tf.float64,
+					 tf.float64, tf.float64, tf.float64, tf.float64,
+					 [tf.float64] * K, [tf.float64] * K, [tf.float64] * K, [tf.float64] * K, [tf.float64] * K,
+					 [tf.float64] * K, [tf.float64] * K, [tf.float64] * K, [tf.float64] * K]
 		# out_dtype = [tf.float64, [tf.float64] * num_updates, tf.float64, [tf.float64] * num_updates]
 
 		# Hiyam adding the 2 lines below
@@ -165,8 +200,10 @@ class MAML:
 
 		result = tf.map_fn(meta_task, elems=(support_xb, support_yb, query_xb, query_yb),
 		                   dtype=out_dtype, parallel_iterations=meta_batchsz, name='map_fn')
-		support_pred_tasks, support_loss_tasks, support_acc_tasks, support_prec_tasks, support_rec_tasks, \
-			query_preds_tasks, query_losses_tasks, query_accs_tasks, query_precisions_tasks, query_recalls_tasks = result
+		support_pred_tasks, support_loss_tasks, support_acc_tasks, support_prec_tasks, support_rec_tasks,\
+			support_fn_tasks, support_fp_tasks, support_tn_tasks, support_tp_tasks,\
+			query_preds_tasks, query_losses_tasks, query_accs_tasks, query_precisions_tasks, query_recalls_tasks,\
+			query_fn_tasks, query_fp_tasks, query_tn_tasks, query_tp_tasks = result
 
 		if mode is 'train':
 			# average loss
@@ -183,6 +220,7 @@ class MAML:
 			# average recall
 			self.support_rec = support_rec = tf.reduce_sum(support_rec_tasks) / meta_batchsz
 
+
 			# average accuracies
 			self.query_accs = query_accs = [tf.reduce_sum(query_accs_tasks[j]) / meta_batchsz
 			                                        for j in range(K)]
@@ -194,8 +232,6 @@ class MAML:
 			# average precisions
 			self.query_recs = query_recs = [tf.reduce_sum(query_recalls_tasks[j]) / meta_batchsz
 											  for j in range(K)]
-
-
 
 			# # add batch_norm ops before meta_op
 			# update_ops = tf.get_collection(tf.GraphKeys.UPDATE_OPS)
@@ -238,6 +274,11 @@ class MAML:
 
 			self.test_query_recalls  = [tf.reduce_sum(query_recalls_tasks[j]) / meta_batchsz
 										  for j in range(K)]
+
+			self.test_query_fns = query_fns = query_fn_tasks[K - 1]
+			self.test_query_fps = query_fps = query_fp_tasks[K - 1]
+			self.test_query_tns = query_tns = query_tn_tasks[K - 1]
+			self.test_query_tps = query_tps = query_tp_tasks[K - 1]
 
 			# self.source_pred = source_pred_tasks
 		#         self.target_preds = target_preds_tasks[FLAGS.num_updates-1]

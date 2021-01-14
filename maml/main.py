@@ -122,6 +122,7 @@ def test(model, sess):
 	test_precisions = []
 	test_recalls = []
 
+
 	# for i in range(600):
 	for i in range(600):
 		if i % 100 == 1:
@@ -142,6 +143,9 @@ def test(model, sess):
 		result = sess.run(ops)
 		test_recalls.append(result)
 
+		if i == 599:
+			ops = [model.test_query_tps, model.test_query_tns, model.test_query_fps, model.test_query_fns]
+			tp, fp, tn, fn = sess.run(ops)
 
 	# [600, K+1]
 	for all_results in list(zip(['accuracy', 'precision', 'recall'], [test_accs, test_precisions, test_recalls])):
@@ -161,6 +165,9 @@ def test(model, sess):
 		print('ci95:', ci95)
 
 		print('mean of all {}: {}'.format(metric, np.mean(means)))
+
+	print('\nTP={} \t\t FP={}'.format(tp, fp))
+	print('FN={} \t\t TN={}'.format(fn, tn))
 
 	# predicted = sess.run([model.test_query_pred])
 	# target_vals = np.array(model.query_y).flatten()
