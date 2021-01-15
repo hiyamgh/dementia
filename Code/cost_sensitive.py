@@ -14,11 +14,12 @@ from imblearn.over_sampling import SMOTENC
 from data_preprocessing import get_columns
 from sklearn import metrics
 from imblearn.metrics import geometric_mean_score
-# from xgboost import XGBClassifier
+from xgboost import XGBClassifier
 from sklearn.neighbors import KNeighborsClassifier
 from imblearn.ensemble import BalancedRandomForestClassifier
-from sklearn.metrics import fbeta_score,make_scorer
+from sklearn.metrics import fbeta_score, make_scorer
 from AdvancedEvaluation import AdvancedEvaluator
+import pickle, os
 
 f2_score=make_scorer(fbeta_score, beta=2)
 
@@ -105,7 +106,9 @@ def print_results(model_name,best_params,y,y_predicted):
     f.write(f'Predicted Positive|{fp}\t\t  |0\n')
     f.close()
 
-def advanced_metrics(train_df,test_df,trained_model,trained_model_name):
+
+# def advanced_metrics(train_df,test_df,trained_model,trained_model_name):
+def advanced_metrics(train_df, test_df, models_dict_trained):
     
     df = pd.concat([train_df, test_df]).sample(frac=1).reset_index(drop=True)
     sm = AdvancedEvaluator(df=df, 
@@ -114,19 +117,24 @@ def advanced_metrics(train_df,test_df,trained_model,trained_model_name):
                            target_variable='dem1066',
                            plots_output_folder='../output/cost_sensitive_results/advanced_plots/',
                            fp_growth_output_folder='../output/cost_sensitive_results/fp_growth/',
-                           models_dict={trained_model_name:trained_model},
+                           models_dict=models_dict_trained,
                            scaling='z-score',
                            cols_drop=None,
                            pos_class_label=1)
 
     print('frequent patterns')
-    # sm.identify_frequent_patterns()
+    # sm.identify_frequent_patterns() # taking too much time on the dementia dataset
     print('classfiy')
-    sm.classify(trained_model=trained_model, trained_model_name=trained_model_name, nb_bins=10)
+    # advanced ML classification
+    models = list(models_dict_trained.keys())
+    for model in models:
+        print('\n~~~~~~~~~~~~~~~~~~~~~~~~ Model: {} ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~'.format(model))
+        sm.classify(trained_model=models_dict_trained[model], trained_model_name=model, nb_bins=10)
+    # sm.classify(trained_model=trained_model, trained_model_name=trained_model_name, nb_bins=10)
     print('add mistake')
     sm.add_mistake()
-    print('proba per fp')
-    probabilities_per_fp = sm.pattern_probability_of_mistake()
+    # print('proba per fp')
+    # probabilities_per_fp = sm.pattern_probability_of_mistake()
     print('ROC')
     sm.produce_roc_curves()
     print('produce_empirical_risk_curves')
@@ -137,41 +145,86 @@ def advanced_metrics(train_df,test_df,trained_model,trained_model_name):
     sm.produce_curves_topK(topKs=[10, 20, 30, 40, 50, 60], metric='recall')
     print('compute_jaccard_similarity')
     sm.compute_jaccard_similarity(topKs=list(range(20, 200, 20)))
-            
-def test_model(train_df,test_df,model_class,model_name):
-    X=train_df[df.columns[:-1]]
-    y=train_df['dem1066']
-    
-    test_X=test_df[df.columns[:-1]]
-    test_y=test_df['dem1066']
-    
-    model,param_grid=create_model(y,model_class)
-    pipeline=create_pipeline(model,X.columns)
-    cv = RepeatedStratifiedKFold(n_splits=10, n_repeats=3, random_state=1)
-    
-    grid = GridSearchCV(estimator=pipeline,param_grid=param_grid,cv=cv,scoring=f2_score)
-    grid_result = grid.fit(X,y)
-    print('Best Weighted logistic regression: %f using %s' % (grid_result.best_score_, grid_result.best_params_))
-    estimator=grid_result.best_estimator_
-    estimator.fit(X,y)
-    y_predicted=estimator.predict(test_X)
-    print('printing results')
-    print_results(model_name,grid_result.best_params_,test_y,y_predicted)
-    print('performing advanced')
-    advanced_metrics(train_df,test_df,estimator,model_name)
-    
+
+
+def mkdir(dirname):
+    if not os.path.exists(dirname):
+        os.makedirs(dirname)
+
+
+# def test_model(train_df,test_df,model_class,model_name):
+def test_model(train_df, test_df, models_dict):
+    for model_name, model_class in models_dict.items():
+        print('Training the {} model ...'.format(model_name))
+
+        X=train_df[df.columns[:-1]]
+        y=train_df['dem1066']
+
+        test_X=test_df[df.columns[:-1]]
+        test_y=test_df['dem1066']
+
+        model,param_grid=create_model(y,model_class)
+        pipeline=create_pipeline(model,X.columns)
+        cv = RepeatedStratifiedKFold(n_splits=10, n_repeats=3, random_state=1)
+
+        X = np.array(X)
+        y = np.array(y)
+        test_X = np.array(test_X)
+        test_y = np.array(test_y)
+
+        grid = GridSearchCV(estimator=pipeline,param_grid=param_grid,cv=cv,scoring=f2_score)
+        grid_result = grid.fit(X,y)
+        print('Best Weighted logistic regression: %f using %s' % (grid_result.best_score_, grid_result.best_params_))
+        estimator=grid_result.best_estimator_
+        estimator.fit(X,y)
+        y_predicted=estimator.predict(test_X)
+        print('printing results')
+        print_results(model_name,grid_result.best_params_,test_y,y_predicted)
+        print('performing advanced')
+
+        # save the trained model in a special directory
+        dir_name = 'trained_models'
+        mkdir(dirname=dir_name)
+        with open(os.path.join(dir_name, '{}.p'.format(model_name)), 'wb') as f:
+            pickle.dump(estimator, f)
+
+        # advanced_metrics(train_df,test_df,estimator,model_name)
+
+
 if __name__=='__main__':
     
-    df=pd.read_csv('../input/train.csv')
-    test_df=pd.read_csv('../input/test.csv')
+    df = pd.read_csv('../input/train.csv')
+    test_df = pd.read_csv('../input/test.csv')
     # baseline_logistic(X,y,test_X,test_y)
-    for model,model_name in [
-        # (XGBClassifier(),'XGBoost'),
-                            # (KNeighborsClassifier(),'KNeighbors'),
-                            # (BalancedRandomForestClassifier(),'Balanced Random Forest'),
-                            (LogisticRegression(),'Weighted Logistic Regression'),
-                            # (DecisionTreeClassifier(),'Weighted Decision Tree Classifier'),
-                            # (SVC(),'Weighted SVM')
-                            ]:
-        
-        test_model(df,test_df,model,model_name)
+    models_dict = {
+        'XGBoost': XGBClassifier(),
+        'KNeighbors': KNeighborsClassifier(),
+        'Balanced Random Forest': BalancedRandomForestClassifier(),
+        'Weighted Logistic Regression': LogisticRegression(),
+        'Weighted Decision Tree Classifier': DecisionTreeClassifier(),
+        'Weighted SVM': SVC()
+    }
+    # for model,model_name in [
+    #     (XGBClassifier(),'XGBoost'),
+    #     (KNeighborsClassifier(),'KNeighbors'),
+    #     (BalancedRandomForestClassifier(),'Balanced Random Forest'),
+    #     (LogisticRegression(),'Weighted Logistic Regression'),
+    #     (DecisionTreeClassifier(),'Weighted Decision Tree Classifier'),
+    #     (SVC(),'Weighted SVM')
+    # ]:
+    #
+
+    # test_model(df,test_df,model,model_name)
+    # tarin all models in the dictionary above + grid search
+    test_model(df, test_df, models_dict)
+
+    # load trained models into another dictionary
+    models = list(models_dict.keys())
+    model_objs = []
+    for file_name in os.listdir('trained_models'):
+        trained_model = pickle.load(open(file_name, 'rb'))
+        model_objs.append(trained_model)
+    models_dict_trained = dict(zip(models, model_objs))
+
+    # now apply advanced ML evaluation
+    advanced_metrics(df, test_df, models_dict_trained)
