@@ -1,9 +1,7 @@
-{'0.00<sectarian_language<0.01'}
-{'0.00<sectarian_language<0.01', '0.00<factive_verbs<0.02'}
-{'0.00<hedges<0.00'}
-{'0.00<factive_verbs<0.02', '0.00<hedges<0.00'}
-{'1.00<quoted_sources<1.00'}
-{'1.00<quoted_sources<1.00', '0.00<factive_verbs<0.02'}
-{'0.00<implicative_verbs<0.00'}
-{'0.00<factive_verbs<0.02', '0.00<implicative_verbs<0.00'}
-{'0.00<factive_verbs<0.02'}
+{'0.0<hedges<0.0046189625000000005'}
+{'0.0<factive_verbs<0.02', '0.0<hedges<0.0046189625000000005'}
+{'0.0<sectarian_language<0.012692127000000001'}
+{'0.0<factive_verbs<0.02', '0.0<sectarian_language<0.012692127000000001'}
+{'0.0<implicative_verbs<0.0036798625'}
+{'0.0<factive_verbs<0.02', '0.0<implicative_verbs<0.0036798625'}
+{'0.0<factive_verbs<0.02'}

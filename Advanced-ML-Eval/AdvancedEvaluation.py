@@ -18,7 +18,6 @@ class AdvancedEvaluator:
     def __init__(self, df, df_train, df_test, target_variable,
                  plots_output_folder,
                  fp_growth_output_folder,
-                #  trained_models_dir,
                  models_dict,
                  scaling='robust', 
                  cols_drop=None,
@@ -302,21 +301,45 @@ class AdvancedEvaluator:
                 '75th': df[col].quantile(0.75),
                 'max': df[col].max()
             }
+            keys_to_delete = []
+            keys = list(self.cols_meta[col].keys())
+            vals = list(self.cols_meta[col].values())
+            for i in range(len(keys) - 1):
+                if vals[i] == vals[i + 1]:
+                    keys_to_delete.append(keys[i+1])
+
+            # delete keys
+            if keys_to_delete:
+                for k in keys_to_delete:
+                    del self.cols_meta[col][k]
+
         # use these quantiles for categorizing data
         for index, row in df.iterrows():
             curr_items = []
             for col in df_cols:
-                if self.cols_meta[col]['min'] <= row[col] < self.cols_meta[col]['25th']:
-                    curr_items.append('{:.2f}<{}<{:.2f}'.format(self.cols_meta[col]['min'], col, self.cols_meta[col]['25th']))
 
-                elif self.cols_meta[col]['25th'] <= row[col] < self.cols_meta[col]['50th']:
-                    curr_items.append('{:.2f}<{}<{:.2f}'.format(self.cols_meta[col]['25th'], col, self.cols_meta[col]['50th']))
+                # if self.cols_meta[col]['min'] <= row[col] < self.cols_meta[col]['25th']:
+                #     curr_items.append('{:.2f}<{}<{:.2f}'.format(self.cols_meta[col]['min'], col, self.cols_meta[col]['25th']))
+                #
+                # elif self.cols_meta[col]['25th'] <= row[col] < self.cols_meta[col]['50th']:
+                #     curr_items.append('{:.2f}<{}<{:.2f}'.format(self.cols_meta[col]['25th'], col, self.cols_meta[col]['50th']))
+                #
+                # elif self.cols_meta[col]['50th'] <= row[col] < self.cols_meta[col]['75th']:
+                #     curr_items.append('{:.2f}<{}<{:.2f}'.format(self.cols_meta[col]['50th'], col, self.cols_meta[col]['75th']))
+                #
+                # else:
+                #     curr_items.append('{:.2f}<{}<{:.2f}'.format(self.cols_meta[col]['75th'], col, self.cols_meta[col]['max']))
 
-                elif self.cols_meta[col]['50th'] <= row[col] < self.cols_meta[col]['75th']:
-                    curr_items.append('{:.2f}<{}<{:.2f}'.format(self.cols_meta[col]['50th'], col, self.cols_meta[col]['75th']))
-
-                else:
-                    curr_items.append('{:.2f}<{}<{:.2f}'.format(self.cols_meta[col]['75th'], col, self.cols_meta[col]['max']))
+                percentiles = list(self.cols_meta[col].keys())
+                percentiles_pairs = list(zip(percentiles, percentiles[1:]))
+                for pair in percentiles_pairs:
+                    if pair[1] != 'max':
+                        if self.cols_meta[col][pair[0]] <= row[col] < self.cols_meta[col][pair[1]]:
+                            curr_items.append('{}<{}<{}'.format(self.cols_meta[col][pair[0]], col, self.cols_meta[col][pair[1]]))
+                            break
+                    else:
+                        curr_items.append(
+                            '{}<{}<{}'.format(self.cols_meta[col][pair[0]], col, self.cols_meta[col][pair[1]]))
 
             itemSetList.append(curr_items)
 
@@ -350,15 +373,20 @@ class AdvancedEvaluator:
         '''
         def get_bounds(col, lower, upper):
             main_dict = self.cols_meta[col]
-            # min-25th
-            if main_dict['min'] == float(lower) and main_dict['25th'] == float(upper):
-                return ['min', '25th']
-            elif main_dict['25th'] == float(lower) and main_dict['50th'] == float(upper):
-                return ['25th', '50th']
-            elif main_dict['50th'] == float(lower) and main_dict['75th'] == float(upper):
-                return ['50th', '75th']
-            else:
-                return ['75th', 'max']
+            # # min-25th
+            # if main_dict['min'] == float(lower) and main_dict['25th'] == float(upper):
+            #     return ['min', '25th']
+            # elif main_dict['25th'] == float(lower) and main_dict['50th'] == float(upper):
+            #     return ['25th', '50th']
+            # elif main_dict['50th'] == float(lower) and main_dict['75th'] == float(upper):
+            #     return ['50th', '75th']
+            # else:
+            #     return ['75th', 'max']
+            percentiles = list(main_dict.keys())
+            percentiles_pairs = list(zip(percentiles, percentiles[1:]))
+            for pair in percentiles_pairs:
+                if main_dict[pair[0]] == float(lower) and main_dict[pair[1]] == float(upper):
+                    return [pair[0], pair[1]]
 
         fps = list(self.fp_dict[fp])
         col_names, lower_bounds, upper_bounds = [], [], []
