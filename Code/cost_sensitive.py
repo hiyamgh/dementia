@@ -163,30 +163,35 @@ def test_model(train_df, test_df, models_dict):
         test_X=test_df[df.columns[:-1]]
         test_y=test_df['dem1066']
 
-        model,param_grid=create_model(y,model_class)
-        pipeline=create_pipeline(model,X.columns)
-        cv = RepeatedStratifiedKFold(n_splits=10, n_repeats=3, random_state=1)
+        # model,param_grid=create_model(y,model_class)
+        # pipeline=create_pipeline(model,X.columns)
+        # cv = RepeatedStratifiedKFold(n_splits=10, n_repeats=3, random_state=1)
 
         X = np.array(X)
         y = np.array(y)
         test_X = np.array(test_X)
         test_y = np.array(test_y)
 
-        grid = GridSearchCV(estimator=pipeline,param_grid=param_grid,cv=cv,scoring=f2_score)
-        grid_result = grid.fit(X,y)
-        print('Best Weighted logistic regression: %f using %s' % (grid_result.best_score_, grid_result.best_params_))
-        estimator=grid_result.best_estimator_
-        estimator.fit(X,y)
-        y_predicted=estimator.predict(test_X)
-        print('printing results')
-        print_results(model_name,grid_result.best_params_,test_y,y_predicted)
-        print('performing advanced')
-
+        model_class.fit(X,y)
+        y_predicted = model_class.predict(test_X)
+        print_results(model_name, None, test_y, y_predicted)
+        # print('performing advanced')
         # save the trained model in a special directory
         dir_name = 'trained_models'
         mkdir(dirname=dir_name)
         with open(os.path.join(dir_name, '{}.p'.format(model_name)), 'wb') as f:
-            pickle.dump(estimator, f)
+            pickle.dump(model_class, f)
+
+        # grid = GridSearchCV(estimator=pipeline,param_grid=param_grid,cv=cv,scoring=f2_score)
+        # grid_result = grid.fit(X,y)
+        # print('Best Weighted logistic regression: %f using %s' % (grid_result.best_score_, grid_result.best_params_))
+        # estimator=grid_result.best_estimator_
+        # estimator.fit(X,y)
+        # y_predicted=estimator.predict(test_X)
+        # print('printing results')
+        # print_results(model_name,grid_result.best_params_,test_y,y_predicted)
+        # print('performing advanced')
+
 
         # advanced_metrics(train_df,test_df,estimator,model_name)
 
@@ -195,24 +200,16 @@ if __name__=='__main__':
     
     df = pd.read_csv('../input/train.csv')
     test_df = pd.read_csv('../input/test.csv')
+
     # baseline_logistic(X,y,test_X,test_y)
     models_dict = {
         'XGBoost': XGBClassifier(),
         'KNeighbors': KNeighborsClassifier(),
-        'Balanced Random Forest': BalancedRandomForestClassifier(),
+        # 'Balanced Random Forest': BalancedRandomForestClassifier(),
         'Weighted Logistic Regression': LogisticRegression(),
-        'Weighted Decision Tree Classifier': DecisionTreeClassifier(),
-        'Weighted SVM': SVC()
+        # 'Weighted Decision Tree Classifier': DecisionTreeClassifier(),
+        'Weighted SVM': SVC(probability=True)
     }
-    # for model,model_name in [
-    #     (XGBClassifier(),'XGBoost'),
-    #     (KNeighborsClassifier(),'KNeighbors'),
-    #     (BalancedRandomForestClassifier(),'Balanced Random Forest'),
-    #     (LogisticRegression(),'Weighted Logistic Regression'),
-    #     (DecisionTreeClassifier(),'Weighted Decision Tree Classifier'),
-    #     (SVC(),'Weighted SVM')
-    # ]:
-    #
 
     # test_model(df,test_df,model,model_name)
     # tarin all models in the dictionary above + grid search
@@ -222,7 +219,7 @@ if __name__=='__main__':
     models = list(models_dict.keys())
     model_objs = []
     for file_name in os.listdir('trained_models'):
-        trained_model = pickle.load(open(file_name, 'rb'))
+        trained_model = pickle.load(open(os.path.join('trained_models', file_name), 'rb'))
         model_objs.append(trained_model)
     models_dict_trained = dict(zip(models, model_objs))
 

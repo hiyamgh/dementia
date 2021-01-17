@@ -1,11 +1,11 @@
-KNeighbors Results:
- ROC AUC: 0.709
- GMEAN: 0.697
- f-score: 0.513
- bss: 0.204
- PR AUC: 0.420
+XGBoost Results:
+ ROC AUC: 0.819
+ GMEAN: 0.816
+ f-score: 0.711
+ bss: 0.428
+ PR AUC: 0.573
 best params:None
 Cost Matrix (assuming cost = 0 for correct labels and cost = 1 for wrong labels)
 		  |Actual Negative|Actual Positive
-Predicted Negative|0		  |21
+Predicted Negative|0		  |12
 Predicted Positive|11		  |0
