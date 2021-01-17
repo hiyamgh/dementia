@@ -16,12 +16,21 @@ cols_drop = ['article_title', 'article_content', 'source', 'source_category', 'u
 target_variable = 'label'
 scaling = 'robust'
 
-
 # the data frames
 df = pd.concat([df_train, df_test]).drop(cols_drop, axis=1).sample(frac=1).reset_index(drop=True)
 df_train = df_train.drop(cols_drop, axis=1)
 df_test = df_test.drop(cols_drop, axis=1)
 special_encoding = 'latin-1'
+
+# training_data_path = 'input/train.csv'
+# testing_data_path = 'input/test.csv'
+# df_train = pd.read_csv(training_data_path, encoding='latin-1')
+# df_test = pd.read_csv(testing_data_path, encoding='latin-1')
+# target_variable = 'dem1066'
+# scaling = 'robust'
+# cols_drop=None
+# special_encoding=None
+# df = pd.concat([df_train, df_test]).sample(frac=1).reset_index(drop=True)
 
 
 class DataGenerator(object):
@@ -48,12 +57,12 @@ class DataGenerator(object):
                 self.df_train = pd.read_csv(self.training_path).drop(self.cols_drop, axis=1).drop(self.cols_drop, axis=1)
                 self.df_test = pd.read_csv(self.testing_path).drop(self.cols_drop, axis=1).drop(self.cols_drop, axis=1)
         else:
-            if self.special_encoding:
+            if self.special_encoding is not None:
                 self.df_train = pd.read_csv(self.training_path, encoding=self.special_encoding)
                 self.df_test = pd.read_csv(self.testing_path, encoding=self.special_encoding)
             else:
-                self.df_train = pd.read_csv(self.training_path).drop(self.cols_drop, axis=1)
-                self.df_test = pd.read_csv(self.testing_path).drop(self.cols_drop, axis=1)
+                self.df_train = pd.read_csv(self.training_path)
+                self.df_test = pd.read_csv(self.testing_path)
 
         # X, Y = make_classification(n_samples=50000, n_features=10, n_informative=8,
         #                            n_redundant=0, n_clusters_per_class=2)

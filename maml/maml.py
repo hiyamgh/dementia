@@ -43,6 +43,10 @@ class MAML:
 		# TODO: meta-test is sort of test stage.
 		training = True if mode is 'train' else False
 
+		# # predictions and actuals extracted from meta batches
+		# self.predictions = []
+		# self.actuals = []
+
 		def meta_task(input):
 			"""
 			map_fn only support one parameters, so we need to unpack from tuple.
@@ -57,6 +61,10 @@ class MAML:
 			# to record the op in t update step.
 			query_preds, query_losses, query_accs = [], [], []
 			query_precisions, query_recalls = [], []
+
+			# added this
+			query_preds_hiyam = []
+			query_actuals_hiyam = []
 
 			# for FP, FN, TP, TN we will report not on the average
 			# but rather on the values of the last update
@@ -77,6 +85,13 @@ class MAML:
 			support_loss = tf.nn.softmax_cross_entropy_with_logits(logits=support_pred, labels=support_y)
 			support_acc = tf.contrib.metrics.accuracy(tf.argmax(tf.nn.softmax(support_pred, dim=1), axis=1),
 			                                             tf.argmax(support_y, axis=1))
+
+			support_pred_hiyam = tf.argmax(tf.nn.softmax(support_pred, dim=1), axis=1)
+			support_actual_hiyam = tf.argmax(tf.nn.softmax(support_pred, dim=1), axis=1)
+
+			# # append predictions vs actuals
+			# self.predictions.append(tf.argmax(tf.nn.softmax(support_pred, dim=1), axis=1))
+			# self.actuals.append(tf.argmax(support_y, axis=1))
 
 			_, support_prec = tf.contrib.metrics.streaming_precision(tf.argmax(tf.nn.softmax(support_pred, dim=1), axis=1),
 			                                             tf.argmax(support_y, axis=1))
@@ -133,6 +148,9 @@ class MAML:
 				query_accs.append(tf.contrib.metrics.accuracy(tf.argmax(tf.nn.softmax(query_preds[i], dim=1), axis=1),
 					                                            tf.argmax(query_y, axis=1)))
 
+				query_preds_hiyam.append(tf.argmax(tf.nn.softmax(query_preds[i], dim=1), axis=1))
+				query_actuals_hiyam.append(tf.argmax(query_y, axis=1))
+
 				precision, precision_op = tf.contrib.metrics.streaming_precision(tf.argmax(tf.nn.softmax(query_preds[i], dim=1), axis=1),
                                                                 tf.argmax(query_y, axis=1))
 
@@ -169,9 +187,10 @@ class MAML:
 			# however, we return all pred&loss&acc op at each time steps.
 			# result = [support_pred, support_loss, support_acc, query_preds, query_losses, query_accs]
 			result = [support_pred, support_loss, support_acc, support_prec, support_rec,
-					  support_fn, support_fp, support_tn, support_tp,
+					  support_fn, support_fp, support_tn, support_tp, support_pred_hiyam, support_actual_hiyam,
+
 					  query_preds, query_losses, query_accs, query_precisions, query_recalls,
-					  query_fns, query_fps, query_tns, query_tps]
+					  query_fns, query_fps, query_tns, query_tps, query_preds_hiyam, query_actuals_hiyam]
 
 			# return task_output
 			result_mod = []
@@ -190,8 +209,14 @@ class MAML:
 		# return: [support_pred, support_loss, support_acc, query_preds, query_losses, query_accs]
 		out_dtype = [tf.float64, tf.float64, tf.float64, tf.float64, tf.float64,
 					 tf.float64, tf.float64, tf.float64, tf.float64,
+
+					 # the hiyam ones
+					 tf.float64, tf.float64,
+
 					 [tf.float64] * K, [tf.float64] * K, [tf.float64] * K, [tf.float64] * K, [tf.float64] * K,
-					 [tf.float64] * K, [tf.float64] * K, [tf.float64] * K, [tf.float64] * K]
+					 [tf.float64] * K, [tf.float64] * K, [tf.float64] * K, [tf.float64] * K,
+					 # the hiyam ones
+					 [tf.float64] * K, [tf.float64] * K]
 		# out_dtype = [tf.float64, [tf.float64] * num_updates, tf.float64, [tf.float64] * num_updates]
 
 		# Hiyam adding the 2 lines below
@@ -201,9 +226,10 @@ class MAML:
 		result = tf.map_fn(meta_task, elems=(support_xb, support_yb, query_xb, query_yb),
 		                   dtype=out_dtype, parallel_iterations=meta_batchsz, name='map_fn')
 		support_pred_tasks, support_loss_tasks, support_acc_tasks, support_prec_tasks, support_rec_tasks,\
-			support_fn_tasks, support_fp_tasks, support_tn_tasks, support_tp_tasks,\
+			support_fn_tasks, support_fp_tasks, support_tn_tasks, support_tp_tasks, support_pred_hiyam, support_actual_hiyam,\
 			query_preds_tasks, query_losses_tasks, query_accs_tasks, query_precisions_tasks, query_recalls_tasks,\
-			query_fn_tasks, query_fp_tasks, query_tn_tasks, query_tp_tasks = result
+			query_fn_tasks, query_fp_tasks, query_tn_tasks, query_tp_tasks,\
+			query_preds_hiyam, query_actuals_hiyam = result
 
 		if mode is 'train':
 			# average loss
@@ -284,10 +310,13 @@ class MAML:
 		#         self.target_preds = target_preds_tasks[FLAGS.num_updates-1]
 		#         self.target_represent = target_represents_tasks[FLAGS.num_updates-1]
 
-			# Hiyam commented the below and replaced it
 			self.test_support_pred = support_pred_tasks
-			# self.test_query_pred = query_preds_tasks
 			self.test_query_pred = tf.argmax(query_preds_tasks, axis=1)
+
+			self.support_pred_hiyam = support_pred_hiyam
+			self.support_actual_hiyam = support_actual_hiyam
+			self.query_preds_hiyam = query_preds_hiyam
+			self.query_actuals_hiyam = query_actuals_hiyam
 
 		# NOTICE: every time build model, support_loss will be added to the summary, but it's different.
 		tf.summary.scalar(mode + '：support loss', support_loss)

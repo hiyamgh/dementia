@@ -4,6 +4,8 @@ import pandas as pd
 import argparse
 import random
 import sklearn
+from sklearn.metrics import *
+from imblearn.metrics import geometric_mean_score
 import tensorflow as tf
 
 from data_generator import DataGenerator
@@ -12,6 +14,7 @@ from maml import MAML
 
 parser = argparse.ArgumentParser()
 parser.add_argument('-t', '--test', action='store_true', default=True, help='set for test, otherwise train')
+parser.add_argument('-d', '--dirname', default='ckpt', help='directory to save the model in')
 args = parser.parse_args()
 
 os.environ['TF_CPP_MIN_LOG_LEVEL'] = '3'
@@ -80,35 +83,119 @@ def train(model, saver, sess):
 			print('>>>>\t\tValidation accs: ', np.mean(acc1s), acc, 'best:', best_acc, '\t\t<<<<')
 
 			if acc - best_acc > 0.05 or acc > 0.4:
-				saver.save(sess, os.path.join('ckpt', 'mini.mdl'))
+				saver.save(sess, os.path.join(args.dirname, 'mini.mdl'))
 				best_acc = acc
 				print('saved into ckpt:', acc)
 
 
-def evaluate(sess, model):
-	input_tensors = [model.test_query_pred]
-	metaval_target_preds = sess.run(input_tensors)
+def evaluate(support_predicted, support_actual, query_predicted, query_actual):
+	# for each meta batch, calculate accuracy / meta_batch_size
+	support_accuracies = []
+	support_precisions, support_recalls, support_f1s = [], [], []
+	support_rocs, support_gmeans, support_fbetas, support_bsss, support_pr_aucs = [], [], [], [], []
 
-	target_vals = np.array(model.query_y).flatten()
-	target_preds = np.array([np.argmax(preds, axis=2) for preds in metaval_target_preds]).flatten()
+	query_total_accuracies = []
+	query_total_precisions, query_total_recalls, query_total_f1s = [], [], []
+	query_total_rocs, query_total_gmeans, query_total_fbetas, query_total_bsss, query_total_pr_aucs = [], [], [], [], []
 
-	target_auc, target_ap, target_ar, target_f1 = compute_metrics(target_preds, target_vals)
-	print('precision: {:.3f}'.format(target_ap))
-	print('recall: {:.3f}'.format(target_ar))
-	print('F1: {:.3f}'.format(target_f1))
-	print('AUC: {:.3f}'.format(target_auc))
+	for i in range(len(support_predicted)):
+		accuracy, precision, recall, f1score, roc, gmean, fscore, bss, pr_auc = compute_metrics(predictions=np.int64(support_predicted[i]),
+																							     labels=np.int64(support_actual[i]))
+
+		support_accuracies.append(accuracy)
+		support_precisions.append(precision)
+		support_recalls.append(recall)
+		support_f1s.append(f1score)
+		support_rocs.append(roc)
+		support_gmeans.append(gmean)
+		support_fbetas.append(fscore)
+		support_bsss.append(bss)
+		support_pr_aucs.append(pr_auc)
+
+	support_accuracy = np.mean(support_accuracies)
+	support_precision = np.mean(support_precisions)
+	support_recall = np.mean(support_recalls)
+	support_f1 = np.mean(support_f1s)
+	support_roc = np.mean(support_rocs)
+	support_gmean = np.mean(support_gmeans)
+	support_fbeta = np.mean(support_fbetas)
+	support_bss = np.mean(support_bsss)
+	support_pr_auc = np.mean(support_pr_aucs)
+
+	for k in range(len(query_predicted)):
+		query_accuracies = []
+		query_precisions, query_recalls, query_f1s = [], [], []
+		query_rocs, query_gmeans, query_fbetas, query_bsss, query_pr_aucs = [], [], [], [], []
+		mini_batch = query_predicted[k]
+		for i in range(len(mini_batch)):
+			# query_accuracies.append(accuracy_score(query_actual[k][i], query_predicted[k][i]))
+			accuracy, precision, recall, f1score, roc, gmean, fscore, bss, pr_auc = compute_metrics(
+				predictions=np.int64(query_predicted[k][i]),
+				labels=np.int64(query_actual[k][i]))
+			query_accuracies.append(accuracy)
+			query_precisions.append(precision)
+			query_recalls.append(recall)
+			query_f1s.append(f1score)
+			query_rocs.append(roc)
+			query_gmeans.append(gmean)
+			query_fbetas.append(fscore)
+			query_bsss.append(bss)
+			query_pr_aucs.append(pr_auc)
+
+		query_total_accuracies.append(np.mean(query_accuracies))
+		query_total_precisions.append(np.mean(query_precisions))
+		query_total_recalls.append(np.mean(query_recalls))
+		query_total_f1s.append(np.mean(query_f1s))
+		query_total_rocs.append(np.mean(query_rocs))
+		query_total_gmeans.append(np.mean(query_gmeans))
+		query_total_fbetas.append(np.mean(query_fbetas))
+		query_total_pr_aucs.append(np.mean(query_pr_aucs))
+
+	results = {
+		'accuracy': [support_accuracy] + query_total_accuracies,
+		'precision': [support_precision] + query_total_precisions,
+		'recall': [support_recall] + query_total_recalls,
+		'f1': [support_f1] + query_total_f1s,
+		'roc': [support_roc] + query_total_rocs,
+		'gmean': [support_gmean] + query_total_gmeans,
+		'fbeta': [support_fbeta] + query_total_fbetas,
+		'bss': [support_bss] + query_total_bsss,
+		'pr_auc': [support_pr_auc] + query_total_pr_aucs
+	}
+	return results
+
+
+	# sklearn.metrics.accuracy_score(query_actual[1].flatten(), query_predicted[1].flatten())
+
+	# target_auc, target_ap, target_ar, target_f1 = compute_metrics(target_preds, target_vals)
+	# print('precision: {:.3f}'.format(target_ap))
+	# print('recall: {:.3f}'.format(target_ar))
+	# print('F1: {:.3f}'.format(target_f1))
+	# print('AUC: {:.3f}'.format(target_auc))
+
+
+def brier_skill_score(y, yhat):
+	probabilities = [0.01 for _ in range(len(y))]
+	brier_ref = brier_score_loss(y, probabilities)
+	bs = brier_score_loss(y, yhat)
+	return 1.0 - (bs / brier_ref)
 
 
 def compute_metrics(predictions, labels):
-	'''compute metrics score'''
-	fpr, tpr, _ = sklearn.metrics.roc_curve(labels, predictions)
-	auc = sklearn.metrics.auc(fpr, tpr)
-	ncorrects = sum(predictions == labels)
-	accuracy = sklearn.metrics.accuracy_score(labels, predictions)
-	ap = sklearn.metrics.average_precision_score(labels, predictions, 'micro')
-	ar = sklearn.metrics.recall_score(labels, predictions)
-	f1score = sklearn.metrics.f1_score(labels, predictions, 'micro')
-	return auc, ap, ar, f1score
+	'''compute metrics - regular and cos sensitive  '''
+	accuracy = accuracy_score(labels, predictions)
+	precision = precision_score(labels, predictions)
+	recall = recall_score(labels, predictions)
+	f1score = f1_score(labels, predictions)
+
+	roc = roc_auc_score(labels, predictions)
+	gmean = geometric_mean_score(labels, predictions, average='weighted')
+	fscore = fbeta_score(labels, predictions, beta=2)
+	bss = brier_skill_score(labels, predictions)
+	pr_auc = average_precision_score(labels, predictions)
+	# tn, fp, fn, tp = confusion_matrix(labels, predictions).ravel()
+
+	return accuracy, precision, recall, f1score, roc, gmean, fscore, bss, pr_auc
 
 
 def test(model, sess):
@@ -121,6 +208,12 @@ def test(model, sess):
 	test_accs = []
 	test_precisions = []
 	test_recalls = []
+
+	# accuracy, precision, recall, f1score, roc, gmean, fscore, bss, pr_auc
+	test_accuracies_hiyam, test_precicions_hiyam, test_recalls_hiyam, test_f1score_hiyam = [], [], [], []
+	test_rocs_hiyam = []
+	test_gmeans_hiyam, test_fbetas_hiyam, test_bsss_hiyam, test_pr_aucs_hiyam = [], [], [], []
+
 
 
 	# for i in range(600):
@@ -143,9 +236,37 @@ def test(model, sess):
 		result = sess.run(ops)
 		test_recalls.append(result)
 
+		ops = [model.support_pred_hiyam, model.support_actual_hiyam,
+			   model.query_preds_hiyam, model.query_actuals_hiyam]
+
+		support_predicted, support_actual, query_predicted, query_actual = sess.run(ops)
+
+		result = evaluate(support_predicted, support_actual, query_predicted, query_actual)
+		test_accuracies_hiyam.append(result['accuracy'])
+		test_precicions_hiyam.append(result['precision'])
+		test_recalls_hiyam.append(result['recall'])
+		test_f1score_hiyam.append(result['f1'])
+		test_rocs_hiyam.append(result['roc'])
+		test_gmeans_hiyam.append(result['gmean'])
+		test_fbetas_hiyam.append(result['fbeta'])
+		test_bsss_hiyam.append(result['bss'])
+		test_pr_aucs_hiyam.append(result['pr_auc'])
+
 		if i == 599:
 			ops = [model.test_query_tps, model.test_query_tns, model.test_query_fps, model.test_query_fns]
 			tp, fp, tn, fn = sess.run(ops)
+
+	results_hiyam = {
+		'accuracy': test_accuracies_hiyam,
+		'precision': test_precicions_hiyam,
+		'recall': test_recalls_hiyam,
+		'f1': test_f1score_hiyam,
+		'roc': test_rocs_hiyam,
+		'gmean': test_gmeans_hiyam,
+		'bss': test_bsss_hiyam,
+		'fbeta': test_fbetas_hiyam,
+		'pr_auc': test_pr_aucs_hiyam
+	}
 
 	# [600, K+1]
 	for all_results in list(zip(['accuracy', 'precision', 'recall'], [test_accs, test_precisions, test_recalls])):
@@ -168,6 +289,19 @@ def test(model, sess):
 
 	print('\nTP={} \t\t FP={}'.format(tp, fp))
 	print('FN={} \t\t TN={}'.format(fn, tn))
+
+	print('\n============================ Hiyam Results: ============================ ')
+	for metric in results_hiyam:
+		means = np.mean(results_hiyam[metric], 0)
+		stds = np.std(results_hiyam[metric], 0)
+		ci95 = 1.96 * stds / np.sqrt(600)
+
+		print('\nMetric: {}'.format(metric))
+		print('[support_t0, query_t0 - \t\t\tK] ')
+		print('mean:', means)
+		print('stds:', stds)
+		print('ci95:', ci95)
+		print('mean of all {}: {}'.format(metric, np.mean(means)))
 
 	# predicted = sess.run([model.test_query_pred])
 	# target_vals = np.array(model.query_y).flatten()
@@ -250,9 +384,9 @@ def main():
 	#####################################################
 	tf.train.start_queue_runners()
 
-	if os.path.exists(os.path.join('ckpt', 'checkpoint')):
+	if os.path.exists(os.path.join(args.dirname, 'checkpoint')):
 		# alway load ckpt both train and test.
-		model_file = tf.train.latest_checkpoint('ckpt')
+		model_file = tf.train.latest_checkpoint(args.dirname)
 		print("Restoring model weights from ", model_file)
 		saver.restore(sess, model_file)
 
