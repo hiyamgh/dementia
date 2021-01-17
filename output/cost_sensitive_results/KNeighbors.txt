@@ -1,11 +1,8 @@
 KNeighbors Results:
- ROC AUC: 0.752
- GMEAN: 0.752
- f-score: 0.660
- bss: -0.244
- PR AUC: 0.380
+ f-score: 0.675
+ ROC AUC: 0.745
 best params:{'s__sampling_strategy': 'all'}
-Cost Matrix (assuming cost = 0 for correct labels and cost = 1 for wrong labels)
+Cost Matrix:
 		  |Actual Negative|Actual Positive
-Predicted Negative|0		  |10
-Predicted Positive|40		  |0
+Predicted Negative|105		  |7
+Predicted Positive|54		  |34

@@ -1,11 +1,8 @@
 Weighted SVM Results:
- ROC AUC: 0.806
- GMEAN: 0.803
- f-score: 0.754
- bss: -0.318
- PR AUC: 0.415
-best params:{'m__class_weight': {0: 162, 1: 640}, 's__sampling_strategy': 'minority'}
-Cost Matrix (assuming cost = 0 for correct labels and cost = 1 for wrong labels)
+ f-score: 0.746
+ ROC AUC: 0.787
+best params:{'s__sampling_strategy': 0.75}
+Cost Matrix:
 		  |Actual Negative|Actual Positive
-Predicted Negative|0		  |3
-Predicted Positive|50		  |0
+Predicted Negative|95		  |1
+Predicted Positive|64		  |40

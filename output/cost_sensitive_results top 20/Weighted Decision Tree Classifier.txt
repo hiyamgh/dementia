@@ -1,0 +1,11 @@
+Weighted Decision Tree Classifier Results:
+ ROC AUC: 0.758
+ GMEAN: 0.753
+ f-score: 0.613
+ bss: 0.229
+ PR AUC: 0.461
+best params:{'m__class_weight': {0: 162, 1: 640}, 's__sampling_strategy': 'minority'}
+Cost Matrix (assuming cost = 0 for correct labels and cost = 1 for wrong labels)
+		  |Actual Negative|Actual Positive
+Predicted Negative|0		  |16
+Predicted Positive|15		  |0

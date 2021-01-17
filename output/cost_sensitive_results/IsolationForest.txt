@@ -1,0 +1,2 @@
+IsolationForest Results:
+ f-score: 0.261

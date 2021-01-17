@@ -1,0 +1,2 @@
+One Class SVM Results:
+ f-score: 0.361

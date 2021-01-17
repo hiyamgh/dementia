@@ -1,0 +1,11 @@
+Weighted Logistic Regression Results:
+ ROC AUC: 0.793
+ GMEAN: 0.785
+ f-score: 0.752
+ bss: -0.567
+ PR AUC: 0.388
+best params:{'m__class_weight': {0: 162, 1: 640}, 's__sampling_strategy': 'all'}
+Cost Matrix (assuming cost = 0 for correct labels and cost = 1 for wrong labels)
+		  |Actual Negative|Actual Positive
+Predicted Negative|0		  |1
+Predicted Positive|62		  |0
