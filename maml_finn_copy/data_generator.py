@@ -2,7 +2,6 @@ import numpy as np
 import pandas as pd
 import random
 from sklearn.preprocessing import *
-from helper import *
 from sklearn.model_selection import train_test_split
 from sklearn.datasets import make_classification
 from tensorflow.python.platform import flags
@@ -16,21 +15,12 @@ cols_drop = ['article_title', 'article_content', 'source', 'source_category', 'u
 target_variable = 'label'
 scaling = 'robust'
 
+
 # the data frames
 df = pd.concat([df_train, df_test]).drop(cols_drop, axis=1).sample(frac=1).reset_index(drop=True)
 df_train = df_train.drop(cols_drop, axis=1)
 df_test = df_test.drop(cols_drop, axis=1)
 special_encoding = 'latin-1'
-
-# training_data_path = 'input/train.csv'
-# testing_data_path = 'input/test.csv'
-# df_train = pd.read_csv(training_data_path, encoding='latin-1')
-# df_test = pd.read_csv(testing_data_path, encoding='latin-1')
-# target_variable = 'dem1066'
-# scaling = 'robust'
-# cols_drop=None
-# special_encoding=None
-# df = pd.concat([df_train, df_test]).sample(frac=1).reset_index(drop=True)
 
 
 class DataGenerator(object):
@@ -57,31 +47,17 @@ class DataGenerator(object):
                 self.df_train = pd.read_csv(self.training_path).drop(self.cols_drop, axis=1).drop(self.cols_drop, axis=1)
                 self.df_test = pd.read_csv(self.testing_path).drop(self.cols_drop, axis=1).drop(self.cols_drop, axis=1)
         else:
-            if self.special_encoding is not None:
+            if self.special_encoding:
                 self.df_train = pd.read_csv(self.training_path, encoding=self.special_encoding)
                 self.df_test = pd.read_csv(self.testing_path, encoding=self.special_encoding)
             else:
-                self.df_train = pd.read_csv(self.training_path)
-                self.df_test = pd.read_csv(self.testing_path)
+                self.df_train = pd.read_csv(self.training_path).drop(self.cols_drop, axis=1)
+                self.df_test = pd.read_csv(self.testing_path).drop(self.cols_drop, axis=1)
 
         # X, Y = make_classification(n_samples=50000, n_features=10, n_informative=8,
         #                            n_redundant=0, n_clusters_per_class=2)
         #
         # X_train, X_test, y_train, y_test = train_test_split(X, Y)
-
-        # create combined dataset for FP growth
-        self.df = pd.concat([self.df_train, self.df_test])
-        # get the frequent pattern and cols_meta(dictionary containing meta data about columns distribution)
-        self.freqItemSet, self.cols_meta = identify_frequent_patterns(df=df, target_variable=target_variable)
-
-        # dictionary of indices for each frequent pattern
-        self.indices_who_has_fp = {}
-        self.indices_without_fp = {}
-        self.indices_who_has_fp['train'] = {}
-        self.indices_who_has_fp['test'] = {}
-        for i, fp in enumerate(self.freqItemSet):
-            self.indices_who_has_fp['train'][i] = get_fp_indices(fps=fp, cols_meta=self.cols_meta, df=self.df_train)
-            self.indices_who_has_fp['test'][i] = get_fp_indices(fps=fp, cols_meta=self.cols_meta, df=self.df_test)
 
         # training and testing numpy arrays
         self.X_train = np.array(self.df_train.loc[:, self.df_train.columns != self.target_variable])
@@ -89,19 +65,6 @@ class DataGenerator(object):
 
         self.X_test = np.array(self.df_test.loc[:, self.df_test.columns != self.target_variable])
         self.y_test = np.array(self.df_test.loc[:, self.df_test.columns == self.target_variable])
-
-        # dictionary containing indices that are not frequent patterns
-        # normal to find none, cz frequent patterns are logically in each row
-        self.indices_without_fp['train'], self.indices_without_fp['test'] = get_non_fp_indices(
-            fp2indices_dict=self.indices_who_has_fp,
-            x_train=self.X_train,
-            x_test=self.X_test)
-
-        if self.indices_without_fp['train'] and self.indices_without_fp['test']:
-            # boolean whether there exist indices ho DONT have FPs or not
-            self.non_fp_exist = True
-        else:
-            self.non_fp_exist = False
 
         # self.X_train = X_train
         # self.y_train = y_train
@@ -122,33 +85,6 @@ class DataGenerator(object):
 
         self.dim_input = self.X_train.shape[1]
         self.dim_output = self.num_classes
-
-    def yield_fp_idxs(self, training=True):
-        num_classes = self.num_classes
-        fp_idxs = {}
-        if training:
-            y = self.y_train
-            indices_who_has_fp = self.indices_who_has_fp['train']
-        else:
-            y = self.y_test
-            indices_who_has_fp = self.indices_who_has_fp['test']
-
-        for cl in range(num_classes):
-            # create an entry for the class
-            fp_idxs[cl] = {}
-
-            for fp in indices_who_has_fp:
-
-                # get the indices avaialbe for the current frequent pattern
-                available_idxs = indices_who_has_fp[fp]
-
-                # get the list of indices for this class that has fp
-                all_idxs_cl_fp = [idx for idx in available_idxs if y[idx] == cl]
-
-                fp_idxs[cl][fp] = all_idxs_cl_fp
-
-        # now, we have a dictionary that has the indices of each frequent pattern, in each class
-        return fp_idxs
 
     def yield_data_idxs(self, training=True):
         num_classes = self.num_classes
@@ -185,56 +121,6 @@ class DataGenerator(object):
     # 4-4, 5-4, 6-4, 7-4,
     # 8-4*2, 9-4*2, 10-4*2, 11-4*2
 
-    def get_fp_tasks(self, labels, fp_idxs, ifold, nb_samples=None, shuffle=True, training=True):
-
-        # number of frequent patterns
-        num_fps = len(fp_idxs[0].keys())
-
-        if nb_samples > num_fps:
-            fps_per_sample = nb_samples // num_fps
-        elif num_fps > nb_samples:
-            fps_per_sample = num_fps // nb_samples
-        else:
-            fps_per_sample = num_fps
-
-        def get_data_idxs(cl):
-            idxs_chosen = []
-            num_samples_taken = 0
-            while len(idxs_chosen) < nb_samples:
-                for fp in fp_idxs[cl]:
-                    idxs_chosen.extend(list(np.random.choice(fp_idxs[cl][fp], size=fps_per_sample, replace=False)))
-                    num_samples_taken += fps_per_sample
-
-                    if len(idxs_chosen) >= nb_samples:
-                        break
-
-            return idxs_chosen
-
-        if training:
-            x = self.X_train
-            y = self.y_train
-        else:
-            x = self.X_test
-            y = self.y_test
-
-        all_idxs = []
-        all_labels = []
-        for i in range(labels):
-            idxs_chosen = get_data_idxs(cl=i)
-            labels_curr = [i] * len(idxs_chosen)
-            labels_curr = np.array([labels_curr, -(np.array(labels_curr)-1)]).T
-
-            all_idxs.extend(idxs_chosen)
-            all_labels.extend(labels_curr)
-
-        if shuffle:
-            zipped = list(zip(all_idxs, all_labels))
-            random.shuffle(zipped)
-            all_idxs, all_labels = zip(*zipped)
-
-        # return x[all_idxs, :], np.array(all_labels).reshape(-1, 1)
-        return x[all_idxs, :], np.array(all_labels)
-
     def get_data_tasks(self, labels, data_idxs, ifold, nb_samples=None, shuffle=True, training=True):
 
         def get_data_idxs(cl):
@@ -265,14 +151,20 @@ class DataGenerator(object):
         all_labels = []
         for i in range(labels):
             # get all the data that belong to a particular class
+            # idxs_curr = [idx for idx in range(len(x)) if y[idx] == i]
+            # sample nb_samples data points per class i
+            # idxs_chosen = sampler(idxs_curr)
             idxs_chosen = get_data_idxs(cl=i)
             labels_curr = [i] * len(idxs_chosen)
             labels_curr = np.array([labels_curr, -(np.array(labels_curr)-1)]).T
-
             # add the indexes and labels
             all_idxs.extend(idxs_chosen)
+            # all_labels.extend([i] * len(idxs_chosen))
             all_labels.extend(labels_curr)
 
+        # flatten the list of indxs
+        # all_idxs = [item for sublist in all_idxs for item in sublist]
+        # all_labels = [item for sublist in all_idxs for item in sublist]
         if shuffle:
             zipped = list(zip(all_idxs, all_labels))
             random.shuffle(zipped)
@@ -284,16 +176,12 @@ class DataGenerator(object):
     def make_data_tensor(self, training=True):
 
         all_data, all_labels = [], []
-        fp_idxs = self.yield_fp_idxs(training=training)
-        # data_idxs = self.yield_data_idxs(training=training)
+        data_idxs = self.yield_data_idxs(training=training)
 
         for ifold in range(self.total_batch_num):
             # sampled_folders, range(self.num_classes), nb_samples=self.nimg
             # 16 in one class, 16 * 2 in one task :)
-
-            # data, labels = self.get_data_tasks(self.num_classes, data_idxs, ifold, nb_samples=self.nimg, shuffle=True, training=training)
-            data, labels = self.get_fp_tasks(self.num_classes, fp_idxs, ifold, nb_samples=self.nimg, shuffle=True, training=training)
-
+            data, labels = self.get_data_tasks(self.num_classes, data_idxs, ifold, nb_samples=self.nimg, shuffle=True, training=training)
             all_data.extend(data)
             all_labels.extend(labels)
 
@@ -313,22 +201,3 @@ class DataGenerator(object):
 
         return all_image_batches, all_label_batches
 
-
-if __name__ == '__main__':
-    training_data_path = 'input/feature_extraction_train_updated.csv'
-    testing_data_path = 'input/feature_extraction_test_updated.csv'
-    df_train = pd.read_csv(training_data_path, encoding='latin-1')
-    df_test = pd.read_csv(testing_data_path, encoding='latin-1')
-    cols_drop = ['article_title', 'article_content', 'source', 'source_category', 'unit_id']
-    target_variable = 'label'
-    scaling = 'robust'
-
-    # the data frames
-    df = pd.concat([df_train, df_test]).drop(cols_drop, axis=1).sample(frac=1).reset_index(drop=True)
-    df_train = df_train.drop(cols_drop, axis=1)
-    df_test = df_test.drop(cols_drop, axis=1)
-    special_encoding = 'latin-1'
-
-    freqItemSet, cols_meta = identify_frequent_patterns(df=df, target_variable=target_variable)
-    indices_who_has_fp = get_fp_indices(fps=freqItemSet[0], cols_meta=cols_meta, df=df)
-    print(indices_who_has_fp)

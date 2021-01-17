@@ -37,7 +37,7 @@ if __name__ == '__main__':
                               target_variable='label',
                               plots_output_folder='plots/fake_news/{}/'.format(exp),
                               fp_growth_output_folder='plots/fake_news/{}/fp_growth/'.format(exp),
-                              trained_models_dir='input/fake_news_trained_models/{}/'.format(exp),
+                              # trained_models_dir='input/fake_news_trained_models/{}/'.format(exp),
                               models_dict=models_dict,
                               scaling='z-score',
                               cols_drop=cols_drop,

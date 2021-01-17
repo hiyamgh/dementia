@@ -1,4 +1,5 @@
 Weighted Logistic Regression Results:
+<<<<<<< HEAD
  f-score: 0.760
  GMEAN: 0.810
  bss: -0.269
@@ -9,3 +10,15 @@ Cost Matrix:
 		  |Actual Negative|Actual Positive
 Predicted Negative|111		  |3
 Predicted Positive|48		  |38
+=======
+ ROC AUC: 0.801
+ GMEAN: 0.797
+ f-score: 0.675
+ bss: 0.428
+ PR AUC: 0.564
+best params:None
+Cost Matrix (assuming cost = 0 for correct labels and cost = 1 for wrong labels)
+		  |Actual Negative|Actual Positive
+Predicted Negative|0		  |14
+Predicted Positive|9		  |0
+>>>>>>> 52a2159ca29cad4380445f6c91ab7687818c260e

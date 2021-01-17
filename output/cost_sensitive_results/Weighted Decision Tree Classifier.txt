@@ -1,4 +1,5 @@
 Weighted Decision Tree Classifier Results:
+<<<<<<< HEAD
  f-score: 0.699
  GMEAN: 0.786
  bss: -0.045
@@ -9,3 +10,15 @@ Cost Matrix:
 		  |Actual Negative|Actual Positive
 Predicted Negative|126		  |9
 Predicted Positive|33		  |32
+=======
+ ROC AUC: 0.457
+ GMEAN: 0.456
+ f-score: 0.340
+ bss: -1.122
+ PR AUC: 0.234
+best params:None
+Cost Matrix (assuming cost = 0 for correct labels and cost = 1 for wrong labels)
+		  |Actual Negative|Actual Positive
+Predicted Negative|0		  |15
+Predicted Positive|37		  |0
+>>>>>>> 52a2159ca29cad4380445f6c91ab7687818c260e
