@@ -305,32 +305,32 @@ def mkdir(dirname):
         # advanced_metrics(train_df,test_df,estimator,model_name)
 
 
-if __name__=='__main__':
+# if __name__=='__main__':
     
-    df = pd.read_csv('../input/train.csv')
-    test_df = pd.read_csv('../input/test.csv')
+#     df = pd.read_csv('../input/train.csv')
+#     test_df = pd.read_csv('../input/test.csv')
 
-    # baseline_logistic(X,y,test_X,test_y)
-    models_dict = {
-        'XGBoost': XGBClassifier(),
-        'KNeighbors': KNeighborsClassifier(),
-        # 'Balanced Random Forest': BalancedRandomForestClassifier(),
-        'Weighted Logistic Regression': LogisticRegression(),
-        # 'Weighted Decision Tree Classifier': DecisionTreeClassifier(),
-        'Weighted SVM': SVC(probability=True)
-    }
+#     # baseline_logistic(X,y,test_X,test_y)
+#     models_dict = {
+#         'XGBoost': XGBClassifier(),
+#         'KNeighbors': KNeighborsClassifier(),
+#         # 'Balanced Random Forest': BalancedRandomForestClassifier(),
+#         'Weighted Logistic Regression': LogisticRegression(),
+#         # 'Weighted Decision Tree Classifier': DecisionTreeClassifier(),
+#         'Weighted SVM': SVC(probability=True)
+#     }
 
-    # test_model(df,test_df,model,model_name)
-    # tarin all models in the dictionary above + grid search
-    test_model(df, test_df, models_dict)
+#     # test_model(df,test_df,model,model_name)
+#     # tarin all models in the dictionary above + grid search
+#     test_model(df, test_df, models_dict)
 
-    # load trained models into another dictionary
-    models = list(models_dict.keys())
-    model_objs = []
-    for file_name in os.listdir('trained_models'):
-        trained_model = pickle.load(open(os.path.join('trained_models', file_name), 'rb'))
-        model_objs.append(trained_model)
-    models_dict_trained = dict(zip(models, model_objs))
+#     # load trained models into another dictionary
+#     models = list(models_dict.keys())
+#     model_objs = []
+#     for file_name in os.listdir('trained_models'):
+#         trained_model = pickle.load(open(os.path.join('trained_models', file_name), 'rb'))
+#         model_objs.append(trained_model)
+#     models_dict_trained = dict(zip(models, model_objs))
 
-    # now apply advanced ML evaluation
-    advanced_metrics(df, test_df, models_dict_trained)
+#     # now apply advanced ML evaluation
+#     advanced_metrics(df, test_df, models_dict_trained)
