@@ -1,8 +1,0 @@
-Easy Ensemble Classifier Results:
- f-score: 0.661
- ROC AUC: 0.746
-best params:{'s__sampling_strategy': 'not minority'}
-Cost Matrix:
-		  |Actual Negative|Actual Positive
-Predicted Negative|113		  |9
-Predicted Positive|46		  |32

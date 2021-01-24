@@ -1,0 +1,6 @@
+Weighted Decision Tree Classifier Results:
+Weighted Decision Tree Classifier &0.722 &0.747 &0.321 &0.350 &0.758 &best params:{'s__sampling_strategy': 'minority', 'f2_score': 0.7220216606498195}
+Cost Matrix:
+		  |Actual Negative|Actual Positive
+Predicted Negative|86		  |1
+Predicted Positive|73		  |40

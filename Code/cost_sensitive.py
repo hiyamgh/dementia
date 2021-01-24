@@ -14,7 +14,7 @@ from imblearn.over_sampling import SMOTENC
 from data_preprocessing import get_columns
 from sklearn import metrics
 from imblearn.metrics import geometric_mean_score
-from xgboost import XGBClassifier
+# from xgboost import XGBClassifier
 from sklearn.neighbors import KNeighborsClassifier
 from imblearn.ensemble import BalancedRandomForestClassifier,EasyEnsembleClassifier
 from sklearn.metrics import fbeta_score,make_scorer
@@ -31,11 +31,8 @@ f2_score=make_scorer(fbeta_score, beta=2)
 
 # make a prediction with a lof model
 def lof_predict(model, trainX, testX):
-	# create one large dataset
 	composite = np.vstack((trainX, testX))
-	# make prediction on composite dataset
 	yhat = model.fit_predict(composite)
-	# return just the predictions on the test set
 	return yhat[len(trainX):]
 
 def to_labels(pos_probs, threshold):
@@ -84,18 +81,22 @@ def create_pipeline(model,columns):
     pipeline = Pipeline(steps=steps)
     return pipeline
 
-def baseline_logistic(X,y,test_X,test_y):
+def baseline_logistic(df,test_df):
+    X=df[df.columns[:-1]]
+    y=df['dem1066']
+    test_X=test_df[df.columns[:-1]]
+    test_y=test_df['dem1066']
     model = LogisticRegression()
     model.fit(X,y)
-    y_predicted=model.predict(test_X)
-    print_results('baseline logistic regression','',test_y,y_predicted)
+    y_predicted=model.predict_proba(test_X)[:, 1]
+    print_results('baseline logistic regression',{},test_y,y_predicted,proba=True,threshold=0.5)
 
 def create_model(y,model):
     counter = Counter(y)
     reverse_counter={0:counter[1],1:counter[0]}
     balance = [{0:1,1:10}, {0:1,1:100},reverse_counter]
     param_grid = {
-        # 'm__class_weight':balance,
+        'm__class_weight':balance,
                   's__sampling_strategy':['minority','not minority','all',0.5,1,0.75],
                     #   solver=['newton-cg', 'lbfgs', 'liblinear','sag', 'saga'],
                     #   C=[0.01,0.1,1,10,100]
@@ -104,9 +105,11 @@ def create_model(y,model):
     # param_grid={'m__class_weight':[reverse_counter],'s__sampling_strategy':['minority']}
     return model,param_grid
 
-def print_results(model_name,best_params,y,y_predicted,proba=False,one_class=False):
-
-    f=open(f"../output/cost_sensitive_results/{model_name}.txt", "w")
+def print_results(model_name,best_params,y,y_predicted,proba=False,one_class=False,threshold=None):
+    if proba:
+        bss=brier_skill_score(y,y_predicted)
+        y_predicted=to_labels(y_predicted,threshold)
+    f=open(f"../output/cost_sensitive_results 10/{model_name}.txt", "w")
 
     if one_class:
         fscore=fbeta_score(y, y_predicted, beta=2, pos_label=-1)
@@ -114,7 +117,8 @@ def print_results(model_name,best_params,y,y_predicted,proba=False,one_class=Fal
         fscore=fbeta_score(y, y_predicted, beta=2)
         
     f.write('%s Results:\n'%model_name)
-    f.write('%s f-score: %.3f\n' % ('',fscore))
+    f.write(f'{model_name} &')
+    f.write('%.3f &'%fscore)
 
     if one_class:
         f.close()
@@ -122,14 +126,13 @@ def print_results(model_name,best_params,y,y_predicted,proba=False,one_class=Fal
     
     if proba:
         gmean=geometric_mean_score(y, y_predicted, average='weighted')
-        f.write('%s GMEAN: %.3f\n' % ('',gmean))
-        bss=brier_skill_score(y,y_predicted)
-        f.write('%s bss: %.3f\n' % ('',bss))
+        f.write('%.3f &' % gmean)
+        f.write('%.3f &' % bss)
         pr_auc=metrics.average_precision_score(y, y_predicted)
-        f.write('%s PR AUC: %.3f\n' % ('',pr_auc))
+        f.write('%.3f &' % pr_auc)
     
     roc=metrics.roc_auc_score(y,y_predicted)
-    f.write('%s ROC AUC: %.3f\n' % ('',mean(roc)))
+    f.write('%.3f &' % mean(roc))
 
     tn, fp, fn, tp = metrics.confusion_matrix(y,y_predicted).ravel()
     f.write(f'best params:{best_params}')
@@ -138,8 +141,7 @@ def print_results(model_name,best_params,y,y_predicted,proba=False,one_class=Fal
     f.write(f'Predicted Negative|{tn}\t\t  |{fn}\n')
     f.write(f'Predicted Positive|{fp}\t\t  |{tp}\n')
     f.close()
-
-
+    
 # def advanced_metrics(train_df,test_df,trained_model,trained_model_name):
 def advanced_metrics(train_df, test_df, models_dict_trained):
     
@@ -183,10 +185,11 @@ def test_model(train_df,test_df,feature_importance,model_class,model_name,proba=
     if one_class:
         train_df=train_df[train_df['dem1066']==0]
 
-    X=train_df[df.columns[:-1]]
-    # X=train_df[feature_importance[:11]]
+    # X=train_df[df.columns[:-1]]
+    X=train_df[feature_importance[:11]]
     y=train_df['dem1066']
-    test_X=test_df[df.columns[:-1]]
+    # test_X=test_df[df.columns[:-1]]
+    test_X=test_df[feature_importance[:11]]
     test_y=test_df['dem1066']
     if one_class:    
         test_y[test_y == 1] = -1
@@ -217,14 +220,12 @@ def test_model(train_df,test_df,feature_importance,model_class,model_name,proba=
         # get best threshold
         ix = np.argmax(scores)
         print('Threshold=%.3f, F-measure=%.5f' % (thresholds[ix], scores[ix]))
-        y_predicted=to_labels(probs,thresholds[ix])
         best_params['f2_score']=scores[ix]
-        best_params['threshold']=thresholds[ix]
+        print_results(model_name,best_params,test_y,probs,proba=proba,one_class=one_class,threshold=thresholds[ix])
     else:
         y_predicted=estimator.predict(test_X)
         # y_predicted=lof_predict(estimator, X, test_X)
-    print('printing results')
-    print_results(model_name,best_params,test_y,y_predicted,proba=proba,one_class=one_class)
+        print_results(model_name,best_params,test_y,y_predicted,proba=proba,one_class=one_class)
     return estimator
     
 if __name__=='__main__':
@@ -233,16 +234,16 @@ if __name__=='__main__':
     test_df=pd.read_csv('../input/test.csv')
     feature_importance=np.array(pd.read_csv('../input/feature_importance.csv')['Feature'])
     # print(feature_importance)
-    # baseline_logistic(X,y,test_X,test_y)
+    baseline_logistic(df,test_df)
     models_dict={}
     for model,model_name,proba,one_class in [
         # (XGBClassifier(),'XGBoost'),
-                            (CalibratedClassifierCV(LogisticRegression(class_weight={0: 162, 1: 640})),'Weighted Logistic Regression',True,False),
-                            (CalibratedClassifierCV(DecisionTreeClassifier(class_weight={0: 162, 1: 640})),'Weighted Decision Tree Classifier',True,False),
-                            (CalibratedClassifierCV(SVC(class_weight={0: 162, 1: 640})),'Weighted SVM',False,False),
-                            (CalibratedClassifierCV(KNeighborsClassifier()),'KNeighbors',False,False),
-                            (BalancedRandomForestClassifier(),'Balanced Random Forest',True,False),
-                            (EasyEnsembleClassifier(),'Easy Ensemble Classifier',False,False),
+                            (LogisticRegression(),'Weighted Logistic Regression',True,False),
+                            (DecisionTreeClassifier(),'Weighted Decision Tree Classifier',True,False),
+                            (SVC(),'Weighted SVM',False,False),
+                            # (KNeighborsClassifier(),'KNeighbors',False,False),
+                            # (BalancedRandomForestClassifier(),'Balanced Random Forest',True,False),
+                            # (EasyEnsembleClassifier(),'Easy Ensemble Classifier',False,False),
                             #  (OneClassSVM(gamma='scale', nu=0.1),'One Class SVM',False,True),
                             #  (EllipticEnvelope(contamination=0.1),'EllipticEnvelope',False,True),
                             #  (IsolationForest(contamination=0.1),'IsolationForest',False,True),

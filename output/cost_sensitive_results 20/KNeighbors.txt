@@ -1,0 +1,6 @@
+KNeighbors Results:
+KNeighbors &0.705 &0.793 &best params:{'s__sampling_strategy': 'all'}
+Cost Matrix:
+		  |Actual Negative|Actual Positive
+Predicted Negative|128		  |9
+Predicted Positive|31		  |32

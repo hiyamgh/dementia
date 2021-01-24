@@ -1,0 +1,6 @@
+Weighted SVM Results:
+Weighted SVM &0.746 &0.787 &best params:{'s__sampling_strategy': 0.75}
+Cost Matrix:
+		  |Actual Negative|Actual Positive
+Predicted Negative|95		  |1
+Predicted Positive|64		  |40

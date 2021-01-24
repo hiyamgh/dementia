@@ -1,0 +1,6 @@
+Weighted Logistic Regression Results:
+Weighted Logistic Regression &0.718 &0.811 &0.401 &0.501 &0.812 &best params:{'m__class_weight': {0: 162, 1: 640}, 's__sampling_strategy': 'not minority', 'f2_score': 0.7175925925925926}
+Cost Matrix:
+		  |Actual Negative|Actual Positive
+Predicted Negative|138		  |10
+Predicted Positive|21		  |31

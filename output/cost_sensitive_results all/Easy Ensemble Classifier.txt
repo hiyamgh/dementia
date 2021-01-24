@@ -1,0 +1,6 @@
+Easy Ensemble Classifier Results:
+Easy Ensemble Classifier &0.729 &0.791 &best params:{'s__sampling_strategy': 'not minority'}
+Cost Matrix:
+		  |Actual Negative|Actual Positive
+Predicted Negative|112		  |5
+Predicted Positive|47		  |36

@@ -1,0 +1,6 @@
+baseline logistic regression Results:
+baseline logistic regression &0.657 &0.786 &0.548 &0.560 &0.792 &best params:{}
+Cost Matrix:
+		  |Actual Negative|Actual Positive
+Predicted Negative|151		  |15
+Predicted Positive|8		  |26

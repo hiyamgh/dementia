@@ -1,0 +1,6 @@
+Weighted SVM Results:
+Weighted SVM &0.749 &0.790 &best params:{'m__class_weight': {0: 1, 1: 10}, 's__sampling_strategy': 'not minority'}
+Cost Matrix:
+		  |Actual Negative|Actual Positive
+Predicted Negative|96		  |1
+Predicted Positive|63		  |40

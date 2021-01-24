@@ -1,0 +1,6 @@
+Balanced Random Forest Results:
+Balanced Random Forest &0.768 &0.797 &0.418 &0.398 &0.805 &best params:{'s__sampling_strategy': 'not minority', 'f2_score': 0.7677902621722846}
+Cost Matrix:
+		  |Actual Negative|Actual Positive
+Predicted Negative|97		  |0
+Predicted Positive|62		  |41
