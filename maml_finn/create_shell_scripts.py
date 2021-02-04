@@ -1,6 +1,22 @@
 import os
 import itertools
 
+# #SBATCH --job-name=graphnei
+# #SBATCH --account=hkg02
+#
+# ## specify the required resources
+# #SBATCH --nodes=1
+# #SBATCH --ntasks-per-node=8
+# #SBATCH --time=0-08:00:00
+# #SBATCH --mail-type=ALL
+# #SBATCH --mail-user=hkg02@mail.aub.edu
+#
+# #
+# # add your command here, e.g
+# #
+# module load python/3
+
+
 def create_scripts(metatrain_iterations,
                    meta_batch_sizes,
                    meta_lrs,
@@ -17,8 +33,15 @@ def create_scripts(metatrain_iterations,
     all_combinations = list(itertools.product(*all_hyper_params))
     print('length of all combinations: {}'.format(len(all_combinations)))
     for i, combination in enumerate(all_combinations):
-        with open('jobfp{}.sh'.format(i), 'w') as f:
+        with open('job{}.sh'.format(i), 'w') as f:
             f.writelines("#!/usr/bin/env bash\n")
+            f.writelines("#SBATCH --job-name={}\n".format('job{}'.format(i)))
+            f.writelines("#SBATCH --account=hkg02\n")
+            f.writelines("#SBATCH --nodes=1\n")
+            f.writelines("#SBATCH --time=0-08:00:00\n")
+            f.writelines("#SBATCH --mail-type=ALL\n")
+            f.writelines("#SBATCH --mail-user=hkg02@mail.aub.edu\n\n")
+            f.writelines("module load python/3\n")
             f.writelines("python main.py \\\n")
             f.writelines("--pretrain_iterations 0 \\\n")
             f.writelines("--metatrain_iterations {} \\\n".format(combination[0]))
@@ -32,7 +55,7 @@ def create_scripts(metatrain_iterations,
             f.writelines("--dim_name '{}' \\\n".format(combination[7][0]))
             f.writelines("--activation_fn '{}' \\\n".format(combination[8]))
             f.writelines("--logdir 'jobs' \\\n")
-            f.writelines("> jobfp{}.txt".format(i))
+            f.writelines("> out_job{}.txt".format(i))
             f.close()
 
 
