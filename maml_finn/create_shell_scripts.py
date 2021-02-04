@@ -7,10 +7,13 @@ def create_scripts(metatrain_iterations,
                    update_batch_sizes,
                    update_lrs,
                    num_updates,
-                   fp_supports):
+                   fp_supports,
+                   dims,
+                   activation_fns):
 
     all_hyper_params = [metatrain_iterations, meta_batch_sizes, meta_lrs, update_batch_sizes,
-                        update_lrs, num_updates]
+                        update_lrs, num_updates, fp_supports, dims, activation_fns]
+
     all_combinations = list(itertools.product(*all_hyper_params))
     print('length of all combinations: {}'.format(len(all_combinations)))
     for i, combination in enumerate(all_combinations):
@@ -24,46 +27,40 @@ def create_scripts(metatrain_iterations,
             f.writelines("--update_batch_size {} \\\n".format(combination[3]))
             f.writelines("--update_lr {} \\\n".format(combination[4]))
             f.writelines("--num_updates {} \\\n".format(combination[5]))
-            f.writelines("--supp_fp {} \\\n")
+            f.writelines("--supp_fp {} \\\n".format(combination[6]))
+            f.writelines("--dim_hidden {} \\\n".format(' '.join([str(d) for d in combination[7][1]])))
+            f.writelines("--dim_name '{}' \\\n".format(combination[7][0]))
+            f.writelines("--activation_fn '{}' \\\n".format(combination[8]))
             f.writelines("--logdir 'jobs' \\\n")
             f.writelines("> jobfp{}.txt".format(i))
             f.close()
 
 
 if __name__ == '__main__':
-    metatrain_iterations = [1000]
-    meta_batch_sizes = [32]
-    meta_lrs = [1e-3]
-    update_batch_sizes = [32]
-    update_lrs = [1e-3]
+    metatrain_iterations = [1000, 2000, 10000]
+    meta_batch_sizes = [4, 8, 16, 32]
+    meta_lrs = [1e-3, 1e-1, 0.3]
+    update_batch_sizes = [4, 8, 16, 32]
+    update_lrs = [1e-3, 1e-1, 0.3]
     num_updates = [4]
-    fp_supports = [0.7, 0.8, 0.9]
+    fp_supports = [0.7, 0.8]
+    dim_hidden = [[256, 128, 64, 64], [128, 64, 64], [256, 128, 64], [128, 64]]
+    dim_names = ['dim{}'.format(i) for i in range(len(dim_hidden))]
+    dims = list(zip(dim_names, dim_hidden))
+    activation_fns = ['relu', 'sigmoid', 'tanh', 'softmax', 'swish']
 
     # metatrain_iterations = [1000]
-    # meta_batch_sizes = [4]
-    # meta_lrs = [1e-3]
-    # update_batch_sizes = [8]
-    # update_lrs = [1e-3]
+    # meta_batch_sizes = [16]
+    # meta_lrs = [1e-1]
+    # update_batch_sizes = [16]
+    # update_lrs = [1e-1]
     # num_updates = [4]
+    # fp_supports = [0.8]
+    # dim_hidden = [[256, 128, 64, 64]]
+    # dim_names = ['dim{}'.format(i) for i in range(len(dim_hidden))]
+    # dims = list(zip(dim_names, dim_hidden))
+    # activation_fns = ['relu']
 
     create_scripts(metatrain_iterations, meta_batch_sizes, meta_lrs,
                    update_batch_sizes, update_lrs, num_updates,
-                   fp_supports)
-
-    # metatrain_iterations = [1000]
-    # meta_batch_sizes = [4, 8]
-    # # meta_lrs = [1e-3, 1e-1]
-    # meta_lrs = [1e-1]
-    # update_batch_sizes = [8, 16]
-    # # update_lrs = [1e-3, 1e-1]
-    # update_lrs = [1e-1]
-    # num_updates = [4]
-    # # metatrain_iterations = [1000]
-    # # meta_batch_sizes = [4]
-    # # meta_lrs = [1e-3]
-    # # update_batch_sizes = [8]
-    # # update_lrs = [1e-3]
-    # # num_updates = [4]
-    #
-    # create_scripts(metatrain_iterations, meta_batch_sizes, meta_lrs,
-    #                update_batch_sizes, update_lrs, num_updates)
+                   fp_supports, dims, activation_fns)

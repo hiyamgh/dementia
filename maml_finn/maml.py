@@ -13,6 +13,15 @@ from tensorflow.python.platform import flags
 from utils import mse, xent, conv_block, normalize
 FLAGS = flags.FLAGS
 
+activations = {
+    'relu': tf.nn.relu,
+    'sigmoid': tf.nn.sigmoid,
+    'tanh': tf.nn.tanh,
+    'softmax': tf.nn.softmax,
+    'swish': tf.nn.swish
+}
+
+
 class MAML:
     def __init__(self, dim_input=1, dim_output=1, test_num_updates=5):
         """ must call construct_model() after initializing MAML! """
@@ -36,7 +45,8 @@ class MAML:
                 self.construct_weights = self.construct_conv_weights
             else:
                 # self.dim_hidden = [256, 128, 64, 64]
-                self.dim_hidden = [256, 128, 64]
+                # self.dim_hidden = [256, 128, 64]
+                self.dim_hidden = FLAGS.dim_hidden
                 self.forward=self.forward_fc
                 self.construct_weights = self.construct_fc_weights
             if FLAGS.datasource == 'miniimagenet':
@@ -236,13 +246,16 @@ class MAML:
         return weights
 
     def forward_fc(self, inp, weights, reuse=False):
+        ac_fn = activations[FLAGS.activation_fn]
         # hidden = normalize(tf.matmul(inp, weights['w1']) + weights['b1'], activation=tf.nn.relu, reuse=reuse, scope='0')
         for key in weights:
             weights[key] = tf.cast(weights[key], tf.float64)
-        hidden = normalize(tf.matmul(inp, weights['w1']) + weights['b1'], activation=tf.nn.relu, reuse=reuse, scope='0')
+        # hidden = normalize(tf.matmul(inp, weights['w1']) + weights['b1'], activation=tf.nn.relu, reuse=reuse, scope='0')
+        hidden = normalize(tf.matmul(inp, weights['w1']) + weights['b1'], activation=ac_fn, reuse=reuse, scope='0')
         for i in range(1,len(self.dim_hidden)):
             hidden = tf.cast(hidden, tf.float64)
-            hidden = normalize(tf.matmul(hidden, weights['w'+str(i+1)]) + weights['b'+str(i+1)], activation=tf.nn.relu, reuse=reuse, scope=str(i+1))
+            # hidden = normalize(tf.matmul(hidden, weights['w'+str(i+1)]) + weights['b'+str(i+1)], activation=tf.nn.relu, reuse=reuse, scope=str(i+1))
+            hidden = normalize(tf.matmul(hidden, weights['w'+str(i+1)]) + weights['b'+str(i+1)], activation=ac_fn, reuse=reuse, scope=str(i+1))
             hidden = tf.cast(hidden, tf.float64)
         return tf.matmul(hidden, weights['w'+str(len(self.dim_hidden)+1)]) + weights['b'+str(len(self.dim_hidden)+1)]
 

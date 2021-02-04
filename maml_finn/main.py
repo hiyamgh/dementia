@@ -78,6 +78,10 @@ flags.DEFINE_float('supp_fp', 0.8, 'support value for fp growth')
 #  0.83154297 0.83056641 0.83105469 0.83056641 0.83203125]
 # mean of all accuracy: 0.8328746448863636 +- 0.0
 
+## Base model hyper parameters
+flags.DEFINE_list('dim_hidden', [256, 128, 64], 'number of neurons in each hidden layer')
+flags.DEFINE_string('dim_name', 'dim0', 'unique index name for the list of hidden layers (above)')
+flags.DEFINE_string('activation_fn', 'relu', 'activation function used')
 
 ## Model options
 flags.DEFINE_string('norm', 'batch_norm', 'batch_norm, layer_norm, or None')
@@ -496,25 +500,37 @@ def main():
     if FLAGS.train_update_lr == -1:
         FLAGS.train_update_lr = FLAGS.update_lr
 
-    exp_string = 'cls_'+str(FLAGS.num_classes)+'.mbs_'+str(FLAGS.meta_batch_size) + '.ubs_' + str(FLAGS.train_update_batch_size) + '.numstep' + str(FLAGS.num_updates) + '.updatelr' + str(FLAGS.train_update_lr)
-    exp_string += 'miter_' + str(FLAGS.metatrain_iterations)
+    exp_string = 'miter_' + str(FLAGS.metatrain_iterations) +\
+                 '.mbs_'+str(FLAGS.meta_batch_size) + \
+                 '.ubs_' + str(FLAGS.train_update_batch_size) + \
+                 '.numup_' + str(FLAGS.num_updates) +\
+                 '.metalr_' + str(FLAGS.meta_lr) +\
+                 '.updatelr_' + str(FLAGS.train_update_lr) +\
+                 '.sfp_'+str(FLAGS.supp_fp) +\
+                 '.dn_'+str(FLAGS.dim_name) +\
+                 '.actfn_'+str(FLAGS.activation_fn)
 
-    if FLAGS.num_filters != 64:
-        exp_string += 'hidden' + str(FLAGS.num_filters)
-    if FLAGS.max_pool:
-        exp_string += 'maxpool'
-    if FLAGS.stop_grad:
-        exp_string += 'stopgrad'
-    if FLAGS.baseline:
-        exp_string += FLAGS.baseline
-    if FLAGS.norm == 'batch_norm':
-        exp_string += 'batchnorm'
-    elif FLAGS.norm == 'layer_norm':
-        exp_string += 'layernorm'
-    elif FLAGS.norm == 'None':
-        exp_string += 'nonorm'
-    else:
-        print('Norm setting not recognized.')
+    # exp_string = 'cls_'+str(FLAGS.num_classes)+'.mbs_'+str(FLAGS.meta_batch_size) + '.ubs_' + str(FLAGS.train_update_batch_size) + '.numstep' + str(FLAGS.num_updates) + '.updatelr' + str(FLAGS.train_update_lr)
+    # exp_string += 'miter_' + str(FLAGS.metatrain_iterations)
+    #
+    # if FLAGS.num_filters != 64:
+    #     exp_string += 'hidden' + str(FLAGS.num_filters)
+    # if FLAGS.max_pool:
+    #     exp_string += 'maxpool'
+    #
+    # exp_string += ''
+    # if FLAGS.stop_grad:
+    #     exp_string += 'stopgrad'
+    # if FLAGS.baseline:
+    #     exp_string += FLAGS.baseline
+    # if FLAGS.norm == 'batch_norm':
+    #     exp_string += 'batchnorm'
+    # elif FLAGS.norm == 'layer_norm':
+    #     exp_string += 'layernorm'
+    # elif FLAGS.norm == 'None':
+    #     exp_string += 'nonorm'
+    # else:
+    #     print('Norm setting not recognized.')
 
     resume_itr = 0
     model_file = None

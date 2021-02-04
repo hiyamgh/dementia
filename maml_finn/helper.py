@@ -116,7 +116,7 @@ def get_fp_indices(fps, cols_meta, df):
     return indices_who_has_fp
 
 
-def identify_frequent_patterns(df, target_variable):
+def identify_frequent_patterns(df, target_variable, supp_fp):
     # inputs needed
     itemSetList = []
     df_cols = list(df.columns)
@@ -163,7 +163,7 @@ def identify_frequent_patterns(df, target_variable):
         itemSetList.append(curr_items)
 
     # get the frequent patterns -- list of sets
-    freqItemSet, rules = fpgrowth(itemSetList, minSupRatio=0.8, minConf=0.8)
+    freqItemSet, rules = fpgrowth(itemSetList, minSupRatio=supp_fp, minConf=supp_fp)
     if freqItemSet:
         print('Frequent patterns: ')
         for fp in freqItemSet:

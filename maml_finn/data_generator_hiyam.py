@@ -1,9 +1,11 @@
 """ Code for loading data. """
 import pandas as pd
+import numpy as np
 import os, pickle
 import random
 from tensorflow.python.platform import flags
 from helper import *
+
 from sklearn.preprocessing import MinMaxScaler
 
 FLAGS = flags.FLAGS
@@ -50,7 +52,7 @@ class DataGenerator(object):
         # create combined dataset for FP growth
         self.df = pd.concat([self.df_train, self.df_test])
 
-        if os.path.isfile(FLAGS.fp_file) and FLAGS.fp_file is not None:
+        if FLAGS.fp_file is not None:
             print('found frequent patterns in {}'.format(FLAGS.fp_file))
             with open(FLAGS.fp_file, 'rb') as handle:
                 self.freqItemSet = pickle.load(handle)
@@ -68,6 +70,14 @@ class DataGenerator(object):
             self.freqItemSet, self.cols_meta = identify_frequent_patterns(df=self.df,
                                                                           target_variable=self.target_variable,
                                                                           supp_fp=FLAGS.supp_fp)
+            if self.freqItemSet:
+                pass
+            else:
+                # probably the support was very high, lower it
+                print('lowering supp_fp from {} to {}'.format(FLAGS.supp_fp, FLAGS.supp_fp - 0.1))
+                self.freqItemSet, self.cols_meta = identify_frequent_patterns(df=self.df,
+                                                                              target_variable=self.target_variable,
+                                                                              supp_fp=FLAGS.supp_fp - 0.1)
 
             # dictionary of indices who has fp
             self.indices_who_has_fp = {}
