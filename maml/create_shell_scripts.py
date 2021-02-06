@@ -43,6 +43,7 @@ def create_scripts(metatrain_iterations,
             f.writelines("#SBATCH --mail-user=hkg02@mail.aub.edu\n\n")
             f.writelines("module load python/3\n")
             f.writelines("python main.py \\\n")
+            f.writelines("")
             f.writelines("--pretrain_iterations 0 \\\n")
             f.writelines("--metatrain_iterations {} \\\n".format(combination[0]))
             f.writelines("--meta_batch_size {} \\\n".format(combination[1]))
@@ -60,29 +61,29 @@ def create_scripts(metatrain_iterations,
 
 
 if __name__ == '__main__':
-    metatrain_iterations = [1000, 2000, 10000]
-    meta_batch_sizes = [4, 8, 16, 32]
-    meta_lrs = [1e-3, 1e-1, 0.3]
-    update_batch_sizes = [4, 8, 16, 32]
-    update_lrs = [1e-3, 1e-1, 0.3]
-    num_updates = [4]
-    fp_supports = [0.7, 0.8]
-    dim_hidden = [[256, 128, 64, 64], [128, 64, 64], [256, 128, 64], [128, 64]]
-    dim_names = ['dim{}'.format(i) for i in range(len(dim_hidden))]
-    dims = list(zip(dim_names, dim_hidden))
-    activation_fns = ['relu', 'sigmoid', 'tanh', 'softmax', 'swish']
-
-    # metatrain_iterations = [1000]
-    # meta_batch_sizes = [16]
-    # meta_lrs = [1e-1]
-    # update_batch_sizes = [16]
-    # update_lrs = [1e-1]
+    # metatrain_iterations = [1000, 2000, 10000]
+    # meta_batch_sizes = [4, 8, 16, 32]
+    # meta_lrs = [1e-3, 1e-1, 0.3]
+    # update_batch_sizes = [4, 8, 16, 32]
+    # update_lrs = [1e-3, 1e-1, 0.3]
     # num_updates = [4]
-    # fp_supports = [0.8]
-    # dim_hidden = [[256, 128, 64, 64]]
+    # fp_supports = [0.7, 0.8]
+    # dim_hidden = [[256, 128, 64, 64], [128, 64, 64], [256, 128, 64], [128, 64]]
     # dim_names = ['dim{}'.format(i) for i in range(len(dim_hidden))]
     # dims = list(zip(dim_names, dim_hidden))
-    # activation_fns = ['relu']
+    # activation_fns = ['relu', 'sigmoid', 'tanh', 'softmax', 'swish']
+
+    metatrain_iterations = [1000]
+    meta_batch_sizes = [16]
+    meta_lrs = [1e-1]
+    update_batch_sizes = [16]
+    update_lrs = [1e-1]
+    num_updates = [4]
+    fp_supports = [0.8]
+    dim_hidden = [[256, 128, 64, 64]]
+    dim_names = ['dim{}'.format(i) for i in range(len(dim_hidden))]
+    dims = list(zip(dim_names, dim_hidden))
+    activation_fns = ['relu']
 
     create_scripts(metatrain_iterations, meta_batch_sizes, meta_lrs,
                    update_batch_sizes, update_lrs, num_updates,

@@ -99,6 +99,8 @@ class MAML:
                     task_accuraciesb = []
 
                 task_outputa = self.forward(inputa, weights, reuse=reuse)  # only reuse on the first iter
+                # task_outputa are the logits
+                # loagits are the
                 task_lossa = self.loss_func(task_outputa, labela)
 
                 grads = tf.gradients(task_lossa, list(weights.values()))
