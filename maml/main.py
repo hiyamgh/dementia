@@ -91,7 +91,7 @@ flags.DEFINE_bool('max_pool', False, 'Whether or not to use max pooling rather t
 flags.DEFINE_bool('stop_grad', False, 'if True, do not use second derivatives in meta-optimization (for speed)')
 
 ## define options for cost-sensitive learning
-flags.DEFINE_boolean('cost_sensitive', True, 'whether to apply cost sensitive learning or not')
+flags.DEFINE_boolean('cost_sensitive', False, 'whether to apply cost sensitive learning or not')
 flags.DEFINE_string('cost_sensitive_type', 'miss-classification', 'type of cost applied')
 flags.DEFINE_list('weights_vector', [0.3, 0.7], 'if class_weights is used, then this are the respective weights'
                                                 'of each classs')
