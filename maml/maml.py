@@ -100,7 +100,9 @@ class MAML:
 
                 task_outputa = self.forward(inputa, weights, reuse=reuse)  # only reuse on the first iter
                 # task_outputa are the logits
-                # loagits are the
+                # logits are the values of the last layer
+                # before applying softmax to them (before turning them into probabilities)
+                # for cost sensitive, multiply logits
                 task_lossa = self.loss_func(task_outputa, labela)
 
                 grads = tf.gradients(task_lossa, list(weights.values()))
