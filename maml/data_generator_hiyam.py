@@ -6,7 +6,7 @@ import random
 from tensorflow.python.platform import flags
 from helper import *
 
-from sklearn.preprocessing import MinMaxScaler
+from sklearn.preprocessing import MinMaxScaler, StandardScaler, RobustScaler
 
 FLAGS = flags.FLAGS
 
@@ -111,9 +111,16 @@ class DataGenerator(object):
         self.dim_input = self.X_train.shape[1]
         self.dim_output = self.num_classes
 
-        scaler = MinMaxScaler()
-        self.X_train = scaler.fit_transform(self.X_train)
-        self.X_test = scaler.transform(self.X_test)
+        if FLAGS.scaling is not None:
+            if FLAGS.scaling == 'min-max':
+                scaler = MinMaxScaler()
+            elif FLAGS.scaling == 'z-score':
+                scaler = StandardScaler()
+            else:
+                scaler = RobustScaler()
+            # apply the scaling
+            self.X_train = scaler.fit_transform(self.X_train)
+            self.X_test = scaler.transform(self.X_test)
 
     def yield_fp_idxs(self, training=True):
         num_classes = self.num_classes
