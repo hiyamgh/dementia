@@ -54,6 +54,7 @@ flags.DEFINE_string('target_variable', 'label', 'name of the target variable col
 flags.DEFINE_string('fp_file', None, 'path to file containing the frequent patterns')
 flags.DEFINE_list('cols_drop', ['article_title', 'article_content', 'source', 'source_category', 'unit_id'], 'list of column to drop from data, if any')
 flags.DEFINE_string('special_encoding', 'latin-1', 'special encoding needed to read the data, if any')
+flags.DEFINE_string('scaling', 'z-score', 'scaling done to the dataset, if any')
 
 ## Training options
 # flags.DEFINE_integer('pretrain_iterations', 0, 'number of pre-training iterations.')
@@ -67,9 +68,9 @@ flags.DEFINE_string('special_encoding', 'latin-1', 'special encoding needed to r
 flags.DEFINE_integer('pretrain_iterations', 0, 'number of pre-training iterations.')
 flags.DEFINE_integer('metatrain_iterations', 1000, 'number of metatraining iterations.') # 15k for omniglot, 50k for sinusoid
 flags.DEFINE_integer('meta_batch_size', 32, 'number of tasks sampled per meta-update')
-flags.DEFINE_float('meta_lr', 1e-3, 'the base learning rate of the generator')
+flags.DEFINE_float('meta_lr', 1e-1, 'the base learning rate of the generator')
 flags.DEFINE_integer('update_batch_size', 32, 'number of examples used for inner gradient update (K for K-shot learning).')
-flags.DEFINE_float('update_lr', 1e-3, 'step size alpha for inner gradient update.') # 0.1 for omniglot
+flags.DEFINE_float('update_lr', 1e-1, 'step size alpha for inner gradient update.') # 0.1 for omniglot
 flags.DEFINE_integer('num_updates', 4, 'number of inner gradient updates during training.')
 flags.DEFINE_float('supp_fp', 0.8, 'support value for fp growth')
 # Metric: accuracy
@@ -79,7 +80,7 @@ flags.DEFINE_float('supp_fp', 0.8, 'support value for fp growth')
 # mean of all accuracy: 0.8328746448863636 +- 0.0
 
 ## Base model hyper parameters
-flags.DEFINE_list('dim_hidden', [256, 128, 64], 'number of neurons in each hidden layer')
+flags.DEFINE_string('dim_hidden', '256, 128, 64', 'number of neurons in each hidden layer')
 flags.DEFINE_string('dim_name', 'dim0', 'unique index name for the list of hidden layers (above)')
 flags.DEFINE_string('activation_fn', 'relu', 'activation function used')
 
@@ -419,6 +420,11 @@ def test(model, saver, sess, exp_string, data_generator, test_num_updates=None):
 def main():
     if not os.path.exists(FLAGS.logdir):
         os.makedirs(FLAGS.logdir)
+
+    if FLAGS.cost_sensitive:
+        print('cost sensitive learning - turned on')
+    else:
+        print('cost sensitive learning - turned off')
 
     if FLAGS.datasource == 'sinusoid':
         if FLAGS.train:

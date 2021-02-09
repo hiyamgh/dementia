@@ -6,6 +6,7 @@ import tensorflow as tf
 
 from tensorflow.contrib.layers.python import layers as tf_layers
 from tensorflow.python.platform import flags
+from itertools import product
 
 FLAGS = flags.FLAGS
 
@@ -56,4 +57,17 @@ def mse(pred, label):
 
 def xent(pred, label):
     # Note - with tf version <=0.12, this loss has incorrect 2nd derivatives
-    return tf.nn.softmax_cross_entropy_with_logits(logits=pred, labels=label) / FLAGS.update_batch_size
+    if FLAGS.cost_sensitive:
+        if FLAGS.cost_sensitive_type == 'miss-classification':
+            weights = np.array(FLAGS.cost_matrix)
+            nb_cl = FLAGS.num_classes
+            final_mask = tf.zeros_like(pred[:, 0])
+            y_pred_max = tf.argmax(pred, axis=1)
+            y_pred_max = tf.expand_dims(y_pred_max, 1)
+            y_pred_max_mat = tf.equal(pred, tf.cast(y_pred_max, tf.float64))
+            for c_p, c_t in product(range(nb_cl), range(nb_cl)):
+                final_mask += tf.cast(weights[c_t, c_p], tf.float64) * tf.cast(y_pred_max_mat[:, c_p], tf.float64) * tf.cast(
+                    label[:, c_t], tf.float64)
+            return tf.nn.softmax_cross_entropy_with_logits(logits=pred, labels=label) * final_mask / FLAGS.update_batch_size
+    else:
+        return tf.nn.softmax_cross_entropy_with_logits(logits=pred, labels=label) / FLAGS.update_batch_size

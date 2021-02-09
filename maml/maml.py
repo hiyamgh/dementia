@@ -46,7 +46,7 @@ class MAML:
             else:
                 # self.dim_hidden = [256, 128, 64, 64]
                 # self.dim_hidden = [256, 128, 64]
-                self.dim_hidden = FLAGS.dim_hidden
+                self.dim_hidden = list(map(int, list(FLAGS.dim_hidden.split(", "))))
                 self.forward=self.forward_fc
                 self.construct_weights = self.construct_fc_weights
             if FLAGS.datasource == 'miniimagenet':
