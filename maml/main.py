@@ -72,7 +72,7 @@ flags.DEFINE_float('meta_lr', 1e-1, 'the base learning rate of the generator')
 flags.DEFINE_integer('update_batch_size', 32, 'number of examples used for inner gradient update (K for K-shot learning).')
 flags.DEFINE_float('update_lr', 1e-1, 'step size alpha for inner gradient update.') # 0.1 for omniglot
 flags.DEFINE_integer('num_updates', 4, 'number of inner gradient updates during training.')
-flags.DEFINE_float('supp_fp', 0.8, 'support value for fp growth')
+flags.DEFINE_float('supp_fp', 0.7, 'support value for fp growth')
 # Metric: accuracy
 # [support_t0, query_t0 - 			K]
 # mean: [0.84472656 0.82958984 0.83105469 0.83398438 0.83544922 0.83105469
