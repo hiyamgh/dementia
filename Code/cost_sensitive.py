@@ -26,6 +26,8 @@ from sklearn.covariance import EllipticEnvelope
 from sklearn.ensemble import IsolationForest
 from sklearn.neighbors import LocalOutlierFactor
 import pickle, os
+import shap
+from matplotlib import pyplot as plt
 
 f2_score=make_scorer(fbeta_score, beta=2)
 
@@ -97,10 +99,7 @@ def create_model(y,model):
     balance = [{0:1,1:10}, {0:1,1:100},reverse_counter]
     param_grid = {
         'm__class_weight':balance,
-                  's__sampling_strategy':['minority','not minority','all',0.5,1,0.75],
-                    #   solver=['newton-cg', 'lbfgs', 'liblinear','sag', 'saga'],
-                    #   C=[0.01,0.1,1,10,100]
-                    #   penalty=['l1', 'l2', 'elasticnet', 'none']              
+                  's__sampling_strategy':['minority','not minority','all',0.5,1,0.75],             
                   }
     # param_grid={'m__class_weight':[reverse_counter],'s__sampling_strategy':['minority']}
     return model,param_grid
@@ -227,6 +226,25 @@ def test_model(train_df,test_df,feature_importance,model_class,model_name,proba=
         print_results(model_name,best_params,test_y,y_predicted,proba=proba,one_class=one_class)
     return estimator
     
+def run_shap(model,model_name,train_df):
+    X=train_df[df.columns[:-1]]
+    X=train_df[feature_importance[:11]]
+    y=train_df['dem1066']
+    model.fit(X,y)
+    shap_values=shap.TreeExplainer(model).shap_values(X)
+    shap.summary_plot(shap_values, X, plot_type="bar")
+    plt.savefig(f'{model_name}_shap_values.png', bbox_inches='tight', dpi=600)
+    plt.close()
+    print(shap_values)
+    # for x in X.columns:
+    shap.dependence_plot("rank(1)", shap_values[0], X)
+    plt.savefig(f'{model_name}_shap_dependence_rank_1.png', bbox_inches='tight', dpi=600)
+
+    # shap.dependence_plot(0, np.array(shap_values), X.values, feature_names=X.columns)
+
+    # plt.savefig(f'{model_name}_shap_dependence.png', bbox_inches='tight', dpi=600)
+    plt.close()
+
 if __name__=='__main__':
     
     df=pd.read_csv('../input/train.csv')
@@ -237,11 +255,11 @@ if __name__=='__main__':
     models_dict={}
     for model,model_name,proba,one_class in [
         # (XGBClassifier(),'XGBoost'),
-                            (LogisticRegression(),'Weighted Logistic Regression',True,False),
-                            (DecisionTreeClassifier(),'Weighted Decision Tree Classifier',True,False),
-                            (SVC(),'Weighted SVM',False,False),
+                            # (LogisticRegression(class_weight={0:1,1:100}),'Weighted Logistic Regression',True,False),
+                            # (DecisionTreeClassifier(class_weight={0:1,1:100}),'Weighted Decision Tree Classifier',True,False),
+                            # (SVC(),'Weighted SVM',False,False),
                             # (KNeighborsClassifier(),'KNeighbors',False,False),
-                            # (BalancedRandomForestClassifier(),'Balanced Random Forest',True,False),
+                            (BalancedRandomForestClassifier(),'Balanced Random Forest',True,False),
                             # (EasyEnsembleClassifier(),'Easy Ensemble Classifier',False,False),
                             #  (OneClassSVM(gamma='scale', nu=0.1),'One Class SVM',False,True),
                             #  (EllipticEnvelope(contamination=0.1),'EllipticEnvelope',False,True),
@@ -249,11 +267,12 @@ if __name__=='__main__':
                             #  (LocalOutlierFactor(contamination=0.1),'LocalOutlierFactor',False,True)
                             ]:
         print(model_name)
-        estimator=test_model(df,test_df,feature_importance,model,model_name,proba=proba,one_class=one_class)
+        run_shap(model,model_name,df)
+        # estimator=test_model(df,test_df,feature_importance,model,model_name,proba=proba,one_class=one_class)
         # models_dict[model_name]=estimator
     
     # for model_name,estimator in models_dict.items():
-    advanced_metrics(df,test_df,model_name)
+    # advanced_metrics(df,test_df,model_name)
 
 
 def mkdir(dirname):
