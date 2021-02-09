@@ -1,7 +1,5 @@
-import pandas as pd
 from fpgrowth_py import fpgrowth
-import itertools
-import operator
+import numpy as np
 
 
 def get_class_indices(cl, x, y):
@@ -44,20 +42,35 @@ def get_non_fp_indices(fp2indices_dict, x_train, x_test):
     return list(non_fp_indices_train), list(non_fp_indices_test)
 
 
+def get_fp_indices_raw(fps, df):
+    col_types = df.dtypes
+    indices_who_has_fp = []
+    for index, row in df.iterrows():
+        add_index = True
+        for curr_fp in fps:
+            col_name = curr_fp.split('=')[0]
+            if col_types[col_name] == np.float64:
+                col_val = float(curr_fp.split('=')[1])
+            else:
+                col_val = int(curr_fp.split('=')[1])
+
+            if row[col_name] == col_val:
+                pass
+            else:
+                add_index = False
+                break
+
+        if add_index:
+            indices_who_has_fp.append(index)
+
+    return indices_who_has_fp
+
+
 def get_fp_indices(fps, cols_meta, df):
     ''' get indices of the rows that contain the frequent pattern fp '''
 
     def get_bounds(col, lower, upper):
         main_dict = cols_meta[col]
-        # # min-25th
-        # if main_dict['min'] == float(lower) and main_dict['50th'] == float(upper):
-        #     return ['min', '50th']
-        # # elif main_dict['25th'] == float(lower) and main_dict['50th'] == float(upper):
-        # #     return ['25th', '50th']
-        # elif main_dict['50th'] == float(lower) and main_dict['75th'] == float(upper):
-        #     return ['50th', '75th']
-        # else:
-        #     return ['75th', 'max']
         percentiles = list(main_dict.keys())
         percentiles_pairs = list(zip(percentiles, percentiles[1:]))
         for pair in percentiles_pairs:
@@ -103,7 +116,7 @@ def get_fp_indices(fps, cols_meta, df):
     return indices_who_has_fp
 
 
-def identify_frequent_patterns(df, target_variable):
+def identify_frequent_patterns(df, target_variable, supp_fp):
     # inputs needed
     itemSetList = []
     df_cols = list(df.columns)
@@ -136,22 +149,6 @@ def identify_frequent_patterns(df, target_variable):
     for index, row in df.iterrows():
         curr_items = []
         for col in df_cols:
-            # pairs_keyed = list(zip((cols_meta[col].keys()), list(cols_meta[col].keys())[1:]))  # Create tuples of neighbours
-            # # pairs = zip((cols_meta[col].keys()), list(cols_meta[col].keys())[1:]) # Create tuples of neighbours
-            # # equals = map(lambda x, y: cols_meta[col][x] == cols_meta[col][y], pairs)
-            #
-            # # check for pairs that have the same value
-            # pair_results = list(map(operator.eq, cols_meta[col].values(), itertools.islice(cols_meta[col].values(), 1, None)))
-            # if any(pair_results):
-            #     # get the index of the true
-            #     true_ones = [i for i, e in enumerate(pair_results) if e]
-            #     if len(true_ones) == 1:
-            #         curr_pair = pairs_keyed[true_ones[0]]
-            #         # get the second possible pair
-            #         for j in range(true_ones[0] + 1, len(pairs_keyed)):
-            #             if cols_meta[col][pairs_keyed[j][0]] > cols_meta[col][curr_pair[1]]:
-            #                 print()
-
             percentiles = list(cols_meta[col].keys())
             percentiles_pairs = list(zip(percentiles, percentiles[1:]))
             for pair in percentiles_pairs:
@@ -163,22 +160,10 @@ def identify_frequent_patterns(df, target_variable):
                     curr_items.append(
                         '{}<{}<{}'.format(cols_meta[col][pair[0]], col, cols_meta[col][pair[1]]))
 
-            # elif cols_meta[col]['25th'] <= row[col] < cols_meta[col]['50th']:
-            #     curr_items.append(
-            #         '{}<{}<{}'.format(cols_meta[col]['25th'], col, cols_meta[col]['50th']))
-            #
-            # elif cols_meta[col]['50th'] <= row[col] < cols_meta[col]['75th']:
-            #     curr_items.append(
-            #         '{}<{}<{}'.format(cols_meta[col]['50th'], col, cols_meta[col]['75th']))
-            #
-            # else:
-            #     curr_items.append(
-            #         '{}<{}<{}'.format(cols_meta[col]['75th'], col, cols_meta[col]['max']))
-
         itemSetList.append(curr_items)
 
     # get the frequent patterns -- list of sets
-    freqItemSet, rules = fpgrowth(itemSetList, minSupRatio=0.8, minConf=0.8)
+    freqItemSet, rules = fpgrowth(itemSetList, minSupRatio=supp_fp, minConf=supp_fp)
     if freqItemSet:
         print('Frequent patterns: ')
         for fp in freqItemSet:

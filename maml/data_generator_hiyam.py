@@ -1,61 +1,46 @@
-import numpy as np
+""" Code for loading data. """
 import pandas as pd
+import numpy as np
+import os, pickle
 import random
-from sklearn.preprocessing import *
-from helper import *
-from sklearn.model_selection import train_test_split
-from sklearn.datasets import make_classification
 from tensorflow.python.platform import flags
+from helper import *
 
+from sklearn.preprocessing import MinMaxScaler
 
-training_data_path = 'input/feature_extraction_train_updated.csv'
-testing_data_path = 'input/feature_extraction_test_updated.csv'
-df_train = pd.read_csv(training_data_path, encoding='latin-1')
-df_test = pd.read_csv(testing_data_path, encoding='latin-1')
-cols_drop = ['article_title', 'article_content', 'source', 'source_category', 'unit_id']
-target_variable = 'label'
-scaling = 'robust'
-
-# the data frames
-df = pd.concat([df_train, df_test]).drop(cols_drop, axis=1).sample(frac=1).reset_index(drop=True)
-df_train = df_train.drop(cols_drop, axis=1)
-df_test = df_test.drop(cols_drop, axis=1)
-special_encoding = 'latin-1'
-
-# training_data_path = 'input/train.csv'
-# testing_data_path = 'input/test.csv'
-# df_train = pd.read_csv(training_data_path, encoding='latin-1')
-# df_test = pd.read_csv(testing_data_path, encoding='latin-1')
-# target_variable = 'dem1066'
-# scaling = 'robust'
-# cols_drop=None
-# special_encoding=None
-# df = pd.concat([df_train, df_test]).sample(frac=1).reset_index(drop=True)
+FLAGS = flags.FLAGS
 
 
 class DataGenerator(object):
-
-    def __init__(self, nway, kshot, kquery, meta_batchsz, total_batch_num = 200000):
-        self.meta_batchsz = meta_batchsz
-        # number of images to sample per class
-        self.nimg = kshot + kquery
-        self.num_classes = nway
-        self.total_batch_num = total_batch_num
+    """
+    Data Generator capable of generating batches of sinusoid or Omniglot data.
+    A "class" is considered a class of omniglot digits or a particular sinusoid function.
+    """
+    def __init__(self, num_samples_per_class, batch_size):
+        """
+        Args:
+            num_samples_per_class: num samples to generate per class in one batch
+            batch_size: size of meta batch size (e.g. number of functions)
+        """
+        # self.meta_batchsz = FLAGS.meta_batch_size
+        self.meta_batchsz = batch_size
+        self.num_samples_per_class = num_samples_per_class
+        self.num_classes = FLAGS.num_classes
 
         # training and testing data
-        self.training_path = training_data_path
-        self.testing_path = testing_data_path
-        self.target_variable = target_variable
-        self.cols_drop = cols_drop
-        self.special_encoding = special_encoding
+        self.training_path = FLAGS.training_data_path
+        self.testing_path = FLAGS.testing_data_path
+        self.target_variable = FLAGS.target_variable
+        self.cols_drop = FLAGS.cols_drop
+        self.special_encoding = FLAGS.special_encoding
 
         if self.cols_drop is not None:
             if self.special_encoding:
                 self.df_train = pd.read_csv(self.training_path, encoding=self.special_encoding).drop(self.cols_drop, axis=1)
                 self.df_test = pd.read_csv(self.testing_path, encoding=self.special_encoding).drop(self.cols_drop, axis=1)
             else:
-                self.df_train = pd.read_csv(self.training_path).drop(self.cols_drop, axis=1).drop(self.cols_drop, axis=1)
-                self.df_test = pd.read_csv(self.testing_path).drop(self.cols_drop, axis=1).drop(self.cols_drop, axis=1)
+                self.df_train = pd.read_csv(self.training_path).drop(self.cols_drop, axis=1)
+                self.df_test = pd.read_csv(self.testing_path).drop(self.cols_drop, axis=1)
         else:
             if self.special_encoding is not None:
                 self.df_train = pd.read_csv(self.training_path, encoding=self.special_encoding)
@@ -64,24 +49,44 @@ class DataGenerator(object):
                 self.df_train = pd.read_csv(self.training_path)
                 self.df_test = pd.read_csv(self.testing_path)
 
-        # X, Y = make_classification(n_samples=50000, n_features=10, n_informative=8,
-        #                            n_redundant=0, n_clusters_per_class=2)
-        #
-        # X_train, X_test, y_train, y_test = train_test_split(X, Y)
-
         # create combined dataset for FP growth
         self.df = pd.concat([self.df_train, self.df_test])
-        # get the frequent pattern and cols_meta(dictionary containing meta data about columns distribution)
-        self.freqItemSet, self.cols_meta = identify_frequent_patterns(df=df, target_variable=target_variable)
 
-        # dictionary of indices for each frequent pattern
-        self.indices_who_has_fp = {}
-        self.indices_without_fp = {}
-        self.indices_who_has_fp['train'] = {}
-        self.indices_who_has_fp['test'] = {}
-        for i, fp in enumerate(self.freqItemSet):
-            self.indices_who_has_fp['train'][i] = get_fp_indices(fps=fp, cols_meta=self.cols_meta, df=self.df_train)
-            self.indices_who_has_fp['test'][i] = get_fp_indices(fps=fp, cols_meta=self.cols_meta, df=self.df_test)
+        if FLAGS.fp_file is not None:
+            print('found frequent patterns in {}'.format(FLAGS.fp_file))
+            with open(FLAGS.fp_file, 'rb') as handle:
+                self.freqItemSet = pickle.load(handle)
+
+            self.indices_who_has_fp = {}
+            self.indices_without_fp = {}
+            self.indices_who_has_fp['train'] = {}
+            self.indices_who_has_fp['test'] = {}
+            for i, fp in enumerate(self.freqItemSet):
+                self.indices_who_has_fp['train'][i] = get_fp_indices_raw(fps=fp, df=self.df_train)
+                self.indices_who_has_fp['test'][i] = get_fp_indices_raw(fps=fp, df=self.df_test)
+
+        else:
+            # get the frequent pattern and cols_meta(dictionary containing meta data about columns distribution)
+            self.freqItemSet, self.cols_meta = identify_frequent_patterns(df=self.df,
+                                                                          target_variable=self.target_variable,
+                                                                          supp_fp=FLAGS.supp_fp)
+            if self.freqItemSet:
+                pass
+            else:
+                # probably the support was very high, lower it
+                print('lowering supp_fp from {} to {}'.format(FLAGS.supp_fp, FLAGS.supp_fp - 0.1))
+                self.freqItemSet, self.cols_meta = identify_frequent_patterns(df=self.df,
+                                                                              target_variable=self.target_variable,
+                                                                              supp_fp=FLAGS.supp_fp - 0.1)
+
+            # dictionary of indices who has fp
+            self.indices_who_has_fp = {}
+            self.indices_without_fp = {}
+            self.indices_who_has_fp['train'] = {}
+            self.indices_who_has_fp['test'] = {}
+            for i, fp in enumerate(self.freqItemSet):
+                self.indices_who_has_fp['train'][i] = get_fp_indices(fps=fp, cols_meta=self.cols_meta, df=self.df_train)
+                self.indices_who_has_fp['test'][i] = get_fp_indices(fps=fp, cols_meta=self.cols_meta, df=self.df_test)
 
         # training and testing numpy arrays
         self.X_train = np.array(self.df_train.loc[:, self.df_train.columns != self.target_variable])
@@ -103,25 +108,12 @@ class DataGenerator(object):
         else:
             self.non_fp_exist = False
 
-        # self.X_train = X_train
-        # self.y_train = y_train
-        # self.X_test = X_test
-        # self.y_test = y_test
-
-        # if scaling == 'robust':
-        #     scaler = RobustScaler()
-        # elif scaling == 'minmax':
-        #     scaler = MinMaxScaler()
-        # else:
-        #     scaler = StandardScaler()
-        #
+        self.dim_input = self.X_train.shape[1]
+        self.dim_output = self.num_classes
 
         scaler = MinMaxScaler()
         self.X_train = scaler.fit_transform(self.X_train)
         self.X_test = scaler.transform(self.X_test)
-
-        self.dim_input = self.X_train.shape[1]
-        self.dim_output = self.num_classes
 
     def yield_fp_idxs(self, training=True):
         num_classes = self.num_classes
@@ -175,16 +167,6 @@ class DataGenerator(object):
 
         return data_idxs
 
-    #             for i in range(self.meta_batchsz):
-    #                 if i != self.meta_batchsz - 1:
-    #                     data_idxs[cl][i] = list(range(i*num_data_per_batch, (i+1)*num_data_per_batch))
-    #                 else:
-    #                     data_idxs[cl][i+1] = list(range(i*num_data_per_batch, data_len))
-
-    # 0, 1, 2, 3,
-    # 4-4, 5-4, 6-4, 7-4,
-    # 8-4*2, 9-4*2, 10-4*2, 11-4*2
-
     def get_fp_tasks(self, labels, fp_idxs, ifold, nb_samples=None, shuffle=True, training=True):
 
         # number of frequent patterns
@@ -232,7 +214,6 @@ class DataGenerator(object):
             random.shuffle(zipped)
             all_idxs, all_labels = zip(*zipped)
 
-        # return x[all_idxs, :], np.array(all_labels).reshape(-1, 1)
         return x[all_idxs, :], np.array(all_labels)
 
     def get_data_tasks(self, labels, data_idxs, ifold, nb_samples=None, shuffle=True, training=True):
@@ -240,7 +221,8 @@ class DataGenerator(object):
         def get_data_idxs(cl):
             if ifold < self.meta_batchsz:
                 multiple = 0
-                idxs_chosen = list(np.random.choice(data_idxs[cl][ifold], size=nb_samples, replace=False))
+                # idxs_chosen = list(np.random.choice(data_idxs[cl][ifold], size=nb_samples, replace=False))
+                idxs_chosen = random.sample(data_idxs[cl][ifold], size=nb_samples)
             else:
                 if ifold%self.meta_batchsz == 0:
                     multiple = ifold/self.meta_batchsz
@@ -281,23 +263,27 @@ class DataGenerator(object):
         # return x[all_idxs, :], np.array(all_labels).reshape(-1, 1)
         return x[all_idxs, :], np.array(all_labels)
 
-    def make_data_tensor(self, training=True):
+    def make_data_tensor(self, train=True):
+        if train:
+            # number of tasks, not number of meta-iterations. (divide by metabatch size to measure)
+            num_total_batches = 200000
+        else:
+            num_total_batches = 600
 
         all_data, all_labels = [], []
-        fp_idxs = self.yield_fp_idxs(training=training)
+        fp_idxs = self.yield_fp_idxs(training=train)
         # data_idxs = self.yield_data_idxs(training=training)
 
-        for ifold in range(self.total_batch_num):
-            # sampled_folders, range(self.num_classes), nb_samples=self.nimg
-            # 16 in one class, 16 * 2 in one task :)
+        for ifold in range(num_total_batches):
 
-            # data, labels = self.get_data_tasks(self.num_classes, data_idxs, ifold, nb_samples=self.nimg, shuffle=True, training=training)
-            data, labels = self.get_fp_tasks(self.num_classes, fp_idxs, ifold, nb_samples=self.nimg, shuffle=True, training=training)
+            data, labels = self.get_fp_tasks(self.num_classes, fp_idxs, ifold,
+                                             nb_samples=self.num_samples_per_class,
+                                             shuffle=True, training=train)
 
             all_data.extend(data)
             all_labels.extend(labels)
 
-        examples_per_batch = self.num_classes * self.nimg  # 2*16 = 32
+        examples_per_batch = self.num_classes * self.num_samples_per_class  # 2*16 = 32
 
         all_data_batches, all_label_batches = [], []
         for i in range(self.meta_batchsz):  # 4 .. i.e. 4 * examples_per-batch = 4 * 32 = 128
@@ -312,23 +298,3 @@ class DataGenerator(object):
         all_label_batches = np.array(all_label_batches) # (4, 32, 1)
 
         return all_image_batches, all_label_batches
-
-
-if __name__ == '__main__':
-    training_data_path = 'input/feature_extraction_train_updated.csv'
-    testing_data_path = 'input/feature_extraction_test_updated.csv'
-    df_train = pd.read_csv(training_data_path, encoding='latin-1')
-    df_test = pd.read_csv(testing_data_path, encoding='latin-1')
-    cols_drop = ['article_title', 'article_content', 'source', 'source_category', 'unit_id']
-    target_variable = 'label'
-    scaling = 'robust'
-
-    # the data frames
-    df = pd.concat([df_train, df_test]).drop(cols_drop, axis=1).sample(frac=1).reset_index(drop=True)
-    df_train = df_train.drop(cols_drop, axis=1)
-    df_test = df_test.drop(cols_drop, axis=1)
-    special_encoding = 'latin-1'
-
-    freqItemSet, cols_meta = identify_frequent_patterns(df=df, target_variable=target_variable)
-    indices_who_has_fp = get_fp_indices(fps=freqItemSet[0], cols_meta=cols_meta, df=df)
-    print(indices_who_has_fp)
