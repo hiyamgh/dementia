@@ -69,5 +69,10 @@ def xent(pred, label):
                 final_mask += tf.cast(weights[c_t, c_p], tf.float64) * tf.cast(y_pred_max_mat[:, c_p], tf.float64) * tf.cast(
                     label[:, c_t], tf.float64)
             return tf.nn.softmax_cross_entropy_with_logits(logits=pred, labels=label) * final_mask / FLAGS.update_batch_size
+        else:
+            # if cost_sensitive_type == 'weighted':
+            weights_vector = np.array(FLAGS.weights_vector)
+            scaled_logits = tf.math.multiply(pred, weights_vector)
+            return tf.nn.softmax_cross_entropy_with_logits(logits=scaled_logits, labels=label) / FLAGS.update_batch_size
     else:
         return tf.nn.softmax_cross_entropy_with_logits(logits=pred, labels=label) / FLAGS.update_batch_size

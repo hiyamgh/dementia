@@ -5,10 +5,17 @@ import os, pickle
 import random
 from tensorflow.python.platform import flags
 from helper import *
-
+from imblearn.over_sampling import SMOTENC
 from sklearn.preprocessing import MinMaxScaler, StandardScaler, RobustScaler
-
 FLAGS = flags.FLAGS
+
+
+def isfloat(value):
+    try:
+        float(value)
+        return True
+    except ValueError:
+        return False
 
 
 class DataGenerator(object):
@@ -33,7 +40,8 @@ class DataGenerator(object):
         self.target_variable = FLAGS.target_variable
         self.cols_drop = FLAGS.cols_drop
         self.special_encoding = FLAGS.special_encoding
-
+        self.codebook = pd.read_csv('erroneous_codebook_legal_outliers_filtered.csv')
+        self.feature_importances = pd.read_csv('feature_importance.csv')
         if self.cols_drop is not None:
             if self.special_encoding:
                 self.df_train = pd.read_csv(self.training_path, encoding=self.special_encoding).drop(self.cols_drop, axis=1)
@@ -48,6 +56,31 @@ class DataGenerator(object):
             else:
                 self.df_train = pd.read_csv(self.training_path)
                 self.df_test = pd.read_csv(self.testing_path)
+
+        if FLAGS.sampling_strategy is not None:
+            if FLAGS.top_features is not None:
+                print('sampling - turned on')
+                print('sampling strategy: {}'.format(FLAGS.sampling_strategy))
+                top_features = list(self.feature_importances['Feature'])[:FLAGS.top_features]
+                self.df_train = self.df_train[top_features+[self.target_variable]]
+                self.df_test = self.df_test[top_features+[self.target_variable]]
+
+            categorical_indices = self.get_categorical(self.df_train.columns)
+            X_train = np.array(self.df_train.loc[:, self.df_train.columns != self.target_variable])
+            y_train = np.array(self.df_train.loc[:, self.df_train.columns == self.target_variable])
+
+            if isfloat(FLAGS.sampling_strategy):
+                sm = SMOTENC(random_state=42, categorical_features=categorical_indices, sampling_strategy=float(FLAGS.sampling_strategy))
+            else:
+                sm = SMOTENC(random_state=42, categorical_features=categorical_indices, sampling_strategy=FLAGS.sampling_strategy)
+            X_res, y_res = sm.fit_resample(X_train, y_train)
+            self.X_train, self.y_train = X_res, y_res
+            all_res = np.append(X_res, y_res.reshape(-1, 1), 1)
+            if FLAGS.top_features:
+                df_train_res = pd.DataFrame(all_res, columns=top_features+['dem1066'])
+            else:
+                df_train_res = pd.DataFrame(all_res, columns=list(self.df_train.columns))
+            self.df_train = df_train_res
 
         # create combined dataset for FP growth
         self.df = pd.concat([self.df_train, self.df_test])
@@ -89,8 +122,9 @@ class DataGenerator(object):
                 self.indices_who_has_fp['test'][i] = get_fp_indices(fps=fp, cols_meta=self.cols_meta, df=self.df_test)
 
         # training and testing numpy arrays
-        self.X_train = np.array(self.df_train.loc[:, self.df_train.columns != self.target_variable])
-        self.y_train = np.array(self.df_train.loc[:, self.df_train.columns == self.target_variable])
+        if FLAGS.sampling_strategy is None:
+            self.X_train = np.array(self.df_train.loc[:, self.df_train.columns != self.target_variable])
+            self.y_train = np.array(self.df_train.loc[:, self.df_train.columns == self.target_variable])
 
         self.X_test = np.array(self.df_test.loc[:, self.df_test.columns != self.target_variable])
         self.y_test = np.array(self.df_test.loc[:, self.df_test.columns == self.target_variable])
@@ -121,6 +155,35 @@ class DataGenerator(object):
             # apply the scaling
             self.X_train = scaler.fit_transform(self.X_train)
             self.X_test = scaler.transform(self.X_test)
+
+    def get_columns(self, erroneous_codebook):
+        # define functions for getting ordinal/categorical
+        get_numeric = lambda col_name, row: col_name if row['data_type'] == 'numeric' else -1
+        get_ordinal = lambda col_name, row: col_name if row['data_type'] == 'ordinal' else -1
+        get_categorical = lambda col_name, row: col_name if row['data_type'] == 'categorical' else -1
+
+        numeric, ordinal, categorical = [], [], []
+        for index, row in erroneous_codebook.iterrows():
+            col_name = row['COLUMN']
+            ordinal.append(get_ordinal(col_name, row))
+            categorical.append(get_categorical(col_name, row))
+            numeric.append(get_numeric(col_name, row))
+
+        # remove the -1s from lists
+        numeric = list(filter((-1).__ne__, numeric))
+        ordinal = list(filter((-1).__ne__, ordinal))
+        categorical = list(filter((-1).__ne__, categorical))
+
+        return numeric, ordinal, categorical
+
+    def get_categorical(self, columns):
+        _, _, categorical = self.get_columns(self.codebook)
+        categorical_index = []
+        for col in categorical:
+            index = np.where(columns == col)
+            if len(index) > 0 and len(index[0]) > 0:
+                categorical_index.append(int(index[0][0]))
+        return categorical_index
 
     def yield_fp_idxs(self, training=True):
         num_classes = self.num_classes

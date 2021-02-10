@@ -38,6 +38,7 @@ from data_generator_hiyam import DataGenerator
 from maml import MAML
 from tensorflow.python.platform import flags
 from sklearn.metrics import *
+from imblearn.metrics import geometric_mean_score
 
 FLAGS = flags.FLAGS
 
@@ -47,14 +48,21 @@ flags.DEFINE_integer('num_classes', 2, 'number of classes used in classification
 # oracle means task id is input (only suitable for sinusoid)
 flags.DEFINE_string('baseline', None, 'oracle, or None')
 
-## Data options
-flags.DEFINE_string('training_data_path', 'feature_extraction_train_updated.csv', 'path to training data')
-flags.DEFINE_string('testing_data_path', 'feature_extraction_test_updated.csv', 'path to testing data')
-flags.DEFINE_string('target_variable', 'label', 'name of the target variable column')
+## Data options - FAKE NEWS
+# flags.DEFINE_string('training_data_path', 'feature_extraction_train_updated.csv', 'path to training data')
+# flags.DEFINE_string('testing_data_path', 'feature_extraction_test_updated.csv', 'path to testing data')
+# flags.DEFINE_string('target_variable', 'label', 'name of the target variable column')
+# flags.DEFINE_string('fp_file', 'fake_news_fps/fps_fakenews_0.7.pickle', 'path to file containing the frequent patterns')
+# flags.DEFINE_list('cols_drop', ['article_title', 'article_content', 'source', 'source_category', 'unit_id'], 'list of column to drop from data, if any')
+# flags.DEFINE_string('special_encoding', 'latin-1', 'special encoding needed to read the data, if any')
+# flags.DEFINE_string('scaling', 'z-score', 'scaling done to the dataset, if any')
+flags.DEFINE_string('training_data_path', 'train.csv', 'path to training data')
+flags.DEFINE_string('testing_data_path', 'test.csv', 'path to testing data')
+flags.DEFINE_string('target_variable', 'dem1066', 'name of the target variable column')
 flags.DEFINE_string('fp_file', None, 'path to file containing the frequent patterns')
-flags.DEFINE_list('cols_drop', ['article_title', 'article_content', 'source', 'source_category', 'unit_id'], 'list of column to drop from data, if any')
-flags.DEFINE_string('special_encoding', 'latin-1', 'special encoding needed to read the data, if any')
-flags.DEFINE_string('scaling', 'z-score', 'scaling done to the dataset, if any')
+flags.DEFINE_list('cols_drop', None, 'list of column to drop from data, if any')
+flags.DEFINE_string('special_encoding', None, 'special encoding needed to read the data, if any')
+flags.DEFINE_string('scaling', None, 'scaling done to the dataset, if any')
 
 ## Training options
 # flags.DEFINE_integer('pretrain_iterations', 0, 'number of pre-training iterations.')
@@ -67,9 +75,9 @@ flags.DEFINE_string('scaling', 'z-score', 'scaling done to the dataset, if any')
 
 flags.DEFINE_integer('pretrain_iterations', 0, 'number of pre-training iterations.')
 flags.DEFINE_integer('metatrain_iterations', 1000, 'number of metatraining iterations.') # 15k for omniglot, 50k for sinusoid
-flags.DEFINE_integer('meta_batch_size', 32, 'number of tasks sampled per meta-update')
+flags.DEFINE_integer('meta_batch_size', 16, 'number of tasks sampled per meta-update')
 flags.DEFINE_float('meta_lr', 1e-1, 'the base learning rate of the generator')
-flags.DEFINE_integer('update_batch_size', 32, 'number of examples used for inner gradient update (K for K-shot learning).')
+flags.DEFINE_integer('update_batch_size', 16, 'number of examples used for inner gradient update (K for K-shot learning).')
 flags.DEFINE_float('update_lr', 1e-1, 'step size alpha for inner gradient update.') # 0.1 for omniglot
 flags.DEFINE_integer('num_updates', 4, 'number of inner gradient updates during training.')
 flags.DEFINE_float('supp_fp', 0.7, 'support value for fp growth')
@@ -92,16 +100,19 @@ flags.DEFINE_bool('max_pool', False, 'Whether or not to use max pooling rather t
 flags.DEFINE_bool('stop_grad', False, 'if True, do not use second derivatives in meta-optimization (for speed)')
 
 ## define options for cost-sensitive learning
-flags.DEFINE_boolean('cost_sensitive', False, 'whether to apply cost sensitive learning or not')
-flags.DEFINE_string('cost_sensitive_type', 'miss-classification', 'type of cost applied')
-flags.DEFINE_list('weights_vector', [0.3, 0.7], 'if class_weights is used, then this are the respective weights'
+flags.DEFINE_boolean('cost_sensitive', True, 'whether to apply cost sensitive learning or not')
+# flags.DEFINE_string('cost_sensitive_type', 'miss-classification', 'type of cost applied')
+flags.DEFINE_string('cost_sensitive_type', 'weighted', 'type of cost applied')
+flags.DEFINE_list('weights_vector', [1, 100], 'if class_weights is used, then this are the respective weights'
                                                 'of each classs')
 flags.DEFINE_list('cost_matrix', [[1, 2.15], [2.15, 1]], 'cost matrix used, only applicable when using'
                                                        'miss-classification cost sensitive method')
+flags.DEFINE_string('sampling_strategy', 'minority', 'how to resample data, only done when cost sensitive is True')
+flags.DEFINE_integer('top_features', 20, 'top features selected by feature selection')
 
 ## Logging, saving, and testing options
 flags.DEFINE_bool('log', True, 'if false, do not log summaries, for debugging code.')
-flags.DEFINE_string('logdir', 'just_testing/', 'directory for summaries and checkpoints.')
+flags.DEFINE_string('logdir', 'just_testing_dementia/', 'directory for summaries and checkpoints.')
 flags.DEFINE_bool('resume', True, 'resume training if there is a model available')
 flags.DEFINE_bool('train', True, 'True to train, False to test.')
 flags.DEFINE_integer('test_iter', -1, 'iteration to load model (-1 for latest model)')
@@ -146,6 +157,19 @@ def compute_metrics(predictions, labels):
 	return accuracy, precision, recall, f1score, roc
 
 
+def compute_cost_sensitive_metrics(predictions, labels):
+    gmean=geometric_mean_score(labels, predictions, average='weighted')
+    bss = brier_skill_score(labels, predictions)
+    pr_auc = average_precision_score(labels, predictions)
+    return gmean, bss, pr_auc
+
+
+def brier_skill_score(y, yhat):
+    probabilities = [0.01 for _ in range(len(y))]
+    brier_ref= brier_score_loss(y, probabilities)
+    bs= brier_score_loss(y, yhat)
+    return 1.0 - (bs / brier_ref)
+
 def unstack_prediction_probabilities(support_predicted, support_actual, support_probas,
                                      query_predicted, query_actual, query_probas,
                                      exp_string):
@@ -174,6 +198,46 @@ def unstack_prediction_probabilities(support_predicted, support_actual, support_
     # sort by ascending order of risk score
     risk_df = risk_df.sort_values(by='risk_scores', ascending=False)
     risk_df.to_csv(os.path.join(FLAGS.logdir + '/' + exp_string, 'risk_df.csv'), index=False)
+
+
+def evaluate_cost_sensitive(support_predicted, support_actual, query_predicted, query_actual):
+    # gmean, bss, pr_auc
+    support_gmeans, support_bsss, support_pr_aucs = [], [], []
+    query_total_gmeans, query_total_bsss, query_total_pr_aucs = [], [], []
+
+    for i in range(len(support_predicted)):
+        gmean, bss, pr_auc = compute_cost_sensitive_metrics(predictions=np.int64(support_predicted[i]),
+                                                            labels=np.int64(support_actual[i]))
+
+        support_gmeans.append(gmean)
+        support_bsss.append(bss)
+        support_pr_aucs.append(pr_auc)
+
+    support_gmean = np.mean(support_gmeans)
+    support_bss = np.mean(support_bsss)
+    support_pr_auc = np.mean(support_pr_aucs)
+
+    for k in range(len(query_predicted)):
+        query_gmeans, query_bsss, query_pr_aucs = [], [], []
+        mini_batch = query_predicted[k]
+        for i in range(len(mini_batch)):
+            gmean, bss, pr_auc = compute_cost_sensitive_metrics(predictions=np.int64(query_predicted[k][i]),
+                                                                labels=np.int64(query_actual[k][i]))
+            query_gmeans.append(gmean)
+            query_bsss.append(bss)
+            query_pr_aucs.append(pr_auc)
+
+        query_total_gmeans.append(np.mean(query_gmeans))
+        query_total_bsss.append(np.mean(query_bsss))
+        query_total_pr_aucs.append(np.mean(query_pr_aucs))
+
+    results = {
+        'gmean': [support_gmean] + query_total_gmeans,
+        'bss': [support_bss] + query_total_bsss,
+        'pr_auc': [support_pr_auc] + query_total_pr_aucs,
+    }
+
+    return results
 
 
 def evaluate(support_predicted, support_actual, query_predicted, query_actual):
@@ -332,6 +396,9 @@ def test(model, saver, sess, exp_string, data_generator, test_num_updates=None):
     metaval_accuracies = []
     metaval_accuracies2, metaval_precisions, metaval_recalls, metaval_f1s, metaval_aucs = [], [], [], [], []
 
+    # cost sensitive metavals, if any
+    metaval_gmeans, metaval_bsss, metaval_pr_aucs = [], [], []
+
     for _ in range(NUM_TEST_POINTS):
         if 'generate' not in dir(data_generator):
             feed_dict = {}
@@ -357,6 +424,8 @@ def test(model, saver, sess, exp_string, data_generator, test_num_updates=None):
             query_predicted, query_actual = sess.run([model.pred2, model.actual2], feed_dict)
             support_probabilities, query_probabilities = sess.run([model.proba1, model.proba2], feed_dict)
             metrics = evaluate(support_predicted, support_actual, query_predicted, query_actual)
+            if FLAGS.cost_sensitive:
+                metrics_cost_sensitive = evaluate_cost_sensitive(support_predicted, support_actual, query_predicted, query_actual)
             unstack_prediction_probabilities(support_predicted, support_actual, support_probabilities,
                                              query_predicted, query_actual, query_probabilities,
                                              exp_string)
@@ -370,6 +439,11 @@ def test(model, saver, sess, exp_string, data_generator, test_num_updates=None):
         metaval_f1s.append(metrics['f1'])
         metaval_aucs.append(metrics['roc'])
 
+        if FLAGS.cost_sensitive:
+            metaval_gmeans.append(metrics_cost_sensitive['gmean'])
+            metaval_bsss.append(metrics_cost_sensitive['bss'])
+            metaval_pr_aucs.append(metrics_cost_sensitive['pr_auc'])
+
     metaval_accuracies = np.array(metaval_accuracies)
     means = np.mean(metaval_accuracies, 0)
     stds = np.std(metaval_accuracies, 0)
@@ -378,13 +452,25 @@ def test(model, saver, sess, exp_string, data_generator, test_num_updates=None):
     print('Mean validation accuracy/loss, stddev, and confidence intervals')
     print((means, stds, ci95))
 
-    results_final = {
-        'accuracy': metaval_accuracies2,
-        'precision': metaval_precisions,
-        'recall': metaval_recalls,
-        'f1': metaval_f1s,
-        'roc': metaval_aucs,
-    }
+    if FLAGS.cost_sensitive:
+        results_final = {
+            'accuracy': metaval_accuracies2,
+            'precision': metaval_precisions,
+            'recall': metaval_recalls,
+            'f1': metaval_f1s,
+            'roc': metaval_aucs,
+            'gmean': metaval_gmeans,
+            'bss': metaval_bsss,
+            'pr_auc': metaval_pr_aucs
+        }
+    else:
+        results_final = {
+            'accuracy': metaval_accuracies2,
+            'precision': metaval_precisions,
+            'recall': metaval_recalls,
+            'f1': metaval_f1s,
+            'roc': metaval_aucs,
+        }
 
     results_save = {}
     print('\n============================ Results -- Evaluation ============================ ')
@@ -399,7 +485,7 @@ def test(model, saver, sess, exp_string, data_generator, test_num_updates=None):
         # print('stds:', stds)
         # print('ci95:', ci95)
         print('mean of all {}: {} +- {}'.format(metric, np.mean(means), np.mean(ci95)))
-        results_save[metric] = '{:.5f} +- {:.3f}'.format(np.mean(means), np.mean(ci95))
+        results_save[metric] = '{:.5f}'.format(np.mean(means), np.mean(ci95))
 
     out_filename = FLAGS.logdir +'/'+ exp_string + '/' + 'test_ubs' + str(FLAGS.update_batch_size) + '_stepsize' + str(FLAGS.update_lr) + '.csv'
     out_pkl = FLAGS.logdir +'/'+ exp_string + '/' + 'test_ubs' + str(FLAGS.update_batch_size) + '_stepsize' + str(FLAGS.update_lr) + '.pkl'

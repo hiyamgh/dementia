@@ -261,6 +261,8 @@ class MAML:
             # hidden = normalize(tf.matmul(hidden, weights['w'+str(i+1)]) + weights['b'+str(i+1)], activation=tf.nn.relu, reuse=reuse, scope=str(i+1))
             hidden = normalize(tf.matmul(hidden, weights['w'+str(i+1)]) + weights['b'+str(i+1)], activation=ac_fn, reuse=reuse, scope=str(i+1))
             hidden = tf.cast(hidden, tf.float64)
+        if len(self.dim_hidden) == 1:
+            hidden = tf.cast(hidden, tf.float64)
         return tf.matmul(hidden, weights['w'+str(len(self.dim_hidden)+1)]) + weights['b'+str(len(self.dim_hidden)+1)]
 
     def construct_conv_weights(self):
