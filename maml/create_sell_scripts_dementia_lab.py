@@ -18,7 +18,7 @@ def create_scripts(metatrain_iterations, meta_batch_sizes, meta_lrs,
     all_combinations = list(itertools.product(*all_hyper_params))
     print('length of all combinations: {}'.format(len(all_combinations)))
     for i, combination in enumerate(all_combinations):
-        with open('job{}.sh'.format(i), 'w') as f:
+        with open('job_d{}.sh'.format(i), 'w') as f:
             f.writelines("#!/usr/bin/env bash\n")
             f.writelines("python main.py \\\n")
             f.writelines("--pretrain_iterations 0 \\\n")
