@@ -6,14 +6,13 @@ def create_scripts(metatrain_iterations, meta_batch_sizes, meta_lrs,
                    update_batch_sizes, update_lrs, num_updates,
                    fp_supports, dims, activation_fns, cost_sensitive,
                    weights, sss, top_features,
-                   scaling,
                    out_dir_name):
     # weights = [[1, 10], [1, 100], [1, 1]]
     #     sampling_strategies = ['minority', 'not minority', 'all', 0.5, 1, 0.75]
     #     top_features = [10, 20]
 
     all_hyper_params = [metatrain_iterations, meta_batch_sizes, meta_lrs, update_batch_sizes,
-                        update_lrs, num_updates, fp_supports, dims, activation_fns, cost_sensitive, scaling]
+                        update_lrs, num_updates, fp_supports, dims, activation_fns, cost_sensitive, weights, sss, top_features]
 
     all_combinations = list(itertools.product(*all_hyper_params))
     print('length of all combinations: {}'.format(len(all_combinations)))
@@ -35,7 +34,7 @@ def create_scripts(metatrain_iterations, meta_batch_sizes, meta_lrs,
             f.writelines("--cost_sensitive {} \\\n".format(combination[9]))
             f.writelines("--weights_vector {} \\\n".format(combination[10]))
             f.writelines("--sampling_strategy '{}' \\\n".format(combination[11]))
-            f.writelines("--scaling '{}' \\\n".format(combination[12]))
+            f.writelines(("--top_features {} \\\n".format(combination[12])))
             f.writelines("--logdir '{}' \\\n".format(out_dir_name))
             f.writelines("> out_job{}.txt".format(i))
             f.close()
@@ -65,4 +64,4 @@ if __name__ == '__main__':
                    update_batch_sizes, update_lrs, num_updates,
                    fp_supports, dims, activation_fns, cost_sensitive,
                    weights, sampling_strategies, top_features,
-                   scaling, out_dir_name=jobs_dir_name)
+                   out_dir_name=jobs_dir_name)
