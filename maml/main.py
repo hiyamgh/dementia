@@ -609,6 +609,12 @@ def main():
                  '.sfp_'+str(FLAGS.supp_fp) +\
                  '.dn_'+str(FLAGS.dim_name) +\
                  '.actfn_'+str(FLAGS.activation_fn)
+    if FLAGS.cost_sensitive:
+        if FLAGS.sampling_strategy is not None:
+            if FLAGS.top_features is not None:
+                exp_string += '.ss_'+str(FLAGS.sampling_strategy) +\
+                    '.topf_' + str(FLAGS.top_features) +\
+                    '.weights_' + "_".join(list(map(str, FLAGS.weights_vector)))
 
     # exp_string = 'cls_'+str(FLAGS.num_classes)+'.mbs_'+str(FLAGS.meta_batch_size) + '.ubs_' + str(FLAGS.train_update_batch_size) + '.numstep' + str(FLAGS.num_updates) + '.updatelr' + str(FLAGS.train_update_lr)
     # exp_string += 'miter_' + str(FLAGS.metatrain_iterations)
