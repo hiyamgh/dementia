@@ -58,8 +58,8 @@ class DataGenerator(object):
                 self.df_test = pd.read_csv(self.testing_path)
 
         if FLAGS.sampling_strategy is not None:
-            self.codebook = pd.read_csv('erroneous_codebook_legal_outliers_filtered.csv')
-            self.feature_importances = pd.read_csv('feature_importance.csv')
+            self.codebook = pd.read_csv('input/erroneous_codebook_legal_outliers_filtered.csv')
+            self.feature_importances = pd.read_csv('input/feature_importance.csv')
             if FLAGS.top_features is not None:
                 print('sampling - turned on')
                 print('sampling strategy: {}'.format(FLAGS.sampling_strategy))
@@ -97,38 +97,11 @@ class DataGenerator(object):
                 with open(FLAGS.colsmeta_file, 'rb') as handle:
                     self.cols_meta = pickle.load(handle)
 
-                # self.indices_who_has_fp = {}
-                # self.indices_without_fp = {}
-                # self.indices_who_has_fp['train'] = {}
-                # self.indices_who_has_fp['test'] = {}
-                # for i, fp in enumerate(self.freqItemSet):
-                #     self.indices_who_has_fp['train'][i] = get_fp_indices_raw(fps=fp, df=self.df_train)
-                #     self.indices_who_has_fp['test'][i] = get_fp_indices_raw(fps=fp, df=self.df_test)
-
             else:
                 # get the frequent pattern and cols_meta(dictionary containing meta data about columns distribution)
                 self.freqItemSet, self.cols_meta = identify_frequent_patterns(df=self.df,
                                                                               target_variable=self.target_variable,
                                                                               supp_fp=FLAGS.supp_fp)
-                # if self.freqItemSet:
-                #     pass
-                # else:
-                #     # probably the support was very high, lower it
-                #     print('lowering supp_fp from {} to {}'.format(FLAGS.supp_fp, FLAGS.supp_fp - 0.1))
-                #     self.freqItemSet, self.cols_meta = identify_frequent_patterns(df=self.df,
-                #                                                                   target_variable=self.target_variable,
-                #                                                                   supp_fp=FLAGS.supp_fp - 0.1)
-                #
-                # # dictionary of indices who has fp
-                # self.indices_who_has_fp = {}
-                # self.indices_without_fp = {}
-                # self.indices_who_has_fp['train'] = {}
-                # self.indices_who_has_fp['test'] = {}
-                # for i, fp in enumerate(self.freqItemSet):
-                #     self.indices_who_has_fp['train'][i] = get_fp_indices(fps=fp, cols_meta=self.cols_meta, df=self.df_train)
-                #     self.indices_who_has_fp['test'][i] = get_fp_indices(fps=fp, cols_meta=self.cols_meta, df=self.df_test)
-                #
-
             if self.freqItemSet:
                 pass
             else:

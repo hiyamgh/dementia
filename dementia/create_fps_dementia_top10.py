@@ -66,16 +66,12 @@ if __name__ == '__main__':
     df = pd.concat([df_train, df_test])
     df_cols = list(df.columns)
     feature_importances = pd.read_csv('feature_importance.csv')
-    top_features = list(feature_importances['Feature'])[:20]
+    top_features = list(feature_importances['Feature'])[:11]
     df = df[top_features+['dem1066']]
     col_types = df.dtypes # Series object,
-    # access by column name # int64 or float64 [col_name] == np.float64
 
-    # min_supps = [0.5, 0.6, 0.7, 0.8, 0.9]
     min_supps = [0.8, 0.9, 0.7]
-    # supp = 0.8
-    # out_folder = 'fake_news_fps/'
-    out_folder = 'dementia_colsmeta_top20/'
+    out_folder = 'dementia_colsmeta_top10/'
 
     if not os.path.exists(out_folder):
         os.makedirs(out_folder)
