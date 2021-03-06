@@ -1,0 +1,274 @@
+Feature,Importance,description
+RECALL_2,0.04701250420493707,number of words remembered correctly
+YEAR_2,0.04194662272381402,in what year are we
+LASTDAY_2,0.0400074055281175,Does he/she forget what happened the day before?
+Q1781_2,0.034187901757376425,Judgment: Problems with memory are more prominent than problems with thinking i.e. more difficulty with remembering things than working things out.
+Q75_2,0.03071293738633356,evaluate: error in the year provided
+LEARN3_2,0.030197948167137903,please repeat the words you can remember (third trial)
+MEMORY_2,0.029390613377137966,"We all have slight difficulties in remembering things as we get older, but has this been a particular problem for him/her?"
+LEARN1_2,0.02464243465218097,please repeat the words you can remember (first trial)
+LEARN2_2,0.02393610991631155,please repeat the words you can remember (second trial)
+Q76_2,0.02383656048266201,evaluate: the participant says/points out that he doesn't know the year
+PUT_2,0.0231763855247364,Does he/she forget where he/she has put things?
+LASTSEE_2,0.01956857006591024,Does he/she forget when he/she last saw you?
+SEASON_2,0.019544408774849812,in what season are we
+MONEY_2,0.018319459547593203,Has there been a change in his/her ability to handle money?
+ANIMALS_2,0.015385042741502184,participant was able to mention the names of the animals during the one minute provided
+CONVERS_2,0.014336305563020822,Does he/she forget what he/she wanted to say in the middle of the conversation?
+MONTH_2,0.013920555670297152,In what month are we
+PAST_2,0.013824691087134886,Does he/she tend to talk about what happened long ago rather than the present?
+Q401_2,0.013788073294046745,the interviewer's believes that the elderly has a memory problem
+Q72_2,0.012076334759747892,evaluate: there is an error in the month provided 
+WORDFIND_2,0.012006732730284212,When speaking does he/she have difficulty saying the right words?
+REASON_2,0.011417001988825637,Have you noticed a change in his/her ability to think and reason?
+STORY_2,0.01132300168092868,score of repeating story
+Q1551_2,0.010137534311951246,"Taking everything into account, how would you describe your satisfaction with life at the present time: good, average, or weak?"
+FRDNAME_2,0.009833446403808468,Does he/she forget the names of friends?
+CARENEED_2,0.009139803394908835,The older person
+Q74_2,0.009105396264148757,"evaluate: at least some answers are incomplete, irrelevant or no answer"
+MENTAL_2,0.009079943298247255,Has there been a general decline in his/her mental functioning?  
+Q331_2,0.008592583863887511,"seems very nervous, worried, depressed or scared"
+ICINTCOM_2,0.008590822684513506,"* Interviewer's evaluation * Has the interview ended?
+"
+KEPT_2,0.008055491222739622,Does he/she forget where things are usually kept?
+Q381_2,0.007887402246871652,does not remember the name of the current prime minister (if wrong give the right answer: Tamam Salam) 
+Q1561_2,0.007846602482509474,"In general, how happy are you: very happy, reasonably happy, not too happy, not happy at all?"
+STORE_2,0.007368989358873347,where is the local market shop located
+Q73_2,0.007081098361464839,evaluate: the participants says/points out that he doesn't know the month
+IRERROR_2,0.006604770389948444,"Interviewer's evaluation: In the Direction or Memory section, did you record ""Yes"" (an indication of memory errors) or ""Not applicable"" frequently during the interview? Or was there a lot of ""not applicable"" in the rest of the interview? """
+Q391_2,0.006493303490810537,does not remember the name of the past prime minister (if wrong give the right answer: Najib Mikati) 
+Q781_2,0.006006061897714433,Elderly seems very slow in all moves
+MUDDLED_2,0.005955805672143182,Does his/her thinking ever seem muddled?                    
+HASCONF_2,0.005952385840723137,overall rating of confidence in data
+ORIENT_2,0.005907024620659577,Does he/she forget where he/she is?
+Q71_2,0.005859238190187754,evaluate: there is an error in the date of the week provided
+TRIALNO_2,0.0056462744499552135,number of trials needed by participant to remember all 3 words
+WORDDEL_2,0.005600999184682359,do you remember the 3 word-list
+LOSTOUT_2,0.005442576689353057,Does he/she get lost in the community/road?
+Q31_2,0.0053467471403992935,States or indicates by gesture he/she does not know what year he/she was born
+LONGMEM_2,0.005293500171196406,what was the name of the elected president who was assasinated during the israeli occupation in 1982
+WORDIMM_2,0.005026957451729548,"3-word list recall (boat, house, fish)"
+STREET_2,0.004864430556422584,give me the names of 2 streets near your home
+Q721_2,0.004544993249581679,Listlessness or subjective   restriction of energy.
+REPEAT_2,0.004454051214962753,please repeat this proverb (it might be difficult to pronounce for some)
+CIRCLE_2,0.004428380241078152,score of drawing the circle
+NPI7,0.0044033506562965235,Does your (xxxx) seem less interested in his or her usual activities and plans of others?
+NPI10,0.004387788508199516,"Does your (xxxx) engage in repetitive activities, such as pacing around the house, handling buttons, wrapping string, or doing other things repeatedly?"
+Q1707_2,0.004371803874697073,"Gait normal, just unsteady"
+Q371_2,0.004308313379479299,does not remember well the interviewer's name (little mistakes are tolerable) 
+TOWN_2,0.004255809566244186,what is the name of this city/village you are currently living in
+Q481_2,0.004204706748608988,Gets worn out or exhausted during daytime or evening
+Q211_2,0.004082991955393258,depressed mood
+Q21_2,0.003977677728164816,Cannot spell both his/her first and last names correctly
+Q1181_2,0.0039320661128606615,He/she has difficulty focusing on reading.
+ACTIV_2,0.0038208056086633684,"Have you seen a change in his/her daily activities in the past several years? 
+"
+Q711_2,0.003820043662453034,"From his/her point of view, the elderly is slower in motion"
+Q1182_2,0.0037461184360418802,"Difficulty with some forms of concentration most days, at least for two weeks."
+Q731_2,0.003738392938749904,"Move less than usual.
+
+"
+Q491_2,0.003674808435482943,difficulty to relax
+Q1141_2,0.0036675494145765298,Participant did not enjoy almost anything
+CHIEF_2,0.0036288401984280105,what is the name of the current president
+Q871_2,0.003512723422176493,Admits feeling lonely
+WORDWRG_2,0.0034742639500107216,Does he/she use the wrong words?
+NPI4,0.0034356808829435503,Does your (xxxx) act as if he or she is sad or in low spirits? Does he or she cry?
+NPI6,0.0033623754940526342,Does your (xxxx) appear to feel too good or act excessively happy?
+Q722_2,0.0033515722690486555,It exists most days for at least two weeks
+CHORES_2,0.0032238379873002964,"Does he/she have difficulty performing household chores that he/she is used to do, such as preparing food or boiling a pot of tea?"
+Q451_2,0.003188257309924978,"the elderly seems week, skinny, sick or disabled"
+Q501_2,0.0031783585813496486,describe the headache
+PAPER_2,0.002977568166402185,score of paper folding/ handling
+CHANGE_2,0.0029356886113625353,does he/she have difficulty in adjusting to change in her daily routine?
+NPI8,0.0029300846522301916,"Does your (xxxx) seem to act impulsively? For example, does your (xxxx) talk to strangers as if he or she knows them, or does your (xxxx) say things that may hurt people’s feeling?"
+HOBBY_2,0.0029015302150506607,"Has there been a loss of a special skill or hobby he/she could manage before? 
+"
+Q641_2,0.0028577091289189705,Feels indecisive
+Q101_2,0.0028275967429400935,"give a positive answer and a short explanation like ""you examined me yesterday"". This answer is wrong"
+Q221_2,0.0027270815508442826,Have you cried at all? How often? Has cried:
+NPI9,0.0027051250324935617,Is your (xxxx) impatient and cranky? Does he or she have difficulty coping with delays or waiting for planned activities?
+Q631_2,0.002670141871128279,Feeling confused
+Q1708_2,0.002613494901150119,Staggers as if drunk
+Q351_2,0.00259684241674248,"forgets the names of friends, family or calls them with other names "
+Q1051_2,0.0025842877705579354,Participant admits to feel annoyed (angry)
+NPI5,0.0025787833421206043,"Does your (xxxx) become upset when separated from you? Does he or she have any other signs of nervousness, such as shortness of breath, sighing, being unable to relax, or feeling excessively tense?"
+Q82_2,0.0025334093266384562,the participant says/points our that he/she doesn't know
+Q32_2,0.002512633229966001,"year of birth is incomplete, irrelevant or no reply"
+NPI3,0.002508925238234873,Is your (xxxx) stubborn and resistive to help from others?
+Q361_2,0.002480575115423615,needs to make more efforts to remember things
+Q81_2,0.002461223306347605,participant gave the wrong or incomplete address
+Q341_2,0.002397930955830747,difficulties from his/her point of view; the memory problem is a true problem for him/her
+Q1171_2,0.0023721909171053757,He/she finds it difficult to focus on entertainment material
+NRECALL_2,0.0023721047526131358,do you remember my name (interviewer's)
+CHEMIST_2,0.0023707385171245115,where do we go to buy medicine/drugs
+Q901_2,0.002354997922608869,Feels disturbed
+Q171_2,0.0023351508753938844,do you have children
+Q541_2,0.0023216774531625546,Problem sleeping or change in the sleeping pattern
+TOILET_2,0.0023119622414527956,Does he/she have difficulty using the toilet? Does he/she wet or soil him/herself?
+PENTAG_2,0.0022913169612264806,score of drawing the pentagones
+Q83_2,0.0022458918491580727,"incomplete, irrelevant, or no answer"
+Q511_2,0.002240743562648065,loss or decreased appetite 
+Q1131_2,0.0022276717151878283,Participant has less interests in the past month than he/she usually has
+Q531_2,0.0022133038873439425,Elderly has lost 10 pounds (4.5 kilograms) or more in the past three months
+Q42_2,0.002208925018461183,"age is incomplete, irrelevant or no reply"
+IRHOME_2,0.0021466244642060913,did the interview take place in the participant's home
+Q294_2,0.0020307567226491,the circumstances of the participant explains the pessimism
+Q1041_2,0.002023167972878118,"There is a clear sense of excessive guilt or self-blame over past and present mistakes (do not affirm positively any self-blame that is justified or simple.)
+  "
+Q644_2,0.001969175062393319,Lack of self-confidence
+Q1709_2,0.0019586069608795043,Takes slow shuffling steps
+Q621_2,0.0019322245863204251,Subjective slowing in thinking.
+Q191_2,0.0018705850539872768,subjective fear or anxiety our of proportion to the event if any that provoked the feeling.
+NPI11,0.0018119899733633129,"Does your (xxxx) awaken you during the night, rise too early in the morning, or take excessive naps during the day?"
+Q352_2,0.001774209805232825,forgets were he/she puts stuff
+Q41_2,0.0017588114572568395,States or indicates by  gesture he/she does not know how old he/she is
+Q1191_2,0.0017289185262758433, Note ** has a clear difficulty in focusing on the interview.
+Q502_2,0.0017250851539715448,"describes the headacke as the product of nervous tension: tension around the head, tension, stiff neck"
+Q11_2,0.001692213326380117,Cannot repeat interviewer’s name correctly even after three repetitions
+Q1042_2,0.0016920862558871342,The participant mentions to regret something from the past which may or may not be justified.
+NPI1,0.0016828900125794486,"Does your (xxxx) believe that others are stealing from him or her, or planning to harm him or her in some way?"
+Q1811_2,0.0016716909255349705,Rating
+NAME_2,0.0016701277776902685,my name is x can you please repeat it
+Q1631_2,0.0015762103526989044,Face without expression. Does not show expressions during conversation.
+Q293_2,0.0015570039950292267,genenral status of hoplessness or depression
+Q1061_2,0.0015409516417428113,Participant is angry with him/herself
+Q1706_2,0.0015211004817372034,"Obvious evidence of physical abnormality of the legs like arthritis, amputation, or gross swelling."
+Q1441_2,0.0014638452015824726,The interviewer believes that the participant has a drinking problem.
+FAMNAME_2,0.0014497076618206857,Does he/she forget the names of members of the family?
+NPI2,0.0014382681045861227,Does your (xxxx) act as if he or she hears voices? Does he or she talk to people who are not there?
+Q1755_2,0.0014224359795147088,Long pauses before replying a characteristic feature.
+Q1632_2,0.0013854338553520495,Monotonous VOICE.  No play of expression in conversation.
+Q642_2,0.0013807035588051957,"A feeling of confused thinking or hesitation is present for most days, for at least two weeks."
+WATCH_2,0.0013605294729672535,what is this called (interviewer shows a watch)
+Q281_2,0.0013493041028458158,felt life not worth living
+Q1704_2,0.0013297517394900433,Obvious abnormality of walking.
+Q652_2,0.0012745218519208527,Appears indecisive
+FEED_2,0.0012456542733149684,Does he/she have difficulty feeding him/herself? 
+Q532_2,0.0012422921745608203,Elderly has lost 10 pounds (4.5 kilograms) or more during the past month
+DRESS_2,0.0012363269865613884,Does he/she have difficulty dressing?
+Q1351_2,0.001235413333693849,Note ** The participant is taking a doctor-prescribed medication to treat a mental problem
+NPI12,0.001220295005953183,"Has your (xxxx) lost or gained weight, or had a change in the food he she likes? "
+LOSTIN_2,0.001217691195226956,"Does he/she get lost at home, e.g finding the toilet?"
+Q1043_2,0.0011829081286375209,Feeling excessive guilt or lack of self-value most days for at least two weeks.
+Q1801_2,0.0011826892414249612,"Memory defect (clear-cut) e.g. disorientated, gross memory loss, clear-cut blackout, etc."
+Q1743_2,0.001160335551668376,"Irrelevance:  whole content of answer may have little to do with the question.  (Do not include wandering or rambling from the topic, or incoherence)."
+Q291_2,0.0011530972999386933,not pessimistic but doesn’t have something to do/wait for (lives day by day)
+Q643_2,0.0011518939208898281,The feeling of not coping well with the daily routine.
+Q1744_2,0.0011392160487204402,"Circumstantial:  much unnecessary detail, but the object in view at the beginning is ultimately reached."
+Q1211_2,0.0010974031212281357,Baffled by something strange happening
+Q931_2,0.001093318402155908,There are people like this
+Q1044_2,0.0010910739960671369,The imaginary feeling of lack of self-value and guilt most days.
+Q1031_2,0.0010516804878385776,It seems from looking at/ listening to the participant that he/she is overly skeptical
+Q1391_2,0.0010141331871159492,The participant admits that it is a problem
+Q1052_2,0.0010118248295129144,Feeling disturbed for most of the days during at least two weeks last month
+Q512_2,0.0009928615961968762,increased appetite
+SHOULD_2,0.0009787954681022685,what is this called (interviewer shows a shoulder)
+Q292_2,0.0009714085543623429,"is pessimistic, doesn’t see a future ahead/ the future is unbearable"
+Q452_2,0.0009641833770009428,"One or more body parts appear paralyzed in whole or in part, or there is a sign of paralysis on one side of the face."
+Q651_2,0.0009254215696915294,The elderly seems confused 
+Q1742_2,0.0009128624480903255,"Patient talks fairly freely, but vaguely and ambiguously so that ideas communicated are not clear - vague wandering from idea to idea or point to point, e.g.
+Question:  
+HOW DO YOU LIKE IT IN THE HOSPITAL?
+Response:  
+WELL, or ….NOT QUITE THE SAME AS, OR …DO NOT QUITE KNOW HOW TO SAY IT.  IT IS NOT THE SAME, BEING IN HOSPITAL AS, or....WORKING. ER….THE JOB IS NOT QUITE THE SAME or… VERY MUCH THE SAME, BUT OF COURSE, IT IS NOT EXACTLY THE SAME."
+Q1381_2,0.0008372045552316069,He/she does this
+Q1642_2,0.0008083715861821853,Uncontrollable short bouts of laughing.
+Q612_2,0.0007903810302509774,Trembling or tremulous feeling due to anxiety.
+Q611_2,0.0007852170221051822,"Palpitations (i.e. patient is conscious of his/her heartbeat which is not due to exercise, but usually accompanied by anxiety."
+Q613_2,0.0007803036474858954,Other physical manifestations of anxiety
+Q1371_2,0.0007749666348380478,Drink alcohol (in one form or another) at least five days a week
+Q1652_2,0.000742209064656749,Infectious gaiety.
+Q1705_2,0.0007419250524138206,Obvious evidence of paralysis or stroke.
+Chin_2,0.000731871716163959,what is this called (interviewer shows a chin)
+PENCIL_2,0.000721654686273204,what is this called (interviewer shows a pencil)
+Q1796_2,0.0006925723241349906,Deafness - severe.
+Q1365_2,0.0006750072252382495,"Barbituric acid analgesic (Allobarbital, Amobarbital, Aprobarbital)"
+Q1822_2,0.0006738401334991537,"Minimization or tendency to say no, indiscriminately."
+Q301_2,0.0006678353043015041,already contemplated the idea of suicide or wished for death
+Q1821_2,0.0006559770007880353,"Exaggeration or tendency to say yes, indiscriminately."
+ADDRESS_2,0.0006085688817715221,what is your homeaddress
+Q1368_2,0.00059462530242733,Other
+Q1635_2,0.000590684452131065,"Uniform blunting of mood, 
+whatever the tone of conversation (indifference, apathetic acceptance)."
+Q201_2,0.0005764569297141608,episode of anxiety which participant tries to terminate e.g. by running out of room.
+Q1754_2,0.0005762300657213229,Speech very slow.  Distinct pauses between words.
+Q1792_2,0.0005594565750285315,Unclear dialect or accent.
+Q1367_2,0.0005455808838668924,"Nerves tranquilizers (Valium, Liberium, etc.)"
+Q1241_2,0.000544869973264405,"A bad taste, not necessarily due to hallucination, for example, bitter taste. "
+Q102_2,0.000541212634530974,mentioned wrong events (not imaginary and not specific in a wrong way)
+Q1361_2,0.0005353508258659114,"Opium alkaloids, heroin, industrial analgesics similar to morphine (eg pythidine, methadone, dehydroquidine) and cocaine."
+Q911_2,0.0005238712389799192,Has this feeling
+Q17910_2,0.0005165894148804424,Weakness - severe.
+Q533_2,0.000507507736515541,Elderly gained 10 pounds (4.5 kilograms) or more during the past month
+CHAIR_2,0.0005065248730018871,what is this called (interviewer shows a chair)
+Q111_2,0.0004940248983441261,observation: the participant speaks without a purpose. Did not get to the point being made
+Q1745_2,0.0004922475352421916,Rambling:  talks in an aimless fashion.  Object in view at the beginning is not reached.
+Q1795_2,0.0004548077852851145,Dysarthria (due to speech organs) e.g. coarse tremor of the tongue or paralysis of vocal chords.
+PRAY_2,0.000440924018744923,what do people do at the church/ mosque
+Q1201_2,0.00043649367297191906,Describes an abnormal sensory experience
+Q1753_2,0.00043257271785005483,"Flight of ideas:  one idea suggests another in rapid succession, so that patient is soon far from the point, e.g.
+Question:  
+WHAT IS THE TIME?
+Response:  
+IT IS THREE O'CLOCK BY MY H. SAMUEL EVERRIGHT GOLD WATCH, BUT IT IS NOT ON THE GOLD STANDARD, WAVE 
+THE FLAGS A LIFE ON THE BRINY WAVE."
+Q1633_2,0.0004268715782555563,No gesture accompanying speech
+Q1741_2,0.0004264564151197095,Vague quality to speech.  No completion of a thought or idea.
+Q1803_2,0.0004186567948171663,"Incoherent in clear consciousness (e.g. not sleepy) i.e. irrelevant or bizarre or random answers, disjointed ideas, gibberish, neologisms, perseveration, flight of ideas."
+Q1802_2,0.00041000425736103824,"Memory defect (dubious) e.g. hazy recall, unconvincingly claims not to remember, makes little attempt to recall."
+Q1231_2,0.0003998241228168427,Hallucinations have to do with smell
+NOD_2,0.00037971677512424446,please move your head as if you are giving a nod
+Q1751_2,0.0003407640663773588,"rate of speech: Extremely rapid speech, but can be interrupted."
+Q1798_2,0.00032720803224657905,Stuttering.
+Q1771_2,0.0002965732828885688,"Perseveration: Repeats answer inappropriately
+e.g.      Question:  Weekday?
+            Response: Tuesday
+            Questions:  Month?
+            Response:   Tuesday"
+Q1671_2,0.00027978587561187,"UNCO-OPERATIVE, ETC.: Tries to start an argument."
+Q18020_2,0.0002760413331291025,Other.
+Q17922_2,0.0002514481726591731,"Patient appears generally sleepy, but does not actually fall asleep."
+Q1634_2,0.0002489825757029839,No appropriate emotion shown when delusional or normal material is discussed which would usually bring out emotion
+Q18019_2,0.00022900658300328697,Distractibility (interviewee's attention is frequently drawn to trivial and irrelevant events in the environment).
+Q1641_2,0.00022312575609837953,Uncontrollable short bouts of crying.
+Q1233_2,0.00022200868577360245,"The participant claims to be farting. (If the answer is positive, evaluate it as ""yes, simple"" or ""yes, severe"")"
+HAMMER_2,0.00022057870002592145,what is the function of a hammer
+Q1703_2,0.0002190320276407702,"Parkinsonian movements (characteristic repeated regular tremor of the hands at rest.  Described as 'pill rolling', as if the interviewee was rolling a pill between the thumb and finger tips)."
+Q1791_2,0.00021263268046853206,Foreign language e.g. poor command of language in which interview is conducted interpreter required.
+ELBOW_2,0.00019924668595719944,what is this called (interviewer shows an elbow)
+Q18010_2,0.00018938513225734915,Gross suspiciousness.
+Q1804_2,0.0001845363849495048,Keeps referring to delusions or hallucinations.
+Q1661_2,0.0001709926016742297,"OTHER AFFECT: Facetious:  silly jokes, flippant remarks."
+Q1251_2,0.00016926680712885965,Indicates that he/she hears voices in the absence of any external influence that can be defined
+Q1808_2,0.00015594543083977718,Cries uncontrollably.
+Q1271_2,0.0001430085873119795,Says that he/she is testing visual perception in the absence of any identifiable external stimulus.
+Q18018_2,0.00013836979953806382,Pre-occupied with inner experiences which are not vocalised (unspecified pre-occupation).
+Q17911_2,0.00013578213573357326,Other.
+POINT_2,0.00013222160948287483,can you point out to the window and the door in this room
+Q18016_2,0.0001279274313197225,Lack of insight.  Total denial of symptoms or illness.
+Q1701_2,0.00012238625918195345,"Choreiform movements (continuous, purposeless, jerky, involuntary movements of the head, body or limbs while at rest)"
+Q1364_2,0.00010338398885116219,Other psychosocial stimulants (eg amphetamines / pep pills)
+Q1363_2,0.00010214719925748722,"Medicinal cannabis (cannabis, marijuana)"
+Q1806_2,0.00010155351124946401,Posturing (maintains an unusual or odd position of any part of the body repeatedly or for several minutes at a time) bizarre behaviour.
+Q1222_2,9.638698283640453e-05,"Illusions that involve sexual sensations, for example, from telepathy, an imaginary lover having sex with the participant during the night, etc.
+(If the answer is positive, evaluate as ""yes, simple"" or  ""yes, severe"")."
+Q1362_2,8.723692154408383e-05,"Heliosis (eg LSD, Mescaline)"
+Q18015_2,8.458111218071095e-05,"Over talkative, but not pressure of speech."
+Q1807_2,8.08010249465666e-05,Speaks coherently to self; speaks to voices.
+Q17912_2,6.136281618057153e-05,Low intelligence.
+Q1232_2,5.554128735317868e-05,"Hallucinations are related to smell, for example the participant smells an odor or gas in the room, etc. which is not really present. (If the answer is positive, evaluate it as ""yes, simple"" or ""yes, severe"")"
+Q18011_2,5.202776506541553e-05,Other.
+Q18014_2,4.9739989356375816e-05,Withdrawal or apparent apathy possibly due to indifference OR to deep depression.
+Q18013_2,3.834330473550377e-05,Suspicious.  Negativistic (clearly does the opposite of what the interviewer asks or expects).
+Q1242_2,3.123441396508728e-05,Hallucinations related to taste
+SHOES_2,2.6354243353926835e-05,what is this called (interviewer shows a shoe)
+Q18017_2,1.2208884016760787e-05,"Excited or agitated or obviously elated (cannot sit still, or frequently interrupts with fatuous jokes or remarks)."
+Q17920_2,0.0,"Interview conditions unfavourable, e.g. noisy, distracting environment."
+Q1651_2,0.0,"Elated, euphoric, even though perhaps changing to irritability or depression."
+Q1221_2,0.0,Physical hallucinations
+Q1805_2,0.0,Incorporates interviewer in delusions.
+Q18012_2,0.0,Mutism not specified as due to physical defect.
+Q1809_2,0.0,"Pressure of speech (cannot be interrupted in the usual manner, talks the interviewer down)."
+Q1752_2,0.0,"Pressure of speech:  too many words, rapid and keeps resisting interruption."
+Q1702_2,0.0,"Athetoid movements (continuous, purposeless, slow writhing movements of tongue, jaws or limbs)."
