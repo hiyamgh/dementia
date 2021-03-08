@@ -61,11 +61,11 @@ def identify_frequent_patterns(df, target_variable, supp_fp):
 
 
 if __name__ == '__main__':
-    df_train = pd.read_csv('train.csv')
-    df_test = pd.read_csv('test.csv')
+    df_train = pd.read_csv('input/train_imputed_scaled.csv')
+    df_test = pd.read_csv('input/test_imputed_scaled.csv')
     df = pd.concat([df_train, df_test])
     df_cols = list(df.columns)
-    feature_importances = pd.read_csv('feature_importance.csv')
+    feature_importances = pd.read_csv('input/feature_importance_modified.csv')
     top_features = list(feature_importances['Feature'])[:20]
     df = df[top_features+['dem1066']]
     col_types = df.dtypes # Series object,

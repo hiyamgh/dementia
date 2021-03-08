@@ -8,7 +8,7 @@
 #SBATCH --mem=16000
 #SBATCH --mail-type=ALL
 #SBATCH --mail-user=hkg02@mail.aub.edu
-#SBATCH --array=1-361%2
+#SBATCH --array=1-361%5
 
 module load python/3
 module load python/tensorflow-1.14.0

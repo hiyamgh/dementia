@@ -59,7 +59,7 @@ class DataGenerator(object):
 
         if FLAGS.sampling_strategy is not None:
             self.codebook = pd.read_csv('input/erroneous_codebook_legal_outliers_filtered.csv')
-            self.feature_importances = pd.read_csv('input/feature_importance.csv')
+            self.feature_importances = pd.read_csv('input/feature_importance_modified.csv')
             if FLAGS.top_features is not None:
                 print('sampling - turned on')
                 print('sampling strategy: {}'.format(FLAGS.sampling_strategy))
