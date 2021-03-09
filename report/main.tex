@@ -1,0 +1,1440 @@
+\documentclass{article}
+\usepackage[utf8]{inputenc}
+\PassOptionsToPackage{hyphens}{url}
+\usepackage[colorlinks = true,
+            linkcolor = blue,
+            urlcolor  = blue,
+            citecolor = blue,
+            anchorcolor = blue]{hyperref}
+\usepackage{graphicx}
+\usepackage{caption}
+\usepackage{subcaption}
+\usepackage[section]{placeins}
+\usepackage{float}
+\usepackage[utf8]{inputenc}
+\usepackage{multirow}
+\usepackage{csquotes}
+\usepackage{xcolor}
+\usepackage{amsmath}
+\usepackage{longtable}
+\usepackage[T1]{fontenc}
+\usepackage[normalem]{ulem}
+\useunder{\uline}{\ul}{}
+
+\title{Dementia}
+
+\begin{document}
+
+\maketitle
+
+\tableofcontents
+
+\section{Data Sources}
+\subsection{Datasets Used}
+The datasets used are from the following dementia surveys conducted in Lebanon:
+\begin{itemize}
+    \item Bekaa Questionnaire: This dataset is the most recent survey conducted last year in the Bekaa. This dataset involved 219 elderly.
+    \item full validation data: This data consists of 281 rows. This is the very first survey that we implemented for the sake of testing the 1066 Dementia SPSS algorithm. This survey was conducted on a 1-1 ratio with clinically diagnosed demented patients.
+    \item dementia data 502 baseline updated: This is the second survey implemented which involved 502 elderly people. The selection of elderly to participate in this survey was random.
+\end{itemize}
+We then merged this dataset into one dataset consisting of a total of 1024 elderly.
+
+\subsection{Dementia Output}
+In order to label each row (elderly) as positive (has dementia) or negative (does not have dementia), we run the 1066 Dementia SPSS algorithm on our dataset. The result was a total of 1024 patients, 203 of whom have dementia according to the SPSS algorithm.
+
+\section{Split Into numeric and textual}
+We have split the data into two chunks, one containing numeric features and another containing categorical features. The Bekaa and full validation questionnaires involved textual questions as well. However, these textual questions are not used by the dementia 1066 SPSS algorithm in determining whether the elderly has dementia or not, so we dropped these textual features from the analysis.
+
+\section{Numeric Features}
+\label{sec:numeric}
+Our data is now a mix of numerical and categorical features. For the numeric features, we have obtained the following information:
+\begin{itemize}
+\item \textbf{data type:} Type of the numeric feature. Could possible be: 
+\begin{enumerate}
+\item \textbf{numeric} meaning this feature has continuous range of values
+
+\item \textbf{categorical} meaning this feature has only a finite set of values, each resembling a specific category
+
+\item \textbf{ordinal} meaning, this feature's values are categorical, but they can be compared between each other. Example would be: a job, were a specific job might be values more than the other. Example: manager vs assistant
+\end{enumerate}
+
+\item[] the specification of the \textbf{data type} of each feature was done manually by looking at the range of values in each, and also by looking at the \textcolor{blue}{choices workbook in the copy of dementia Excel questionnaire}
+
+\item \textbf{Description:} Description of each feature
+
+\item \textbf{cat\_options:} Short for "categorical options". \textit{In case the feature is categorical}, what are the possible categories.
+
+\item \textbf{val\_range:} Short for "values range". \textit{In case the feature is numerical}, what are the range of values this feature takes
+
+\item \textbf{min:} \textit{In case the feature is numeric}, what is the minimum value it has
+
+\item \textbf{max:} \textit{In case the feature is numeric}, what is the maximum value it has
+
+\item \textbf{distribution:} link to the distribution plot of each feature on bitbucket. The distribution plot helps in detecting erroneous data
+
+\item \textbf{perc\_missing:} Short for "percentage of missing values". This helps us ggregate features with high percentage of missing. In case the percentage of missing is very high, Imputation methods won't aid much
+
+\item \textbf{perc\_erroneous:} Short for "percentage of erroneous values". Detecting erroneous values was done manually for each feature. Anomalies cover uni-intentional or intentional erroneous values. Example would be having "age" feature being 1966 instead of the actual age
+
+\item \textbf{erroneous:} What were the erroneous values, if any
+
+\item \textbf{cut\_off:} The cut off used to decide whether a feature's value is erroneous or not. The cut off was discovered manually by us for each feature.
+
+\item \textbf{color code:} a color code was applied to each feature to determine whether it belongs to the informant or not.
+\end{itemize} 
+
+\subsection{Informant and High Percentage of Missing}
+Most of the features associated with very high percentage of missing were directed to informants and related to the living conditions of the family, the house, income, cor-residents of the elderly, etc... which are not used by the SPSS algorithm to label the patients as demented or not (since they are not about the patients) For this reason, we dropped the questions that were about the household, informants, and co-residents
+
+* informant is usually the caregiver of the interviewed elderly person
+
+\subsection{Nested Questions and High percentage of missing}
+Since our data is survey in nature, some features are actually questions are related to the other. If a certain question is asked to the elderly, and only based upon the elderly's answer, the interviewer might ask the elderly another question or not. Let us give an example:
+\begin{enumerate}
+\item the interviewer asks if there has ever been a period when the elderly smoked cigarettes, cigars, a pipe, or water pipe nearly every day?
+
+\item \textbf{Only if the answer to the question above was a Yes}
+
+\item the interviewer asks the following questions:
+\begin{enumerate}
+\item What did the elderly smoke?
+\item How old were you when you started using tobacco regularly? (if the above is true)
+\item Do you still use tobacco regularly?
+\end{enumerate}
+\end{enumerate}
+
+We also realized that many features have high percentage of missing because a parent question's answer did not cause a jump to that feature question.
+
+
+\subsection{Treating Features with High Percentage of Missing}
+\label{sec:legalizingfeatures}
+We divided the features as follows:
+\begin{enumerate}
+\item \textbf{Informant} A feature belongs to this category if the question is asked to the informant
+
+\item From Informants we have:
+\begin{enumerate}
+\item \textbf{parent} Questions that caused jumps to other questions
+
+\item \textbf{child} child of parent question
+\end{enumerate}
+
+\item \textbf{Non-Informant}
+We also have:
+\begin{enumerate}
+\item \textbf{parent}
+\item \textbf{child}
+\end{enumerate}
+\end{enumerate}
+
+We followed the following steps in order to eliminate features with high percentage of missing:
+\begin{enumerate}
+\item remove all informants and their children questions (so we removed all informants, and if one of them happens to be a parent question, we removed all its children questions)
+
+\item It is important to note that all parent questions informants have their children questions also informant
+
+\item Then we are left with \textbf{Legal features}
+
+\item From legal features, remove all children
+\end{enumerate} 
+
+\textbf{\textit{After doing the steps above, the number of \textcolor{blue}{numerical features} decreased from 542 to 257, all of which have 0\% missing (with the exception of 1 feature whcih has 50\% missing)}}
+
+\subsection{Detecting Erroneous Values Inside Features}
+In our dataset, the categorical and ordinal values are encoded with numbers ranging from 1 to the length of the categories. therefore, since our categorical, ordinal, and numerical values are all numbers, we set cut-offs to determine erroneous values. 
+For some of the features, the erroneous values are straight forward to detect, based on the description for the question. These are the following:
+\begin{itemize}
+    \item age: some people enter the year, others enter the age. for this, if the value of both the numb as is or 2020 - the numb is more than 100, this means that the person is more than 100 years old which renders the age erroneous. For age, the cut-off was 100
+    \item helphour: number of hours per week the elderly needed help, therefore bounded by max numb of hours in a week
+    \item learn questions: the patient is supposed to repeat 3 words, bounded by the max numb of words: 3
+\end{itemize}
+For the rest of the categorical and ordinal values, we get the maximum number encoding for the question options from the options excel sheet based on which the interviewers selected these options. The cut-off is therefore the maximum number encoding a category. Were therefore label any value that is greater than the cut-off to be erroneous.
+
+\subsection{Working with Legal Features}
+As mentioned in section \ref{sec:legalizingfeatures}, the remaining \textbf{\textit{"Legal"}} Features are the 257 out of originally 542. We will be using these 257 \textbf{\textit{"Legal"}} features as input for data pre-processing and cleaning techniques.
+
+\subsection{Filtering Legal Features with Erroneous Values - Erroneous Code-Book}
+In section \ref{sec:numeric}, we talked about how some of the 542 numeric features have erroneous values. However, as we will be working with only "Legal" features, its important to filter out which subset of the features with erroneous values are actually "Legal". Thats's why, we did the following:
+
+\begin{enumerate}
+    \item From all the features containing erroneous, filter out the ones that are Legal
+    \item From the Legal ones:
+    \begin{enumerate}
+        \item get the feature name
+        \item get the feature's description
+        \item get the feature's percentage of erroneous values
+        \item get the feature's actual erroneous values
+        \item Display the feature's cut-off on values which decides which values are erroneous (crossing the cut-off) and which are non-erroneous (not crossing the cut-off)
+    \end{enumerate}
+    \item When done from 2. above, sort the features by decreasing order of percentage of erroneous values
+\end{enumerate}
+
+\subsection{Detecting Outliers}
+We want to investifgate the existsence of outliers in the data. We have 3 different data types:
+\begin{enumerate}
+    \item \textbf{Numeric}: very few columns
+    \item \textbf{Ordinal}: categorical values that obey a certain order of importance
+    \item \textbf{Categorical}
+\end{enumerate}
+
+\noindent The outlier detection methods are known for numeric values, but it is \textbf{ordianl} and \textbf{categorical} values that raise the question of how are we going to detect outliers with such types of data ?
+
+\noindent We will assume that ordinal values are numeric. We will prove the legit-ability of our assumption through an example:
+
+\noindent Assume for instance, that we have a column that shows the socio economic status (“low income”,”middle income”,”high income”), education level (“high school”,”BS”,”MS”,”PhD”), income level (“less than 50K”, “50K-100K”, “over 100K”), satisfaction rating (“extremely dislike”, “dislike”, “neutral”, “like”, “extremely like”). These are not categorical but rather ordinal, and if we give, for example, the income level the following labels:
+\begin{itemize}
+    \item less than 50K: 0
+    \item 50K-100K: 1
+    \item over 100K: 2
+\end{itemize}
+Then it is definitely the case that 2 $>$ 1 $>$ 0. And if we have an individual who earns, $>$ 1000 K, we give this the label 3, and these individuals are definitely rare and can be considered as outliers
+
+\subsection{Outlier Detection and Scaling}
+We try different scaling methods before we detect outliers, and we apply the outlier detection only for columns \textit{that are: numeric and/or ordinal}, and we extracted the percentage of outliers for each of the legal columns as well as the outlier values themselves (values considered outliers).
+
+\noindent We realize that the outlier values, for the \textbf{ordinal} columns, happen to be the values \textit{8 and 9} which is normal because the values are either 0,1,2 or 8,9.
+
+\subsection{Feature Cross}
+Our data mostly consists of categorical/ordinal columns, and we have to find a way to solve these non-linearities such that it fairs better for the model's understanding of the features when we begin with the modelling phase. We generate the list of all possible feature crosses. 
+
+\noindent Feature crossing, will come after we 'one-hot encode' our data.
+
+
+\section{Feature Selection}
+\subsection{Decision Tree Feature Importance}
+We use decision tree regressor to calculate feature importance implemented using scikit-learn's DecisionTreeRegressor.
+
+After being fit, the model provides a feature\_importances\_ property that can be accessed to retrieve the relative importance scores for each input feature.
+
+The results of the feature importance using the dummy imputed pooled data so far is then stored in the 'feature\_importance.csv', sorted from highest (highest importance score) to lowest (lowest importance score).
+
+\subsection{Select K Best Features}
+\subsubsection{Deciding "K"}
+In order to select K best features, we need to first decide the value of K. In order to do this, we use sklearn's RFECV, which uses step forward recursive feature elimination (1-step) and cross validation to decide the number of features needed to give the highest out of sample accuracy. The model used for this was decision tree regressor.
+
+\subsubsection{Selecting K Best Features}
+After deciding on the value of K, which using the current imputation of the input data turned out to be 20, we perform step forward recursive feature elimination that ranks all the features as 0 or 1, with 1 meaning that a feature is one of the K best features. We store the names of the k-selected features (column names) into a csv file called "k\_best\_features.csv" This is also performed using a decision tree regressor.
+
+\section{Oversampling and Undersampling}
+Based on the examples discussed in the books, we implemented 4 functions that accept a model and add it to a pipeline after adding the oversampling/undersampling layers. The following are the functions created:
+
+\begin{enumerate}
+    \item random\_sampling: consists of a random oversampling and a random undersampling layers \textit{works with mixed data types}
+    \item smote\_random\_sampling: adds a smote oversampler and a random undersampler \textit{works with mixed data types}
+    \item smote\_tomek (combination approach): combines over and under sampling using SMOTE and Tomek links. \textit{could not find support for mixed datatypes}
+    \item smote\_enn: combines over and under sampling using SMOTE and Edited Nearest Neighbours. \textit{could not find support for mixed datatypes}
+\end{enumerate}
+
+\subsection{Dealing With Mixed Variables}
+The python library that is used in the book provides a model, SMOTENC, that handles mixed datatypes. For this model, the only difference is that we have to specify the indices of the categorical variables. The random sampler model can also be used for mixed datatypes. SMOTENC does not require scaling but according to my search it is adviced to scale the numerical variables using either MinMax or standard deviation scaling, and let the SMOTENC handle the categorical variables.
+
+\section{Cost-Sensitive Learning}
+\subsection{Cost sensitive learning consists of the following steps:}
+\begin{enumerate}
+    \item Input is the imputed and scaled data.
+    \item Built a pipeline that consists of SMOTENC and the model of choice.
+    \item Pipeline is passed into a GridSearchCV, to find the best percentage of sampling for the SMOTE, and the best params for the model of choice using GridSearch and cross validation. The scoring metric for finding the best combination of params was AUC ROC.
+    \item cross validation was achieved through RepeatedStratifiedKFold%: the stratified k-fold cross-validation procedure is repeated n times, where the data sample is shuffled prior to each repetition, which results in a different split of the sample.
+    %\item the above repeatedstratifiedkfold split is used in combination with a GridSearchCV where the scoring is the aurea under the ROC curve.
+    \item The above steps are repeated for every tested model, followed by reporting the results of the test dataset.
+    \item The results (metrics) are: ROC AUC, GMEANS, f2-score, BSS, AUC PR, cost matrix
+    \item BSS: is calculated by using a reference score, and comparing the score of the model to that reference score (baseline score). BSS = 1 - (model BrierScore/ reference BrierScore). If the reference score was evaluated, it would result in a BSS of 0.0. This represents a no skill prediction. Values below this will be negative and represent worse than no skill. Values above 0.0 represent skillful predictions with a perfect prediction value of 1.0. The book suggests the reference score to be the brier score of a probability of 0.01 for all rows (not an actual model predicting the probabilities)
+    \item The tested models are: XGBoost, KNeighbors Classifier, Balanced Random Forest (from the imbalanced library), Weighted Logistic Regression, Weighted Decision Tree,Weighted SVM
+\end{enumerate}
+\subsection{Tested sampling methods (using SMOTENC's sampling\_strategy options):}
+\begin{enumerate}
+    \item minority: resample the minority class (oversampling)
+    \item not minority: resample the majority class (undersampling)
+    \item all: resample both classes
+    \item When float, it corresponds to the desired ratio of the number of samples in the minority class over the number of samples in the majority class after resampling, this ratio is reached by oversampling the minority class to reach the desired ratio. Tested ratios: 1, 0.5, 0.75
+\end{enumerate}
+\subsection{Tested class\_weights: (costs for each label), combination of suggestions from book and built-in options:}
+In the below list, cost(1) means cost of false positive and cost(0) means cost of false negative.
+\begin{enumerate}
+    \item reverse: cost(1)= number of 0s in the train and cost(0) = number of 1s in the train. This is suggested by the book: invert the ratio of positive-to-negative and used as the cost of misclassification errors, where the cost of a False Negative is the length of negative in the dataset and the cost of a False Positive is the length of the negative in the original dataset. the book suggests that it is a good idea to use this heuristic as a starting point, then test a range of similar related costs or ratios to confirm it is sensible. 
+    \item cost(1)= 10, cost(0)=1
+    \item cost(1) = 100, cost(0)=1    
+    \item cost(0)= 10, cost(1)=1
+    \item cost(0) = 100, cost(1)=1
+    \item balanced: The "balanced" mode provided by the library uses the values of y to automatically adjust weights inversely proportional to class frequencies in the input data as n\_samples / (n\_classes * np.bincount(y))
+\end{enumerate}
+
+\subsection{Probabilistic Models}
+\subsubsection{Grid Search For Optimal Probability Threshold}
+As suggested by the book, after performing grid search, training, and testing for each model, we test a range of probability thresholds to find the one that gives the highest f2 score. The range is from 0 to 1 with 0.001 steps.
+
+\subsubsection{Calibrated Models}
+This is provided by SKLEARN library, we specify class weights for each class in the label which allows for cost sensitive learning (as done in the book). Calibration was using sklearn's CalibratedClassifierCV, which takes a model and performs its regular grid search to find the best parameters but also uses cross validation to calibrate the model.
+
+\subsubsection{Balanced Random Forest Results}
+The Balanced Random Forest class from the imbalanced-learn library performs data sampling on the bootstrap sample
+in order to explicitly change the class distribution and performs random undersampling of the majority class in each bootstrap sample. This is generally referred to as Balanced Random
+Forest. It takes care of the class\_weight (cost matrix) and does not need it explicitly specified since it expects imbalanced datasets, Unlike other models provided by sklearn that need the cost matrix for imbalanced classification.
+
+\subsubsection{Results}
+\begin{tabular}{ |p{2cm}|p{1cm}|p{1cm}|p{1cm}|p{1cm}|p{1cm}|p{2cm}|p{2cm}|} 
+ \hline
+ Model Name&f2-score&G-MEAN&BSS&PR AUC&ROC AUC&sampling strategy& cost matrix\\ 
+ \hline
+baseline logistic Reg. &0.66&0.79&0.55&0.56&0.79&-&-\\
+ \hline
+Calibrated Weighted Logistic Reg. &0.752 &0.808 &0.273 &0.427 &0.810 &both& reverse\\
+ \hline
+Calibrated Weighted Decision Tree  &0.722 &0.747 &0.321 &0.350 &0.758 &over-sampling&reverse\\
+ \hline
+Balanced Random Forest &0.768 &0.797 &0.418 &0.398 &0.805 &under-sampling&-\\
+ \hline
+\end{tabular}
+ \subsubsection{Results With Top 10 Features}
+\begin{tabular}{ |p{2cm}|p{1cm}|p{1cm}|p{1cm}|p{1cm}|p{1cm}|p{2cm}|p{2cm}|} 
+ \hline
+ Model Name&f2-score&G-MEAN&BSS&PR AUC&ROC AUC&sampling strategy& cost matrix\\ 
+ \hline
+baseline logistic Reg. &0.657 &0.786 &0.548 &0.560 &0.792&-&-\\
+ \hline
+Calibrated Weighted Logistic Reg. &0.728 &0.821 &0.300 &0.528 &0.821 &ratio=0.75& reverse\\
+ \hline
+Calibrated Weighted Decision Tree  &0.647 &0.756 &0.353 &0.402 &0.756&both&reverse\\
+ \hline
+Balanced Random Forest &0.727 &0.815 &0.379 &0.491 &0.815 &under-sampling&-\\
+ \hline
+\end{tabular}
+ \subsubsection{Results With Top 20 Features}
+\begin{tabular}{ |p{2cm}|p{1cm}|p{1cm}|p{1cm}|p{1cm}|p{1cm}|p{2cm}|p{2cm}|} 
+ \hline
+ Model Name&f2-score&G-MEAN&BSS&PR AUC&ROC AUC&sampling strategy& cost matrix\\ 
+ \hline
+baseline logistic Reg.&0.657 &0.786 &0.548 &0.560 &0.792&-&-\\
+ \hline
+Calibrated Weighted Logistic Reg. &0.758 &0.814 &0.293 &0.437 &0.816&over-sampling& reverse\\
+ \hline
+Calibrated Weighted Decision Tree&0.759 &0.801 &0.390 &0.409 &0.806&ratio=1&reverse\\
+ \hline
+Balanced Random Forest&0.822 &0.876 &0.457 &0.567 &0.876&under-sampling&-\\
+ \hline
+\end{tabular}
+
+\subsection{Classfication Models}
+ \subsubsection{Results}
+\begin{tabular}{|c|c|c|c|c|} 
+ \hline
+ Model Name&f2-score&ROC AUC&sampling strategy& cost matrix\\ 
+ \hline
+KNeighbors &0.709 &0.763 & over-sampling & -\\
+ \hline
+Calibrated Weighted SVM &0.746 &0.787 &ratio=0.75&reverse\\
+ \hline
+Easy Ensemble Classifier &0.729 &0.791 &under-sampling&-\\ 
+ \hline
+\end{tabular}
+ \subsubsection{Results With Top 10 Features}
+\begin{tabular}{|c|c|c|c|c|} 
+ \hline
+ Model Name&f2-score&ROC AUC&sampling strategy& cost matrix\\ 
+ \hline
+KNeighbors &0.658 &0.759&over-sampling&-\\
+ \hline
+Calibrated Weighted SVM &0.725 &0.825&ratio=0.75&cost(0)=1,cost(1)=10\\
+ \hline
+Easy Ensemble Classifier &0.702 &0.790&ratio=0.5&-\\ 
+ \hline
+\end{tabular}
+ \subsubsection{Results With Top 20 Features}
+\begin{tabular}{|c|c|c|c|c|} 
+ \hline
+ Model Name&f2-score&ROC AUC&sampling strategy& cost matrix\\ 
+ \hline
+KNeighbors&0.705 &0.793&both&-\\
+ \hline
+Calibrated Weighted SVM&0.738 &0.801&over-sampling&cost(0)=1,cost(1)=10\\
+ \hline
+Easy Ensemble Classifier&0.687 &0.767&under-sampling&-\\ 
+ \hline
+\end{tabular}
+
+\subsection{One-Class Classification}
+\begin{tabular}{|c|c|} 
+\hline
+Model Name&f2-score\\
+\hline
+One class SVM&0.361\\
+\hline
+Elliptic Envelope&0.152\\
+\hline
+Isolation forest&0.261\\
+\hline
+Local Outlier Factor&0.269\\
+\hline
+\end{tabular}
+\section{SHAP}
+\subsection{Global SHAP Summary Values Results}
+The summary plot combines feature importance with feature effects. Each point on the summary plot is a Shapley value for a feature and an instance. The position on the y-axis is determined by the feature and on the x-axis by the Shapley value
+\begin{figure}[H]
+\centering
+\includegraphics[scale=0.5]{1.png}
+\caption{Class 0}
+\end{figure}
+\begin{figure}[H]
+\centering
+\includegraphics[scale=0.5]{2.png}
+\caption{Class 1}
+\end{figure}
+\subsection{Global SHAP Interaction Values}
+\begin{figure}[H]
+\centering
+\includegraphics[scale=0.5]{3.png}
+\end{figure}
+\subsection{Multi-output Decision Plot for properly classified Rows}
+\begin{figure}[H]
+\centering
+\includegraphics[scale=0.5]{4.png}
+\caption{Row with label = 0}
+\end{figure}
+\begin{figure}[H]
+\centering
+\includegraphics[scale=0.5]{5.png}
+\caption{Row with label = 1}
+\end{figure}
+\subsection{Decision Plot for Miss-classified Row}
+\begin{figure}[H]
+\centering
+\includegraphics[scale=0.5]{6.png}
+\end{figure}
+
+\section{Chapter 6: Precision, Recall, and F-measure}
+The chapter summarizes the precision, recall, and f-measures of multiclass and binary classification for the case of balanced data.
+
+\section{Chapter 7:ROC Curves and Precision-Recall
+Curves}
+ROC Curves (receiver operating characteristic curve) and ROC AUC (area under the ROC curve) are used to decide if the model differentiates between the labels. 
+\subsection{ROC Curve}
+The threshold is applied to the cut point in probability between the positive and negative classes. In order to decide on the best threshold, we evaluate the true positive and false positives for different threshold values, a curve can be constructed that stretches from the bottom left to top right and bows toward the top left. This curve is called the ROC curve. A classifier that has no discriminative power between positive and negative classes will form a diagonal line between (0,0) and (1,1). Models represented by points below this line have worse than no skill.
+\subsection{AUC}
+Area under the curve is calculated to give a single score for a classifier model across all threshold values. This is called the ROC area under curve or ROC AUC or sometimes ROCAUC. The score is a value between 0.0 and 1.0, with 1.0 indicating a perfect classifier.
+\section{Chapter 8: Probability Scoring Methods}
+\subsection{Probability Metrics}
+On some problems, a crisp class label is not required, and instead a probability of class membership is preferred. The probability summarizes the likelihood (or uncertainty) of an example belonging to each class label. 
+\subsection{LogLoss Score}
+Logarithmic loss or log loss for short is a loss function known for training the logistic regression classification algorithm. The log loss function calculates the negative log likelihood for probability predictions made by the binary classification model. Most notably, this is logistic regression,but this function can be used by other models, such as neural networks, and is known by other names, such as cross-entropy.
+\section{Cross Validation for Imbalanced Datasets}
+The solution is to not split the data randomly when using k-fold cross-validation or a train-test split. Specifically, we can split a dataset randomly, although in such a way that maintains the same class distribution in each subset. This is called stratification or stratified sampling and the target variable (y), the class, is used to control the sampling process. This is available using sklearn stratified kfold.
+\section{Chapter 10}
+Summarizes oversampling and undersampling techniques which are available in chapters 12 and 13 in details.
+\section{Chapter 12}
+\subsection{Oversampling}
+All techniques available through the python library: imblearn.over\_sampling
+
+\begin{itemize}
+    \item Random Oversampling: simplest oversampling method, involves randomly duplicating examples from the minority class in the training dataset
+    \item SMOTE (Synthetic Minority Oversampling Technique): works by selecting examples that are close in the feature space, drawing a line between the examples in the feature space and drawing a new sample as a point along that line
+    \item Borderline-SMOTE: involves selecting those instances of the minority class that are misclassified, such as with a k-nearest neighbor classification model, and only generating synthetic samples that are difficult to classify. Borderline Oversampling is an extension to SMOTE that fits an SVM to the dataset and uses the decision boundary as defined by the support vectors as the basis for generating synthetic examples, again based on the idea that the decision boundary is the area where more minority examples are required.
+    \item Adaptive Synthetic Sampling (ADASYN): another extension to SMOTE that generates synthetic samples inversely proportional to the density of the examples in the minority class. It is designed to create synthetic examples in regions of the feature space where the density of minority examples is low, and fewer or none where the density is high.
+\end{itemize}
+\subsection{Undersampling Techniques}
+\begin{itemize}
+    \item Random Undersampling
+\end{itemize}
+\section{Data Transforms (Hiyam)}
+\subsection{Scaling Numeric Data (chapter 17)}
+\begin{itemize}
+\item Normalization (Min-Max Scaling)
+\item Standardization
+\end{itemize}
+
+\subsection{Scaling Data with Outliers (chapter 18)}
+Many machine learning algorithms perform better when \textbf{numerical} input variables are scaled. Standardization is a popular scaling technique that substracts the mean from the values and divide by the stadard deviation, transforming the probability distribution from for an input variable to a Standard Gaussian (zero mean and unit variance).
+
+\noindent \textbf{Problem:} Standardization can become skewed or biased when the input variable contains outliers.
+
+\subsubsection*{Robust Scaling}
+When we are scaling the data, and if we have very large values relative to the other input variables, these large values can dominate or skew some machine learning algorithms. \textbf{The result is that the algorithms pay most of their attention on the large values and ignore the variables with smaller values}.
+
+\noindent Outliers are values at the edge of the distribution that may have a low probability of occurence, yet are overrepresented for some reason. \textbf{Outliers can skew a probability distribution and make data scaling using standardization difficult as the calculated mean and standard deviation will be skewed by the presence of outliers.}
+
+\noindent \textbf{Approach:} When standardizing input variables containing outliers, we can ignore outliers from the calculation of the mean and standard deviation, and use the calculated values to scale the data
+
+\noindent \textbf{This is called robust standardization}. This can be achieved by calculating the median (50th percentile) and the 25th and 75th percentile. The values of each variable can then have their median subtracted and are divided by the inter quartile range (IQR) which is the difference between the 25th and 75th percentile.
+
+\begin{equation}
+value = \frac{value - median}{p_{75} - p_{25}}
+\end{equation}
+
+The resulting value has a \textbf{zero mean and median and a standard deviation of 1}. Although not skewed by outliers and the outliers are still present with the same relative relationships to other values.
+
+\subsection{How to Encode Categorical Data (chapter 19)}
+Machine learning models require all input and output variables to be numeric. This means that if the data contains categorical data, we must encode it to numbers before we fit and evaluate our models.
+
+\subsection*{Ordinal Encoding}
+Each unique category is assigned an integer value. Example: \textit{red} is 1, \textit{green} is 2, \textit{blue} is 3.
+
+\noindent For categorical variables, it imposes and \textbf{ordinal relationship} when no such relationship exists. This may cause problems and \textbf{one hot encoding} may be used instead.
+
+\subsection*{One Hot Encoding}
+For categorical variable where no ordinal relationship exists, the ordinal encoding is not enough and may be misleading.
+
+\noindent One Hot Encoding works by creating binary variables for each category. For Example: \textit{red} will be [1, 0, 0], \textit{blue} will be [0, 1, 0], and \textit{green} will be [0, 0, 1].
+
+\subsection*{Dummy Variable Encoding}
+The one hot encoding includes a binary representation for each category. This might cause redundancy. 
+
+\noindent if we know that [1, 0, 0] represents \textit{blue}, and [0, 1, 0] represents \textit{green}, we don't need another binary variable to represent \textit{red}, instead we could use 0 values along, e.g. [0, 0]. This is called dummy variable encoding and always represents $C$ categories with $C-1$ binary variables.
+
+\noindent Other being less redundant, it is required for some models.
+
+\subsection{How to Make Distributions Look More Gaussian (chapter 20)}
+Several Machine Learning Algorithms assume the numerical values have a Gaussian distribution. Our data may not have a Gaussian distribution and it might have a Gaussian-like distribution.
+
+\section{Data Pre-Pocessing}
+After we have filtered the legal features in our data, and we deleted the features that have $>$ 40 \% missing values, we are left out with 255 legal features. These features must be pre-processed before we do the modelling exercise, for the following reasons:
+\begin{enumerate}
+\item All the 255 legal features still have missing values
+\item We have a combination of numeric, ordinal, and categorical features, whereby each might require a different kind of scaling
+\end{enumerate}
+
+\subsection{Imputing Missing Values - Categorical Features}
+For \textbf{all} categorical features, we will impute missing values by adding \textbf{a new category} for missing values. This way, any value that is missing will have its own category(label)
+
+\subsection{Imputing Missing Values - Numerical/Ordinal Features}
+For all numeric/ordinal features, we will impute missing values using \textbf{KNN}.
+
+\noindent \textcolor{blue}{We discussed in one of our meeting that we will treat ordinal features as numeric, that's why we considered treating ordinal as numeric features therefore they are also imputed using KNN}
+
+\subsection{Scaling - Numeric/Ordinal Features}
+We applied \textbf{Robust Scaling} for all numeric/ordinal features.
+
+\noindent \textbf{Robust Scaling} is good for data that includes outliers, and all our features do have outliers (with a very low percentage, though). 
+
+\noindent For more information about the \textbf{percentage of outliers/feature, please consult with the following dataframe on our github repository: \url{https://github.com/hiyamgh/dementia/blob/master/input/codebooks/erroneous_codebook_legal_outliers_filtered.csv}}
+
+\subsection{Scaling - Categorical Features}
+No scaling is applied for categorical features.
+
+
+% \subsection{Imputation in Ordinal/Categorical Data}
+% To be continued ... waiting to meet with Dr Khalil again. Some notes:
+% \begin{enumerate}
+%     \item We said we might do KNN and impute by getting the values from the nearest neighbors.
+%     \item It is common that public health practitioners usually disregard features with greater than 25\% missing, and since we have features that have greater than 25\% missing, we got the \textbf{theme} of each feature, and if the feature belongs to a particular theme that might not be of vital importance for detecting dementia, we will dis-regard the feature by itself.  
+% \end{enumerate}
+
+% \subsection{Imputation Currently Done}
+% Just for now, to get things going, we imputed all missing values by replacing with the majority
+
+% \subsection{Scaling}
+% We have said earlier that we have three data types in our features: \textit{\textbf{numeric, ordinal, and categorical.}}
+
+% \begin{itemize}
+%     \item For ordinal and numeric data, we will be using the \textbf{Robust scaling} mechanism due to the presence of outliers
+%     \item For categorical data, we will not scale it as we will be applying \textbf{dummy variable encoding} 
+% \end{itemize}
+
+
+% \subsection{Encoding Data}
+% \begin{itemize}
+%     \item For ordinal features, we will be applying Ordinal Encoding, as it will maintain an order between feature values.
+%     \item For categorical features, we apply dummy variable encoding that decreases redundancy of one hot encoding
+% \end{itemize}
+
+
+\section{Imputing Numerical Missing Data}
+In this section, we will be listing the multiple imputation methods that may be used for imputing missing \textbf{numeric} data. \textcolor{blue}{I referred to the data preparation book we have}
+
+\subsection{Statistical Imputation}
+Using mean, median, mode, constant value
+
+\subsection{K Nearest Neighbors}
+K nearest neighbor model. A new sample is imputed by finding samples in the training set closest to it and averages these nearby points to fill in the value. Must specify the \textbf{distance} to use and the \textbf{number of neighbors} neeeded for imputation
+
+\subsection{Iterative Imputation}
+.  Iterative imputation refers to a process where each feature is modeled as a function of the other features, e.g.  a regression problem where missing values are predicted.  Each feature is imputed sequentially, one after the other,allowing prior imputed values to be used as part of a model in predicting subsequent features.It is iterative because this process is repeated multiple times, allowing ever improved estimates of missing values to be calculated as missing values across all features are estimated.  \textcolor{blue}{This approach may be generally referred to as fully conditional specification (FCS) or multivariate imputation by chained equations (MICE)}.
+
+\section{Imputing Categorical Missing Data}
+In this section, we will be listing the multiple imputation methods that may be used for imputing missing \textbf{categorical} data
+
+\section*{Single based Imputation Methods}
+
+\subsection{Mean Imputation}
+The mean imputation replaces missing values with the observed mean of the available data.
+
+\subsection{Imputation Using Most Frequent or (Zero/Constant Values)}
+Most Frequent is another statistical strategy to impute missing values and it works with categorical features (strings or numerical representations) by replacing missing data with the most frequent values within each column
+
+\subsection{Create a New Category (Random Category) for NAN Values}
+\textcolor{blue}{I think its more of a "hack" rather than an actual imputation method}
+
+\subsection{ Adding a Variable To Capture NAN}
+Replace NAN categories with most occurred values, and add a new feature to introduce some weight/importance to non-imputed and imputed observations. Create a new column and replace 1 if the category is NAN else 0. This column is an importance column to the imputed category.Replace NAN value with most occurred category in the actual column.
+
+\subsection{Imputation Using Deep Learning (Datawig)}
+\textcolor{blue}{Its actually a repository for AWS -- DataWig learns Machine Learning models to impute missing values in tables. -- So not sure how trustworthy it is}
+This method works very well with categorical and non-numerical features. It is a library that learns Machine Learning models using Deep Neural Networks to impute missing values in a dataframe. It also supports both CPU and GPU for training.
+
+\subsection{Regression Imputation}
+\textcolor{blue}{The resource I used mentions this under the imputation for categorical variables, unless they treat each category as a \textbf{regressor variable}(numeric) but in my humble opinion, I think it can be used as a classification (in case we want to predict a category rather than a numeric outcome)?}
+Regression Imputation consists of using some selected prediction of a missing value  on a variable of interest. For instance, to predict the missing value for the variable, say $X_1$, use this variable as a function of other variables, say $X_2$ and $X_3$ in a model that could even include the dependent variable $Y$
+
+\textbf{Cons:} The \textbf{uncertainty} is not incorporated very well because the estimates are random variables.
+
+\subsection{Imputation Using Interpolation}
+\textcolor{blue}{I think this might fit if the data is time series but I'm not sure if it can be used in non-time series data} Suppose a varoable $X$ is measured at times $t = 1, 2, 3 (X_1, X_2, and X_3)$ and some values are missing at $t=2 (X_2)$, then $X_2 = \frac{X_1 + X_3}{2}$
+
+\subsection*{Multiple Imputation}
+Single based Imputation Methods mentioned earlier are an improvement over the case deletion method, but they do not account for the uncertainty in the imputations as imputed values are treated as true rather than estimates of the missing values leading to the under estimation of the variance of the estimates and the distortion of relationships among variables.Goal of \textbf{multiple imputation} is to account for uncertainty in imputed values. This method uses a selected model, such as a regression model to predict missing values on a variable. Instead of picking one value for the missing value, many values are chosen and the uncertainty is presented in the variance covariance matrix.
+
+\subsection{Multivariate Normal Imputation (MNVI)}
+\begin{itemize}
+\item MNVI assumes all variables in the model are normally distributed \textcolor{blue}{problem for us?}
+\item uses Markov Chain Monte Carlo Procedure to obtained imputed values from estimated multivariate distribution allowing uncertainty
+\end{itemize}
+
+\subsection{Multiple Imputation by Chained Equations (MICE)}
+This type of imputation works by filling the missing data multiple times. The chained equations approach is also very flexible and can handle different variables of different data types (ie., continuous or binary) as well as complexities such as bounds or survey skip patterns. 
+
+\subsection*{Other Imputation Methods}
+\subsection{Stochastic regression imputation:}
+It is quite similar to regression imputation which tries to predict the missing values by regressing it from other related variables in the same dataset plus some random residual value.
+
+\subsection{Extrapolation and Interpolation:}
+It tries to estimate values from other observations within the range of a discrete set of known data points.
+
+\subsection{Hot-Deck Imputation}
+Works by randomly choosing the missing value from a set of related and similar variables.
+
+\subsection{Some papers for handling missing categorical data (did not read them at length -- just the abstract)}
+
+\begin{itemize}
+\item \href{https://www.sciencedirect.com/science/article/abs/pii/S0164121216301583?casa_token=ZELiCdTNfw4AAAAA:_dpjT3fvcxOkRXX1po7HaCnzb02biPjrKEYw-j8d7OU_krEYFqaaQIIwQo3rki5tbUWitsJstA}{Combining instance selection for better missing value imputation}
+\item \href{https://link.springer.com/article/10.1007/s10115-019-01427-1}{Missing data imputation using decision trees and fuzzy clustering with iterative learning}
+\item \href{https://www.sciencedirect.com/science/article/abs/pii/S0925231216309407?casa_token=dC_ROkr-pWoAAAAA:s5zwIWUilFRt2zbv5YcFVu6kzsNhdZN3c_OfUpQ1s1e-f9-c4VqcB1_OnXS-kGF0-kPzctFJ9A}{Probabilistic neural network based categorical data imputation}
+\end{itemize}
+
+\subsection*{References}
+\begin{itemize}
+\item \url{https://projecteuclid.org/download/pdfview_1/euclid.bjps/1481619615}
+
+\item \url{http://www.jds-online.com/files/JDS-612.pdf}
+
+\item\url{ https://towardsdatascience.com/6-different-ways-to-compensate-for-missing-values-data-imputation-with-examples-6022d9ca0779}
+\item \url{https://github.com/awslabs/datawig}
+\item \url{https://medium.com/analytics-vidhya/ways-to-handle-categorical-column-missing-data-its-implementations-15dc4a56893}
+\end{itemize}
+
+
+
+\section{Advanced ML Evaluation Techniques}
+In this paper, authors seek to solve the problem of predicting students who are at risk of dropping out of highschool or not. They have a \textbf{binary classification problem} and they predict if the student graduates (0) or does not (1). School principals want to see if they can have enough budget to afford those - \textbf{at an early stage} - that are at risk of not graduating and help them with additional materials. Non-Machine learning practitioners do not value regular evaluation metrics like precision and recall because it means nothing to them, they want some evaluation techniques that could help understand the predictions more from their point of view
+
+\subsection*{Disclaimer}
+\begin{itemize}
+\item I have read only sections 5 \& 6 from the paper as instructed by Dr. Fatima
+\item I have found a github repository for their work here: \url{https://github.com/dssg/student-early-warning} but their work is not complete at all, the only thing that they did - with regards to sections 5 \& 6, is compute the \textbf{\textit{risk}}. The rest of the work is done solely by me. 
+\item I used the data they provided in their github repository to complete my work, they also do not provide the complete data and there are differences between the column names mentioned in the paper and the columns in the dataset they provide. But I still worked with this incomplete version of the data 
+\end{itemize}
+
+\subsection{Analysis of Predictive Models}
+School districts are interested in identifying those students who are are at risk of not graduating high school on time so that plan their resource allocation ahead of time.
+
+\noindent \textbf{Goal:} predict if a student is at \textbf{risk} of not graduating high school on time
+
+\subsection{Evaluation Using Traditional Metrics}
+\begin{itemize}
+\item We have a binary outcome, use standard evaluation metrics such as \textit{accuracy, precision, recall, f-measure, and AUC}
+\item Their data is \textbf{imbalanced}:
+\begin{enumerate}
+\item \textbf{Class 0: 91.4\%}
+\item \textbf{Class 1: 8.6 \%}
+\end{enumerate}
+
+\item I must do a \textbf{stratified} split of classes between training and testing such that if the original data has X\% 0s and Y\% 1s, then the training as well as the testing must also have X\% 0s and Y\%  1s
+
+\item I have added \textbf{SMOTE} so that we can \textbf{oversample} our \textbf{training} data before predicting
+
+\item I used MinMax Scaling (just for now because my focus is on the implementation of the ideas in sections 5 \& 6)
+
+\item In this paper they only use shallow models, this what I also do (just for now because my focus is on the implementation of the ideas in sections 5 \& 6)
+
+\item In Figure \ref{plots/toydata/Fig:roccurves} below, I show the ROC curves of various models
+\end{itemize}
+
+\begin{figure}[H]
+\centering
+\includegraphics[scale=0.5]{plots/toydata/roccurves.png}
+\caption{ROC Curves of various shallow models trained on the data provided}
+\label{Fig:roccurves}
+\end{figure}
+
+\subsection{Problem with Standard Evaluation Metrics}
+\begin{enumerate}
+\item Educators think about the performance of an algorithm in a slightly different fashion
+\item the availability of resources varies with time. For example, a school might support 100 students in 2012, and 75 in 2013. 
+\item We want to build algorithms that can cater to these changing settings
+\end{enumerate}
+
+\subsection{Solution: Risk Estimates}
+\begin{itemize}
+\item an algorithm, to cater to their needs, must provide them with a list of students ranked by some measure of \textit{risk} such that, the students at the top of the list are at a higher risk of not graduating on time.
+
+\item Once educators have such a ranked list, they can choose the \textbf{top k} students from it and provide assistance to them
+
+\item \textbf{Challenge:} We only have binary records, but fortunately, all classification algorithms provide internally a probability of each class we have, we can use this probability to derive our \textbf{risk} measure
+\end{itemize}
+
+\subsection{Ensuring Quality Of Risk 
+Estimates}
+\subsubsection{From Models to Risk Estimates}
+\begin{itemize}
+\item The output of our predictions are binary: either 0 (will graduate on time) or 1 (will not graduate on time)
+\item Algorithms allow us to get the  \textbf{probability} of each class. Here, we focus on the probability of the \textbf{positive} class (which shows the probability of not graduating on time). We use the probability of the predictions on the \textbf{final testing data }
+\end{itemize}
+
+\subsubsection{Measuring the Goodness of Risk Scores}
+\begin{itemize}
+\item We first get the probability of not graduating on time (class: 1) for each of the testing instances (students) we have. We call this \textbf{\textit{risk}}
+
+\item Rank the testing instances (students) in descending order of \textbf{risk} estimates. This way, students with higher probability of not graduating on time are at the top of the list.
+
+\item Group students into \textbf{bins (percentiles)} based on their risk scores. We can decide, for example, to choose 10 bins, and when we do, then the students who fall between the 10th and 20th percentile have very little risk scores, those between 20th and 30th have more risk scores than the latter 
+
+\item \textcolor{blue}{My problem with this is as follows: we are doing the 3 bullets above for all the algorithms we have. The distribution of risk scores, for un-balanced classification problems, is usually very skewed and therefore, we can have the following 2 scenarios:}
+\begin{itemize}
+\item We might not be able to group them into 10 bins for example because each bin must have the same number of instances and that might not be possible in the un-balanced skewed distribution
+\item A possible solution to the problem above is to decrease the number of bins.
+\item Even if we decrease the number of bins, we might not be able to attain the same number of bins for every algorithm we have. If you look at Figure 2 in their paper, you see that for all algorithms they were able to distribute risk scores into 10 bins, but in case one is not able, we cannot produce such a plot
+\item One solution is to distribute them into bins but \textbf{without guaranteeing the same number of instances in each bin  }
+\item Even if we are able to produce such a plot, the 10 bins won't be unique (in terms of lower and upper limits) for each algorithm. Is that valid to work with ?  
+\end{itemize}
+
+\item \textcolor{blue}{SOLUTION: I fixed this problem. I enforced the same number of items to happen in each bin \textbf{according to the number of predictions}. Number of items per bin $= number of predictions // nb bins $. The $//$ in python is an \textbf{integer division} operator to divide two numbers and round their quotient down to nearest integer. This will make sure that all bins have the same number of instances (except for 1 bin if it happens that the $number of predictions$ and $nb bins$ are not divisible)}
+
+
+\item For each bin, we produce the \textbf{mean empirical risk} which is the fraction of students, from that bin, who actually (as per ground truth) fail to graduate on time.
+\item This curve is called \textbf{mean empirical risk} curve
+\item An algorithm is considered to be producing good predictions if its empirical risk curve is \textbf{monotonically non-decreasing} (as the risk scores increase, we have more \textbf{correct} predictions about the positive class (more students who actually - as per ground truth - fail to graduate on time))
+\end{itemize}
+
+I present below the empirical risk curve of the shallow models I trained on - \textbf{with incorporating SMOTE} and MinMax Scaling
+\begin{figure}[H]
+\centering
+\includegraphics[scale=0.5]{plots/toydata/meanempiricalrisks.png}
+\caption{Mean Empirical Risks per Model}
+\label{Fig:MeanEmpiricalRisks}
+\end{figure}
+
+\subsubsection{Comparative Evaluation of Risk Estimates}
+It is good to see the models performances on the \textbf{Top K} students \textbf{at risk}. The steps we do to attain this:
+\begin{enumerate}
+\item Rank Testing instances (students) by their \textbf{risk} scores
+\item Define a list of \textbf{K}s
+\item For each value \textbf{k} of \textbf{K}:
+\begin{enumerate}
+\item get the top \textbf{k} predicted values
+\item get the ground truth  of these \textbf{top k}
+\item compute the precision/recall
+\end{enumerate}
+\end{enumerate}
+\noindent We get the precision and recall at top K and we produce the following curves:
+
+\begin{figure}[H]
+\centering
+\includegraphics[scale=0.5]{plots/toydata/precisionstopK.png}
+\caption{Precision at Top K}
+\label{Fig:prectopk}
+\end{figure}
+
+
+\begin{figure}[H]
+\centering
+\includegraphics[scale=0.5]{plots/toydata/recallstopK.png}
+\caption{Recall at Top K}
+\label{Fig:prectopk}
+\end{figure}
+
+\subsection{Interpreting Classifier Outputs - FP Growth}
+\subsection*{Frequent Patterns}
+To understand FP Growth algorithm, we need to first understand association rules.
+
+Association Rules uncover the relationship between two or more attributes. It is mainly in the form of- If antecedent than consequent.  For example, a supermarket sees that there are 200 customers on Friday evening. Out of the 200 customers, 100 bought chicken, and out of the 100 customers who bought chicken, 50 have bought Onions. Thus, the association rule would be- If customers buy chicken then buy onion too, with a support of 50/200 = 25\% and a confidence of 50/100=50\%.
+
+\textbf{References:} \url{https://www.mygreatlearning.com/blog/understanding-fp-growth-algorithm/}
+
+\subsection{Technicalities}
+\noindent Usually, for identifying frequent patterns, we are represented with a \textbf{transactions} dataset, where each row represents \textbf{a set of items} bought by a customer. \textbf{However, we do not have transaction, we rather have multivariate dataset with a bunch of numerical columns. How can we do it?}
+
+\textbf{\textcolor{blue}{Disclaimer: The methodology below presents my own solution of the problem, I am not able to find such a technique anywhere on the internet.}}
+
+In order to \textbf{present} values as items:
+\begin{enumerate}
+\item Consider Each column value, in a row, as being an \textbf{item} bought by the customer.
+\item Our values are numeric, therefore, to avoid redundancy, I categorize the values as follows:
+\begin{itemize}
+\item value $<=$ 25th percentile
+\item 25th percentile $<$ value $<=$ 75th percentile
+\item value $>$ 75th percentile
+\end{itemize}
+\item Do the categorization above, \textbf{per column}, for all values in the dataset
+\item Achieve the so called "Item Dataset" where each row has one item (from the categories generated above) per column
+\item Apply the FP-growth Technique on the generated "Item Dataset"
+\item Extract the most frequent patterns
+\end{enumerate}
+
+The reason I did the aforementioned methodology above is because, in the \textbf{paper we are referencing (montogemery)}, they have frequent patterns like (GPA $>$ 2.0) and (Absence rate $<=$ 0.1), therefore I deduced that these can be taken by doing 'quartiles' of the distribution of values we have per column.
+
+\subsection{Characterizing Prediction Mistakes}
+\begin{enumerate}
+\item Get all frequent patterns using the methodology I created above that incorporates FP-Growth
+\item Rank predictions based on risk score probabilistic estimates
+
+\item Create a new field called \textit{mistake} which is 1 if the prediction does not match ground truth and 0 otherwise
+
+\item \textbf{For each frequent pattern} identify the \textbf{probability of mistake} by computing the number of mistakes done per frequent pattern
+
+\item Do all of the above bullets \textbf{for each model. Therefore, we end up with a probability of mistake for each frequent pattern, per model}
+\end{enumerate} 
+
+
+
+\subsection{Comparing Classifier Predictions}
+When we present educators with a suite of algorithms, they are keen on understanding the differences between \textit{rank orderings} produced by each of these algorithms.
+
+\noindent We will be using \textbf{Jaccard Similarity} for measuring similarity between predictions, \textbf{also at Top K}:
+
+Let's say we have 200 testing instances (students). One model might put the highest risk score for the 180th testing instance, another model might put the highest risk score for the 190th testing instance. Therefore, it is important to note that in this exercise, we find which testing instances were chosen to be in the top k between model 1 and model 2, and we compute, using the jaccard similarity, the intersection of these testing instances (over their union). Good models must have very high intersections if they are classifying instances properly.
+ 
+\begin{enumerate}
+\item Get all possible \textbf{combinations} of model pairs (we are using a suite of models)
+\item For each model pair, and for each \textbf{k} in \textbf{K}:
+\begin{enumerate}
+\item get the testing instances at top \textbf{k} from model 1 of the model pair
+\item get the testing instances at top \textbf{k} from model 2 of the model pair
+\item Compute jaccard similarity as the intersection of the two testing instances from each model over their union
+\end{enumerate}
+\end{enumerate}
+
+After doing this, we get the following results:
+\begin{figure}[H]
+\centering
+\includegraphics[scale=0.6]{plots/toydata/jaccardtopK.png}
+\label{Fig:jaccardtopk}
+\caption{Jaccard Similarity of students at risk for various algorithms}
+\end{figure}
+
+
+% \section{Advanced ML Evaluation of Fake News Experiments}
+% We have already done the fake news experiments before, and for each experiment \textbf{with the exception of Expriment 2}, we have saved the \textbf{trained models}. We have made our code \textbf{accept trained models}, and assess their performance on \textbf{testing dataset} passed by the user, with the performace asssessed, hereafter, by advanced ML Evaluation techniques presented in this report.
+
+% \subsection*{Fake News Repository}
+% The fake news repository with latest experiments is found here on bitbucket in the latest folder called \textit{Hiyam}: \url{https://bitbucket.org/rba15/fake_news_detection/src/master/Hiyam/} 
+
+% \subsection{Experiment 1}
+% In Experiment 1, we have trained a suit of \textbf{shallow} ML models on the FA-KES training data and tested it on the FA-KES testing data as well. Ofcourse, it is important to note that we have split the original FA-KES data in a \textbf{stratified manner}, hereafter, maintaining the same class distribution between training and testing dataset splits.
+
+% \noindent We have chosen the \textbf{number of bins to be equal to 3}. By the number of bins, we mean the bins were the probabilistic risk scores fall in, in ascending order (smaller bins have smaller risk scores; higher bins have higher risk scores)
+
+% \subsubsection{Mean Empirical Risks}
+% \begin{figure}[H]
+% \includegraphics[scale=0.6]{plots/fakenewsexp1/meanempiricalrisks.png}
+% \caption{plot that shows the mean empirical risks across the 3 bins}
+% \end{figure}
+
+% We realize that the mean empirical risks for all models is non-decreasing, indicating that our \textbf{trained models} are successful at giving higher risks to instances who are actually, \textbf{as per ground truth}, classified as being \textbf{true}
+
+% \noindent We realize that the logistic regression model's mean empirical risk curve decreases when the number of bins is 9.
+
+% \noindent In general, several models have their mean empirical risk decrease for a high bin number, suggesting that the models at extreme cases were the instances classified as being \textbf{true} do not assign very high probabilities.
+
+% \subsubsection{Precision at Top K}
+% \begin{figure}[H]
+% \includegraphics[scale=0.6]{plots/fakenewsexp1/precisionstopK.png}
+% \caption{Precison at Top K instances that have the highest risk scores}
+% \end{figure}
+% the precision scores for some models decrease for higher K, some increase and some remain constant.
+
+% \subsubsection{Recall at Top K}
+% \begin{figure}[H]
+% \includegraphics[scale=0.6]{plots/fakenewsexp1/recallstopK.png}
+% \caption{Recall at Top K instances that have the highest risk scores}
+% \end{figure}
+% This plot is not good. Something is a bit off as the recall \textbf{remains at 1 }? Or perhaps all models are predicting only 1 class and not predicting for the other class. This is bad though. We must dig up the \textbf{contingency matrices} of the predictions of these models in the 2019 report
+
+
+% \subsubsection{Jaccard Similarity at Top K}
+% \begin{figure}[H]
+% \includegraphics[scale=0.6]{plots/fakenewsexp1/jaccardtopK.png}
+% \caption{Jaccard Similarity at Top K instances that have the highest risk scores}
+% \end{figure}
+% Some light in this plot. For any given K, the algorithms return the set of K news that are likely to be fake based on the risk scores. Good algorithms must return the same set of K instances that are likely to be fake. 
+% \noindent We realize that as the number of instances K increases, the similarity between all model pairs increase, with the highest similarity is between the Logistic Regression and the Random Forest models.
+
+% \subsubsection{ROC Curves}
+% \begin{figure}[H]
+% \includegraphics[scale=0.6]{plots/fakenewsexp1/roccurves.png}
+% \caption{ROC Curves of predictions}
+% \end{figure}
+% The area under the curves for our models are good.
+
+% \subsection{FP-Growth}
+% In the figure below we show the frequent patterns that were extracted from the fake news data (FA-KES - Experiment 1) using FP Growth technique. Each \textbf{line} below represents a frequent pattern. 
+% \begin{figure}[H]
+% \centering
+% \includegraphics[scale=0.3]{plots/fakenewsexp1/fps.png}
+% \end{figure}
+
+% \textcolor{blue}{I did the probability of \textbf{mistake} per frequent pattern per model -- but I will leave it till the meeting to talk about it}
+
+\section{Model Agnostic Meta Learning (MAML by Chelsea Finn)}
+MAML is well suited for small datasets because it \textbf{learns to learn}, from the very few examples it starts training on, and each time it encounters new examples it learns from them.
+
+\subsection{Code Modifications}
+In order to use MAML, we hav eto modify the code for MAML found on github by chelsea finn et al. The url for the github: \url{https://github.com/cbfinn/maml}
+
+\subsection*{Data Generation Process}
+In usual deep learning exercises, we have the notion of \textbf{batches}. Each \textbf{batch} contains a number of samples of the data by which the model trains on. We can control the number of batches when we build the model's architecture and it is usually something we \textbf{tune}.
+
+\noindent In \textbf{Meta Learning}, we have the notion of \textbf{episodes}.
+
+\begin{figure}[H]
+\centering
+\includegraphics[scale=0.18]{plots/maml2.png}
+\end{figure}
+
+\noindent In general, each \textbf{episode} must contain \textbf{K} samples from each class found in the \textbf{episode}.
+
+We say \textbf{K-way N-shot} classification, meaning that our problem is to predict the correct class among \textbf{K} classes, using \textbf{N} shots per class.
+
+We will find in the literature that the number of \textbf{examples/samples} to include per class is a parameter to tune.
+
+\begin{itemize}
+    \item In the MAML paper, the authors were trying to predict the correct characters using the \textbf{omniglot} dataset (which is a dataset that includes 1623 characters from 50 different alphabets).
+    \item There exist 20 instances of each character
+    \item the authors tried \textbf{20-way 1-shot} and \textbf{5-way 1-shot} and the former yielded better results
+\end{itemize}
+
+\subsubsection*{Support and Query sets}
+Each episode contains a support and query set. The support set is used as an "\textbf{inner training}" and the \textbf{query} set is used as a "\textbf{validation}" set to validate the result on the training.  The model then learns from the \textbf{errors} made on the validation set in order to \textbf{optimize} its performance for the next iteration.
+
+Notice that this happens per episode
+
+\noindent Each of the support and query also must contain \textbf{number of samples per class}
+
+\subsubsection*{Tuning the Number of Samples Per class in Support + Query Set}
+we can tune this. These parameters are often called:
+\begin{itemize}
+    \item K-shot: The number of samples per class in the support set
+    \item K-query: The number of samples per class in the Query set
+\end{itemize}
+
+\textcolor{blue}{In \textbf{Finn et al}'s code on github, they did not tune this and rather always maintained the same number of \textbf{examples per class} in each of these sets}.
+
+\subsection{Modification of Data Generation Process}
+Finn et al's code on github is made to work on images of the omniglot/Imagenet datasets.
+\begin{itemize}
+    \item Modified the code to sample instances from tabular data rather than images
+    \item Modified the code of generatimg episodes so that it also takes samples from tabular data rather than images
+\end{itemize}
+
+The below Figure shows the psuedo code of the data generation process
+\begin{figure}[H]
+    \includegraphics[scale=0.9]{plots/datageneration.png}
+    \caption{Pseudo Code of Data Generation Process}
+    \label{fig:my_label}
+\end{figure}
+
+\subsection*{Base Models}
+We can provide MAML with Base models from our choice (we can build the model architecture we want)
+
+\noindent I started off with the FA-KES dataset in order to evaluate the modified MAML code on it, it is giving me overly optimistic results (near 100\% accuracy) and I am just stuck fixing the bug, will communicate the results soon.
+
+Modied MAML code on our github repository: \url{https://github.com/hiyamgh/dementia/tree/master/maml_finn}
+
+\subsection{Incorporating FP Growth}
+When we first transoformed Chelsea Finn's code on github to make it accept tabular data rather than images, we achived 60\% accuracy using MAML-FNN on the FA-KES dataset whilst a suite of shallow models on FA-KES dataset achieved around 90\% accuracy. 
+
+\noindent The problem was that the randomness in picking tasks for generating episodes was not passing over the whole data, and the model thus was unable to learn.
+
+\noindent We solved this problem by incorporating FP Growth into the data generation process.
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[scale=0.5]{\detokenize{data_generation_fp.jpeg}}
+    \caption{Data Generation Process Incorporating FP Growth}
+    \label{fig:my_label}
+\end{figure}
+
+While sampling a predefined number of samples per class, we still sample tasks at random, but we make sure that each sample incorporates one of the frequent patterns, and \textbf{we ensure that each mini-batch has at least one sample from each frequent pattern found}
+
+\subsection{Results}
+The following table shows the results of the MAML model with a base Feed Forward neural network on the FA-KES dataset.
+\begin{table}[H]
+\begin{tabular}{|l|l|l|l|l|}
+\hline
+\textbf{model} & \textbf{accuracy} & \textbf{precision} & \textbf{recall} & \textbf{F1} \\ \hline
+MAML-FNN       & 91.47\%           & 88.45\%            & 94.32\%         & 90.86\%     \\ \hline
+\end{tabular}
+\caption{Results of running MAML with baseline Feed Forward Neural Network - Standard Classification metrics}
+\end{table}
+
+\begin{table}[H]
+\begin{tabular}{|l|l|l|l|l|l|}
+\hline
+\textbf{model} & \textbf{AUC-ROC} & \textbf{GMEAN} & \textbf{BSS} & \textbf{F\_Beta} & \textbf{PR\_AUC} \\ \hline
+MAML-FNN       & 92.07\%          & 92.07\%        & 100\%        & 92.79\%          & 86.42\%          \\ \hline
+\end{tabular}
+\caption{Results of running MAML with baseline Feed Forward Neural Network - Cost Sensitive metrics}
+\end{table}
+
+% \begin{table}[H]
+% \begin{tabular}{|l|l|l|l|l|l|l|l|}
+% \hline
+% \textbf{model} & \textbf{accuracy} & \textbf{precision} & \textbf{recall} & \textbf{TP} & \textbf{FP} & \textbf{FN} & \textbf{TN} \\ \hline
+% MAML-FNN       & 85.79\%           & 86.57\%            & 84.65\%         & 28          & 28          & 4           & 4           \\ \hline
+% \end{tabular}
+% \caption{Results of Running MAML with Feed Forward Neural Network as a Baseline Model on FA-KES dataset}
+% \end{table}
+Previously before we incorporated \textbf{FP-Growth}, we have reached only 80\% accuracy. After adding FP-growth, the accuracy has increased to 85\%.It is important to note that the metrics reported above are the averages across both the \textbf{support and query sets}.
+
+We have several hyper parameters to take into account and they are the following:
+\begin{enumerate}
+    \item \textbf{num\_updates}: number of inner gradient updates during training
+    \item \textbf{num\_test\_updates}: number of inner gradient updates during testing
+\end{enumerate}
+Therefore, when we report testing results, we report it by averaging across the \textit{num\_test\_updates}. In our program, we made that to be equal to 10.
+
+\noindent It is also worth noting that, due to the randomness of data generation process (generating episodes), the testing is repeated several times. In our program, we made the number of repetitions to be 600.
+
+\noindent Therefore when we finish testing, we end up with a \textbf{num\_repeats $\times$ num\_test\_updates matrix,} were for each repeat we have num\_test\_updates results.
+
+\noindent Therefore, the metrics reported above, we first do the average for each column of this matrix (we end up with a  num\_test\_updates vector of results). Then, we report the average of that vector. This is the way MAML results are to be delivered.
+
+\section{Meta Learning Vs. Shallow Models - FAKES}
+
+\subsection{Methodology}
+\begin{enumerate}
+    \item Full hyper parameter search for the shallow and deep models
+    \item Run on FAKES and compare with old results
+    \item Run advanced evaluation metrics on all non meta learners (done before) and new meta learners
+    \item We ok the procedure
+    \item Repeat 1 to 4 but on oversampled data and penalized models
+    \item Compare to Roaa's using imbalanced learning metrics and advanced metrics
+    \item repeat 1 to 6 using Petri Dish
+    \item We do shap on the ones we like the most
+\end{enumerate}
+
+
+\subsection{Quantitative Results}
+\subsubsection*{Without FP - Accuracy}
+% without fp - top 10 - f2
+\begin{table}[H]
+\input{\detokenize{tables/fakenews_without_fp}}
+\caption{Results - MAML without FP, aggregated by accuracy score}
+\label{Tab:fakenews_without_fp}
+\end{table}
+
+\subsubsection*{With FP - Accuracy score}
+% without fp - top 10 - bss
+\begin{table}[H]
+\input{\detokenize{tables/fakenews_with_fp}}
+\caption{Results - MAML with FP, aggregated by accuracy score}
+\label{Tab:fakenews_with_fp}
+\end{table}
+
+We realize that the results with FP are better.
+
+\subsection{Qualitative Results}
+\subsection{Mean Empirical Risk Curves}
+\begin{figure}[H]
+\begin{subfigure}{.6\textwidth}
+  \centering
+  \includegraphics[width=.8\linewidth]{\detokenize{advanced_ml_plots_fn/without_fp/mean_empirical_risks.png}}
+  \caption{Mean Empirical Risks for top 3 models - Without FP}
+  \label{fig:sub1}
+\end{subfigure}%
+\begin{subfigure}{.6\textwidth}
+  \centering
+  \includegraphics[width=.8\linewidth]{\detokenize{advanced_ml_plots_fn/with_fp/mean_empirical_risks.png}}
+  \caption{Mean Empirical Risks for top 3 models - With FP}
+  \label{fig:sub2}
+\end{subfigure}
+\caption{Mear Empirical Risks for top models - With FP}
+\label{fig:test}
+\end{figure}
+
+
+\subsection{Precisions Top K}
+\begin{figure}[H]
+\begin{subfigure}{.6\textwidth}
+  \centering
+  \includegraphics[width=.8\linewidth]{\detokenize{advanced_ml_plots_fn/without_fp/precisions_topK.png}}
+  \caption{Precisions at Top K for top 3 models - Without FP}
+  \label{fig:sub1}
+\end{subfigure}%
+\begin{subfigure}{.6\textwidth}
+  \centering
+  \includegraphics[width=.8\linewidth]{\detokenize{advanced_ml_plots_fn/with_fp/precisions_topK.png}}
+  \caption{Precisions at Top K for top 3 models - With FP}
+  \label{fig:sub2}
+\end{subfigure}
+\caption{Precisions at top K for top models - With FP}
+\label{fig:test}
+\end{figure}
+
+
+
+\subsection{Recalls Top K}
+\begin{figure}[H]
+\begin{subfigure}{.6\textwidth}
+  \centering
+  \includegraphics[width=.8\linewidth]{\detokenize{advanced_ml_plots_fn/without_fp/recalls_topK.png}}
+  \caption{Recalls at Top K for top 3 models - Without FP}
+  \label{fig:sub1}
+\end{subfigure}%
+\begin{subfigure}{.6\textwidth}
+  \centering
+  \includegraphics[width=.8\linewidth]{\detokenize{advanced_ml_plots_fn/with_fp/recalls_topK.png}}
+  \caption{Recalls at Top K for top 3 models - With FP}
+  \label{fig:sub2}
+\end{subfigure}
+\caption{Precisions at top K for top models - With FP}
+\label{fig:test}
+\end{figure}
+
+
+\subsection{ROC Curves}
+\begin{figure}[H]
+\begin{subfigure}{.6\textwidth}
+  \centering
+  \includegraphics[width=.8\linewidth]{\detokenize{advanced_ml_plots_fn/without_fp/roc_curves.png}}
+  \caption{ROC Curve for top 3 models - Without FP}
+  \label{fig:sub1}
+\end{subfigure}%
+\begin{subfigure}{.6\textwidth}
+  \centering
+  \includegraphics[width=.8\linewidth]{\detokenize{advanced_ml_plots_fn/with_fp/roc_curves.png}}
+  \caption{ROC Curve for top 3 models - With FP}
+  \label{fig:sub2}
+\end{subfigure}
+\caption{ROC Curves top K for top models - With FP}
+\label{fig:test}
+\end{figure}
+
+
+
+\section{Meta Learning vs Shallow Models - Dementia Dataset}
+
+\subsection{Cost Sensitive Learning in Neural Networks}
+We have many types of cost sensitive learning, here, we will be focusing on two types which are \textbf{weighting} and \textbf{miss-classification error/cost matrix}.
+
+It is important to note that, after the input is forwarded from the input layer to the output layer, the neural network computes the \textbf{loss} which quantifies how much mistake did it make, if any. 
+
+\subsection*{Key defenition - Loss}
+The loss function in case of regression is the \textbf{mean squared error}, whilst that for classification is the \textbf{cross entropy loss} (binary cross entropy (for binary classification tasks) or categorical cross entropy for multi-classification tasks)
+
+\subsection*{Key defenition - Logits}
+Loss if computed on the \textbf{logits}. Logits are the raw outputs of the last layer of the neural network. Logits interpreted to be the unnormalised (or not-yet normalised) predictions (or outputs) of a model. These can give results, but we don't normally stop with logits, because interpreting their raw values is not easy.
+
+Let's demonstrate this through an example, say we want to classify images as being either a cat or a dog. For the first new image, we get logit values out of 16.917 for a cat and then 0.772 for a dog. Higher means better, or ('more likely'), so we'd say that a cat is the answer. The correct answer is a cat, so the model worked. If we apply softmax activation to the logits, we get p(cat) = 0.99 and p(dog) = 0.0001
+
+\subsection*{Weighting}
+Weighting is applied to the loss such that smaller weight values result in errors, i.e. less update the model coefficients and larger weight results in more errors, i.e. more updates to the model coefficients.
+
+\textbf{Multiply the logit with a weight vector representing scaling factor of each class}. 
+
+\subsection*{Miss-Classification Errros/Cost-Matrix}
+The problem with class weighting is that it applies the weighting to all the data that belongs to the class, whilst we want it to depend on the miss classification error.
+
+\begin{table}[H]
+\centering
+\begin{tabular}{|l|l|l|}
+\hline
+actual/predicted & class 0 & class 1 \\ \hline
+class 0          & 0       & 0.25    \\ \hline
+class 1          & 0.25    & 0       \\ \hline
+\end{tabular}
+\caption{cost matrix of classifications/miss-classifications}
+\end{table}
+
+The table above shows that the cost of miss-classifying class 0 as class 1 or classifying class 1 as class 0 is 0.25 while correct classifications have no cost.
+
+%%%%%%%%%%%%%%%%%%%%%%% Hyper Parameter Space %%%%%%%%%%%%%%%%%%
+\subsection{Hyper Parameters}
+\begin{table}[H]
+%\resizebox{.7\width}{!}
+{\input{\detokenize{tables/hyperparameters}}}
+\caption{Hyper Parameter Space}
+\label{Tab:hyperparameters}
+\end{table}
+
+
+%%%%%%%%%%%%%%%%%%%%%%% Winning Hyper Parameters %%%%%%%%%%%%%%%%%%
+\subsection{Winning Hyper Parameters}
+% winning - with fp - top 10
+\begin{table}[H]
+\resizebox{.7\width}{!}{\input{\detokenize{tables/winning_with_top10}}}
+\caption{Winning Hyper Parameters - MAML with FP, using top 10 columns}
+\label{Tab:winning_with_top10}
+\end{table}
+
+% winning - with fp - top 20
+\begin{table}[H]
+\resizebox{.7\width}{!}{\input{\detokenize{tables/winning_with_top20}}}
+\caption{Winning Hyper Parameters - MAML with FP, using top 20 columns}
+\label{Tab:winning_with_top20}
+\end{table}
+
+
+
+\subsection{Quantitative Results - Without FP Growth}
+
+\subsubsection*{Without FP - Top 10 - F2 score}
+% without fp - top 10 - f2
+\begin{table}[H]
+\resizebox{.7\width}{!}{\input{\detokenize{tables/without_fp_top10_f2}}}
+\caption{Results - MAML without FP, using top 10 columns - aggregated by f2 score}
+\label{Tab:without_fp_top10_f2}
+\end{table}
+
+\subsubsection*{Without FP - Top 10 - BSS score}
+% without fp - top 10 - bss
+\begin{table}[H]
+\resizebox{.7\width}{!}{\input{\detokenize{tables/without_fp_top10_bss}}}
+\caption{Results - MAML without FP, using top 10 columns - aggregated by bss score}
+\label{Tab:without_fp_top10_bss}
+\end{table}
+
+\subsubsection*{Without FP - Top 20 - F2 score}
+% without fp - top 20 - f2
+\begin{table}[H]
+\resizebox{.7\width}{!}{\input{\detokenize{tables/without_fp_top20_f2}}}
+\caption{Results - MAML without FP, using top 20 columns - aggregated by f2 score}
+\label{Tab:without_fp_top20_f2}
+\end{table}
+
+
+\subsubsection*{Without FP - Top 20 - BSS score}
+% without fp - top 20 - bss
+\begin{table}[H]
+\resizebox{.7\width}{!}{\input{\detokenize{tables/without_fp_top20_bss}}}
+\caption{Results - MAML without FP, using top 20 columns - aggregated by bss score}
+\label{Tab:without_fp_top20_bss}
+\end{table}
+
+
+\subsection{Insights}
+\begin{enumerate}
+\item We realize that the highest F2 score reached was by an MAML model, that \textbf{did not} incorporate FP Growth, and taking the top 10 columns selected by feature selection. \textbf{The highest F2 score is 0.9 shown in Table \ref{Tab:without_fp_top10_f2}}
+
+\item We realize that the highest BSS score reached by an MAML model, that \textbf{did not} incorporate FP Growth, and taking the top 20 columns selected by feature selection. The highest  BSS score is 0.72 shown in Table \ref{Tab:without_fp_top20_bss}
+
+\item the model named \textit{'model\_306'} found in table \ref{Tab:without_fp_top20_bss} seems to be a perfect model because, although not the highest in f2 score, it has an F2 score of 0.85, a GMEAN score of 0.86, a PR\_AUC score of 0.83, and a BSS score of 0.72. Therefore, this model is doing equivalently well in performance with regards to predicting the positive and the negative class. 
+\end{enumerate}
+
+\subsection{Quantitative Results - With FP Growth}
+
+\subsubsection*{With FP - Top 10 - F2 score}
+% without fp - top 10 - f2
+\begin{table}[H]
+\resizebox{.7\width}{!}{\input{\detokenize{tables/with_fp_top10_f2}}}
+\caption{Results - MAML with FP, using top 10 columns - aggregated by f2 score}
+\label{Tab:with_fp_top10_f2}
+\end{table}
+
+\subsubsection*{With FP - Top 10 - BSS score}
+% without fp - top 10 - bss
+\begin{table}[H]
+\resizebox{.7\width}{!}{\input{\detokenize{tables/with_fp_top10_bss}}}
+\caption{Results - MAML with FP, using top 10 columns - aggregated by bss score}
+\label{Tab:with_fp_top10_bss}
+\end{table}
+
+\subsubsection*{With FP - Top 20 - F2 score}
+% without fp - top 20 - f2
+\begin{table}[H]
+\resizebox{.7\width}{!}{\input{\detokenize{tables/with_fp_top20_f2}}}
+\caption{Results - MAML with FP, using top 20 columns - aggregated by f2 score}
+\label{Tab:with_fp_top20_f2}
+\end{table}
+
+
+\subsubsection*{With FP - Top 20 - BSS score}
+% without fp - top 20 - bss
+\begin{table}[H]
+\resizebox{.7\width}{!}{\input{\detokenize{tables/with_fp_top20_bss}}}
+\caption{Results - MAML without FP, using top 20 columns - aggregated by bss score}
+\label{Tab:with_fp_top20_bss}
+\end{table}
+
+\subsection{Insights}
+\begin{enumerate}
+\item We realize that the highest F2 score reached was by an MAML model, that \textbf{incorporated} FP Growth, and taking the top 10 columns selected by feature selection. \textbf{The highest F2 score is 0.89 shown in Table \ref{Tab:with_fp_top10_f2}}
+
+\item We realize that the highest BSS score reached by an MAML model, that \textbf{incorporated} FP Growth, and taking the top 20 columns selected by feature selection. \textbf{The highest  BSS score is 0.76 shown in Table \ref{Tab:with_fp_top20_bss}}
+
+\item the model named \textit{'model\_35'} found in Table \ref{Tab:with_fp_top20_bss} seems to be a perfect model because, although not the highest in f2 score, it has an F2 score of 0.88, a GMEAN score of 0.88, a PR\_AUC score of 0.85, and a BSS score of 0.76. Therefore, this model is doing equivalently well in performance with regards to predicting the positive and the negative class. 
+\end{enumerate}
+
+\subsection{Insights on With FP vs. Without FP}
+In terms of error metrics, the differences are marginal between the experiments incorporating and those not incorporating FP growth. This observation is expected because, in both cases, we have modified the randomness in generating tasks for training the MAML model, in such a way that in both we made sure to generate tasks from all the heterogeneous data samples found in the dataset. However, although this is just a \textit{'heuristic'}, but it turns out to capture enough of the data.  \textbf{This heuristic covers tasks from all around the dataset in a \textit{round robin fashion}}
+
+\subsection{Insights about PPV}
+Its is important to note that in most of the results, we realize that PPV (\textbf{P}robability \textbf{P}ositi\textbf{V}e Class) was always threshold approximately around 0.6, expect in Table \ref{Tab:with_fp_top10_f2} were we see that the top 20 best performing models had PPVs of 0.9. This means that these models were able to assign high risks to some of the instances, which means that they were able to assign high risks to patients that are most likely to be demented. This effect will be captured in the \textbf{empirical risk curves}
+
+\subsection{Qualitative Results}
+
+\subsection{Mean Empirical Risk Curves}
+\begin{figure}[H]
+\begin{subfigure}{.6\textwidth}
+  \centering
+  \includegraphics[width=.8\linewidth]{\detokenize{advanced_ml_plots/without_top10/mean_empirical_risks.png}}
+  \caption{Mean Empirical Risks for top 6 models - Without FP - top 10 columns}
+  \label{fig:sub1}
+\end{subfigure}%
+\begin{subfigure}{.6\textwidth}
+  \centering
+  \includegraphics[width=.8\linewidth]{\detokenize{advanced_ml_plots/without_top20/mean_empirical_risks.png}}
+  \caption{Mean Empirical Risks for top 6 models - Without FP - top 20 columns}
+  \label{fig:sub2}
+\end{subfigure}
+\caption{Mear Empirical Risks for top models - Without FP - trained on top 10 and top 20 columns selected by feature selection}
+\label{fig:test}
+\end{figure}
+
+\begin{figure}[H]
+\begin{subfigure}{.6\textwidth}
+  \centering
+  \includegraphics[width=.8\linewidth]{\detokenize{advanced_ml_plots/with_top10/mean_empirical_risks.png}}
+  \caption{Mean Empirical Risks for top 6 models - With FP - top 10 columns}
+  \label{fig:sub1}
+\end{subfigure}%
+\begin{subfigure}{.6\textwidth}
+  \centering
+  \includegraphics[width=.8\linewidth]{\detokenize{advanced_ml_plots/with_top20/mean_empirical_risks.png}}
+  \caption{Mean Empirical Risks for top 6 models - With FP - top 20 columns}
+  \label{fig:sub2}
+\end{subfigure}
+\caption{Mean Empirical Risks for top models - With and Without FP - trained on top 10 and top 20 columns selected by feature selection}
+\label{fig:test}
+\end{figure}
+
+In order to produce empirical risk curves, first, we rank patients by descending order of their estimated risk scores. We then group patients into bins based on the percentiles they fall into when categorized using risk scores. In our experiments, we choose to create 10 bins. The bottom 10\% of patients who have the least risk are grouped into a single bin. Those who rank between 10th and 20th percentile are grouped in the next bin and so on. For each such bin, we compute the \textit{empirical risk score} \textbf{which is the fraction of patients from that bin who actually, as per ground truth, are demented}. A good model would be classifying patients correctly if the \textit{empirical risk curve} is monotonically non-decreasing.
+
+If the empirical risk curve is non-monotonic for some models, it implies that the classification using the model's risk scores may result in scenarios where patients with lower risk
+scores are more likely to be demented compared to
+patients with higher risk scores.
+
+In the plots above, we realize that, whether with FP or without FP, the models that are trained using top 20 features have better empirical risk curves than those trained using top 10 features.
+
+\subsection{Precision at Top K}
+\begin{figure}[H]
+\begin{subfigure}{.6\textwidth}
+  \centering
+  \includegraphics[width=.8\linewidth]{\detokenize{advanced_ml_plots/without_top10/precisions_topK.png}}
+  \caption{Precisions for top 6 models - Without FP - top 10 columns}
+  \label{fig:sub1}
+\end{subfigure}%
+\begin{subfigure}{.6\textwidth}
+  \centering
+  \includegraphics[width=.8\linewidth]{\detokenize{advanced_ml_plots/without_top20/precisions_topK.png}}
+  \caption{Precisions at Top K for top 6 models - Without FP - top 20 columns}
+  \label{fig:sub2}
+\end{subfigure}
+\caption{Precisions at Top K for top models - Without FP - trained on top 10 and top 20 columns selected by feature selection}
+\label{fig:test}
+\end{figure}
+
+\begin{figure}[H]
+\begin{subfigure}{.6\textwidth}
+  \centering
+  \includegraphics[width=.8\linewidth]{\detokenize{advanced_ml_plots/with_top10/precisions_topK.png}}
+  \caption{Precisions at Top K for top 6 models - With FP - top 10 columns}
+  \label{fig:sub1}
+\end{subfigure}%
+\begin{subfigure}{.6\textwidth}
+  \centering
+  \includegraphics[width=.8\linewidth]{\detokenize{advanced_ml_plots/with_top20/precisions_topK.png}}
+  \caption{Precisions at Top K for top 6 models - With FP - top 20 columns}
+  \label{fig:sub2}
+\end{subfigure}
+\caption{Precisions at Top K for top models - With and Without FP - trained on top 10 and top 20 columns selected by feature selection}
+\label{fig:test}
+\end{figure}
+
+It might happen that hospitals, for example, might want to admit only a certain number of patients, and for that, it might want to admit only the patients that are at a very high risk of having dementia. For that reason, clinicians might be interested in models that provide good risk estimates to rank . Therefore, it might be very helpful to provide the precision/recall values of various models at different values of K.
+
+It is good to note that in all 4 figures above, the precision values do not drop a lot for smaller K values (with the exception of model\_14 and model\_306 in the first two upper figures). Realize that in the bottom figures, the range of values for precision is still between [0.7-1] and [0.92-1] 
+
+\subsection{Recall at Top K}
+\begin{figure}[H]
+\begin{subfigure}{.6\textwidth}
+  \centering
+  \includegraphics[width=.8\linewidth]{\detokenize{advanced_ml_plots/without_top10/recalls_topK.png}}
+  \caption{Recalls for top 6 models - Without FP - top 10 columns}
+  \label{fig:sub1}
+\end{subfigure}%
+\begin{subfigure}{.6\textwidth}
+  \centering
+  \includegraphics[width=.8\linewidth]{\detokenize{advanced_ml_plots/without_top20/recalls_topK.png}}
+  \caption{Recalls at Top K for top 6 models - Without FP - top 20 columns}
+  \label{fig:sub2}
+\end{subfigure}
+\caption{Recalls at Top K for top models - Without FP - trained on top 10 and top 20 columns selected by feature selection}
+\label{fig:test}
+\end{figure}
+
+\begin{figure}[H]
+\begin{subfigure}{.6\textwidth}
+  \centering
+  \includegraphics[width=.8\linewidth]{\detokenize{advanced_ml_plots/with_top10/recalls_topK.png}}
+  \caption{Recalls at Top K for top 6 models - With FP - top 10 columns}
+  \label{fig:sub1}
+\end{subfigure}%
+\begin{subfigure}{.6\textwidth}
+  \centering
+  \includegraphics[width=.8\linewidth]{\detokenize{advanced_ml_plots/with_top20/recalls_topK.png}}
+  \caption{Recalls at Top K for top 6 models - With FP - top 20 columns}
+  \label{fig:sub2}
+\end{subfigure}
+\caption{Recalls at Top K for top models - With and Without FP - trained on top 10 and top 20 columns selected by feature selection}
+\label{fig:test}
+\end{figure}
+
+We realize that the recall values at top K stay stable at 1 with the exception of the model\_14 in the first figure; However, model\_14 increases back to reach 1.
+
+
+\subsection{ROC Curves}
+\begin{figure}[H]
+\begin{subfigure}{.6\textwidth}
+  \centering
+  \includegraphics[width=.8\linewidth]{\detokenize{advanced_ml_plots/without_top10/roc_curves.png}}
+  \caption{ROC Curves - Without FP - top 10 columns}
+  \label{fig:sub1}
+\end{subfigure}%
+\begin{subfigure}{.6\textwidth}
+  \centering
+  \includegraphics[width=.8\linewidth]{\detokenize{advanced_ml_plots/without_top20/roc_curves.png}}
+  \caption{ROC Curves for top 6 models - Without FP - top 20 columns}
+  \label{fig:sub2}
+\end{subfigure}
+\caption{ROC Curves for top models - Without FP - trained on top 10 and top 20 columns selected by feature selection}
+\label{fig:test}
+\end{figure}
+
+\begin{figure}[H]
+\begin{subfigure}{.6\textwidth}
+  \centering
+  \includegraphics[width=.8\linewidth]{\detokenize{advanced_ml_plots/with_top10/roc_curves.png}}
+  \caption{ROC Curves for top 6 models - With FP - top 10 columns}
+  \label{fig:sub1}
+\end{subfigure}%
+\begin{subfigure}{.6\textwidth}
+  \centering
+  \includegraphics[width=.8\linewidth]{\detokenize{advanced_ml_plots/with_top20/roc_curves.png}}
+  \caption{ROC Curves for top 6 models - With FP - top 20 columns}
+  \label{fig:sub2}
+\end{subfigure}
+\caption{ROC Curves for top models - With and Without FP - trained on top 10 and top 20 columns selected by feature selection}
+\label{fig:test}
+\end{figure}
+
+We realize that the best ROC Curves are those of the models trained on the top 20 features selected by feature selection, whether with or without FP.
+
+
+\end{document}

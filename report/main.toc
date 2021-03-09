@@ -1,0 +1,123 @@
+\contentsline {section}{\numberline {1}Data Sources}{4}{section.1}%
+\contentsline {subsection}{\numberline {1.1}Datasets Used}{4}{subsection.1.1}%
+\contentsline {subsection}{\numberline {1.2}Dementia Output}{5}{subsection.1.2}%
+\contentsline {section}{\numberline {2}Split Into numeric and textual}{5}{section.2}%
+\contentsline {section}{\numberline {3}Numeric Features}{5}{section.3}%
+\contentsline {subsection}{\numberline {3.1}Informant and High Percentage of Missing}{6}{subsection.3.1}%
+\contentsline {subsection}{\numberline {3.2}Nested Questions and High percentage of missing}{6}{subsection.3.2}%
+\contentsline {subsection}{\numberline {3.3}Treating Features with High Percentage of Missing}{7}{subsection.3.3}%
+\contentsline {subsection}{\numberline {3.4}Detecting Erroneous Values Inside Features}{7}{subsection.3.4}%
+\contentsline {subsection}{\numberline {3.5}Working with Legal Features}{8}{subsection.3.5}%
+\contentsline {subsection}{\numberline {3.6}Filtering Legal Features with Erroneous Values - Erroneous Code-Book}{8}{subsection.3.6}%
+\contentsline {subsection}{\numberline {3.7}Detecting Outliers}{8}{subsection.3.7}%
+\contentsline {subsection}{\numberline {3.8}Outlier Detection and Scaling}{9}{subsection.3.8}%
+\contentsline {subsection}{\numberline {3.9}Feature Cross}{9}{subsection.3.9}%
+\contentsline {section}{\numberline {4}Feature Selection}{9}{section.4}%
+\contentsline {subsection}{\numberline {4.1}Decision Tree Feature Importance}{9}{subsection.4.1}%
+\contentsline {subsection}{\numberline {4.2}Select K Best Features}{10}{subsection.4.2}%
+\contentsline {subsubsection}{\numberline {4.2.1}Deciding "K"}{10}{subsubsection.4.2.1}%
+\contentsline {subsubsection}{\numberline {4.2.2}Selecting K Best Features}{10}{subsubsection.4.2.2}%
+\contentsline {section}{\numberline {5}Oversampling and Undersampling}{10}{section.5}%
+\contentsline {subsection}{\numberline {5.1}Dealing With Mixed Variables}{10}{subsection.5.1}%
+\contentsline {section}{\numberline {6}Cost-Sensitive Learning}{11}{section.6}%
+\contentsline {subsection}{\numberline {6.1}Cost sensitive learning consists of the following steps:}{11}{subsection.6.1}%
+\contentsline {subsection}{\numberline {6.2}Tested sampling methods (using SMOTENC's sampling\_strategy options):}{11}{subsection.6.2}%
+\contentsline {subsection}{\numberline {6.3}Tested class\_weights: (costs for each label), combination of suggestions from book and built-in options:}{12}{subsection.6.3}%
+\contentsline {subsection}{\numberline {6.4}Probabilistic Models}{12}{subsection.6.4}%
+\contentsline {subsubsection}{\numberline {6.4.1}Grid Search For Optimal Probability Threshold}{12}{subsubsection.6.4.1}%
+\contentsline {subsubsection}{\numberline {6.4.2}Calibrated Models}{12}{subsubsection.6.4.2}%
+\contentsline {subsubsection}{\numberline {6.4.3}Balanced Random Forest Results}{13}{subsubsection.6.4.3}%
+\contentsline {subsubsection}{\numberline {6.4.4}Results}{13}{subsubsection.6.4.4}%
+\contentsline {subsubsection}{\numberline {6.4.5}Results With Top 10 Features}{13}{subsubsection.6.4.5}%
+\contentsline {subsubsection}{\numberline {6.4.6}Results With Top 20 Features}{14}{subsubsection.6.4.6}%
+\contentsline {subsection}{\numberline {6.5}Classfication Models}{14}{subsection.6.5}%
+\contentsline {subsubsection}{\numberline {6.5.1}Results}{14}{subsubsection.6.5.1}%
+\contentsline {subsubsection}{\numberline {6.5.2}Results With Top 10 Features}{14}{subsubsection.6.5.2}%
+\contentsline {subsubsection}{\numberline {6.5.3}Results With Top 20 Features}{14}{subsubsection.6.5.3}%
+\contentsline {subsection}{\numberline {6.6}One-Class Classification}{14}{subsection.6.6}%
+\contentsline {section}{\numberline {7}SHAP}{15}{section.7}%
+\contentsline {subsection}{\numberline {7.1}Global SHAP Summary Values Results}{15}{subsection.7.1}%
+\contentsline {subsection}{\numberline {7.2}Global SHAP Interaction Values}{17}{subsection.7.2}%
+\contentsline {subsection}{\numberline {7.3}Multi-output Decision Plot for properly classified Rows}{18}{subsection.7.3}%
+\contentsline {subsection}{\numberline {7.4}Decision Plot for Miss-classified Row}{20}{subsection.7.4}%
+\contentsline {section}{\numberline {8}Chapter 6: Precision, Recall, and F-measure}{20}{section.8}%
+\contentsline {section}{\numberline {9}Chapter 7:ROC Curves and Precision-Recall Curves}{20}{section.9}%
+\contentsline {subsection}{\numberline {9.1}ROC Curve}{20}{subsection.9.1}%
+\contentsline {subsection}{\numberline {9.2}AUC}{21}{subsection.9.2}%
+\contentsline {section}{\numberline {10}Chapter 8: Probability Scoring Methods}{21}{section.10}%
+\contentsline {subsection}{\numberline {10.1}Probability Metrics}{21}{subsection.10.1}%
+\contentsline {subsection}{\numberline {10.2}LogLoss Score}{21}{subsection.10.2}%
+\contentsline {section}{\numberline {11}Cross Validation for Imbalanced Datasets}{21}{section.11}%
+\contentsline {section}{\numberline {12}Chapter 10}{21}{section.12}%
+\contentsline {section}{\numberline {13}Chapter 12}{22}{section.13}%
+\contentsline {subsection}{\numberline {13.1}Oversampling}{22}{subsection.13.1}%
+\contentsline {subsection}{\numberline {13.2}Undersampling Techniques}{22}{subsection.13.2}%
+\contentsline {section}{\numberline {14}Data Transforms (Hiyam)}{22}{section.14}%
+\contentsline {subsection}{\numberline {14.1}Scaling Numeric Data (chapter 17)}{22}{subsection.14.1}%
+\contentsline {subsection}{\numberline {14.2}Scaling Data with Outliers (chapter 18)}{22}{subsection.14.2}%
+\contentsline {subsection}{\numberline {14.3}How to Encode Categorical Data (chapter 19)}{23}{subsection.14.3}%
+\contentsline {subsection}{\numberline {14.4}How to Make Distributions Look More Gaussian (chapter 20)}{24}{subsection.14.4}%
+\contentsline {section}{\numberline {15}Data Pre-Pocessing}{24}{section.15}%
+\contentsline {subsection}{\numberline {15.1}Imputing Missing Values - Categorical Features}{24}{subsection.15.1}%
+\contentsline {subsection}{\numberline {15.2}Imputing Missing Values - Numerical/Ordinal Features}{24}{subsection.15.2}%
+\contentsline {subsection}{\numberline {15.3}Scaling - Numeric/Ordinal Features}{25}{subsection.15.3}%
+\contentsline {subsection}{\numberline {15.4}Scaling - Categorical Features}{25}{subsection.15.4}%
+\contentsline {section}{\numberline {16}Imputing Numerical Missing Data}{25}{section.16}%
+\contentsline {subsection}{\numberline {16.1}Statistical Imputation}{25}{subsection.16.1}%
+\contentsline {subsection}{\numberline {16.2}K Nearest Neighbors}{25}{subsection.16.2}%
+\contentsline {subsection}{\numberline {16.3}Iterative Imputation}{25}{subsection.16.3}%
+\contentsline {section}{\numberline {17}Imputing Categorical Missing Data}{26}{section.17}%
+\contentsline {subsection}{\numberline {17.1}Mean Imputation}{26}{subsection.17.1}%
+\contentsline {subsection}{\numberline {17.2}Imputation Using Most Frequent or (Zero/Constant Values)}{26}{subsection.17.2}%
+\contentsline {subsection}{\numberline {17.3}Create a New Category (Random Category) for NAN Values}{26}{subsection.17.3}%
+\contentsline {subsection}{\numberline {17.4} Adding a Variable To Capture NAN}{26}{subsection.17.4}%
+\contentsline {subsection}{\numberline {17.5}Imputation Using Deep Learning (Datawig)}{26}{subsection.17.5}%
+\contentsline {subsection}{\numberline {17.6}Regression Imputation}{26}{subsection.17.6}%
+\contentsline {subsection}{\numberline {17.7}Imputation Using Interpolation}{27}{subsection.17.7}%
+\contentsline {subsection}{\numberline {17.8}Multivariate Normal Imputation (MNVI)}{27}{subsection.17.8}%
+\contentsline {subsection}{\numberline {17.9}Multiple Imputation by Chained Equations (MICE)}{27}{subsection.17.9}%
+\contentsline {subsection}{\numberline {17.10}Stochastic regression imputation:}{28}{subsection.17.10}%
+\contentsline {subsection}{\numberline {17.11}Extrapolation and Interpolation:}{28}{subsection.17.11}%
+\contentsline {subsection}{\numberline {17.12}Hot-Deck Imputation}{28}{subsection.17.12}%
+\contentsline {subsection}{\numberline {17.13}Some papers for handling missing categorical data (did not read them at length -- just the abstract)}{28}{subsection.17.13}%
+\contentsline {section}{\numberline {18}Advanced ML Evaluation Techniques}{28}{section.18}%
+\contentsline {subsection}{\numberline {18.1}Analysis of Predictive Models}{29}{subsection.18.1}%
+\contentsline {subsection}{\numberline {18.2}Evaluation Using Traditional Metrics}{29}{subsection.18.2}%
+\contentsline {subsection}{\numberline {18.3}Problem with Standard Evaluation Metrics}{30}{subsection.18.3}%
+\contentsline {subsection}{\numberline {18.4}Solution: Risk Estimates}{30}{subsection.18.4}%
+\contentsline {subsection}{\numberline {18.5}Ensuring Quality Of Risk Estimates}{31}{subsection.18.5}%
+\contentsline {subsubsection}{\numberline {18.5.1}From Models to Risk Estimates}{31}{subsubsection.18.5.1}%
+\contentsline {subsubsection}{\numberline {18.5.2}Measuring the Goodness of Risk Scores}{31}{subsubsection.18.5.2}%
+\contentsline {subsubsection}{\numberline {18.5.3}Comparative Evaluation of Risk Estimates}{32}{subsubsection.18.5.3}%
+\contentsline {subsection}{\numberline {18.6}Interpreting Classifier Outputs - FP Growth}{34}{subsection.18.6}%
+\contentsline {subsection}{\numberline {18.7}Technicalities}{34}{subsection.18.7}%
+\contentsline {subsection}{\numberline {18.8}Characterizing Prediction Mistakes}{35}{subsection.18.8}%
+\contentsline {subsection}{\numberline {18.9}Comparing Classifier Predictions}{35}{subsection.18.9}%
+\contentsline {section}{\numberline {19}Model Agnostic Meta Learning (MAML by Chelsea Finn)}{36}{section.19}%
+\contentsline {subsection}{\numberline {19.1}Code Modifications}{36}{subsection.19.1}%
+\contentsline {subsection}{\numberline {19.2}Modification of Data Generation Process}{38}{subsection.19.2}%
+\contentsline {subsection}{\numberline {19.3}Incorporating FP Growth}{39}{subsection.19.3}%
+\contentsline {subsection}{\numberline {19.4}Results}{41}{subsection.19.4}%
+\contentsline {section}{\numberline {20}Meta Learning Vs. Shallow Models - FAKES}{42}{section.20}%
+\contentsline {subsection}{\numberline {20.1}Methodology}{42}{subsection.20.1}%
+\contentsline {subsection}{\numberline {20.2}Quantitative Results}{43}{subsection.20.2}%
+\contentsline {subsection}{\numberline {20.3}Qualitative Results}{45}{subsection.20.3}%
+\contentsline {subsection}{\numberline {20.4}Mean Empirical Risk Curves}{45}{subsection.20.4}%
+\contentsline {subsection}{\numberline {20.5}Precisions Top K}{45}{subsection.20.5}%
+\contentsline {subsection}{\numberline {20.6}Recalls Top K}{46}{subsection.20.6}%
+\contentsline {subsection}{\numberline {20.7}ROC Curves}{46}{subsection.20.7}%
+\contentsline {section}{\numberline {21}Meta Learning vs Shallow Models - Dementia Dataset}{46}{section.21}%
+\contentsline {subsection}{\numberline {21.1}Cost Sensitive Learning in Neural Networks}{46}{subsection.21.1}%
+\contentsline {subsection}{\numberline {21.2}Hyper Parameters}{48}{subsection.21.2}%
+\contentsline {subsection}{\numberline {21.3}Winning Hyper Parameters}{49}{subsection.21.3}%
+\contentsline {subsection}{\numberline {21.4}Quantitative Results - Without FP Growth}{50}{subsection.21.4}%
+\contentsline {subsection}{\numberline {21.5}Insights}{52}{subsection.21.5}%
+\contentsline {subsection}{\numberline {21.6}Quantitative Results - With FP Growth}{52}{subsection.21.6}%
+\contentsline {subsection}{\numberline {21.7}Insights}{54}{subsection.21.7}%
+\contentsline {subsection}{\numberline {21.8}Insights on With FP vs. Without FP}{54}{subsection.21.8}%
+\contentsline {subsection}{\numberline {21.9}Insights about PPV}{55}{subsection.21.9}%
+\contentsline {subsection}{\numberline {21.10}Qualitative Results}{55}{subsection.21.10}%
+\contentsline {subsection}{\numberline {21.11}Mean Empirical Risk Curves}{55}{subsection.21.11}%
+\contentsline {subsection}{\numberline {21.12}Precision at Top K}{57}{subsection.21.12}%
+\contentsline {subsection}{\numberline {21.13}Recall at Top K}{58}{subsection.21.13}%
+\contentsline {subsection}{\numberline {21.14}ROC Curves}{59}{subsection.21.14}%
