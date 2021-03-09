@@ -99,7 +99,7 @@ def get_hyper_parameters(outfile_name, fp=True):
                                                     'sampling_strategy': ss
                                                 }
                                                 count += 1
-
+    print('number of models: {}'.format(count))
     with open('{}.p'.format(outfile_name), 'wb') as f:
         pickle.dump(hyperparameters, f, pickle.HIGHEST_PROTOCOL)
 

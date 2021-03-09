@@ -16,12 +16,18 @@ warnings.filterwarnings("ignore")
 
 class AdvancedEvaluator:
 
-    def __init__(self, models_results, plots_output_folder, nb_bins=10):
+    def __init__(self, models_results, plots_output_folder, nb_bins=10,
+                 special_cases=None):
 
         self.models_results = {}
-        for metric in models_results:
-            for topn_model in models_results[metric]['topn_models']:
-                self.models_results[topn_model] = models_results[metric][topn_model]
+        if special_cases is None:
+            for metric in models_results:
+                for topn_model in models_results[metric]['topn_models']:
+                    self.models_results[topn_model] = models_results[metric][topn_model]
+        else:
+            metric = 'f2'
+            for sc in special_cases:
+                self.models_results[sc] = models_results[metric][sc]
 
         # self.models_results = models_results
         self.nb_bins = nb_bins
