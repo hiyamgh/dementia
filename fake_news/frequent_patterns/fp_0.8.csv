@@ -1,0 +1,4 @@
+frequent_patterns
+{'0.5<quoted_sources<1.0'}
+"{'0.5<quoted_sources<1.0', '0.0<factive_verbs<0.02'}"
+{'0.0<factive_verbs<0.02'}
