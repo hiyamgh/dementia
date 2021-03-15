@@ -68,10 +68,8 @@ if __name__ == '__main__':
     col_types = df.dtypes # Series object,
     # access by column name # int64 or float64 [col_name] == np.float64
 
-    # min_supps = [0.5, 0.6, 0.7, 0.8, 0.9]
-    min_supps = [0.9]
-    # supp = 0.8
-    # out_folder = 'fake_news_fps/'
+    min_supps = [0.5, 0.6, 0.7, 0.8, 0.9]
+
     out_folder = 'fake_news_fps_colsmeta/'
 
     if not os.path.exists(out_folder):
@@ -84,28 +82,3 @@ if __name__ == '__main__':
             pickle.dump(freqItemSet, handle, protocol=pickle.HIGHEST_PROTOCOL)
         with open(os.path.join(out_folder, 'colsmeta_fakenews_{}.pickle'.format(supp)), 'wb') as handle:
             pickle.dump(cols_meta, handle, protocol=pickle.HIGHEST_PROTOCOL)
-
-    # for supp in min_supps:
-    #     itemSetList = []
-    #     print('len of df: {}'.format(len(df)))
-    #     for index, row in df.iterrows():
-    #         curr_items = []
-    #         for col in df_cols:
-    #             if col_types[col] == np.float64:
-    #                 val = float(row[col])
-    #             else:
-    #                 val = int(row[col])
-    #             curr_items.append('{}={}'.format(col, val))
-    #
-    #         itemSetList.append(curr_items)
-    #
-    #     freqItemSet, rules = fpgrowth(itemSetList, minSupRatio=supp, minConf=supp)
-    #     if freqItemSet:
-    #         print('Frequent patterns: ')
-    #         for fp in freqItemSet:
-    #             print(fp)
-    #
-    #     with open(os.path.join(out_folder, 'fps_fakenews_{}.pickle'.format(supp)), 'wb') as handle:
-    #         pickle.dump(freqItemSet, handle, protocol=pickle.HIGHEST_PROTOCOL)
-    #
-    #     print('dumped {} into {}'.format('fps_fakenews_{}.pickle'.format(supp), out_folder))
