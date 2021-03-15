@@ -19,6 +19,7 @@
 \usepackage{longtable}
 \usepackage[T1]{fontenc}
 \usepackage[normalem]{ulem}
+\usepackage{footmisc}
 \useunder{\uline}{\ul}{}
 
 \title{Dementia}
@@ -80,11 +81,12 @@ Our data is now a mix of numerical and categorical features. For the numeric fea
 
 \item \textbf{cut\_off:} The cut off used to decide whether a feature's value is erroneous or not. The cut off was discovered manually by us for each feature.
 
-\item \textbf{color code:} a color code was applied to each feature to determine whether it belongs to the informant or not.
+\item \textbf{color code:} a color code was applied to each feature to determine whether it belongs to the informant or not. The features having the color code \textcolor{yellow}{yellow} are \textbf{informant}, the ones having the color code \textcolor{red}{red} are related to the \textbf{patient} himself/herself. \footnote{The dataset containing information about all numeric features can be found on our public repository on github: \url{https://github.com/hiyamgh/dementia/blob/master/input/codebooks/numeric.xlsx} \label{numeric_codebook}}
 \end{itemize} 
 
+
 \subsection{Informant and High Percentage of Missing}
-Most of the features associated with very high percentage of missing were directed to informants and related to the living conditions of the family, the house, income, cor-residents of the elderly, etc... which are not used by the SPSS algorithm to label the patients as demented or not (since they are not about the patients) For this reason, we dropped the questions that were about the household, informants, and co-residents
+Most of the features associated with very high percentage of missing were directed to informants and related to the living conditions of the family, the house, income, cor-residents of the elderly, etc... which are not used by the SPSS algorithm to label the patients as demented or not (since they are not about the patients) \textbf{For this reason, we dropped the questions that were about the household, informants, and co-residents}
 
 * informant is usually the caregiver of the interviewed elderly person
 
@@ -138,15 +140,16 @@ We followed the following steps in order to eliminate features with high percent
 \item From legal features, remove all children
 \end{enumerate} 
 
-\textbf{\textit{After doing the steps above, the number of \textcolor{blue}{numerical features} decreased from 542 to 257, all of which have 0\% missing (with the exception of 1 feature whcih has 50\% missing)}}
+\textbf{\textit{After doing the steps above, the number of \textcolor{blue}{numerical features} decreased from 542 to 257}}
 
 \subsection{Detecting Erroneous Values Inside Features}
+\label{sec:markerrneous}
 In our dataset, the categorical and ordinal values are encoded with numbers ranging from 1 to the length of the categories. therefore, since our categorical, ordinal, and numerical values are all numbers, we set cut-offs to determine erroneous values. 
 For some of the features, the erroneous values are straight forward to detect, based on the description for the question. These are the following:
 \begin{itemize}
-    \item age: some people enter the year, others enter the age. for this, if the value of both the numb as is or 2020 - the numb is more than 100, this means that the person is more than 100 years old which renders the age erroneous. For age, the cut-off was 100
-    \item helphour: number of hours per week the elderly needed help, therefore bounded by max numb of hours in a week
-    \item learn questions: the patient is supposed to repeat 3 words, bounded by the max numb of words: 3
+    \item \textbf{age}: some people enter the year, others enter the age. for this, if the value of both the numb as is or 2020 - the numb is more than 100, this means that the person is more than 100 years old which renders the age erroneous. For age, the cut-off was 100
+    \item \textbf{helphour}: number of hours per week the elderly needed help, therefore bounded by max numb of hours in a week
+    \item \textbf{learn questions}: the patient is supposed to repeat 3 words, bounded by the max numb of words: 3
 \end{itemize}
 For the rest of the categorical and ordinal values, we get the maximum number encoding for the question options from the options excel sheet based on which the interviewers selected these options. The cut-off is therefore the maximum number encoding a category. Were therefore label any value that is greater than the cut-off to be erroneous.
 
@@ -194,10 +197,42 @@ We try different scaling methods before we detect outliers, and we apply the out
 
 \noindent We realize that the outlier values, for the \textbf{ordinal} columns, happen to be the values \textit{8 and 9} which is normal because the values are either 0,1,2 or 8,9.
 
-\subsection{Feature Cross}
-Our data mostly consists of categorical/ordinal columns, and we have to find a way to solve these non-linearities such that it fairs better for the model's understanding of the features when we begin with the modelling phase. We generate the list of all possible feature crosses. 
+\subsection{Erroneous Codebook}
+All the work done in Section \ref{sec:numeric} is summarized in the a codebook which we called: erroneous codebook. \footnote{The erroneous codebook can be found here on our public github repository: \url{https://github.com/hiyamgh/dementia/blob/master/input/codebooks/erroneous_codebook_legal_outliers_filtered.csv}\label{err_codebook}}
 
-\noindent Feature crossing, will come after we 'one-hot encode' our data.
+The following is a description of each column in the codebook:
+\begin{enumerate}
+\item \textbf{COLUMN:} Name of the feature
+\item \textbf{data\_type:} type of the feature (specified manually by our team) numeric, ordinal, or categorical
+\item \textbf{theme:} The survey theme of the feature. Extracted from the Copy of dementia baseline questionnaire. \footnote{Copy of dementia survey can be found here on our public github repository: \url{https://github.com/hiyamgh/dementia/blob/master/input/~\%24Copy\%20of\%20Dementia_baseline_questionnaire_V1.xlsx}\label{copyof_codebook}}
+\item \textbf{description:} Description of the feature
+\item \textbf{frequencies}: the unique values in the feature and their frequency (in percentage)
+\item \textbf{perc\_missing:} percentage of missing values in the feature
+\item \textbf{erroneous}: the erroneous values in the feature, if any.
+\item \textbf{perc\_errnoneous:} percentage of erronous values, if any
+\item \textbf{cut\_off:} cut off value based on which we selected the erroneous values in a feature. This was done manually by our team (refer to Section \ref{sec:markerrneous} for more details)
+\item \textbf{outliers\_zscore:} percentage of outliers identified using z-score
+\item \textbf{outliers\_iqr:} percentage of outliers identified using IQR 
+\end{enumerate}
+
+\newpage
+\subsection{Data Preprocessing}
+Our legal features that we have filtered contain a mix of numeric, categorical, and ordinal features. By referring to the erroneous codebook \footref{err_codebook}, we have created all the features have missing values, we have done the following:
+
+
+\subsubsection{Imputing Missing Values}
+\begin{itemize}
+\item \textbf{Numeric \& Ordinal} We have imputed missing values using KNN Imputation
+\item \textbf{Categorical:} We have imputed missing values by creating a new category for the missing features. This decision is based on the fact that we cannot impute categorical features using KNN due to the discrete nature of categorical values.
+\end{itemize}
+
+\subsubsection{Scaling Features}
+Due to the discrete nature of values in the categorical features, \textbf{we scaled only the numeric and ordinal features}. We have used Robust Scaling from python's \textit{sklearn} module. Robust Scaling is well suited for features with outlier and we do have outliers.
+
+%\subsection{Feature Cross}
+%Our data mostly consists of categorical/ordinal columns, and we have to find a way to solve these non-linearities such that it fairs better for the model's understanding of the features when we begin with the modelling phase. We generate the list of all possible feature crosses. 
+%
+%\noindent Feature crossing, will come after we 'one-hot encode' our data.
 
 
 \section{Feature Selection}
