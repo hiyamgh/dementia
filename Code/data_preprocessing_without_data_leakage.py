@@ -60,6 +60,38 @@ def apply_knn_imputation(pooled_numerical_sub, n_neighbs=5):
     return pd.DataFrame(imputed, columns=all_cols)
 
 
+def replace_erroneous(df, erroneous, numeric, ordinal, categorical):
+    ''' Dr. Khalil: 17/3/2021: For the column ANIMALS_2 replace the erroneous by 10
+    (the highest threshold) as for the rest, consider them as missing.
+    This was for the top 20 column selected by feature importance
+    but we will do this for all the columns
+    '''
+    orig_df = df
+    replaced = pd.DataFrame()
+    num_ord_cat = numeric + ordinal + categorical
+    for col_name in num_ord_cat:
+        # get the erroneous values of this column
+        err_values = erroneous.loc[erroneous['COLUMN'] == col_name]['erroneous'].values[0]
+        if not isinstance(err_values, str):
+            if np.isnan(err_values):
+                replaced[col_name] = df[col_name]
+                continue
+            else:
+                print('oops, sth is wrong: {}'.format(err_values))
+        else:
+            col_values = list(df[col_name])
+            err_values = list(map(int, err_values.split(',')))
+            if col_name == 'ANIMALS_2': # replace the erroneous with 10, the highest threshold
+                col_values_replaced = [v if v not in err_values else 10 for v in col_values]
+            else:
+                col_values_replaced = [v if v not in err_values else np.nan for v in col_values]
+            replaced[col_name] = col_values_replaced
+
+    replaced['dem1066'] = df['dem1066']
+    print('before & after replacing erroneous, are they equal: {}'.format(orig_df.equals(replaced)))
+    return replaced
+
+
 def apply_one_hot_encoding(pooled_categorical_sub):
     all_cols = list(pooled_categorical_sub.columns)
     df = pooled_categorical_sub
@@ -156,11 +188,14 @@ if __name__ == '__main__':
 
         numeric, ordinal, categorical = get_columns(erroneous_codebook)
 
+        # replace erroneous values in columns by missing (except for ANIMALS_2)
+        pooled_legal_replaced = replace_erroneous(pooled_legal, erroneous_codebook, numeric, ordinal, categorical)
+
         # data subsets by data type + the target variable
-        numeric_df = pooled_legal[numeric]
-        ordinal_df = pooled_legal[ordinal]
-        categorical_df = pooled_legal[categorical]
-        target = pooled_legal[['dem1066']]
+        numeric_df = pooled_legal_replaced[numeric]
+        ordinal_df = pooled_legal_replaced[ordinal]
+        categorical_df = pooled_legal_replaced[categorical]
+        target = pooled_legal_replaced[['dem1066']]
 
         # according to the latest meeting, for the categorical
         # replace missing values by a new category for missing
