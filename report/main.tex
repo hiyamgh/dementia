@@ -215,7 +215,14 @@ The following is a description of each column in the codebook:
 \item \textbf{outliers\_iqr:} percentage of outliers identified using IQR 
 \end{enumerate}
 
-\newpage
+\subsection{Treating Erroneous Values}
+Erroneous values are there due to intentional/un-intentional errors made by surveyors. However, they cannot stay in the dataset because this will lead to building machine learning models that learned from erroneous data. In order to avoid this, we have done the following:
+\begin{enumerate}
+\item Marked all erroneous values, in each feature, as being missing
+\item Marked all erroneous values, in \textit{\textbf{ANIMALS\_2}} feature, with the value 10, which is the highest threshold.
+\end{enumerate}
+
+
 \subsection{Data Preprocessing}
 Our legal features that we have filtered contain a mix of numeric, categorical, and ordinal features. By referring to the erroneous codebook \footref{err_codebook}, we have created all the features have missing values, we have done the following:
 

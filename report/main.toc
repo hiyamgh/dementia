@@ -12,9 +12,10 @@
 \contentsline {subsection}{\numberline {3.7}Detecting Outliers}{9}{subsection.3.7}%
 \contentsline {subsection}{\numberline {3.8}Outlier Detection and Scaling}{9}{subsection.3.8}%
 \contentsline {subsection}{\numberline {3.9}Erroneous Codebook}{10}{subsection.3.9}%
-\contentsline {subsection}{\numberline {3.10}Data Preprocessing}{11}{subsection.3.10}%
-\contentsline {subsubsection}{\numberline {3.10.1}Imputing Missing Values}{11}{subsubsection.3.10.1}%
-\contentsline {subsubsection}{\numberline {3.10.2}Scaling Features}{11}{subsubsection.3.10.2}%
+\contentsline {subsection}{\numberline {3.10}Treating Erroneous Values}{10}{subsection.3.10}%
+\contentsline {subsection}{\numberline {3.11}Data Preprocessing}{11}{subsection.3.11}%
+\contentsline {subsubsection}{\numberline {3.11.1}Imputing Missing Values}{11}{subsubsection.3.11.1}%
+\contentsline {subsubsection}{\numberline {3.11.2}Scaling Features}{11}{subsubsection.3.11.2}%
 \contentsline {section}{\numberline {4}Feature Selection}{11}{section.4}%
 \contentsline {subsection}{\numberline {4.1}Decision Tree Feature Importance}{11}{subsection.4.1}%
 \contentsline {subsection}{\numberline {4.2}Select K Best Features}{11}{subsection.4.2}%

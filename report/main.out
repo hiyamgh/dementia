@@ -12,115 +12,116 @@
 \BOOKMARK [2][-]{subsection.3.7}{Detecting Outliers}{section.3}% 12
 \BOOKMARK [2][-]{subsection.3.8}{Outlier Detection and Scaling}{section.3}% 13
 \BOOKMARK [2][-]{subsection.3.9}{Erroneous Codebook}{section.3}% 14
-\BOOKMARK [2][-]{subsection.3.10}{Data Preprocessing}{section.3}% 15
-\BOOKMARK [3][-]{subsubsection.3.10.1}{Imputing Missing Values}{subsection.3.10}% 16
-\BOOKMARK [3][-]{subsubsection.3.10.2}{Scaling Features}{subsection.3.10}% 17
-\BOOKMARK [1][-]{section.4}{Feature Selection}{}% 18
-\BOOKMARK [2][-]{subsection.4.1}{Decision Tree Feature Importance}{section.4}% 19
-\BOOKMARK [2][-]{subsection.4.2}{Select K Best Features}{section.4}% 20
-\BOOKMARK [3][-]{subsubsection.4.2.1}{Deciding "K"}{subsection.4.2}% 21
-\BOOKMARK [3][-]{subsubsection.4.2.2}{Selecting K Best Features}{subsection.4.2}% 22
-\BOOKMARK [1][-]{section.5}{Oversampling and Undersampling}{}% 23
-\BOOKMARK [2][-]{subsection.5.1}{Dealing With Mixed Variables}{section.5}% 24
-\BOOKMARK [1][-]{section.6}{Cost-Sensitive Learning}{}% 25
-\BOOKMARK [2][-]{subsection.6.1}{Cost sensitive learning consists of the following steps:}{section.6}% 26
-\BOOKMARK [2][-]{subsection.6.2}{Tested sampling methods \(using SMOTENC's sampling\137strategy options\):}{section.6}% 27
-\BOOKMARK [2][-]{subsection.6.3}{Tested class\137weights: \(costs for each label\), combination of suggestions from book and built-in options:}{section.6}% 28
-\BOOKMARK [2][-]{subsection.6.4}{Probabilistic Models}{section.6}% 29
-\BOOKMARK [3][-]{subsubsection.6.4.1}{Grid Search For Optimal Probability Threshold}{subsection.6.4}% 30
-\BOOKMARK [3][-]{subsubsection.6.4.2}{Calibrated Models}{subsection.6.4}% 31
-\BOOKMARK [3][-]{subsubsection.6.4.3}{Balanced Random Forest Results}{subsection.6.4}% 32
-\BOOKMARK [3][-]{subsubsection.6.4.4}{Results}{subsection.6.4}% 33
-\BOOKMARK [3][-]{subsubsection.6.4.5}{Results With Top 10 Features}{subsection.6.4}% 34
-\BOOKMARK [3][-]{subsubsection.6.4.6}{Results With Top 20 Features}{subsection.6.4}% 35
-\BOOKMARK [2][-]{subsection.6.5}{Classfication Models}{section.6}% 36
-\BOOKMARK [3][-]{subsubsection.6.5.1}{Results}{subsection.6.5}% 37
-\BOOKMARK [3][-]{subsubsection.6.5.2}{Results With Top 10 Features}{subsection.6.5}% 38
-\BOOKMARK [3][-]{subsubsection.6.5.3}{Results With Top 20 Features}{subsection.6.5}% 39
-\BOOKMARK [2][-]{subsection.6.6}{One-Class Classification}{section.6}% 40
-\BOOKMARK [1][-]{section.7}{SHAP}{}% 41
-\BOOKMARK [2][-]{subsection.7.1}{Global SHAP Summary Values Results}{section.7}% 42
-\BOOKMARK [2][-]{subsection.7.2}{Global SHAP Interaction Values}{section.7}% 43
-\BOOKMARK [2][-]{subsection.7.3}{Multi-output Decision Plot for properly classified Rows}{section.7}% 44
-\BOOKMARK [2][-]{subsection.7.4}{Decision Plot for Miss-classified Row}{section.7}% 45
-\BOOKMARK [1][-]{section.8}{Chapter 6: Precision, Recall, and F-measure}{}% 46
-\BOOKMARK [1][-]{section.9}{Chapter 7:ROC Curves and Precision-Recall Curves}{}% 47
-\BOOKMARK [2][-]{subsection.9.1}{ROC Curve}{section.9}% 48
-\BOOKMARK [2][-]{subsection.9.2}{AUC}{section.9}% 49
-\BOOKMARK [1][-]{section.10}{Chapter 8: Probability Scoring Methods}{}% 50
-\BOOKMARK [2][-]{subsection.10.1}{Probability Metrics}{section.10}% 51
-\BOOKMARK [2][-]{subsection.10.2}{LogLoss Score}{section.10}% 52
-\BOOKMARK [1][-]{section.11}{Cross Validation for Imbalanced Datasets}{}% 53
-\BOOKMARK [1][-]{section.12}{Chapter 10}{}% 54
-\BOOKMARK [1][-]{section.13}{Chapter 12}{}% 55
-\BOOKMARK [2][-]{subsection.13.1}{Oversampling}{section.13}% 56
-\BOOKMARK [2][-]{subsection.13.2}{Undersampling Techniques}{section.13}% 57
-\BOOKMARK [1][-]{section.14}{Data Transforms \(Hiyam\)}{}% 58
-\BOOKMARK [2][-]{subsection.14.1}{Scaling Numeric Data \(chapter 17\)}{section.14}% 59
-\BOOKMARK [2][-]{subsection.14.2}{Scaling Data with Outliers \(chapter 18\)}{section.14}% 60
-\BOOKMARK [2][-]{subsection.14.3}{How to Encode Categorical Data \(chapter 19\)}{section.14}% 61
-\BOOKMARK [2][-]{subsection.14.4}{How to Make Distributions Look More Gaussian \(chapter 20\)}{section.14}% 62
-\BOOKMARK [1][-]{section.15}{Data Pre-Pocessing}{}% 63
-\BOOKMARK [2][-]{subsection.15.1}{Imputing Missing Values - Categorical Features}{section.15}% 64
-\BOOKMARK [2][-]{subsection.15.2}{Imputing Missing Values - Numerical/Ordinal Features}{section.15}% 65
-\BOOKMARK [2][-]{subsection.15.3}{Scaling - Numeric/Ordinal Features}{section.15}% 66
-\BOOKMARK [2][-]{subsection.15.4}{Scaling - Categorical Features}{section.15}% 67
-\BOOKMARK [1][-]{section.16}{Imputing Numerical Missing Data}{}% 68
-\BOOKMARK [2][-]{subsection.16.1}{Statistical Imputation}{section.16}% 69
-\BOOKMARK [2][-]{subsection.16.2}{K Nearest Neighbors}{section.16}% 70
-\BOOKMARK [2][-]{subsection.16.3}{Iterative Imputation}{section.16}% 71
-\BOOKMARK [1][-]{section.17}{Imputing Categorical Missing Data}{}% 72
-\BOOKMARK [2][-]{subsection.17.1}{Mean Imputation}{section.17}% 73
-\BOOKMARK [2][-]{subsection.17.2}{Imputation Using Most Frequent or \(Zero/Constant Values\)}{section.17}% 74
-\BOOKMARK [2][-]{subsection.17.3}{Create a New Category \(Random Category\) for NAN Values}{section.17}% 75
-\BOOKMARK [2][-]{subsection.17.4}{ Adding a Variable To Capture NAN}{section.17}% 76
-\BOOKMARK [2][-]{subsection.17.5}{Imputation Using Deep Learning \(Datawig\)}{section.17}% 77
-\BOOKMARK [2][-]{subsection.17.6}{Regression Imputation}{section.17}% 78
-\BOOKMARK [2][-]{subsection.17.7}{Imputation Using Interpolation}{section.17}% 79
-\BOOKMARK [2][-]{subsection.17.8}{Multivariate Normal Imputation \(MNVI\)}{section.17}% 80
-\BOOKMARK [2][-]{subsection.17.9}{Multiple Imputation by Chained Equations \(MICE\)}{section.17}% 81
-\BOOKMARK [2][-]{subsection.17.10}{Stochastic regression imputation:}{section.17}% 82
-\BOOKMARK [2][-]{subsection.17.11}{Extrapolation and Interpolation:}{section.17}% 83
-\BOOKMARK [2][-]{subsection.17.12}{Hot-Deck Imputation}{section.17}% 84
-\BOOKMARK [2][-]{subsection.17.13}{Some papers for handling missing categorical data \(did not read them at length \205 just the abstract\)}{section.17}% 85
-\BOOKMARK [1][-]{section.18}{Advanced ML Evaluation Techniques}{}% 86
-\BOOKMARK [2][-]{subsection.18.1}{Analysis of Predictive Models}{section.18}% 87
-\BOOKMARK [2][-]{subsection.18.2}{Evaluation Using Traditional Metrics}{section.18}% 88
-\BOOKMARK [2][-]{subsection.18.3}{Problem with Standard Evaluation Metrics}{section.18}% 89
-\BOOKMARK [2][-]{subsection.18.4}{Solution: Risk Estimates}{section.18}% 90
-\BOOKMARK [2][-]{subsection.18.5}{Ensuring Quality Of Risk Estimates}{section.18}% 91
-\BOOKMARK [3][-]{subsubsection.18.5.1}{From Models to Risk Estimates}{subsection.18.5}% 92
-\BOOKMARK [3][-]{subsubsection.18.5.2}{Measuring the Goodness of Risk Scores}{subsection.18.5}% 93
-\BOOKMARK [3][-]{subsubsection.18.5.3}{Comparative Evaluation of Risk Estimates}{subsection.18.5}% 94
-\BOOKMARK [2][-]{subsection.18.6}{Interpreting Classifier Outputs - FP Growth}{section.18}% 95
-\BOOKMARK [2][-]{subsection.18.7}{Technicalities}{section.18}% 96
-\BOOKMARK [2][-]{subsection.18.8}{Characterizing Prediction Mistakes}{section.18}% 97
-\BOOKMARK [2][-]{subsection.18.9}{Comparing Classifier Predictions}{section.18}% 98
-\BOOKMARK [1][-]{section.19}{Model Agnostic Meta Learning \(MAML by Chelsea Finn\)}{}% 99
-\BOOKMARK [2][-]{subsection.19.1}{Code Modifications}{section.19}% 100
-\BOOKMARK [2][-]{subsection.19.2}{Modification of Data Generation Process}{section.19}% 101
-\BOOKMARK [2][-]{subsection.19.3}{Incorporating FP Growth}{section.19}% 102
-\BOOKMARK [2][-]{subsection.19.4}{Results}{section.19}% 103
-\BOOKMARK [1][-]{section.20}{Meta Learning Vs. Shallow Models - FAKES}{}% 104
-\BOOKMARK [2][-]{subsection.20.1}{Methodology}{section.20}% 105
-\BOOKMARK [2][-]{subsection.20.2}{Quantitative Results}{section.20}% 106
-\BOOKMARK [2][-]{subsection.20.3}{Qualitative Results}{section.20}% 107
-\BOOKMARK [2][-]{subsection.20.4}{Mean Empirical Risk Curves}{section.20}% 108
-\BOOKMARK [2][-]{subsection.20.5}{Precisions Top K}{section.20}% 109
-\BOOKMARK [2][-]{subsection.20.6}{Recalls Top K}{section.20}% 110
-\BOOKMARK [2][-]{subsection.20.7}{ROC Curves}{section.20}% 111
-\BOOKMARK [1][-]{section.21}{Meta Learning vs Shallow Models - Dementia Dataset}{}% 112
-\BOOKMARK [2][-]{subsection.21.1}{Cost Sensitive Learning in Neural Networks}{section.21}% 113
-\BOOKMARK [2][-]{subsection.21.2}{Hyper Parameters}{section.21}% 114
-\BOOKMARK [2][-]{subsection.21.3}{Winning Hyper Parameters}{section.21}% 115
-\BOOKMARK [2][-]{subsection.21.4}{Quantitative Results - Without FP Growth}{section.21}% 116
-\BOOKMARK [2][-]{subsection.21.5}{Insights}{section.21}% 117
-\BOOKMARK [2][-]{subsection.21.6}{Quantitative Results - With FP Growth}{section.21}% 118
-\BOOKMARK [2][-]{subsection.21.7}{Insights}{section.21}% 119
-\BOOKMARK [2][-]{subsection.21.8}{Insights on With FP vs. Without FP}{section.21}% 120
-\BOOKMARK [2][-]{subsection.21.9}{Insights about PPV}{section.21}% 121
-\BOOKMARK [2][-]{subsection.21.10}{Qualitative Results}{section.21}% 122
-\BOOKMARK [2][-]{subsection.21.11}{Mean Empirical Risk Curves}{section.21}% 123
-\BOOKMARK [2][-]{subsection.21.12}{Precision at Top K}{section.21}% 124
-\BOOKMARK [2][-]{subsection.21.13}{Recall at Top K}{section.21}% 125
-\BOOKMARK [2][-]{subsection.21.14}{ROC Curves}{section.21}% 126
+\BOOKMARK [2][-]{subsection.3.10}{Treating Erroneous Values}{section.3}% 15
+\BOOKMARK [2][-]{subsection.3.11}{Data Preprocessing}{section.3}% 16
+\BOOKMARK [3][-]{subsubsection.3.11.1}{Imputing Missing Values}{subsection.3.11}% 17
+\BOOKMARK [3][-]{subsubsection.3.11.2}{Scaling Features}{subsection.3.11}% 18
+\BOOKMARK [1][-]{section.4}{Feature Selection}{}% 19
+\BOOKMARK [2][-]{subsection.4.1}{Decision Tree Feature Importance}{section.4}% 20
+\BOOKMARK [2][-]{subsection.4.2}{Select K Best Features}{section.4}% 21
+\BOOKMARK [3][-]{subsubsection.4.2.1}{Deciding "K"}{subsection.4.2}% 22
+\BOOKMARK [3][-]{subsubsection.4.2.2}{Selecting K Best Features}{subsection.4.2}% 23
+\BOOKMARK [1][-]{section.5}{Oversampling and Undersampling}{}% 24
+\BOOKMARK [2][-]{subsection.5.1}{Dealing With Mixed Variables}{section.5}% 25
+\BOOKMARK [1][-]{section.6}{Cost-Sensitive Learning}{}% 26
+\BOOKMARK [2][-]{subsection.6.1}{Cost sensitive learning consists of the following steps:}{section.6}% 27
+\BOOKMARK [2][-]{subsection.6.2}{Tested sampling methods \(using SMOTENC's sampling\137strategy options\):}{section.6}% 28
+\BOOKMARK [2][-]{subsection.6.3}{Tested class\137weights: \(costs for each label\), combination of suggestions from book and built-in options:}{section.6}% 29
+\BOOKMARK [2][-]{subsection.6.4}{Probabilistic Models}{section.6}% 30
+\BOOKMARK [3][-]{subsubsection.6.4.1}{Grid Search For Optimal Probability Threshold}{subsection.6.4}% 31
+\BOOKMARK [3][-]{subsubsection.6.4.2}{Calibrated Models}{subsection.6.4}% 32
+\BOOKMARK [3][-]{subsubsection.6.4.3}{Balanced Random Forest Results}{subsection.6.4}% 33
+\BOOKMARK [3][-]{subsubsection.6.4.4}{Results}{subsection.6.4}% 34
+\BOOKMARK [3][-]{subsubsection.6.4.5}{Results With Top 10 Features}{subsection.6.4}% 35
+\BOOKMARK [3][-]{subsubsection.6.4.6}{Results With Top 20 Features}{subsection.6.4}% 36
+\BOOKMARK [2][-]{subsection.6.5}{Classfication Models}{section.6}% 37
+\BOOKMARK [3][-]{subsubsection.6.5.1}{Results}{subsection.6.5}% 38
+\BOOKMARK [3][-]{subsubsection.6.5.2}{Results With Top 10 Features}{subsection.6.5}% 39
+\BOOKMARK [3][-]{subsubsection.6.5.3}{Results With Top 20 Features}{subsection.6.5}% 40
+\BOOKMARK [2][-]{subsection.6.6}{One-Class Classification}{section.6}% 41
+\BOOKMARK [1][-]{section.7}{SHAP}{}% 42
+\BOOKMARK [2][-]{subsection.7.1}{Global SHAP Summary Values Results}{section.7}% 43
+\BOOKMARK [2][-]{subsection.7.2}{Global SHAP Interaction Values}{section.7}% 44
+\BOOKMARK [2][-]{subsection.7.3}{Multi-output Decision Plot for properly classified Rows}{section.7}% 45
+\BOOKMARK [2][-]{subsection.7.4}{Decision Plot for Miss-classified Row}{section.7}% 46
+\BOOKMARK [1][-]{section.8}{Chapter 6: Precision, Recall, and F-measure}{}% 47
+\BOOKMARK [1][-]{section.9}{Chapter 7:ROC Curves and Precision-Recall Curves}{}% 48
+\BOOKMARK [2][-]{subsection.9.1}{ROC Curve}{section.9}% 49
+\BOOKMARK [2][-]{subsection.9.2}{AUC}{section.9}% 50
+\BOOKMARK [1][-]{section.10}{Chapter 8: Probability Scoring Methods}{}% 51
+\BOOKMARK [2][-]{subsection.10.1}{Probability Metrics}{section.10}% 52
+\BOOKMARK [2][-]{subsection.10.2}{LogLoss Score}{section.10}% 53
+\BOOKMARK [1][-]{section.11}{Cross Validation for Imbalanced Datasets}{}% 54
+\BOOKMARK [1][-]{section.12}{Chapter 10}{}% 55
+\BOOKMARK [1][-]{section.13}{Chapter 12}{}% 56
+\BOOKMARK [2][-]{subsection.13.1}{Oversampling}{section.13}% 57
+\BOOKMARK [2][-]{subsection.13.2}{Undersampling Techniques}{section.13}% 58
+\BOOKMARK [1][-]{section.14}{Data Transforms \(Hiyam\)}{}% 59
+\BOOKMARK [2][-]{subsection.14.1}{Scaling Numeric Data \(chapter 17\)}{section.14}% 60
+\BOOKMARK [2][-]{subsection.14.2}{Scaling Data with Outliers \(chapter 18\)}{section.14}% 61
+\BOOKMARK [2][-]{subsection.14.3}{How to Encode Categorical Data \(chapter 19\)}{section.14}% 62
+\BOOKMARK [2][-]{subsection.14.4}{How to Make Distributions Look More Gaussian \(chapter 20\)}{section.14}% 63
+\BOOKMARK [1][-]{section.15}{Data Pre-Pocessing}{}% 64
+\BOOKMARK [2][-]{subsection.15.1}{Imputing Missing Values - Categorical Features}{section.15}% 65
+\BOOKMARK [2][-]{subsection.15.2}{Imputing Missing Values - Numerical/Ordinal Features}{section.15}% 66
+\BOOKMARK [2][-]{subsection.15.3}{Scaling - Numeric/Ordinal Features}{section.15}% 67
+\BOOKMARK [2][-]{subsection.15.4}{Scaling - Categorical Features}{section.15}% 68
+\BOOKMARK [1][-]{section.16}{Imputing Numerical Missing Data}{}% 69
+\BOOKMARK [2][-]{subsection.16.1}{Statistical Imputation}{section.16}% 70
+\BOOKMARK [2][-]{subsection.16.2}{K Nearest Neighbors}{section.16}% 71
+\BOOKMARK [2][-]{subsection.16.3}{Iterative Imputation}{section.16}% 72
+\BOOKMARK [1][-]{section.17}{Imputing Categorical Missing Data}{}% 73
+\BOOKMARK [2][-]{subsection.17.1}{Mean Imputation}{section.17}% 74
+\BOOKMARK [2][-]{subsection.17.2}{Imputation Using Most Frequent or \(Zero/Constant Values\)}{section.17}% 75
+\BOOKMARK [2][-]{subsection.17.3}{Create a New Category \(Random Category\) for NAN Values}{section.17}% 76
+\BOOKMARK [2][-]{subsection.17.4}{ Adding a Variable To Capture NAN}{section.17}% 77
+\BOOKMARK [2][-]{subsection.17.5}{Imputation Using Deep Learning \(Datawig\)}{section.17}% 78
+\BOOKMARK [2][-]{subsection.17.6}{Regression Imputation}{section.17}% 79
+\BOOKMARK [2][-]{subsection.17.7}{Imputation Using Interpolation}{section.17}% 80
+\BOOKMARK [2][-]{subsection.17.8}{Multivariate Normal Imputation \(MNVI\)}{section.17}% 81
+\BOOKMARK [2][-]{subsection.17.9}{Multiple Imputation by Chained Equations \(MICE\)}{section.17}% 82
+\BOOKMARK [2][-]{subsection.17.10}{Stochastic regression imputation:}{section.17}% 83
+\BOOKMARK [2][-]{subsection.17.11}{Extrapolation and Interpolation:}{section.17}% 84
+\BOOKMARK [2][-]{subsection.17.12}{Hot-Deck Imputation}{section.17}% 85
+\BOOKMARK [2][-]{subsection.17.13}{Some papers for handling missing categorical data \(did not read them at length \205 just the abstract\)}{section.17}% 86
+\BOOKMARK [1][-]{section.18}{Advanced ML Evaluation Techniques}{}% 87
+\BOOKMARK [2][-]{subsection.18.1}{Analysis of Predictive Models}{section.18}% 88
+\BOOKMARK [2][-]{subsection.18.2}{Evaluation Using Traditional Metrics}{section.18}% 89
+\BOOKMARK [2][-]{subsection.18.3}{Problem with Standard Evaluation Metrics}{section.18}% 90
+\BOOKMARK [2][-]{subsection.18.4}{Solution: Risk Estimates}{section.18}% 91
+\BOOKMARK [2][-]{subsection.18.5}{Ensuring Quality Of Risk Estimates}{section.18}% 92
+\BOOKMARK [3][-]{subsubsection.18.5.1}{From Models to Risk Estimates}{subsection.18.5}% 93
+\BOOKMARK [3][-]{subsubsection.18.5.2}{Measuring the Goodness of Risk Scores}{subsection.18.5}% 94
+\BOOKMARK [3][-]{subsubsection.18.5.3}{Comparative Evaluation of Risk Estimates}{subsection.18.5}% 95
+\BOOKMARK [2][-]{subsection.18.6}{Interpreting Classifier Outputs - FP Growth}{section.18}% 96
+\BOOKMARK [2][-]{subsection.18.7}{Technicalities}{section.18}% 97
+\BOOKMARK [2][-]{subsection.18.8}{Characterizing Prediction Mistakes}{section.18}% 98
+\BOOKMARK [2][-]{subsection.18.9}{Comparing Classifier Predictions}{section.18}% 99
+\BOOKMARK [1][-]{section.19}{Model Agnostic Meta Learning \(MAML by Chelsea Finn\)}{}% 100
+\BOOKMARK [2][-]{subsection.19.1}{Code Modifications}{section.19}% 101
+\BOOKMARK [2][-]{subsection.19.2}{Modification of Data Generation Process}{section.19}% 102
+\BOOKMARK [2][-]{subsection.19.3}{Incorporating FP Growth}{section.19}% 103
+\BOOKMARK [2][-]{subsection.19.4}{Results}{section.19}% 104
+\BOOKMARK [1][-]{section.20}{Meta Learning Vs. Shallow Models - FAKES}{}% 105
+\BOOKMARK [2][-]{subsection.20.1}{Methodology}{section.20}% 106
+\BOOKMARK [2][-]{subsection.20.2}{Quantitative Results}{section.20}% 107
+\BOOKMARK [2][-]{subsection.20.3}{Qualitative Results}{section.20}% 108
+\BOOKMARK [2][-]{subsection.20.4}{Mean Empirical Risk Curves}{section.20}% 109
+\BOOKMARK [2][-]{subsection.20.5}{Precisions Top K}{section.20}% 110
+\BOOKMARK [2][-]{subsection.20.6}{Recalls Top K}{section.20}% 111
+\BOOKMARK [2][-]{subsection.20.7}{ROC Curves}{section.20}% 112
+\BOOKMARK [1][-]{section.21}{Meta Learning vs Shallow Models - Dementia Dataset}{}% 113
+\BOOKMARK [2][-]{subsection.21.1}{Cost Sensitive Learning in Neural Networks}{section.21}% 114
+\BOOKMARK [2][-]{subsection.21.2}{Hyper Parameters}{section.21}% 115
+\BOOKMARK [2][-]{subsection.21.3}{Winning Hyper Parameters}{section.21}% 116
+\BOOKMARK [2][-]{subsection.21.4}{Quantitative Results - Without FP Growth}{section.21}% 117
+\BOOKMARK [2][-]{subsection.21.5}{Insights}{section.21}% 118
+\BOOKMARK [2][-]{subsection.21.6}{Quantitative Results - With FP Growth}{section.21}% 119
+\BOOKMARK [2][-]{subsection.21.7}{Insights}{section.21}% 120
+\BOOKMARK [2][-]{subsection.21.8}{Insights on With FP vs. Without FP}{section.21}% 121
+\BOOKMARK [2][-]{subsection.21.9}{Insights about PPV}{section.21}% 122
+\BOOKMARK [2][-]{subsection.21.10}{Qualitative Results}{section.21}% 123
+\BOOKMARK [2][-]{subsection.21.11}{Mean Empirical Risk Curves}{section.21}% 124
+\BOOKMARK [2][-]{subsection.21.12}{Precision at Top K}{section.21}% 125
+\BOOKMARK [2][-]{subsection.21.13}{Recall at Top K}{section.21}% 126
+\BOOKMARK [2][-]{subsection.21.14}{ROC Curves}{section.21}% 127
