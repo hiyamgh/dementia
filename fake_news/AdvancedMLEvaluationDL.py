@@ -1,24 +1,40 @@
+'''
+author: Hiyam K. Ghannam
+email: hkg02@mail.aub.edu
+'''
+
 import pandas as pd
-import numpy as np
 import os
-import pickle
 import itertools
 import matplotlib
-
 matplotlib.use('Agg')
 import matplotlib.pyplot as plt
 from sklearn.metrics import *
-from fpgrowth_py import fpgrowth
 import warnings
-
 warnings.filterwarnings("ignore")
+
+
+def mkdir(folder):
+    ''' create a directory of specified path if it does not already exist '''
+    if not os.path.exists(folder):
+        os.makedirs(folder)
 
 
 class AdvancedEvaluator:
 
-    def __init__(self, models_results, plots_output_folder, nb_bins=10,
-                 special_cases=None):
+    def __init__(self, models_results, plots_output_folder, fps, df_test, nb_bins=10, special_cases=None):
+        '''
+        Main class for running Advanced ML Evaluation, inspired by: https://dl.acm.org/doi/10.1145/2783258.2788620
+        :param models_results: the risk dfs attached per maml model
+        :param plots_output_folder: the name of the output folder
+        :param fps: the collection of frequent patterns, one per minimum support
+        :param df_test: the testing dataset
+        :param nb_bins: number of bins for mean empirical risk curves, be default 10
+        :param special_cases: special models of interest, by default, None.
+        '''
 
+        self.fps = fps # list of frequent patterns
+        self.df_test = df_test
         self.models_results = {}
         if special_cases is None:
             for metric in models_results:
@@ -163,3 +179,59 @@ class AdvancedEvaluator:
                 plt.ylabel('Recall')
                 plt.savefig(os.path.join(self.plots_output_folder, 'recalls_topK.png'))
             plt.close()
+
+    def _create_mistake(self, row):
+        if row['y_test'] == row['y_pred']:
+            return 0
+        return 1
+    
+    def _get_row_indices(self, fp, df_test):
+        indexes = []
+        # lower bound, column/feature name, upper bound
+        lb, col_name, ub = float(fp.split('<')[0]), fp.split('<')[1], float(fp.split('<')[2])
+        for i, row in df_test.iterrows():
+            if lb <= row[col_name] <= ub:
+                indexes.append(i)
+        
+        return indexes
+        
+    def characterize_prediction_mistakes(self, out_folder):
+        for model_name_num in self.models_results:
+            # already sorted
+            risk_df = self.models_results[model_name_num]['risk_df']
+            # create a new field called mistake, set this field to 1 for those data points
+            # where the prediction of the classification model does not match ground truth,
+            # else, set this field to zero
+            risk_df['mistake'] = risk_df.apply(self._create_mistake, axis=1)
+            # for each frequent pattern, generate probability of mistake, this can
+            # be done by iterating over all data points where the pattern holds true and
+            # computing the fraction of these data points where the mistake field is
+            # set to 1
+            fp_prob_mistakes = pd.DataFrame(columns=['frequent_pattern', 'prob_of_mistake'])
+            mkdir(out_folder)
+            for fp in self.fps:
+                # a frequent pattern may have more than one rule, so:
+                mistakesare1 = []
+                for r in fp:
+                    # get the indices of rows that have the rule/fp (the rows in testing dataset, of course)
+                    indexes = self._get_row_indices(r, df_test=self.df_test)
+                    # get those indices that have mistake = 1
+                    mistakeis1 = [int(row['test_indices']) for _, row in risk_df.iterrows() if row['mistake'] == 1 and int(row['test_indices']) in indexes]
+                    mistakesare1.append(mistakeis1)
+
+                results_union = set().union(*mistakesare1)
+                # but the risk_df has repeated testing indices due to query_set repetitions (num_updates)
+                # //TODO check which is the appropriate 'len' to divide by for getting the probability of mistake
+                prob_of_mistake = len(results_union) / len(risk_df) * 100
+                fp_prob_mistakes = fp_prob_mistakes.append({
+                    'frequent_pattern': fp,
+                    'prob_of_mistake':  '{:.2f}'.format(prob_of_mistake)
+                }, ignore_index=True)
+
+            fp_prob_mistakes = fp_prob_mistakes.sort_values(by='prob_of_mistakes')
+            fp_prob_mistakes.to_csv(os.path.join(out_folder, '{}_prob_mistakes.csv').format(model_name_num))
+
+                    
+
+
+
