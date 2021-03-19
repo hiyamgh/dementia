@@ -104,24 +104,29 @@
 \BOOKMARK [2][-]{subsection.19.4}{Results}{section.19}% 104
 \BOOKMARK [1][-]{section.20}{Meta Learning Vs. Shallow Models - FAKES}{}% 105
 \BOOKMARK [2][-]{subsection.20.1}{Methodology}{section.20}% 106
-\BOOKMARK [2][-]{subsection.20.2}{Quantitative Results}{section.20}% 107
-\BOOKMARK [2][-]{subsection.20.3}{Qualitative Results}{section.20}% 108
-\BOOKMARK [2][-]{subsection.20.4}{Mean Empirical Risk Curves}{section.20}% 109
-\BOOKMARK [2][-]{subsection.20.5}{Precisions Top K}{section.20}% 110
-\BOOKMARK [2][-]{subsection.20.6}{Recalls Top K}{section.20}% 111
-\BOOKMARK [2][-]{subsection.20.7}{ROC Curves}{section.20}% 112
-\BOOKMARK [1][-]{section.21}{Meta Learning vs Shallow Models - Dementia Dataset}{}% 113
-\BOOKMARK [2][-]{subsection.21.1}{Cost Sensitive Learning in Neural Networks}{section.21}% 114
-\BOOKMARK [2][-]{subsection.21.2}{Hyper Parameters}{section.21}% 115
-\BOOKMARK [2][-]{subsection.21.3}{Winning Hyper Parameters}{section.21}% 116
-\BOOKMARK [2][-]{subsection.21.4}{Quantitative Results - Without FP Growth}{section.21}% 117
-\BOOKMARK [2][-]{subsection.21.5}{Insights}{section.21}% 118
-\BOOKMARK [2][-]{subsection.21.6}{Quantitative Results - With FP Growth}{section.21}% 119
-\BOOKMARK [2][-]{subsection.21.7}{Insights}{section.21}% 120
-\BOOKMARK [2][-]{subsection.21.8}{Insights on With FP vs. Without FP}{section.21}% 121
-\BOOKMARK [2][-]{subsection.21.9}{Insights about PPV}{section.21}% 122
-\BOOKMARK [2][-]{subsection.21.10}{Qualitative Results}{section.21}% 123
-\BOOKMARK [2][-]{subsection.21.11}{Mean Empirical Risk Curves}{section.21}% 124
-\BOOKMARK [2][-]{subsection.21.12}{Precision at Top K}{section.21}% 125
-\BOOKMARK [2][-]{subsection.21.13}{Recall at Top K}{section.21}% 126
-\BOOKMARK [2][-]{subsection.21.14}{ROC Curves}{section.21}% 127
+\BOOKMARK [2][-]{subsection.20.2}{Frequent Patterns \046 FP Growth}{section.20}% 107
+\BOOKMARK [2][-]{subsection.20.3}{Hyperparameters}{section.20}% 108
+\BOOKMARK [2][-]{subsection.20.4}{Winning Hyper Parameters}{section.20}% 109
+\BOOKMARK [2][-]{subsection.20.5}{Quantitative Results}{section.20}% 110
+\BOOKMARK [2][-]{subsection.20.6}{Qualitative Results}{section.20}% 111
+\BOOKMARK [2][-]{subsection.20.7}{Mean Empirical Risk Curves}{section.20}% 112
+\BOOKMARK [2][-]{subsection.20.8}{Precisions Top K}{section.20}% 113
+\BOOKMARK [2][-]{subsection.20.9}{Recalls Top K}{section.20}% 114
+\BOOKMARK [2][-]{subsection.20.10}{ROC Curves}{section.20}% 115
+\BOOKMARK [2][-]{subsection.20.11}{Characterizing Prediction Mistakes}{section.20}% 116
+\BOOKMARK [2][-]{subsection.20.12}{Conclusion}{section.20}% 117
+\BOOKMARK [1][-]{section.21}{Meta Learning vs Shallow Models - Dementia Dataset}{}% 118
+\BOOKMARK [2][-]{subsection.21.1}{Cost Sensitive Learning in Neural Networks}{section.21}% 119
+\BOOKMARK [2][-]{subsection.21.2}{Hyper Parameters}{section.21}% 120
+\BOOKMARK [2][-]{subsection.21.3}{Winning Hyper Parameters}{section.21}% 121
+\BOOKMARK [2][-]{subsection.21.4}{Quantitative Results - Without FP Growth}{section.21}% 122
+\BOOKMARK [2][-]{subsection.21.5}{Insights}{section.21}% 123
+\BOOKMARK [2][-]{subsection.21.6}{Quantitative Results - With FP Growth}{section.21}% 124
+\BOOKMARK [2][-]{subsection.21.7}{Insights}{section.21}% 125
+\BOOKMARK [2][-]{subsection.21.8}{Insights on With FP vs. Without FP}{section.21}% 126
+\BOOKMARK [2][-]{subsection.21.9}{Insights about PPV}{section.21}% 127
+\BOOKMARK [2][-]{subsection.21.10}{Qualitative Results}{section.21}% 128
+\BOOKMARK [2][-]{subsection.21.11}{Mean Empirical Risk Curves}{section.21}% 129
+\BOOKMARK [2][-]{subsection.21.12}{Precision at Top K}{section.21}% 130
+\BOOKMARK [2][-]{subsection.21.13}{Recall at Top K}{section.21}% 131
+\BOOKMARK [2][-]{subsection.21.14}{ROC Curves}{section.21}% 132

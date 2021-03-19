@@ -1061,6 +1061,104 @@ Therefore, when we report testing results, we report it by averaging across the 
     \item We do shap on the ones we like the most
 \end{enumerate}
 
+\subsection{Frequent Patterns \& FP Growth}
+\label{sec:fp_itemset_transformation}
+We will be incorporating FP Growth technique into our meta learning exercise. FP Growth algorithm generates the frequent itemsets according to a minimum support defined by the user. The FP Growth algorithm, therefore, expects a dataset of items transaction. Imagine this as having two columns, one that contains the transaction ID, the second that contains the list of items in the transaction. 
+
+\subsubsection*{Having a non-transaction dataset}
+Our dataset, however, is not a transaction dataset. Our input column are all of numeric features (continuous), thus, they differ from the transaction data were each row is just a list of items. The best  way we thought about this, is to create groupings of our data. For that, please see Table \ref{Tab:df_desc_fakes} below.
+
+\begin{table}[H]
+\resizebox{.5\width}{!}{\input{\detokenize{tables/df_description}}}
+\caption{Statistics about each column in FA-KES}
+\label{Tab:df_desc_fakes}
+\end{table}
+
+In the table above, we get some descriptive statistics about each column/feature (min, and the percentiles: 25th, 50th, 75th, and max. Along with mean and standard deviation). We have created four groupings:
+\begin{enumerate}
+\item \textit{min - 25th}: all values that fall between min and 25th percentile
+\item \textit{25th - 50th}: all values that fall between 25th and 50th percentile
+\item \textit{50th - 75th}: all values that fall between 50th and 75th percentile
+\item \textit{75th - max}: all values that fall between 75th and the max value
+\end{enumerate}
+
+We created these groupings because if we leave the values as is in the data, it will be hard for the FP Growth algorithm to find any frequent patterns, due to the high variance of values per column, especially that we are dealing with numeric rather than categorical columns.
+
+Since we have the percentile values of each column/feature, we generated the following frequent patterns (per minimum support):
+
+\begin{table}[H]
+\input{\detokenize{tables/fp_05}}
+\caption{Frequent Patterns with 0.5 minimum support}
+\label{Tab:fp_05}
+\end{table}
+
+\begin{table}[H]
+\input{\detokenize{tables/fp_06}}
+\caption{Frequent Patterns with 0.6 minimum support}
+\label{Tab:fp_06}
+\end{table}
+
+\begin{table}[H]
+\input{\detokenize{tables/fp_07}}
+\caption{Frequent Patterns with 0.7 minimum support}
+\label{Tab:fp_07}
+\end{table}
+
+\begin{table}[H]
+\input{\detokenize{tables/fp_08}}
+\caption{Frequent Patterns with 0.8 minimum support}
+\label{Tab:fp_08}
+\end{table}
+
+\begin{table}[H]
+\input{\detokenize{tables/fp_09}}
+\caption{Frequent Patterns with 0.9 minimum support}
+\label{Tab:fp_09}
+\end{table}
+
+\subsubsection*{Representation of a Frequent Pattern}
+We realize that in tables \ref{Tab:fp_05}, \ref{Tab:fp_06}, \ref{Tab:fp_07}, \ref{Tab:fp_08}, \ref{Tab:fp_09} that the frequent pattern is represented as the column/feature name surrounded by the appropriate grouping. For example, one of the frequent patterns is 0.5 $<$ implicative\_verbs $<$ 0.0036. Realize that 0.5 is the 50th percentile of implicative\_verb and 0.0036 is the 75th percentile according to Table \ref{Tab:df_desc_fakes}
+
+
+Minimum support was part of our hyper parameter search space. In the following section, we display the list of hyper parameters we searched over.
+
+\subsection{Hyperparameters}
+\begin{table}[H]
+%\resizebox{.7\width}{!}
+{\input{\detokenize{tables/hyperparameters_fakes}}}
+\caption{Hyper Parameter Space}
+\label{Tab:hyperparameters}
+\end{table}
+
+\subsection{Winning Hyper Parameters}
+In Tables \ref{Tab:winning_hyperparameters_fakes_with_fp} and \ref{Tab:winning_hyperparameters_fakes_without_fp} below, we display the winning hyper parameters for the top 20 best MAML models trained and tested on FA-KES, with and without including sampling with frequent patterns, respectively. Each table contains the following information:
+\begin{itemize}
+\item \textbf{model:} the name of the winning model
+\item \textbf{miter:} the meta training iterations 
+\item \textbf{mbs:} the meta batch size
+\item \textbf{mlr:} the meta learning rate
+\item \textbf{ulr:} the update learning rate
+\item \textbf{dh:} dimensions hidden, i.e. the number of hidden layers and the number of nodes in each hidden layer. For example: \textit{128, 64} means that we have 2 hidden layers, the first having 128 nodes and the second having 64 nodes.
+\item \textbf{afn:} activation function.
+\item \textbf{nu:} number of testing updates. This is used by the meta learning code to repeat the evaluation on the query set, so here in this case, we evaluate the same query set 4 times for checking the generality of the results.
+\item \textbf{ifp:} a boolean variable of whether we are including sampling with frequent patterns or not. 1 means we are, 0 means we are not.
+\item \textbf{fp\_supp:} the minimum support used for discovering the frequent patterns.
+\end{itemize}
+\begin{table}[H]
+%\resizebox{.7\width}{!}
+{\input{\detokenize{tables/winning_fakes_with_fp}}}
+\caption{Winning Hyper Parameters with MAML trained and tested on the FA-KES dataset - Including Sampling with Frequent Patterns}
+\label{Tab:winning_hyperparameters_fakes_with_fp}
+\end{table}
+
+\begin{table}[H]
+%\resizebox{.7\width}{!}
+{\input{\detokenize{tables/winning_fakes_without_fp}}}
+\caption{Winning Hyper Parameters with MAML trained and tested on the FA-KES dataset - Without including sampling with Frequent Patterns}
+\label{Tab:winning_hyperparameters_fakes_without_fp}
+\end{table}
+
+
 
 \subsection{Quantitative Results}
 \subsubsection*{Without FP - Accuracy}
@@ -1079,7 +1177,22 @@ Therefore, when we report testing results, we report it by averaging across the 
 \label{Tab:fakenews_with_fp}
 \end{table}
 
-We realize that the results with FP are better.
+\subsubsection*{Shallow}
+\begin{table}[H]
+\begin{tabular}{|l|l|l|l|l|l|}
+\hline
+\textbf{model}          & \textbf{accuracy} & \textbf{precision} & \textbf{recall}   & \textbf{f1}       & \textbf{auc}      \\ \hline
+ada\_boost              & 0.863354          & 0.804124           & 0.962963          & 0.876404          & 0.862731          \\ \hline
+\textbf{decision\_tree} & \textbf{0.913043} & \textbf{0.894118}  & \textbf{0.938272} & \textbf{0.915663} & \textbf{0.912886} \\ \hline
+extra\_trees            & 0.857143          & 0.778846           & 1                 & 0.875676          & 0.85625           \\ \hline
+logistic\_regression    & 0.832298          & 0.764706           & 0.962963          & 0.852459          & 0.831481          \\ \hline
+random\_forest          & 0.857143          & 0.795918           & 0.962963          & 0.871508          & 0.856481          \\ \hline
+\end{tabular}
+\caption{Results - Shallow models}
+\label{Tab:fakenewsshallow}
+\end{table}
+
+We realize that the results with FP are better. And the MAML has better results than shallow (in terms of accuracy, precision, f1, and auc). The shallow model (decision tree) has a slightly higher recall.
 
 \subsection{Qualitative Results}
 \subsection{Mean Empirical Risk Curves}
@@ -1096,9 +1209,22 @@ We realize that the results with FP are better.
   \caption{Mean Empirical Risks for top 3 models - With FP}
   \label{fig:sub2}
 \end{subfigure}
-\caption{Mear Empirical Risks for top models - With FP}
+\caption{Mean Empirical Risks for top models - With FP}
 \label{fig:test}
 \end{figure}
+
+\begin{figure}[H]
+\centering
+  \includegraphics[width=.5\linewidth]{\detokenize{advanced_ml_plots_fn_shallow/mean_empirical_risks.png}}
+  \caption{Mean Empirical Risks for shallow models}
+  \label{fig:merc-shallow}
+\end{figure}
+
+In order to produce empirical risk curves, first, we rank the news by descending order of their estimated risk scores. We then group news into bins based on the percentiles they fall into when categorized using risk scores. In our experiments, we choose to create 10 bins. The bottom 10\% of news who have the least risk are grouped into a single bin. Those that rank between 10th and 20th percentile are grouped in the next bin and so on. For each such bin, we compute the \textit{empirical risk score} \textbf{which is the fraction of news from that bin who actually, as per ground truth, are \textit{positive} This is the general way of doing the mean empirical risk. However, for the FA-KES dataset, its entries has been labeled 0 (negative) for \textit{fake} and 1 (positive) for \textit{not fake}. Therefore, we are actually here displaying the probability risk score of predicting the negative class (which is labeled '1') rather than the positive class}. A good model would be classifying patients correctly if the \textit{empirical risk curve} is monotonically non-decreasing.
+
+If the empirical risk curve is non-monotonic for some models, it implies that the classification using the model's risk scores may result in scenarios where news with lower risk scores are more likely to be fake (not fake - here) compared to news with higher risk scores.
+
+In the plots above, we realize that the models that include sampling using FP growth exhibit better empirical risk curves than those without. In comparison with the mean empirical risk curves of the shallow models, the meta learning ones are better because the shallow ones include several plots that are not monotonically non-decreasing
 
 
 \subsection{Precisions Top K}
@@ -1118,6 +1244,17 @@ We realize that the results with FP are better.
 \caption{Precisions at top K for top models - With FP}
 \label{fig:test}
 \end{figure}
+
+\begin{figure}[H]
+\centering
+  \includegraphics[width=.5\linewidth]{\detokenize{advanced_ml_plots_fn_shallow/precisions_topK.png}}
+  \caption{Precisions at top K for shallow models}
+  \label{fig:pK-shallow}
+\end{figure}
+
+It might happen that we want to classify only the top n news (breaking news, for example) that are at a very high risk of being fake. For that reason, news reporters (media) might be interested in models that provide good risk estimates to rank . Therefore, it might be very helpful to provide the precision/recall values of various models at different values of K.
+
+It is good to note that in both (MAML) figures above, the precision values do not drop a lot for smaller K values. Realize that in the bottom figures, the range of values for precision is still between [0.78-1] and [0.9-1] . However, the precision at top L for the shallow models exhibit weird behaviours  with smaller values of K.
 
 
 
@@ -1139,6 +1276,15 @@ We realize that the results with FP are better.
 \label{fig:test}
 \end{figure}
 
+\begin{figure}[H]
+\centering
+  \includegraphics[width=.5\linewidth]{\detokenize{advanced_ml_plots_fn_shallow/recalls_topK.png}}
+  \caption{Recalls at top K for shallow models}
+  \label{fig:rK-shallow}
+\end{figure}
+
+Similar motivation to the precision at top K , we are interested in the recall at top K. It is good to note that in both figures above, the recall values do not drop a lot for smaller K values. Realize that in the bottom figures, the range of values for precision is still between [0.97-1] and [0.87-1]. However, the recall at top K for the shallow models seem to always remain 1, so shallow models have better recall.
+
 
 \subsection{ROC Curves}
 \begin{figure}[H]
@@ -1158,6 +1304,59 @@ We realize that the results with FP are better.
 \label{fig:test}
 \end{figure}
 
+\begin{figure}[H]
+\centering
+  \includegraphics[width=.5\linewidth]{\detokenize{advanced_ml_plots_fn_shallow/roc_curves.png}}
+  \caption{ROC Curves K for shallow models}
+  \label{fig:roc-shallow}
+\end{figure}
+
+The ROC Curves for the models that incorporated sampling with frequent patterns exhibit are better than those that did not. However, the MAML roc curves are better than the shallow ones.
+
+\subsection{Characterizing Prediction Mistakes}
+End users are usually interested in understanding the patterns of mistakes made by models which will help them decide whether to confirm usage of a certain model or not. In order to test this out, we use a simple technique involving frequent itemset extraction. For transforming our dataset into a itemset-like dataset, please refer to details in section \ref{sec:fp_itemset_transformation}. We will now display the methodology we followed:
+\begin{enumerate}
+\item identify all frequent patterns in the dataset. Since we are interested in the models that performed the best, we will consider the same frequent patterns that model has used to sample the tasks in the meta training and meta testing phase. Those are actually the ones that had the best minimum support, which was part of the hyper parameter search space. It is important to note that we did this exercise (please refer to section \ref{sec:fp_itemset_transformation}) on the raw values of the dataset rather than on the scaled values. The reason was to make the fp-pattern-t0-mistake reading easier to decipher.
+
+\item Rank news based on their risk score estimates (here oddly the risk of the negative class)
+
+\item Create a new field called \textit{mistake}. Set the value of this field to 1 for those data points where the prediction of the model does not match its ground truth, otherwise we set this to 0 (i.e. no mistake)
+
+\item For each frequent pattern detected from Step 1, compute the \textbf{\textit{probability of mistake}}, which is the fraction of the rows where the frequent pattern holds true where the mistake = 1.
+
+\item Sort the patterns based on their probability of mistake.
+\end{enumerate}
+
+Below we display the probability of mistakes of the frequent patterns that each of the top 3 winning models have used for sampling their meta-tasks. Notice that here we are including the models that incorporated sampling using FP. However, we can include the ones that did not incorporate sampling using FP, but we did not focus on them because the results of those that did were better:
+
+\begin{table}[H]
+\input{\detokenize{tables/model_616_probmistake}}
+\caption{Probability of Mistake for the frequent patterns used by model\_616 to sample its meta tasks}
+\end{table}
+
+\begin{table}[H]
+\input{\detokenize{tables/model_152_probmistake}}
+\caption{Probability of Mistake for the frequent patterns used by model\_152 to sample its meta tasks}
+\end{table}
+
+\begin{table}[H]
+\input{\detokenize{tables/model_529_probmistake}}
+\caption{Probability of Mistake for the frequent patterns used by model\_529 to sample its meta tasks}
+\end{table}
+
+We realize that for all the frequent patterns used by all models, the probability of mistake is very small (not more than 4\%). 
+
+We will now display the probability of mistakes for the frequent patterns in the evaluation of the shallow models.
+
+\begin{table}[H]
+\resizebox{.5\width}{!}{
+\input{\detokenize{tables/shallow_probmistake}}}
+\caption{Probability of Mistake for the frequent patterns discovered in the FA-KES dataset}
+\end{table}
+
+
+\subsection{Conclusion}
+We realize that the models that incorporated sampling tasks using frequent patterns exhibited better quantitative and qualitative results than those that did not.
 
 
 \section{Meta Learning vs Shallow Models - Dementia Dataset}

@@ -4,29 +4,29 @@
 \contentsline {section}{\numberline {2}Split Into numeric and textual}{5}{section.2}%
 \contentsline {section}{\numberline {3}Numeric Features}{5}{section.3}%
 \contentsline {subsection}{\numberline {3.1}Informant and High Percentage of Missing}{6}{subsection.3.1}%
-\contentsline {subsection}{\numberline {3.2}Nested Questions and High percentage of missing}{6}{subsection.3.2}%
+\contentsline {subsection}{\numberline {3.2}Nested Questions and High percentage of missing}{7}{subsection.3.2}%
 \contentsline {subsection}{\numberline {3.3}Treating Features with High Percentage of Missing}{7}{subsection.3.3}%
 \contentsline {subsection}{\numberline {3.4}Detecting Erroneous Values Inside Features}{8}{subsection.3.4}%
 \contentsline {subsection}{\numberline {3.5}Working with Legal Features}{8}{subsection.3.5}%
 \contentsline {subsection}{\numberline {3.6}Filtering Legal Features with Erroneous Values - Erroneous Code-Book}{8}{subsection.3.6}%
 \contentsline {subsection}{\numberline {3.7}Detecting Outliers}{9}{subsection.3.7}%
-\contentsline {subsection}{\numberline {3.8}Outlier Detection and Scaling}{9}{subsection.3.8}%
+\contentsline {subsection}{\numberline {3.8}Outlier Detection and Scaling}{10}{subsection.3.8}%
 \contentsline {subsection}{\numberline {3.9}Erroneous Codebook}{10}{subsection.3.9}%
-\contentsline {subsection}{\numberline {3.10}Treating Erroneous Values}{10}{subsection.3.10}%
+\contentsline {subsection}{\numberline {3.10}Treating Erroneous Values}{11}{subsection.3.10}%
 \contentsline {subsection}{\numberline {3.11}Data Preprocessing}{11}{subsection.3.11}%
 \contentsline {subsubsection}{\numberline {3.11.1}Imputing Missing Values}{11}{subsubsection.3.11.1}%
 \contentsline {subsubsection}{\numberline {3.11.2}Scaling Features}{11}{subsubsection.3.11.2}%
 \contentsline {section}{\numberline {4}Feature Selection}{11}{section.4}%
 \contentsline {subsection}{\numberline {4.1}Decision Tree Feature Importance}{11}{subsection.4.1}%
-\contentsline {subsection}{\numberline {4.2}Select K Best Features}{11}{subsection.4.2}%
-\contentsline {subsubsection}{\numberline {4.2.1}Deciding "K"}{11}{subsubsection.4.2.1}%
+\contentsline {subsection}{\numberline {4.2}Select K Best Features}{12}{subsection.4.2}%
+\contentsline {subsubsection}{\numberline {4.2.1}Deciding "K"}{12}{subsubsection.4.2.1}%
 \contentsline {subsubsection}{\numberline {4.2.2}Selecting K Best Features}{12}{subsubsection.4.2.2}%
 \contentsline {section}{\numberline {5}Oversampling and Undersampling}{12}{section.5}%
 \contentsline {subsection}{\numberline {5.1}Dealing With Mixed Variables}{12}{subsection.5.1}%
-\contentsline {section}{\numberline {6}Cost-Sensitive Learning}{12}{section.6}%
-\contentsline {subsection}{\numberline {6.1}Cost sensitive learning consists of the following steps:}{12}{subsection.6.1}%
+\contentsline {section}{\numberline {6}Cost-Sensitive Learning}{13}{section.6}%
+\contentsline {subsection}{\numberline {6.1}Cost sensitive learning consists of the following steps:}{13}{subsection.6.1}%
 \contentsline {subsection}{\numberline {6.2}Tested sampling methods (using SMOTENC's sampling\_strategy options):}{13}{subsection.6.2}%
-\contentsline {subsection}{\numberline {6.3}Tested class\_weights: (costs for each label), combination of suggestions from book and built-in options:}{13}{subsection.6.3}%
+\contentsline {subsection}{\numberline {6.3}Tested class\_weights: (costs for each label), combination of suggestions from book and built-in options:}{14}{subsection.6.3}%
 \contentsline {subsection}{\numberline {6.4}Probabilistic Models}{14}{subsection.6.4}%
 \contentsline {subsubsection}{\numberline {6.4.1}Grid Search For Optimal Probability Threshold}{14}{subsubsection.6.4.1}%
 \contentsline {subsubsection}{\numberline {6.4.2}Calibrated Models}{14}{subsubsection.6.4.2}%
@@ -104,24 +104,29 @@
 \contentsline {subsection}{\numberline {19.4}Results}{43}{subsection.19.4}%
 \contentsline {section}{\numberline {20}Meta Learning Vs. Shallow Models - FAKES}{44}{section.20}%
 \contentsline {subsection}{\numberline {20.1}Methodology}{44}{subsection.20.1}%
-\contentsline {subsection}{\numberline {20.2}Quantitative Results}{45}{subsection.20.2}%
-\contentsline {subsection}{\numberline {20.3}Qualitative Results}{47}{subsection.20.3}%
-\contentsline {subsection}{\numberline {20.4}Mean Empirical Risk Curves}{47}{subsection.20.4}%
-\contentsline {subsection}{\numberline {20.5}Precisions Top K}{47}{subsection.20.5}%
-\contentsline {subsection}{\numberline {20.6}Recalls Top K}{48}{subsection.20.6}%
-\contentsline {subsection}{\numberline {20.7}ROC Curves}{48}{subsection.20.7}%
-\contentsline {section}{\numberline {21}Meta Learning vs Shallow Models - Dementia Dataset}{48}{section.21}%
-\contentsline {subsection}{\numberline {21.1}Cost Sensitive Learning in Neural Networks}{48}{subsection.21.1}%
-\contentsline {subsection}{\numberline {21.2}Hyper Parameters}{50}{subsection.21.2}%
-\contentsline {subsection}{\numberline {21.3}Winning Hyper Parameters}{51}{subsection.21.3}%
-\contentsline {subsection}{\numberline {21.4}Quantitative Results - Without FP Growth}{52}{subsection.21.4}%
-\contentsline {subsection}{\numberline {21.5}Insights}{54}{subsection.21.5}%
-\contentsline {subsection}{\numberline {21.6}Quantitative Results - With FP Growth}{54}{subsection.21.6}%
-\contentsline {subsection}{\numberline {21.7}Insights}{56}{subsection.21.7}%
-\contentsline {subsection}{\numberline {21.8}Insights on With FP vs. Without FP}{56}{subsection.21.8}%
-\contentsline {subsection}{\numberline {21.9}Insights about PPV}{57}{subsection.21.9}%
-\contentsline {subsection}{\numberline {21.10}Qualitative Results}{57}{subsection.21.10}%
-\contentsline {subsection}{\numberline {21.11}Mean Empirical Risk Curves}{57}{subsection.21.11}%
-\contentsline {subsection}{\numberline {21.12}Precision at Top K}{59}{subsection.21.12}%
-\contentsline {subsection}{\numberline {21.13}Recall at Top K}{60}{subsection.21.13}%
-\contentsline {subsection}{\numberline {21.14}ROC Curves}{61}{subsection.21.14}%
+\contentsline {subsection}{\numberline {20.2}Frequent Patterns \& FP Growth}{44}{subsection.20.2}%
+\contentsline {subsection}{\numberline {20.3}Hyperparameters}{47}{subsection.20.3}%
+\contentsline {subsection}{\numberline {20.4}Winning Hyper Parameters}{47}{subsection.20.4}%
+\contentsline {subsection}{\numberline {20.5}Quantitative Results}{50}{subsection.20.5}%
+\contentsline {subsection}{\numberline {20.6}Qualitative Results}{52}{subsection.20.6}%
+\contentsline {subsection}{\numberline {20.7}Mean Empirical Risk Curves}{52}{subsection.20.7}%
+\contentsline {subsection}{\numberline {20.8}Precisions Top K}{53}{subsection.20.8}%
+\contentsline {subsection}{\numberline {20.9}Recalls Top K}{54}{subsection.20.9}%
+\contentsline {subsection}{\numberline {20.10}ROC Curves}{55}{subsection.20.10}%
+\contentsline {subsection}{\numberline {20.11}Characterizing Prediction Mistakes}{55}{subsection.20.11}%
+\contentsline {subsection}{\numberline {20.12}Conclusion}{57}{subsection.20.12}%
+\contentsline {section}{\numberline {21}Meta Learning vs Shallow Models - Dementia Dataset}{57}{section.21}%
+\contentsline {subsection}{\numberline {21.1}Cost Sensitive Learning in Neural Networks}{57}{subsection.21.1}%
+\contentsline {subsection}{\numberline {21.2}Hyper Parameters}{59}{subsection.21.2}%
+\contentsline {subsection}{\numberline {21.3}Winning Hyper Parameters}{60}{subsection.21.3}%
+\contentsline {subsection}{\numberline {21.4}Quantitative Results - Without FP Growth}{61}{subsection.21.4}%
+\contentsline {subsection}{\numberline {21.5}Insights}{63}{subsection.21.5}%
+\contentsline {subsection}{\numberline {21.6}Quantitative Results - With FP Growth}{63}{subsection.21.6}%
+\contentsline {subsection}{\numberline {21.7}Insights}{65}{subsection.21.7}%
+\contentsline {subsection}{\numberline {21.8}Insights on With FP vs. Without FP}{65}{subsection.21.8}%
+\contentsline {subsection}{\numberline {21.9}Insights about PPV}{66}{subsection.21.9}%
+\contentsline {subsection}{\numberline {21.10}Qualitative Results}{66}{subsection.21.10}%
+\contentsline {subsection}{\numberline {21.11}Mean Empirical Risk Curves}{66}{subsection.21.11}%
+\contentsline {subsection}{\numberline {21.12}Precision at Top K}{68}{subsection.21.12}%
+\contentsline {subsection}{\numberline {21.13}Recall at Top K}{69}{subsection.21.13}%
+\contentsline {subsection}{\numberline {21.14}ROC Curves}{70}{subsection.21.14}%
