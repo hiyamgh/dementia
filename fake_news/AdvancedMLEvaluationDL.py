@@ -4,7 +4,7 @@ email: hkg02@mail.aub.edu
 '''
 
 import pandas as pd
-import os
+import os, pickle
 import itertools
 import matplotlib
 matplotlib.use('Agg')
@@ -20,9 +20,19 @@ def mkdir(folder):
         os.makedirs(folder)
 
 
+def get_fp_from_hyperparameters(model_name, hyperparameters, dir_of_fps, suffix):
+    ''' load the frequent patterns according to the min support of the model '''
+    min_supp = hyperparameters[model_name]['fp_supp']
+    with open(dir_of_fps + suffix + '_{}.pickle'.format(min_supp)) as f:
+        fps = pickle.load(f)
+    return fps
+
+
 class AdvancedEvaluator:
 
-    def __init__(self, models_results, plots_output_folder, fps, df_test, nb_bins=10, special_cases=None):
+    def __init__(self, models_results, plots_output_folder, hyperparameters,
+                 dir_of_fps, suffix,
+                 df_test, nb_bins=10, special_cases=None):
         '''
         Main class for running Advanced ML Evaluation, inspired by: https://dl.acm.org/doi/10.1145/2783258.2788620
         :param models_results: the risk dfs attached per maml model
@@ -33,13 +43,16 @@ class AdvancedEvaluator:
         :param special_cases: special models of interest, by default, None.
         '''
 
-        self.fps = fps # list of frequent patterns
         self.df_test = df_test
+        self.fps = {}
         self.models_results = {}
         if special_cases is None:
             for metric in models_results:
                 for topn_model in models_results[metric]['topn_models']:
                     self.models_results[topn_model] = models_results[metric][topn_model]
+                    # list of frequent patterns
+                    self.fps[topn_model] = get_fp_from_hyperparameters(topn_model, hyperparameters,
+                                                                       dir_of_fps, suffix)
         else:
             metric = 'f2'
             for sc in special_cases:
@@ -209,7 +222,7 @@ class AdvancedEvaluator:
             # set to 1
             fp_prob_mistakes = pd.DataFrame(columns=['frequent_pattern', 'prob_of_mistake'])
             mkdir(out_folder)
-            for fp in self.fps:
+            for fp in self.fps[model_name_num]:
                 # a frequent pattern may have more than one rule, so:
                 mistakesare1 = []
                 for r in fp:

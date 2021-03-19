@@ -65,10 +65,10 @@ class MAML:
             self.labela = tf.placeholder(tf.float64)
             self.labelb = tf.placeholder(tf.float64)
         else:
-            self.inputa = input_tensors['inputa']
-            self.inputb = input_tensors['inputb']
-            self.labela = input_tensors['labela']
-            self.labelb = input_tensors['labelb']
+            self.inputa = input_tensors['inputa'] # 16, 32, 9
+            self.inputb = input_tensors['inputb'] # 16, 32, 9
+            self.labela = input_tensors['labela'] # 16, 32, 2
+            self.labelb = input_tensors['labelb'] # 16, 32, 2
 
         with tf.variable_scope('model', reuse=None) as training_scope:
             if 'weights' in dir(self):
@@ -81,7 +81,7 @@ class MAML:
             # outputbs[i] and lossesb[i] is the output and loss after i+1 gradient updates
             lossesa, outputas, lossesb, outputbs = [], [], [], []
             accuraciesa, accuraciesb = [], []
-            num_updates = max(self.test_num_updates, FLAGS.num_updates)
+            num_updates = max(self.test_num_updates, FLAGS.num_updates) # num_updates: 10
             outputbs = [[]]*num_updates
             lossesb = [[]]*num_updates
             accuraciesb = [[]]*num_updates
@@ -187,13 +187,16 @@ class MAML:
             if self.classification:
                 outputas, outputbs, lossesa, lossesb, accuraciesa, accuraciesb,\
                 predsa, actualsa, predsb, actualsb, \
-                probasa, probasb = result
+                probasa, probasb = result # accuraciesa: 16, accuraciesb: 16,
+                                         # actualsa: 16, 32, actualsb: 16, 32,
+                                         # predsa: 16, 32, predsb: 16, 32,
+                                        # probasa: 16, 32, 2, probasb: 16, 32, 2
             else:
                 outputas, outputbs, lossesa, lossesb  = result
 
         ## Performance & Optimization
         meta_batch_siz64 = tf.cast(tf.to_float(FLAGS.meta_batch_size), tf.float64)
-        if 'train' in prefix:
+        if 'train' in prefix: # lossesa: 16,32, lossesb = list of 10, each 16, 32
             self.total_loss1 = total_loss1 = tf.reduce_sum(lossesa) / meta_batch_siz64
             self.total_losses2 = total_losses2 = [tf.reduce_sum(lossesb[j]) / meta_batch_siz64 for j in range(num_updates)]
             # after the map_fn

@@ -2,7 +2,8 @@ import pandas as pd
 import pickle
 import numpy as np
 import os
-from AdvancedEvaluationDL import AdvancedEvaluator
+from AdvancedMLEvaluationDL import AdvancedEvaluator
+from get_hyper_parameters import *
 
 
 def get_results_dementia(trained_models_dir, outfile_name, output_folder, sort_by, topn=3,):
@@ -70,6 +71,8 @@ if __name__ == '__main__':
 
     metrics = ['accuracy']
     out_folder = 'results_errors/'
+    # df_train = pd.read_csv('input/feature_extraction_train_updated.csv')
+    df_test = pd.read_csv('input/feature_extraction_test_updated.csv')
 
     models1 = get_results_dementia(trained_models_dir='fake_news_with_fp2/',
                          outfile_name='fake_news_with_fp',
@@ -83,12 +86,30 @@ if __name__ == '__main__':
     
     all_models = [models1, models2]
     all_models_names = ['with_fp', 'without_fp']
+
     all_tuples = list(zip(all_models, all_models_names))
     for models, models_names in all_tuples:
-        AE = AdvancedEvaluator(models_results=models,
-                               plots_output_folder='advanced_ml_plots/{}/'.format(models_names))
+        # get the fp min supp that the model used
+        if models_names == 'with_fp':
 
-        AE.produce_empirical_risk_curves()
-        AE.compute_jaccard_similarity(topKs=[10, 100, 200, 300, 400, 500, 600, 700])
-        AE.produce_roc_curves()
-        AE.produce_curves_topK(topKs=[10, 100, 200, 300, 400, 500, 600, 700])
+            # this will save hyper parameters to pickle file
+            get_hyper_parameters(outfile_name='hyperparameters_with_fp', fp=True)
+            # read the pickle file of hyper parameters
+            with open('hyperparameters_with_fp.p', 'rb') as handle:
+                hyperparameters = pickle.load(handle)
+
+            out_folder = 'advanced_ml_plots/{}/'.format(models_names)
+            AE = AdvancedEvaluator(models_results=models,
+                                   plots_output_folder=out_folder,
+                                   hyperparameters=hyperparameters,
+                                   dir_of_fps='fake_news_fps_colsmeta/',
+                                   suffix='fps_fakenews',
+                                   df_test=df_test)
+
+            AE.produce_empirical_risk_curves()
+            AE.compute_jaccard_similarity(topKs=[10, 100, 200, 300, 400, 500, 600, 700])
+            AE.produce_roc_curves()
+            AE.produce_curves_topK(topKs=[10, 100, 200, 300, 400, 500, 600, 700])
+            AE.characterize_prediction_mistakes(out_folder=out_folder)
+
+            break

@@ -56,10 +56,10 @@ flags.DEFINE_string('baseline', None, 'oracle, or None')
 # flags.DEFINE_list('cols_drop', ['article_title', 'article_content', 'source', 'source_category', 'unit_id'], 'list of column to drop from data, if any')
 # flags.DEFINE_string('special_encoding', 'latin-1', 'special encoding needed to read the data, if any')
 # flags.DEFINE_string('scaling', 'z-score', 'scaling done to the dataset, if any')
-flags.DEFINE_string('training_data_path', 'feature_extraction_train_updated.csv', 'path to training data')
-flags.DEFINE_string('testing_data_path', 'feature_extraction_test_updated.csv', 'path to testing data')
+flags.DEFINE_string('training_data_path', 'input/feature_extraction_train_updated.csv', 'path to training data')
+flags.DEFINE_string('testing_data_path', 'input/feature_extraction_test_updated.csv', 'path to testing data')
 flags.DEFINE_string('target_variable', 'label', 'name of the target variable column')
-flags.DEFINE_string('include_fp', '1', 'whether to include frequent pattern in mining tasks or not, if yes 1, if no 0')
+flags.DEFINE_string('include_fp', '0', 'whether to include frequent pattern in mining tasks or not, if yes 1, if no 0')
 flags.DEFINE_string('fp_file', 'fake_news_fps_colsmeta/fps_fakenews_0.7.pickle', 'path to file containing the frequent patterns')
 flags.DEFINE_string('colsmeta_file', 'fake_news_fps_colsmeta/colsmeta_fakenews_0.7.pickle', 'path to file containing the colsmeta')
 flags.DEFINE_list('cols_drop', ['article_title', 'article_content', 'source', 'source_category', 'unit_id'], 'list of column to drop from data, if any')
@@ -81,7 +81,7 @@ flags.DEFINE_integer('meta_batch_size', 16, 'number of tasks sampled per meta-up
 flags.DEFINE_float('meta_lr', 1e-1, 'the base learning rate of the generator')
 flags.DEFINE_integer('update_batch_size', 16, 'number of examples used for inner gradient update (K for K-shot learning).')
 flags.DEFINE_float('update_lr', 1e-1, 'step size alpha for inner gradient update.') # 0.1 for omniglot
-flags.DEFINE_integer('num_updates', 4, 'number of inner gradient updates during training.')
+flags.DEFINE_integer('num_updates', 5, 'number of inner gradient updates during training.')
 flags.DEFINE_float('supp_fp', 0.7, 'support value for fp growth')
 # Metric: accuracy
 # [support_t0, query_t0 - 			K]
@@ -115,8 +115,8 @@ flags.DEFINE_integer('top_features', 20, 'top features selected by feature selec
 
 ## Logging, saving, and testing options
 flags.DEFINE_bool('log', True, 'if false, do not log summaries, for debugging code.')
-flags.DEFINE_string('logdir', 'fake_news/', 'directory for summaries and checkpoints.')
-flags.DEFINE_bool('resume', True, 'resume training if there is a model available')
+flags.DEFINE_string('logdir', 'fake_news_specific/', 'directory for summaries and checkpoints.')
+flags.DEFINE_bool('resume', False, 'resume training if there is a model available')
 flags.DEFINE_bool('train', True, 'True to train, False to test.')
 flags.DEFINE_integer('test_iter', -1, 'iteration to load model (-1 for latest model)')
 flags.DEFINE_bool('test_set', False, 'Set to true to test on the the test set, False for the validation set.')
@@ -180,7 +180,39 @@ def brier_skill_score(y, yhat):
 def unstack_prediction_probabilities(support_predicted, support_actual, support_probas,
                                      query_predicted, query_actual, query_probas,
                                      exp_string):
+
+    # the risk df length is defined as follows:
+    # get num of test points
+    # shape of support_predicted: (16, 32)
+    # shape of support_actual: (16, 32)
+    # shape of support_probas: (16, 32, 2)
+    # shape of query_predicted: (10, 16, 32)
+    # shape of query_actual: (10, 16, 32)
+    # shape of query_probas: (10, 16, 32, 2)
+    # so len(risk_df) = (16 * 32) + (10 * 16 * 32) = 5632
     """ craetes the risk data frame needed for advanced ML Evaluation """
+    exp_string = 'model_{}'.format(FLAGS.model_num)
+    path_to_save = FLAGS.logdir + '/' + exp_string + '/'
+    if not os.path.exists(path_to_save):
+        os.makedirs(path_to_save, exist_ok=True)
+    with open(os.path.join(path_to_save, 'testing_at_main.txt'), 'a') as f:
+        f.write('get num of test points \n')
+        f.write('shape of support_predicted: {}\n'.format(np.array(support_predicted).shape))
+        f.write('shape of support_actual: {}\n'.format(np.array(support_actual).shape))
+        f.write('shape of support_probas: {}\n'.format(np.array(support_probas).shape))
+        f.write('shape of query_predicted: {}\n'.format(np.array(query_predicted).shape))
+        f.write('shape of query_actual: {}\n'.format(np.array(query_actual).shape))
+        f.write('shape of query_probas: {}\n'.format(np.array(query_probas).shape))
+
+    with open(os.path.join(path_to_save, 'testing_indices.p'), 'rb') as f:
+        testing_indices = pickle.load(f)
+
+    support_shape = np.array(support_predicted).shape
+    query_repeats = np.array(query_predicted).shape[0]
+    support_testing_indices = testing_indices[:support_shape[0]*support_shape[1]]
+    query_testing_indices = testing_indices[support_shape[0]*support_shape[1]:]
+    testing_indices = support_testing_indices + query_testing_indices * query_repeats
+
     risk_df = pd.DataFrame()
     y_test, y_pred, probas = [], [], []
     for mini_batch in range(len(support_predicted)):
@@ -196,8 +228,19 @@ def unstack_prediction_probabilities(support_predicted, support_actual, support_
             # add the probability of the positive class
             probas.extend(query_probas[num_update][mini_batch][:, 1])
 
+    # exp_string = 'model_{}'.format(FLAGS.model_num)
+    # path_to_save = FLAGS.logdir + '/' + exp_string + '/'
+    # if not os.path.exists(path_to_save):
+    #     os.makedirs(path_to_save, exist_ok=True)
+    # with open(os.path.join(path_to_save, 'testing_at_main.txt'), 'a') as f:
+    #     f.write('get num of test points \n')
+    #     f.write('shape of y_test: {}\n'.format(np.array(y_test).shape))
+    #     f.write('shape of y_pred: {}\n'.format(np.array(y_pred).shape))
+    #     f.write('shape of probas: {}\n'.format(np.array(probas).shape))
+
     # 'test_indices', 'y_test', 'y_pred', 'risk_scores'
-    risk_df['test_indices'] = list(range(len(y_test)))
+    # risk_df['test_indices'] = list(range(len(y_test)))
+    risk_df['test_indices'] = testing_indices
     risk_df['y_test'] = y_test
     risk_df['y_pred'] = y_pred
     risk_df['risk_scores'] = probas
@@ -453,6 +496,7 @@ def test(model, saver, sess, exp_string, data_generator, test_num_updates=None):
             metrics = evaluate(support_predicted, support_actual, query_predicted, query_actual)
             if FLAGS.cost_sensitive:
                 metrics_cost_sensitive = evaluate_cost_sensitive(support_predicted, support_actual, query_predicted, query_actual)
+            # I deduce that risk_df will be overwritten 600 times, and the last one will be the last update
             unstack_prediction_probabilities(support_predicted, support_actual, support_probabilities,
                                              query_predicted, query_actual, query_probabilities,
                                              exp_string)
@@ -552,7 +596,7 @@ def main():
     if FLAGS.cost_sensitive:
         print('cost sensitive learning - turned on')
     else:
-        print('cost sensitive learning - turned off')
+        print('cost sensitive learning - turned off') # this
 
     if FLAGS.datasource == 'sinusoid':
         if FLAGS.train:
@@ -566,7 +610,7 @@ def main():
             else:
                 test_num_updates = 10
         else:
-            test_num_updates = 10
+            test_num_updates = 10 # this
 
     if FLAGS.train == False:
         orig_meta_batch_size = FLAGS.meta_batch_size
@@ -586,7 +630,7 @@ def main():
                     data_generator = DataGenerator(FLAGS.update_batch_size+15, FLAGS.meta_batch_size)  # only use one datapoint for testing to save memory
                 else:
                     data_generator = DataGenerator(FLAGS.update_batch_size*2, FLAGS.meta_batch_size)  # only use one datapoint for testing to save memory
-            else:
+            else: # this
                 data_generator = DataGenerator(FLAGS.update_batch_size*2, FLAGS.meta_batch_size)  # only use one datapoint for testing to save memory
 
     dim_output = data_generator.dim_output
@@ -595,28 +639,28 @@ def main():
         dim_input = 3
         FLAGS.pretrain_iterations += FLAGS.metatrain_iterations
         FLAGS.metatrain_iterations = 0
-    else:
+    else: # this
         dim_input = data_generator.dim_input
 
-    if FLAGS.datasource == 'miniimagenet' or FLAGS.datasource == 'omniglot':
+    if FLAGS.datasource == 'miniimagenet' or FLAGS.datasource == 'omniglot': # this
         tf_data_load = True
         num_classes = data_generator.num_classes
 
         if FLAGS.train: # only construct training model if needed
             random.seed(5)
-            image_tensor, label_tensor = data_generator.make_data_tensor()
-            inputa = tf.slice(image_tensor, [0,0,0], [-1,num_classes*FLAGS.update_batch_size, -1])
-            inputb = tf.slice(image_tensor, [0,num_classes*FLAGS.update_batch_size, 0], [-1,-1,-1])
-            labela = tf.slice(label_tensor, [0,0,0], [-1,num_classes*FLAGS.update_batch_size, -1])
-            labelb = tf.slice(label_tensor, [0,num_classes*FLAGS.update_batch_size, 0], [-1,-1,-1])
+            image_tensor, label_tensor = data_generator.make_data_tensor() # # (16, 64, 9), (16, 64, 2)
+            inputa = tf.slice(image_tensor, [0,0,0], [-1,num_classes*FLAGS.update_batch_size, -1]) # 16, 32, 9
+            inputb = tf.slice(image_tensor, [0,num_classes*FLAGS.update_batch_size, 0], [-1,-1,-1]) # 16, 32, 9
+            labela = tf.slice(label_tensor, [0,0,0], [-1,num_classes*FLAGS.update_batch_size, -1]) # 16, 32, 2
+            labelb = tf.slice(label_tensor, [0,num_classes*FLAGS.update_batch_size, 0], [-1,-1,-1]) # 16, 32, 2
             input_tensors = {'inputa': inputa, 'inputb': inputb, 'labela': labela, 'labelb': labelb}
 
         random.seed(6)
         image_tensor, label_tensor = data_generator.make_data_tensor(train=False)
-        inputa = tf.slice(image_tensor, [0,0,0], [-1,num_classes*FLAGS.update_batch_size, -1])
-        inputb = tf.slice(image_tensor, [0,num_classes*FLAGS.update_batch_size, 0], [-1,-1,-1])
-        labela = tf.slice(label_tensor, [0,0,0], [-1,num_classes*FLAGS.update_batch_size, -1])
-        labelb = tf.slice(label_tensor, [0,num_classes*FLAGS.update_batch_size, 0], [-1,-1,-1])
+        inputa = tf.slice(image_tensor, [0,0,0], [-1,num_classes*FLAGS.update_batch_size, -1])  # 16, 32, 9
+        inputb = tf.slice(image_tensor, [0,num_classes*FLAGS.update_batch_size, 0], [-1,-1,-1]) # 16, 32, 9
+        labela = tf.slice(label_tensor, [0,0,0], [-1,num_classes*FLAGS.update_batch_size, -1]) # 16, 32, 2
+        labelb = tf.slice(label_tensor, [0,num_classes*FLAGS.update_batch_size, 0], [-1,-1,-1]) # 16, 32, 2
         metaval_input_tensors = {'inputa': inputa, 'inputb': inputb, 'labela': labela, 'labelb': labelb}
     else:
         tf_data_load = False
@@ -687,15 +731,15 @@ def main():
     tf.global_variables_initializer().run()
     tf.train.start_queue_runners()
 
-    if FLAGS.resume or not FLAGS.train:
-        model_file = tf.train.latest_checkpoint(FLAGS.logdir + '/' + exp_string)
-        if FLAGS.test_iter > 0:
-            model_file = model_file[:model_file.index('model')] + 'model' + str(FLAGS.test_iter)
-        if model_file:
-            ind1 = model_file.index('model')
-            resume_itr = int(model_file[ind1+5:])
-            print("Restoring model weights from " + model_file)
-            saver.restore(sess, model_file)
+    # if FLAGS.resume or not FLAGS.train:
+    #     model_file = tf.train.latest_checkpoint(FLAGS.logdir + '/' + exp_string)
+    #     if FLAGS.test_iter > 0:
+    #         model_file = model_file[:model_file.index('model')] + 'model' + str(FLAGS.test_iter)
+    #     if model_file:
+    #         ind1 = model_file.index('model')
+    #         resume_itr = int(model_file[ind1+5:])
+    #         print("Restoring model weights from " + model_file)
+    #         saver.restore(sess, model_file)
 
     # if FLAGS.train:
     #     train(model, saver, sess, exp_string, data_generator, resume_itr)

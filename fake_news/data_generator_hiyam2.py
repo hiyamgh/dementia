@@ -344,7 +344,20 @@ class DataGenerator(object):
             random.shuffle(zipped)
             all_idxs, all_labels = zip(*zipped)
 
-        return x[all_idxs, :], np.array(all_labels)
+        # only when testing,
+        if not training:
+            exp_string = 'model_{}'.format(FLAGS.model_num)
+            path_to_save = FLAGS.logdir + '/' + exp_string + '/'
+            if not os.path.exists(path_to_save):
+                os.makedirs(path_to_save, exist_ok=True)
+            with open(os.path.join(path_to_save, 'test_indices.txt'), 'a') as f:
+                f.write('testing\n')
+                f.writelines(', '.join(str(idx) for idx in all_idxs))
+               #for idx in all_idxs:
+                    #f.writelines(str)
+                    #f.write('\n')
+            f.close()
+        return x[all_idxs, :], np.array(all_labels), list(all_idxs)
 
     def get_data_tasks(self, labels, data_idxs, ifold, nb_samples=None, shuffle=True, training=True):
 
@@ -416,7 +429,17 @@ class DataGenerator(object):
         random.shuffle(zipped)
         all_idxs, all_labels = zip(*zipped)
 
-        return x[all_idxs, :], np.array(all_labels)
+        # save the testing indexes
+        if not train:
+            exp_string = 'model_{}'.format(FLAGS.model_num)
+            path_to_save = FLAGS.logdir + '/' + exp_string + '/'
+            if not os.path.exists(path_to_save):
+                os.makedirs(path_to_save, exist_ok=True)
+            with open(os.path.join(path_to_save, 'test_indices.txt'), 'a') as f:
+                f.write('testing\n')
+                f.writelines(', '.join(str(idx) for idx in all_idxs))
+
+        return x[all_idxs, :], np.array(all_labels), list(all_idxs)
 
     def make_data_tensor(self, train=True):
         if train:
@@ -425,25 +448,26 @@ class DataGenerator(object):
         else:
             num_total_batches = 600
 
-        all_data, all_labels = [], []
+        all_data, all_labels, all_idexes = [], [], []
         if FLAGS.include_fp == '1':
             fp_idxs = self.yield_fp_idxs(training=train)
 
         for ifold in range(num_total_batches):
 
             if FLAGS.include_fp == '1':
-                data, labels = self.get_fp_tasks(self.num_classes, fp_idxs, ifold,
+                data, labels, idxs = self.get_fp_tasks(self.num_classes, fp_idxs, ifold,
                                                  nb_samples=self.num_samples_per_class,
                                                  shuffle=True, training=train)
             else:
-                data, labels = self.sample_tasks(train=train)
+                data, labels, idxs = self.sample_tasks(train=train)
 
             all_data.extend(data)
             all_labels.extend(labels)
+            all_idexes.extend(idxs)
 
         examples_per_batch = self.num_classes * self.num_samples_per_class  # 2*16 = 32
 
-        all_data_batches, all_label_batches = [], []
+        all_data_batches, all_label_batches, all_index_batches = [], [], []
         for i in range(self.meta_batchsz):  # 4 .. i.e. 4 * examples_per-batch = 4 * 32 = 128
             # current task, 128 data points
             data_batch = all_data[i * examples_per_batch:(i + 1) * examples_per_batch]
@@ -452,7 +476,18 @@ class DataGenerator(object):
             all_data_batches.append(np.array(data_batch))
             all_label_batches.append(np.array(labels_batch))
 
+            all_index_batches.extend(all_idexes[i * examples_per_batch: (i + 1) * examples_per_batch])
+
         all_image_batches = np.array(all_data_batches) # (4, 32, nb_cols)
         all_label_batches = np.array(all_label_batches) # (4, 32, 1)
+
+        if not train:
+            exp_string = 'model_{}'.format(FLAGS.model_num)
+            path_to_save = FLAGS.logdir + '/' + exp_string + '/'
+            if not os.path.exists(path_to_save):
+                os.makedirs(path_to_save, exist_ok=True)
+
+            with open(os.path.join(path_to_save, 'testing_indices.p'), 'wb') as f:
+                pickle.dump(all_index_batches, f)
 
         return all_image_batches, all_label_batches
