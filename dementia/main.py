@@ -57,7 +57,7 @@ flags.DEFINE_string('colsmeta_file', 'dementia_colsmeta_top20/colsmeta_dementia_
 flags.DEFINE_list('cols_drop', None, 'list of column to drop from data, if any')
 flags.DEFINE_string('special_encoding', None, 'special encoding needed to read the data, if any')
 flags.DEFINE_string('scaling', None, 'scaling done to the dataset, if any')
-
+flags.DEFINE_string('categorical_encoding', 'binary', 'type of categorical encoding')
 
 flags.DEFINE_integer('pretrain_iterations', 0, 'number of pre-training iterations.')
 flags.DEFINE_integer('metatrain_iterations', 1000, 'number of metatraining iterations.') # 15k for omniglot, 50k for sinusoid

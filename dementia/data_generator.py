@@ -7,6 +7,7 @@ from tensorflow.python.platform import flags
 from helper import *
 from imblearn.over_sampling import SMOTENC
 from sklearn.preprocessing import MinMaxScaler, StandardScaler, RobustScaler
+from category_encoders import encode_categorical_data
 FLAGS = flags.FLAGS
 
 
@@ -40,8 +41,12 @@ class DataGenerator(object):
         self.target_variable = FLAGS.target_variable
         self.cols_drop = FLAGS.cols_drop
         self.special_encoding = FLAGS.special_encoding
+        self.cat_encoding = FLAGS.categorical_encoding
+
         # self.codebook = pd.read_csv('erroneous_codebook_legal_outliers_filtered.csv')
         # self.feature_importances = pd.read_csv('feature_importance.csv')
+
+        # for dropping un-wanted columns
         if self.cols_drop is not None:
             if self.special_encoding:
                 self.df_train = pd.read_csv(self.training_path, encoding=self.special_encoding).drop(self.cols_drop, axis=1)
@@ -86,6 +91,16 @@ class DataGenerator(object):
 
         # create combined dataset for FP growth
         self.df = pd.concat([self.df_train, self.df_test])
+
+        # encode categorical data
+        df_orig = self.df
+        if self.cat_encoding not in ['binary', 'basen', 'sum', 'backward_diff', 'polynomial', 'count', 'helmert']:
+            raise ValueError('categorical encoding \'{}\' is not supported'.format(self.cat_encoding))
+        else:
+            with open('../input/columns/categorical.p', 'rb') as f:
+                categorical_cols = pickle.load(f)
+            df_enc = encode_categorical_data(df_orig, categorical_cols, self.cat_encoding)
+            self.df = df_enc
 
         if FLAGS.include_fp == '1':
             print('fp growth - turned on')
