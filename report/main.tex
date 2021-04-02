@@ -1047,6 +1047,47 @@ Therefore, when we report testing results, we report it by averaging across the 
 
 \noindent Therefore, the metrics reported above, we first do the average for each column of this matrix (we end up with a  num\_test\_updates vector of results). Then, we report the average of that vector. This is the way MAML results are to be delivered.
 
+\section{Sampling Training/Testing Tasks}
+The MAML code is divided into a main method that calls the appropriate training and testing methods. Each method, will appropriately call the data generator component, which is responsible for generating the tasks that the meta learner uses for training and testing respectively. \textbf{The data generation process depends on the following hyper parameters:}
+\begin{itemize}
+\item \textit{meta\_batch\_size:} Number of tasks sampled per meta-update
+\item \textit{update\_batch\_size:} Number of tasks samples per meta-update
+\item \textit{num\_classes:} number of classes we are classifying
+\end{itemize}
+
+\noindent\textbf{The data generator component takes in two parameters as input:}
+\begin{itemize}
+\item \textit{num\_samples\_per\_class:} number of samples (i.e. data instances) to sample per classification class. (i.e. how many data samples we will take from each class. If $\text{num\_samples\_per\_class}= 32$, then, we will take 32 samples from class 0, and 32 samples from class 1. Notice this is a \textbf{stratified} sampling.)
+\item \textit{batch\_size:} the batch size, whereby each mini-batch will contain the appropriate number of samples. 
+\end{itemize}
+
+\noindent\textbf{Note (Very Important):} Each mini-batch (from "\textit{batch\_size}") will contain  $  \text{num\_classes} * \text{num\_samples\_per\_class}$ data samples. The main method in the original MAML code that was public on github (which we took and adapted changes as appropriate) \footnote{\url{https://github.com/cbfinn/maml}} called the Data Generator component by setting the data generation parameters parameters to be equal to the following:
+\begin{itemize}
+\item $\text{num\_samples\_per\_class} = \text{update\_batch\_size} * 2$
+\item $\text{batch\_size} = \text{meta\_batch\_size}$
+\end{itemize}
+
+\subsection*{Meta-Training}
+\noindent Therefore, if for example we have $\text{meta\_batch\_size} = 16$ and $\text{update\_batch\_size}=16$, then the $\text{batch\_ size} = 16 $ \& $\text{num\_samples\_per\_class} = 16 * 2 = 32$. By that, since each mini-batch will have $n\text{num\_samples\_per\_class}$ number of data samples, then we have in total $16 * 32 = 512$ data samples used for training, and $512$ samples \textbf{for each class}, therefore, a total of $512 + 512 = 1024$ samples.
+
+\subsection{Support \& Query Sets}
+We have seen in the example above that we had 1024 (16 batch size, 32 samples per class, 2 classes) training samples. These are distributed into \textit{support and query sets}. 
+
+\noindent Similar to the idea of training, validation, and testing in a regular supervised learning exercise, here in meta learning, the support set is what the meta learner trains on, and the query set is what the meta learner validates on.
+
+\noindent Each mini-batch will contain a support set, and a query set. Mini-batch is called an \textbf{\textit{episode}}. Since each episode contains 64 samples in total (32 for each class), those 64 samples, are further distributed between support and query sets. The support will take 32 samples and the query will take 32 samples (stratified distribution).
+
+\subsection*{N-way K-shot}
+The number of classes in the support set, is referred to as \textit{N-way} task, and the number of samples per class is referred to as \textit{K-shot}. Therefore, our task is a \textit{\textbf{2-way 32-shot classification task}} 
+
+
+\subsection*{How Do We Evaluate Testing Predictions ?}
+In the MAML inner loop, we calculate the gradient updates of all weights and pass the updated weights to the model to get the new prediction. The query dataset is used to get the task losses after each gradient update. However, we do multiple gradient updates, and this is controlled by the parameter $num\_inner\_updates$ \footnote{\url{https://cs330.stanford.edu/material/cs330_hw2.pdf}}. Therefore, when we report the testing error metrics, we report the performance on the support set and the performance on the query set. Since the query set is used in while doing gradient updates, and since we do that "$num\_inner\_updates$" times, we report the performance averaged across those "$num\_inner\_updates$" for the query set. 
+
+ 
+\noindent In other terms, we have 1024 (16 meta batch size, 32 examples per class, 2 classes) distributed as 512 support set samples, and 512 query set samples. However, the 512 samples are tested $\text{num\_test\_updates} = 10$ times, \textbf{therefore, we are reporting the average of the support set + the 10 query set updates.}
+
+
 \section{Meta Learning Vs. Shallow Models - FAKES}
 
 \subsection{Methodology}
