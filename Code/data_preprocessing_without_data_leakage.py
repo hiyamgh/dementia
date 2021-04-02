@@ -174,6 +174,18 @@ def scale_data(df_train, df_test, numeric_cols, ordinal_cols, categorical_cols, 
 #     pd.concat([numeric_ordinal_imp, categorical_df_imp, target], axis=1)
 
 
+def save_cols(numeric, ordinal, categorical, cols_dir):
+    # create path if it does not already exist
+    mkdir(cols_dir)
+
+    with open(os.path.join(cols_dir, 'numeric.p'), 'wb') as f:
+        pickle.dump(numeric, f)
+    with open(os.path.join(cols_dir, 'ordinal.p'), 'wb') as f:
+        pickle.dump(ordinal, f)
+    with open(os.path.join(cols_dir, 'categorical.p'), 'wb') as f:
+        pickle.dump(categorical, f)
+
+
 if __name__ == '__main__':
     # read the erroneous codebook
     erroneous_codebook = pd.read_csv('../input/codebooks/erroneous_codebook_legal_outliers_filtered.csv')
@@ -187,6 +199,7 @@ if __name__ == '__main__':
         # pooled_legal.to_csv('../input/pooled_legal.csv', index=False)
 
         numeric, ordinal, categorical = get_columns(erroneous_codebook)
+        save_cols(numeric, ordinal, categorical, cols_dir='../input/columns/') # save column names as pickle files
 
         # replace erroneous values in columns by missing (except for ANIMALS_2)
         pooled_legal_replaced = replace_erroneous(pooled_legal, erroneous_codebook, numeric, ordinal, categorical)
