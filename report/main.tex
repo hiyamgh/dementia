@@ -408,6 +408,79 @@ Isolation forest&0.261\\
 Local Outlier Factor&0.269\\
 \hline
 \end{tabular}
+
+\section{Encoding Categorical Data}
+Several Methods exist for encoding categorical data. Methods could be divided into two: unsupervised and supervised. We include the encoding method inside our grid search (for shallow models) and hyper parameter search (for the deep learning models).
+
+We will use only the \textbf{supervised categorical encoding methods} because they do not add dimensionality to the data.
+
+\subsection*{Target Encoding}
+In target encoding, we replace each category $X_i$ with the proportion of instances with that value that belong to the positive class. 
+
+\subsection*{Catboost Encoder}
+Similar to Target Encoding. Target Encoding introduces target leakage since the target is used to predict the target. Such models tend to be overfitted and don't generalize well in unseen circumstances.
+
+\noindent A CatBoost encoder involves an ordering principle in order to overcome this problem of target leakage. It uses the principle similar to the time series data validation. The values of target statistic rely on the observed history, i.e, target probability for the current feature is calculated only from the rows (observations) before it. Categorical feature values are encoded using the following formula:
+\begin{equation}
+\frac{\text{TargetSum} + \text{prior}}{\text{FeatureCount} + 1}
+\end{equation}
+
+\noindent \textbf{TargetCount}:  Sum of the target value for that particular categorical feature (upto the current one).
+
+\noindent \textbf{Prior}: It is a constant value determined by (sum of target values in the whole dataset)/(total number of observations (i.e. rows) in the dataset)
+
+\noindent \textbf{FeatureCount}: Total number of categorical features observed upto the current one with the same value as the current one.\footnote{\url{https://www.geeksforgeeks.org/categorical-encoding-with-catboost-encoder/}}
+
+\subsection*{James-Stein Estimator}
+It is similar to target encoding, but better. Lets say for example that 4\% of population of 4000 are color blind versus 4\% of population of 50 are color-blind. In the first case, we are confident that the proportion is close to 4\%, but in the latter case, only about 2 out of 50 are color-blind. These 2 might create a lot of noise in the data.
+
+\noindent The James-Stein encoder shrinks the average toward the overall average. If $p_{\text{all}} $ is the overall proportion of people that are color-blind in our sample set, we have
+
+\begin{equation}
+\text{Encoded value for group}  i = (1 - B)p_i + Bp_{\text{all}} 
+\end{equation}
+
+\noindent Where $B$ is a weight of the population mean, and $1-B$ is the weight of the group mean (with the total weight being 1).
+
+\noindent There are different methods for calculating B, as discussed in the documentation, but the default one in category encoders is called the "independent model". For each category we have:
+
+\begin{equation}
+B = \frac{(\text{group variance})}{(\text{group variance}) + (\text{popualtion variance})}
+\end{equation}
+
+
+\noindent When we are uncertain about a group's value (i.e. the group variance is high compared to the population variance) then $B \approx 1$, and we are heavily biased toward the population value. When the group variance is much lower that the population variance, $B \approx 0$ and we use the value for the group instead. \footnote{\url{https://kiwidamien.github.io/james-stein-encoder.html}}
+
+\subsection*{M-Estimator}
+ a simplified version of Target Encoder. The stands for maximum likelihood-type. It has only one hyper-parameter $m$, which represents the power of regularization. The higher the value of $m$ results into stronger shrinking. Recommended values m are in the range of 1 to 100 \footnote{\url{https://towardsdatascience.com/how-to-encode-categorical-data-d44dde313131}}
+
+\subsection*{Weight of Evidence}
+The weight of evidence tells the predictive power of an independent variable in relation to the dependent variable. Since it evolved from credit scoring world, it is generally described as a measure of the separation of good and bad customers. "Bad Customers" refers to the customers who defaulted on a loan. and "Good Customers" refers to the customers who paid back loan.
+
+\begin{equation}
+WOE = \ln{\frac{\text{Distribution of Goods}}{\text{Distribution of Bads}}}
+\end{equation}
+
+\noindent In the case of binary classification, it will become:
+
+\begin{equation}
+WOE = \ln{\frac{p(1)}{p(0)}}
+\end{equation}
+
+\noindent Where $p(1)$ is the probability of the target being 1 (positive class) and $p(0)$ is the probability of the target being 0 (negative class). 
+
+\noindent For every category in a feature, calculate $p(0)$ \& $p(1)$, compute the natural logarithm, and replace. \footnote{\url{https://www.listendata.com/2015/03/weight-of-evidence-woe-and-information.html}}\footnote{\url{https://heartbeat.fritz.ai/hands-on-with-feature-engineering-techniques-encoding-categorical-variables-be4bc0715394}}
+
+\subsection*{Generalized Linear Mixed Model}
+supervised encoder similar to Target Encoder or M-Estimator, but there are some advantages:
+\begin{enumerate}
+\item Solid statistical theory behind the technique. Mixed effects models are a mature branch of statistics.
+\item No hyper-parameters to tune. The amount of shrinkage is automatically determined through the estimation process. In short, the less observations a category has and/or the more the outcome varies for a category then the higher the regularization towards "the prior" or "grand mean"
+\item The technique is applicable for both continuous and binomial targets. If the target is continuous, the encoder returns regularized difference of the observation’s category from the global mean. If the target is binomial, the encoder returns regularized log odds per category.
+\end{enumerate}
+
+In comparison to James-Stein Estimator, this encoder utilizes generalized linear mixed models from \textit{statsmodels} library \footnote{\url{https://contrib.scikit-learn.org/category_encoders/glmm.html}}
+
 \section{SHAP}
 \subsection{Global SHAP Summary Values Results}
 The summary plot combines feature importance with feature effects. Each point on the summary plot is a Shapley value for a feature and an instance. The position on the y-axis is determined by the feature and on the x-axis by the Shapley value
@@ -1070,7 +1143,7 @@ The MAML code is divided into a main method that calls the appropriate training 
 \subsection*{Meta-Training}
 \noindent Therefore, if for example we have $\text{meta\_batch\_size} = 16$ and $\text{update\_batch\_size}=16$, then the $\text{batch\_ size} = 16 $ \& $\text{num\_samples\_per\_class} = 16 * 2 = 32$. By that, since each mini-batch will have $n\text{num\_samples\_per\_class}$ number of data samples, then we have in total $16 * 32 = 512$ data samples used for training, and $512$ samples \textbf{for each class}, therefore, a total of $512 + 512 = 1024$ samples.
 
-\subsection{Support \& Query Sets}
+\subsection*{Support \& Query Sets}
 We have seen in the example above that we had 1024 (16 batch size, 32 samples per class, 2 classes) training samples. These are distributed into \textit{support and query sets}. 
 
 \noindent Similar to the idea of training, validation, and testing in a regular supervised learning exercise, here in meta learning, the support set is what the meta learner trains on, and the query set is what the meta learner validates on.
