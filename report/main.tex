@@ -410,9 +410,7 @@ Local Outlier Factor&0.269\\
 \end{tabular}
 
 \section{Encoding Categorical Data}
-Several Methods exist for encoding categorical data. Methods could be divided into two: unsupervised and supervised. We include the encoding method inside our grid search (for shallow models) and hyper parameter search (for the deep learning models).
-
-We will use only the \textbf{supervised categorical encoding methods} because they do not add dimensionality to the data.
+Several Methods exist for encoding categorical data. Methods could be divided into two: \textit{\textbf{unsupervised and supervised.}} We include the encoding method inside our grid search (for shallow models) and hyper parameter search (for the deep learning models). We will use only the \textbf{supervised categorical encoding methods} because they do not add dimensionality to the data. We have used the \textit{category\_encoders} python module, which supports all the variations of categorical encoding mechanisms. \footnote{\url{https://github.com/scikit-learn-contrib/category_encoders}}
 
 \subsection*{Target Encoding}
 In target encoding, we replace each category $X_i$ with the proportion of instances with that value that belong to the positive class. 
