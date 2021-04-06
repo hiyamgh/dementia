@@ -52,12 +52,12 @@ flags.DEFINE_string('training_data_path', 'input/train_imputed_scaled.csv', 'pat
 flags.DEFINE_string('testing_data_path', 'input/test_imputed_scaled.csv', 'path to testing data')
 flags.DEFINE_string('target_variable', 'dem1066', 'name of the target variable column')
 flags.DEFINE_string('include_fp', '1', 'whether to include frequent pattern in mining tasks or not, if yes 1, if no 0')
-flags.DEFINE_string('fp_file', 'dementia_colsmeta_top20/fps_dementia_0.9.pickle', 'path to file containing the frequent patterns')
-flags.DEFINE_string('colsmeta_file', 'dementia_colsmeta_top20/colsmeta_dementia_0.9.pickle', 'path to file containing the colsmeta')
+flags.DEFINE_string('fp_file', 'dementia_colsmeta_top10/fps_dementia_0.9.pickle', 'path to file containing the frequent patterns')
+flags.DEFINE_string('colsmeta_file', 'dementia_colsmeta_top10/colsmeta_dementia_0.9.pickle', 'path to file containing the colsmeta')
 flags.DEFINE_list('cols_drop', None, 'list of column to drop from data, if any')
 flags.DEFINE_string('special_encoding', None, 'special encoding needed to read the data, if any')
 flags.DEFINE_string('scaling', None, 'scaling done to the dataset, if any')
-flags.DEFINE_string('categorical_encoding', 'binary', 'type of categorical encoding')
+flags.DEFINE_string('categorical_encoding', 'target', 'type of categorical encoding')
 
 flags.DEFINE_integer('pretrain_iterations', 0, 'number of pre-training iterations.')
 flags.DEFINE_integer('metatrain_iterations', 1000, 'number of metatraining iterations.') # 15k for omniglot, 50k for sinusoid
@@ -90,11 +90,11 @@ flags.DEFINE_string('weights_vector', "10, 1", 'if class_weights is used, then t
 flags.DEFINE_list('cost_matrix', [[1, 2.15], [2.15, 1]], 'cost matrix used, only applicable when using'
                                                        'miss-classification cost sensitive method')
 flags.DEFINE_string('sampling_strategy', 'all', 'how to resample data, only done when cost sensitive is True')
-flags.DEFINE_integer('top_features', 20, 'top features selected by feature selection')
+flags.DEFINE_integer('top_features', 10, 'top features selected by feature selection')
 
 ## Logging, saving, and testing options
 flags.DEFINE_bool('log', True, 'if false, do not log summaries, for debugging code.')
-flags.DEFINE_string('logdir', 'fake_news/', 'directory for summaries and checkpoints.')
+flags.DEFINE_string('logdir', 'trained_models/', 'directory for summaries and checkpoints.')
 flags.DEFINE_bool('resume', True, 'resume training if there is a model available')
 flags.DEFINE_bool('train', True, 'True to train, False to test.')
 flags.DEFINE_integer('test_iter', -1, 'iteration to load model (-1 for latest model)')

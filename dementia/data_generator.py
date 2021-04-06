@@ -1,4 +1,7 @@
-""" Code for loading data. """
+""" Code for loading data.
+@author: Hiyam K. Ghannam
+@email: hkg02@mail.aub.edu
+"""
 import pandas as pd
 import numpy as np
 import os, pickle
@@ -7,7 +10,7 @@ from tensorflow.python.platform import flags
 from helper import *
 from imblearn.over_sampling import SMOTENC
 from sklearn.preprocessing import MinMaxScaler, StandardScaler, RobustScaler
-from category_encoders import encode_categorical_data
+from categorical_encoding import encode_categorical_data_supervised, encode_categorical_data_unsupervised
 FLAGS = flags.FLAGS
 
 
@@ -17,6 +20,11 @@ def isfloat(value):
         return True
     except ValueError:
         return False
+
+
+def mkdir(folder):
+    if not os.path.exists(folder):
+        os.makedirs(folder)
 
 
 class DataGenerator(object):
@@ -42,9 +50,6 @@ class DataGenerator(object):
         self.cols_drop = FLAGS.cols_drop
         self.special_encoding = FLAGS.special_encoding
         self.cat_encoding = FLAGS.categorical_encoding
-
-        # self.codebook = pd.read_csv('erroneous_codebook_legal_outliers_filtered.csv')
-        # self.feature_importances = pd.read_csv('feature_importance.csv')
 
         # for dropping un-wanted columns
         if self.cols_drop is not None:
@@ -92,16 +97,6 @@ class DataGenerator(object):
         # create combined dataset for FP growth
         self.df = pd.concat([self.df_train, self.df_test])
 
-        # encode categorical data
-        df_orig = self.df
-        if self.cat_encoding not in ['binary', 'basen', 'sum', 'backward_diff', 'polynomial', 'count', 'helmert']:
-            raise ValueError('categorical encoding \'{}\' is not supported'.format(self.cat_encoding))
-        else:
-            with open('../input/columns/categorical.p', 'rb') as f:
-                categorical_cols = pickle.load(f)
-            df_enc = encode_categorical_data(df_orig, categorical_cols, self.cat_encoding)
-            self.df = df_enc
-
         if FLAGS.include_fp == '1':
             print('fp growth - turned on')
             if FLAGS.fp_file is not None and FLAGS.colsmeta_file is not None:
@@ -117,34 +112,8 @@ class DataGenerator(object):
                 self.freqItemSet, self.cols_meta = identify_frequent_patterns(df=self.df,
                                                                               target_variable=self.target_variable,
                                                                               supp_fp=FLAGS.supp_fp)
-            if self.freqItemSet:
-                pass
-            else:
-                # probably the support was very high, lower it
-                print('lowering supp_fp from {} to {}'.format(FLAGS.supp_fp, FLAGS.supp_fp - 0.1))
-                self.freqItemSet, self.cols_meta = identify_frequent_patterns(df=self.df,
-                                                                              target_variable=self.target_variable,
-                                                                              supp_fp=FLAGS.supp_fp - 0.1)
 
-                # dictionary of indices who has fp
-            self.indices_who_has_fp = {}
-            self.indices_without_fp = {}
-            self.indices_who_has_fp['train'] = {}
-            self.indices_who_has_fp['test'] = {}
-            for i, fp in enumerate(self.freqItemSet):
-                self.indices_who_has_fp['train'][i] = get_fp_indices(fps=fp, cols_meta=self.cols_meta, df=self.df_train)
-                self.indices_who_has_fp['test'][i] = get_fp_indices(fps=fp, cols_meta=self.cols_meta, df=self.df_test)
-
-            if self.freqItemSet:
-                pass
-            else:
-                # probably the support was very high, lower it
-                print('lowering supp_fp from {} to {}'.format(FLAGS.supp_fp, FLAGS.supp_fp - 0.1))
-                self.freqItemSet, self.cols_meta = identify_frequent_patterns(df=self.df,
-                                                                              target_variable=self.target_variable,
-                                                                              supp_fp=FLAGS.supp_fp - 0.1)
-
-                # dictionary of indices who has fp
+            # dictionary of indices who has fp
             self.indices_who_has_fp = {}
             self.indices_without_fp = {}
             self.indices_who_has_fp['train'] = {}
@@ -156,27 +125,58 @@ class DataGenerator(object):
         else:
             print('fp growth - turned off')
 
+        # encode categorical data (after FP Growth)
+        df_orig = self.df
+        if self.cat_encoding not in ['binary', 'basen', 'sum', 'backward_diff', 'polynomial', 'count', 'helmert',
+                                     'catboost', 'glmm', 'target', 'mestimator', 'james', 'woe']:
+            raise ValueError('categorical encoding \'{}\' is not supported'.format(self.cat_encoding))
+        else:
+            with open('../input/columns/categorical.p', 'rb') as f:
+                categorical_cols = pickle.load(f)
+            categorical_cols = [c for c in categorical_cols if c in df_orig.columns]
+            if self.cat_encoding in ['binary', 'basen', 'sum', 'backward_diff', 'polynomial', 'count', 'helmert']:
+                df_enc, encoder = encode_categorical_data_unsupervised(df_orig, categorical_cols, self.cat_encoding)
+                self.df = df_enc
+                # since df is just pd.concat([df_train, df_test]), then df_train is first n rows
+                # and df_test is the last n rows
+                df_train = self.df.head(len(self.df_train))
+                df_test = self.df.tail(len(self.df) - len(df_train))
+                # update training and testing data after encoding
+                self.df_train = df_train
+                self.df_test = df_test
+            else:
+                Xtraindf = self.df_train.drop([self.target_variable], axis=1)
+                y_train_list = list(self.df_train[self.target_variable])
+                ytraindf = self.df_train[[self.target_variable]]
+                Xtestdf = self.df_test.drop([self.target_variable], axis=1)
+                y_test_list = list(self.df_test[self.target_variable])
+
+                Xtraindf_enc, Xtestdf_enc, encoder = encode_categorical_data_supervised(Xtraindf, ytraindf,Xtestdf, categorical_cols, self.cat_encoding)
+
+                df_train = Xtraindf_enc
+                df_train[self.target_variable] = y_train_list
+                df_test = Xtestdf_enc
+                df_test[self.target_variable] = y_test_list
+
+                self.df_train = df_train
+                self.df_test = df_test
+
+            # save the encoder, so that later we can do inverse_transform()
+            encoding_folder = 'encoders/'
+            mkdir(encoding_folder)
+            with open(os.path.join(encoding_folder, '{}_encoder.p'.format(self.cat_encoding)), 'wb') as f:
+                pickle.dump(encoder, f)
+
         # training and testing numpy arrays
-        if FLAGS.sampling_strategy is None:
-            self.X_train = np.array(self.df_train.loc[:, self.df_train.columns != self.target_variable])
-            self.y_train = np.array(self.df_train.loc[:, self.df_train.columns == self.target_variable])
+        # if FLAGS.sampling_strategy is None:
+        #     self.X_train = np.array(self.df_train.loc[:, self.df_train.columns != self.target_variable])
+        #     self.y_train = np.array(self.df_train.loc[:, self.df_train.columns == self.target_variable])
+
+        self.X_train = np.array(self.df_train.loc[:, self.df_train.columns != self.target_variable])
+        self.y_train = np.array(self.df_train.loc[:, self.df_train.columns == self.target_variable])
 
         self.X_test = np.array(self.df_test.loc[:, self.df_test.columns != self.target_variable])
         self.y_test = np.array(self.df_test.loc[:, self.df_test.columns == self.target_variable])
-
-        # dictionary containing indices that are not frequent patterns
-        # normal to find none, cz frequent patterns are logically in each row
-        if FLAGS.include_fp == '1':
-            self.indices_without_fp['train'], self.indices_without_fp['test'] = get_non_fp_indices(
-                fp2indices_dict=self.indices_who_has_fp,
-                x_train=self.X_train,
-                x_test=self.X_test)
-
-            if self.indices_without_fp['train'] and self.indices_without_fp['test']:
-                # boolean whether there exist indices ho DONT have FPs or not
-                self.non_fp_exist = True
-            else:
-                self.non_fp_exist = False
 
         self.dim_input = self.X_train.shape[1]
         self.dim_output = self.num_classes
@@ -188,7 +188,6 @@ class DataGenerator(object):
                 scaler = StandardScaler()
             else:
                 scaler = RobustScaler()
-            # apply the scaling
             self.X_train = scaler.fit_transform(self.X_train)
             self.X_test = scaler.transform(self.X_test)
 
@@ -221,21 +220,6 @@ class DataGenerator(object):
                 categorical_index.append(int(index[0][0]))
         return categorical_index
 
-    def yield_idxs(self, training=True):
-        ''' yield indices, without using fp growth '''
-        num_classes = self.num_classes
-        if training:
-            x, y = self.X_train, self.y_train
-        else:
-            x, y = self.X_test, self.y_test
-        cl_indices = {}
-        for cl in range(num_classes):
-            # create an entry for the class
-            all_idxs_cl = [idx for idx in range(len(y)) if y[idx] == cl]
-            cl_indices[cl] = all_idxs_cl
-
-        return cl_indices
-
     def yield_fp_idxs(self, training=True):
         ''' yield indices, one from each fp '''
         num_classes = self.num_classes
@@ -251,7 +235,7 @@ class DataGenerator(object):
             # create an entry for the class
             fp_idxs[cl] = {}
             for fp in indices_who_has_fp:
-                # get the indices avaialbe for the current frequent pattern
+                # get the indices available for the current frequent pattern
                 available_idxs = indices_who_has_fp[fp]
                 # get the list of indices for this class that has fp
                 all_idxs_cl_fp = [idx for idx in available_idxs if y[idx] == cl]
@@ -259,31 +243,6 @@ class DataGenerator(object):
 
         # now, we have a dictionary that has the indices of each frequent pattern, in each class
         return fp_idxs
-
-    def yield_data_idxs(self, training=True):
-        num_classes = self.num_classes
-        data_idxs = {}
-        if training:
-            x = self.X_train
-            y = self.y_train
-        else:
-            x = self.X_test
-            y = self.y_test
-        for cl in range(num_classes):
-            data_idxs[cl] = {}
-            data_len = len(x)
-            idxs_for_class = [idx for idx in range(len(x)) if y[idx] == cl]
-            num_data_per_batch = len(idxs_for_class) // self.meta_batchsz
-
-            for i in range(self.meta_batchsz):
-                if i != self.meta_batchsz - 1:
-                    curr_list = idxs_for_class[i*num_data_per_batch: (i+1)*num_data_per_batch]
-                    data_idxs[cl][i] = curr_list
-                else:
-                    curr_list = idxs_for_class[i*num_data_per_batch: data_len]
-                    data_idxs[cl][i] = curr_list
-
-        return data_idxs
 
     def get_fp_tasks(self, labels, fp_idxs, ifold, nb_samples=None, shuffle=True, training=True):
 
@@ -310,12 +269,7 @@ class DataGenerator(object):
 
             return idxs_chosen
 
-        if training:
-            x = self.X_train
-            y = self.y_train
-        else:
-            x = self.X_test
-            y = self.y_test
+        x = self.X_train if training else self.X_test
 
         all_idxs = []
         all_labels = []
@@ -332,64 +286,14 @@ class DataGenerator(object):
             random.shuffle(zipped)
             all_idxs, all_labels = zip(*zipped)
 
-        return x[all_idxs, :], np.array(all_labels)
-
-    def get_data_tasks(self, labels, data_idxs, ifold, nb_samples=None, shuffle=True, training=True):
-
-        def get_data_idxs(cl):
-            if ifold < self.meta_batchsz:
-                multiple = 0
-                # idxs_chosen = list(np.random.choice(data_idxs[cl][ifold], size=nb_samples, replace=False))
-                idxs_chosen = random.sample(data_idxs[cl][ifold], size=nb_samples)
-            else:
-                if ifold%self.meta_batchsz == 0:
-                    multiple = ifold/self.meta_batchsz
-                else:
-                    possibles = list(range(ifold))
-                    for num in reversed(possibles):
-                        if num%self.meta_batchsz == 0:
-                            multiple = num/self.meta_batchsz
-                            break
-                idxs_chosen = list(np.random.choice(data_idxs[cl][ifold - self.meta_batchsz*multiple], size=nb_samples, replace=False))
-
-            return idxs_chosen
-
-        if training:
-            x = self.X_train
-            y = self.y_train
-        else:
-            x = self.X_test
-            y = self.y_test
-
-        all_idxs = []
-        all_labels = []
-        for i in range(labels):
-            # get all the data that belong to a particular class
-            idxs_chosen = get_data_idxs(cl=i)
-            labels_curr = [i] * len(idxs_chosen)
-            labels_curr = np.array([labels_curr, -(np.array(labels_curr)-1)]).T
-
-            # add the indexes and labels
-            all_idxs.extend(idxs_chosen)
-            all_labels.extend(labels_curr)
-
-        if shuffle:
-            zipped = list(zip(all_idxs, all_labels))
-            random.shuffle(zipped)
-            all_idxs, all_labels = zip(*zipped)
-
-        # return x[all_idxs, :], np.array(all_labels).reshape(-1, 1)
         return x[all_idxs, :], np.array(all_labels)
 
     def sample_tasks(self, train):
-        all_idxs = []
-        all_labels = []
+        all_idxs, all_labels = [], []
         if train:
-            x = self.X_train
-            y = self.y_train
+            x, y = self.X_train, self.y_train
         else:
-            x = self.X_test
-            y = self.y_test
+            x, y = self.X_test, self.y_test
 
         for i in range(self.num_classes):
             idxs = [idx for idx in range(len(x)) if y[idx] == i]
