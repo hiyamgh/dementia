@@ -98,37 +98,38 @@
 \contentsline {subsection}{\numberline {19.7}Technicalities}{39}{subsection.19.7}%
 \contentsline {subsection}{\numberline {19.8}Characterizing Prediction Mistakes}{40}{subsection.19.8}%
 \contentsline {subsection}{\numberline {19.9}Comparing Classifier Predictions}{40}{subsection.19.9}%
-\contentsline {section}{\numberline {20}Model Agnostic Meta Learning (MAML by Chelsea Finn)}{41}{section.20}%
-\contentsline {subsection}{\numberline {20.1}Code Modifications}{41}{subsection.20.1}%
-\contentsline {subsection}{\numberline {20.2}Modification of Data Generation Process}{43}{subsection.20.2}%
-\contentsline {subsection}{\numberline {20.3}Incorporating FP Growth}{44}{subsection.20.3}%
-\contentsline {subsection}{\numberline {20.4}Results}{46}{subsection.20.4}%
-\contentsline {section}{\numberline {21}Sampling Training/Testing Tasks}{47}{section.21}%
-\contentsline {section}{\numberline {22}Meta Learning Vs. Shallow Models - FAKES}{48}{section.22}%
-\contentsline {subsection}{\numberline {22.1}Methodology}{48}{subsection.22.1}%
-\contentsline {subsection}{\numberline {22.2}Frequent Patterns \& FP Growth}{49}{subsection.22.2}%
-\contentsline {subsection}{\numberline {22.3}Hyperparameters}{51}{subsection.22.3}%
-\contentsline {subsection}{\numberline {22.4}Winning Hyper Parameters}{52}{subsection.22.4}%
-\contentsline {subsection}{\numberline {22.5}Quantitative Results}{55}{subsection.22.5}%
-\contentsline {subsection}{\numberline {22.6}Qualitative Results}{57}{subsection.22.6}%
-\contentsline {subsection}{\numberline {22.7}Mean Empirical Risk Curves}{57}{subsection.22.7}%
-\contentsline {subsection}{\numberline {22.8}Precisions Top K}{58}{subsection.22.8}%
-\contentsline {subsection}{\numberline {22.9}Recalls Top K}{59}{subsection.22.9}%
-\contentsline {subsection}{\numberline {22.10}ROC Curves}{60}{subsection.22.10}%
-\contentsline {subsection}{\numberline {22.11}Characterizing Prediction Mistakes}{60}{subsection.22.11}%
-\contentsline {subsection}{\numberline {22.12}Conclusion}{62}{subsection.22.12}%
-\contentsline {section}{\numberline {23}Meta Learning vs Shallow Models - Dementia Dataset}{62}{section.23}%
-\contentsline {subsection}{\numberline {23.1}Cost Sensitive Learning in Neural Networks}{62}{subsection.23.1}%
-\contentsline {subsection}{\numberline {23.2}Hyper Parameters}{64}{subsection.23.2}%
-\contentsline {subsection}{\numberline {23.3}Winning Hyper Parameters}{65}{subsection.23.3}%
-\contentsline {subsection}{\numberline {23.4}Quantitative Results - Without FP Growth}{66}{subsection.23.4}%
-\contentsline {subsection}{\numberline {23.5}Insights}{68}{subsection.23.5}%
-\contentsline {subsection}{\numberline {23.6}Quantitative Results - With FP Growth}{68}{subsection.23.6}%
-\contentsline {subsection}{\numberline {23.7}Insights}{70}{subsection.23.7}%
-\contentsline {subsection}{\numberline {23.8}Insights on With FP vs. Without FP}{70}{subsection.23.8}%
-\contentsline {subsection}{\numberline {23.9}Insights about PPV}{71}{subsection.23.9}%
-\contentsline {subsection}{\numberline {23.10}Qualitative Results}{71}{subsection.23.10}%
-\contentsline {subsection}{\numberline {23.11}Mean Empirical Risk Curves}{71}{subsection.23.11}%
-\contentsline {subsection}{\numberline {23.12}Precision at Top K}{73}{subsection.23.12}%
-\contentsline {subsection}{\numberline {23.13}Recall at Top K}{74}{subsection.23.13}%
-\contentsline {subsection}{\numberline {23.14}ROC Curves}{75}{subsection.23.14}%
+\contentsline {section}{\numberline {20}Plan for the Paper}{41}{section.20}%
+\contentsline {section}{\numberline {21}Model Agnostic Meta Learning (MAML by Chelsea Finn)}{41}{section.21}%
+\contentsline {subsection}{\numberline {21.1}Code Modifications}{42}{subsection.21.1}%
+\contentsline {subsection}{\numberline {21.2}Modification of Data Generation Process}{43}{subsection.21.2}%
+\contentsline {subsection}{\numberline {21.3}Incorporating FP Growth}{44}{subsection.21.3}%
+\contentsline {subsection}{\numberline {21.4}Results}{46}{subsection.21.4}%
+\contentsline {section}{\numberline {22}Sampling Training/Testing Tasks}{47}{section.22}%
+\contentsline {section}{\numberline {23}Meta Learning Vs. Shallow Models - FAKES}{48}{section.23}%
+\contentsline {subsection}{\numberline {23.1}Methodology}{48}{subsection.23.1}%
+\contentsline {subsection}{\numberline {23.2}Frequent Patterns \& FP Growth}{49}{subsection.23.2}%
+\contentsline {subsection}{\numberline {23.3}Hyperparameters}{51}{subsection.23.3}%
+\contentsline {subsection}{\numberline {23.4}Winning Hyper Parameters}{52}{subsection.23.4}%
+\contentsline {subsection}{\numberline {23.5}Quantitative Results}{55}{subsection.23.5}%
+\contentsline {subsection}{\numberline {23.6}Qualitative Results}{57}{subsection.23.6}%
+\contentsline {subsection}{\numberline {23.7}Mean Empirical Risk Curves}{57}{subsection.23.7}%
+\contentsline {subsection}{\numberline {23.8}Precisions Top K}{58}{subsection.23.8}%
+\contentsline {subsection}{\numberline {23.9}Recalls Top K}{59}{subsection.23.9}%
+\contentsline {subsection}{\numberline {23.10}ROC Curves}{60}{subsection.23.10}%
+\contentsline {subsection}{\numberline {23.11}Characterizing Prediction Mistakes}{60}{subsection.23.11}%
+\contentsline {subsection}{\numberline {23.12}Conclusion}{62}{subsection.23.12}%
+\contentsline {section}{\numberline {24}Meta Learning vs Shallow Models - Dementia Dataset}{62}{section.24}%
+\contentsline {subsection}{\numberline {24.1}Cost Sensitive Learning in Neural Networks}{62}{subsection.24.1}%
+\contentsline {subsection}{\numberline {24.2}Hyper Parameters}{64}{subsection.24.2}%
+\contentsline {subsection}{\numberline {24.3}Winning Hyper Parameters}{65}{subsection.24.3}%
+\contentsline {subsection}{\numberline {24.4}Quantitative Results - Without FP Growth}{66}{subsection.24.4}%
+\contentsline {subsection}{\numberline {24.5}Insights}{68}{subsection.24.5}%
+\contentsline {subsection}{\numberline {24.6}Quantitative Results - With FP Growth}{68}{subsection.24.6}%
+\contentsline {subsection}{\numberline {24.7}Insights}{70}{subsection.24.7}%
+\contentsline {subsection}{\numberline {24.8}Insights on With FP vs. Without FP}{70}{subsection.24.8}%
+\contentsline {subsection}{\numberline {24.9}Insights about PPV}{71}{subsection.24.9}%
+\contentsline {subsection}{\numberline {24.10}Qualitative Results}{71}{subsection.24.10}%
+\contentsline {subsection}{\numberline {24.11}Mean Empirical Risk Curves}{71}{subsection.24.11}%
+\contentsline {subsection}{\numberline {24.12}Precision at Top K}{73}{subsection.24.12}%
+\contentsline {subsection}{\numberline {24.13}Recall at Top K}{74}{subsection.24.13}%
+\contentsline {subsection}{\numberline {24.14}ROC Curves}{75}{subsection.24.14}%

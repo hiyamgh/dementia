@@ -994,6 +994,19 @@ After doing this, we get the following results:
 
 % \textcolor{blue}{I did the probability of \textbf{mistake} per frequent pattern per model -- but I will leave it till the meeting to talk about it}
 
+\section{Plan for the Paper}
+\begin{enumerate}
+\item Fix roaa’s code
+\item MAML with random sampling, Reptile with random sampling
+\item MAML with FP growth, Reptile with FP growth
+\item MAML with ARML, Reptile with ARML
+\item Ensure process is thorough with hyperparameter search documented, winning hyper-parameters documented, and performance metrics cast against the baseline model
+\item Quantitative Comparison between baseline ML, vanilla ML, metalearning in three sampling procedures
+\item 
+Qualitative Comparison between baseline ML, vanilla ML, metalearning in three sampling procedures
+\end{enumerate}
+
+
 \section{Model Agnostic Meta Learning (MAML by Chelsea Finn)}
 MAML is well suited for small datasets because it \textbf{learns to learn}, from the very few examples it starts training on, and each time it encounters new examples it learns from them.
 
