@@ -15,6 +15,10 @@ from imblearn.metrics import geometric_mean_score
 from xgboost import XGBClassifier
 from sklearn.neighbors import KNeighborsClassifier
 from imblearn.ensemble import BalancedRandomForestClassifier, EasyEnsembleClassifier, BalancedBaggingClassifier
+from sklearn.svm import OneClassSVM
+from sklearn.covariance import EllipticEnvelope
+from sklearn.ensemble import IsolationForest
+from sklearn.neighbors import LocalOutlierFactor
 from sklearn.metrics import fbeta_score, make_scorer
 import pickle, os
 import category_encoders as ce
@@ -24,6 +28,31 @@ warnings.filterwarnings("ignore", category=DeprecationWarning)
 warnings.filterwarnings("ignore", category=FutureWarning)
 
 f2_score = make_scorer(fbeta_score, beta=2)
+
+def encode_categorical_data_supervised(X_train, y_train, X_test, cat_cols, enc_method):
+    if enc_method == 'catboost':
+        print('Encoding: {}'.format(enc_method))
+        encoder = ce.CatBoostEncoder(cols=cat_cols)
+    elif enc_method == 'glmm':
+        print('Encoding: {}'.format(enc_method))
+        encoder = ce.GLMMEncoder(cols=cat_cols)
+    elif enc_method == 'target':
+        print('Encoding: {}'.format(enc_method))
+        encoder = ce.TargetEncoder(cols=cat_cols)
+    elif enc_method == 'mestimator':
+        print('Encoding: {}'.format(enc_method))
+        encoder = ce.MEstimateEncoder(cols=cat_cols)
+    elif enc_method == 'james':
+        print('Encoding: {}'.format(enc_method))
+        encoder = ce.JamesSteinEncoder(cols=cat_cols)
+    else: # woe
+        print('Encoding: {}'.format(enc_method))
+        encoder = ce.WOEEncoder(cols=cat_cols)
+
+    X_train_enc = encoder.fit_transform(X_train, y_train)
+    X_test_enc = encoder.transform(X_test)
+    print(X_train_enc.shape, X_test_enc.shape)
+    return X_train_enc, X_test_enc, encoder
 
 
 def mkdir(dirname):
@@ -147,10 +176,10 @@ def print_results(model_name, best_params, y, y_predicted, df_results, encoding_
 
     if proba:
         bss = brier_skill_score(y, y_predicted)
-        if one_class:
-            fscore = fbeta_score(y, y_predicted, beta=2, pos_label=-1)
-        else:
-            fscore = fbeta_score(y, y_predicted, beta=2)
+        # if one_class:
+        #     fscore = fbeta_score(y, y_predicted, beta=2, pos_label=-1)
+        # else:
+        fscore = fbeta_score(y, y_predicted, beta=2)
         gmean = geometric_mean_score(y, y_predicted, average='weighted')
         pr_auc = metrics.average_precision_score(y, y_predicted)
         if 'm__class_weight' in best_params:
@@ -173,30 +202,36 @@ def print_results(model_name, best_params, y, y_predicted, df_results, encoding_
     else:
         if one_class:
             fscore = fbeta_score(y, y_predicted, beta=2, pos_label=-1)
+            df_results = df_results.append({
+                'model_name': model_name,
+                'f2': '{:.5f}'.format(fscore)
+            }, ignore_index=True)
+
         else:
             fscore = fbeta_score(y, y_predicted, beta=2)
 
-        roc = mean(metrics.roc_auc_score(y, y_predicted))
-        tn, fp, fn, tp = metrics.confusion_matrix(y, y_predicted).ravel()
-        sampling_strategy = best_params['s__sampling_strategy']
-        if 'm__class_weight' in best_params:
-            cost_matrix = best_params['m__class_weight']
-        elif 'm__scale_pos_weight' in best_params:
-            cost_matrix = best_params['m__scale_pos_weight']
-        else:
-            cost_matrix = '-'
+            roc = mean(metrics.roc_auc_score(y, y_predicted))
+            tn, fp, fn, tp = metrics.confusion_matrix(y, y_predicted).ravel()
+            sampling_strategy = best_params['s__sampling_strategy']
+            if 'm__class_weight' in best_params:
+                cost_matrix = best_params['m__class_weight']
+            elif 'm__scale_pos_weight' in best_params:
+                cost_matrix = best_params['m__scale_pos_weight']
+            else:
+                cost_matrix = '-'
 
-        df_results = df_results.append({
-            'f2': '{:.5f}'.format(fscore),
-            'roc_auc': '{:.5f}'.format(roc),
-            'tn': tn,
-            'fp': fp,
-            'fn': fn,
-            'tp': tp,
-            'sampling_strategy': sampling_strategy,
-            'cost_matrix': cost_matrix,
-            'encoding_strategy': encoding_strategy
-        }, ignore_index=True)
+            df_results = df_results.append({
+                'model_name': model_name,
+                'f2': '{:.5f}'.format(fscore),
+                'roc_auc': '{:.5f}'.format(roc),
+                'tn': tn,
+                'fp': fp,
+                'fn': fn,
+                'tp': tp,
+                'sampling_strategy': sampling_strategy,
+                'cost_matrix': cost_matrix,
+                'encoding_strategy': encoding_strategy
+            }, ignore_index=True)
 
     return df_results
 
@@ -236,6 +271,7 @@ def test_model(train_df, test_df, feature_importance, model_class, model_name,
         else:
             estimator = model
             best_params = {}
+            X, test_X, _ = encode_categorical_data_supervised(X, y, test_X,cat_cols, enc)
 
         estimator.fit(X, y)
         if proba:
@@ -249,15 +285,16 @@ def test_model(train_df, test_df, feature_importance, model_class, model_name,
             ix = np.argmax(scores)
             print('Threshold=%.3f, F-measure=%.5f' % (thresholds[ix], scores[ix]))
             best_params['f2_score'] = scores[ix]
-            df_res = print_results(model_name, best_params, test_y, probs, df_results, enc,
+            df_results = print_results(model_name, best_params, test_y, probs, df_results, enc,
                           proba=proba, one_class=one_class,
                           threshold=thresholds[ix], topn=topn)
         else:
             y_predicted = estimator.predict(test_X)
             # y_predicted=lof_predict(estimator, X, test_X)
-            df_res = print_results(model_name, best_params, test_y, y_predicted, df_results, enc,
+            df_results = print_results(model_name, best_params, test_y, y_predicted, df_results, enc,
                           proba=proba, one_class=one_class, topn=topn)
-        return estimator, df_res
+
+    return df_results
 
 
 if __name__ == '__main__':
@@ -275,11 +312,16 @@ if __name__ == '__main__':
         out_regular = '../output_regular/top_{}/'.format(topn)
         mkdir(out_regular)
 
+        out_one_class = '../output_one_class/top_{}/'.format(topn)
+        mkdir(out_one_class)
+
         df_proba = pd.DataFrame(columns=['model_name', 'f2', 'gmean', 'bss', 'pr_auc',
                                          'sampling_strategy', 'cost_matrix', 'encoding_strategy'])
 
         df_regular = pd.DataFrame(columns=['model_name', 'f2', 'tn', 'fp', 'fn', 'tp',
                                            'sampling_strategy', 'cost_matrix', 'encoding_strategy'])
+
+        df_one_class = pd.DataFrame(columns=['model_name', 'f2', 'encoding_strategy'])
 
         for model, model_name, proba, one_class in [
             (XGBClassifier(), 'Weighted XGBoost', True, False), # scale_pos_weight added by Hiyam
@@ -295,12 +337,11 @@ if __name__ == '__main__':
 
             print('top {}:'.format(topn))
             if proba:
-                estimator, df_proba = test_model(df, test_df, feature_importance, model, model_name,
+                df_proba = test_model(df, test_df, feature_importance, model, model_name,
                                        df_proba, proba=proba, one_class=one_class, topn=topn)
             else:
-                estimator, df_regular = test_model(df, test_df, feature_importance, model, model_name,
+                df_regular = test_model(df, test_df, feature_importance, model, model_name,
                                        df_regular, proba=proba, one_class=one_class, topn=topn)
-            models_dict[model_name] = estimator
 
             print('===================================================================\n')
 
@@ -310,5 +351,18 @@ if __name__ == '__main__':
             else:
                 df_regular = df_regular.sort_values(by='f2')
                 df_regular.to_csv(os.path.join(out_regular, 'regular_results.csv'), index=False)
+
+        # now for one class classification
+        for model, model_name, proba, one_class in [
+            (OneClassSVM(gamma='scale', nu=0.1), 'One Class SVM', False, True),
+            (EllipticEnvelope(contamination=0.1), 'EllipticEnvelope', False, True),
+            (IsolationForest(contamination=0.1), 'IsolationForest', False, True),
+            (LocalOutlierFactor(contamination=0.1), 'LocalOutlierFactor', False, True)]:
+
+            df_one_class = test_model(df, test_df, feature_importance, model, model_name,
+                                      df_one_class, proba=proba, one_class=one_class, topn=topn)
+
+            df_one_class = df_one_class.sort_values(by='f2')
+            df_one_class.to_csv(os.path.join(out_one_class, 'one_class_results.csv'), index=False)
 
 
