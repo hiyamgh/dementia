@@ -302,7 +302,7 @@ def test_model(train_df, test_df, feature_importance, model_class, model_name, p
     enc_methods = ['catboost', 'glmm', 'target', 'mestimator', 'james', 'woe']
     model, param_grid = create_model(y, model_class, model_name)
     for enc in enc_methods:
-        pipeline = create_pipeline(model, X.columns, enc_method=enc, cat_cols=cat_cols)
+        pipeline = create_pipeline(model, X.columns, X, enc_method=enc, cat_cols=cat_cols)
         cv = RepeatedStratifiedKFold(n_splits=10, n_repeats=3, random_state=1)
 
         if not one_class:
