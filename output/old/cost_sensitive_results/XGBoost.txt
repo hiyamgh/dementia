@@ -1,0 +1,11 @@
+XGBoost Results:
+ ROC AUC: 0.792
+ GMEAN: 0.788
+ f-score: 0.665
+ bss: 0.353
+ PR AUC: 0.526
+best params:{'m__class_weight': {0: 162, 1: 640}, 's__sampling_strategy': 'minority'}
+Cost Matrix (assuming cost = 0 for correct labels and cost = 1 for wrong labels)
+		  |Actual Negative|Actual Positive
+Predicted Negative|0		  |14
+Predicted Positive|12		  |0

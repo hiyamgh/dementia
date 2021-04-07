@@ -19,6 +19,9 @@ from sklearn.metrics import fbeta_score, make_scorer
 import pickle, os
 import category_encoders as ce
 from sklearn.compose import ColumnTransformer
+import warnings
+warnings.filterwarnings("ignore", category=DeprecationWarning)
+warnings.filterwarnings("ignore", category=FutureWarning)
 
 f2_score = make_scorer(fbeta_score, beta=2)
 
@@ -44,10 +47,6 @@ def brier_skill_score(y, yhat):
     brier_ref = metrics.brier_score_loss(y, probabilities)
     bs = metrics.brier_score_loss(y, yhat)
     return 1.0 - (bs / brier_ref)
-
-
-def train_validate_test():
-    split_save('../input/pooled_imputed_scaled.csv', '../input/train.csv', '../input/test.csv')
 
 
 def split_save(full_path, train_path, test_path):
@@ -125,7 +124,7 @@ def create_model(y, model, model_name):
     if model_name in ['Weighted Logistic Regression', 'Weighted Decision Tree Classifier',
                       'Weighted SVM', 'Balanced Random Forest']:
         param_grid = {
-            'm__class_weight': balance if model_name != 'Balanced Random Forest' else 'balance',
+            'm__class_weight': balance if model_name != 'Balanced Random Forest' else ['balanced'],
             's__sampling_strategy': ['minority', 'not minority', 'all', 0.5, 1, 0.75],
         }
     elif model_name == 'Weighted XGBoost':
@@ -143,7 +142,8 @@ def create_model(y, model, model_name):
 def print_results(model_name, best_params, y, y_predicted, df_results, encoding_strategy,
                   proba=False, one_class=False, threshold=None, topn=10):
 
-    y_predicted = to_labels(y_predicted, threshold)
+    if proba:
+        y_predicted = to_labels(y_predicted, threshold)
 
     if proba:
         bss = brier_skill_score(y, y_predicted)
@@ -153,7 +153,12 @@ def print_results(model_name, best_params, y, y_predicted, df_results, encoding_
             fscore = fbeta_score(y, y_predicted, beta=2)
         gmean = geometric_mean_score(y, y_predicted, average='weighted')
         pr_auc = metrics.average_precision_score(y, y_predicted)
-        cost_matrix = best_params['m__class_weight']
+        if 'm__class_weight' in best_params:
+            cost_matrix = best_params['m__class_weight']
+        elif 'm__scale_pos_weight' in best_params:
+            cost_matrix = best_params['m__scale_pos_weight']
+        else:
+            cost_matrix = '-'
         sampling_strategy = best_params['s__sampling_strategy']
         df_results = df_results.append({
             'model_name': model_name,
@@ -244,15 +249,15 @@ def test_model(train_df, test_df, feature_importance, model_class, model_name,
             ix = np.argmax(scores)
             print('Threshold=%.3f, F-measure=%.5f' % (thresholds[ix], scores[ix]))
             best_params['f2_score'] = scores[ix]
-            print_results(model_name, best_params, test_y, probs, df_results, enc,
+            df_res = print_results(model_name, best_params, test_y, probs, df_results, enc,
                           proba=proba, one_class=one_class,
                           threshold=thresholds[ix], topn=topn)
         else:
             y_predicted = estimator.predict(test_X)
             # y_predicted=lof_predict(estimator, X, test_X)
-            print_results(model_name, best_params, test_y, y_predicted, df_results, enc,
+            df_res = print_results(model_name, best_params, test_y, y_predicted, df_results, enc,
                           proba=proba, one_class=one_class, topn=topn)
-        return estimator
+        return estimator, df_res
 
 
 if __name__ == '__main__':
@@ -282,7 +287,7 @@ if __name__ == '__main__':
             (DecisionTreeClassifier(), 'Weighted Decision Tree Classifier', True, False), # class_weight
             (SVC(), 'Weighted SVM', False, False), # class_weight
             (KNeighborsClassifier(), 'KNeighbors', False, False),
-            (BalancedRandomForestClassifier(), 'Balanced Random Forest', True, False), # class_weight
+            # (BalancedRandomForestClassifier(), 'Balanced Random Forest', True, False), # class_weight
             (BalancedBaggingClassifier(), 'Balanced Bagging Classifier', True, False), # added by Hiyam
             (EasyEnsembleClassifier(), 'Easy Ensemble Classifier', False, False)]:
 
@@ -290,20 +295,20 @@ if __name__ == '__main__':
 
             print('top {}:'.format(topn))
             if proba:
-                estimator = test_model(df, test_df, feature_importance, model, model_name,
+                estimator, df_proba = test_model(df, test_df, feature_importance, model, model_name,
                                        df_proba, proba=proba, one_class=one_class, topn=topn)
             else:
-                estimator = test_model(df, test_df, feature_importance, model, model_name,
+                estimator, df_regular = test_model(df, test_df, feature_importance, model, model_name,
                                        df_regular, proba=proba, one_class=one_class, topn=topn)
             models_dict[model_name] = estimator
 
             print('===================================================================\n')
 
-        if proba:
-            df_proba = df_proba.sort_values(by='f2')
-            df_proba.to_csv(os.path.join(out_proba, 'prob_results.csv'), index=False)
-        else:
-            df_regular = df_regular.sort_values(by='f2')
-            df_regular.to_csv(os.path.join(out_regular, 'regular_results.csv'), index=False)
+            if proba:
+                df_proba = df_proba.sort_values(by='f2')
+                df_proba.to_csv(os.path.join(out_proba, 'prob_results.csv'), index=False)
+            else:
+                df_regular = df_regular.sort_values(by='f2')
+                df_regular.to_csv(os.path.join(out_regular, 'regular_results.csv'), index=False)
 
 

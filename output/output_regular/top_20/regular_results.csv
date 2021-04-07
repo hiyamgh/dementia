@@ -1,0 +1,4 @@
+model_name,f2,tn,fp,fn,tp,sampling_strategy,cost_matrix,encoding_strategy,roc_auc
+,0.73113,143,17,10,31,not minority,-,catboost,0.82492
+,0.78838,121,39,3,38,0.5,"{0: 1, 1: 10}",catboost,0.84154
+,0.79186,138,22,6,35,1.0,-,catboost,0.85808

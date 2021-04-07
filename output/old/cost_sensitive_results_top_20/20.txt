@@ -1,0 +1,6 @@
+Weighted XGBoost Results:
+Weighted XGBoost &0.813 &0.854 &0.273 &0.481 &0.857 &best params:{'m__scale_pos_weight': 10, 's__sampling_strategy': 'minority', 'f2_score': 0.8130081300813008}
+Cost Matrix:
+		  |Actual Negative|Actual Positive
+Predicted Negative|118		  |1
+Predicted Positive|42		  |40
