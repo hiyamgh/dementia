@@ -29,6 +29,7 @@ import pickle, os
 # import shap
 from matplotlib import pyplot as plt
 import category_encoders as ce
+from sklearn.compose import ColumnTransformer, make_column_transformer
 
 f2_score = make_scorer(fbeta_score, beta=2)
 
@@ -90,37 +91,51 @@ def get_categorical(columns):
     return categorical_index
 
 
-def create_pipeline(model, columns, enc_method, cat_cols):
+def create_pipeline(model, columns, X, enc_method, cat_cols):
     categorical_index = get_categorical(columns)
     print('Encoding: {}'.format(enc_method))
     # if model_name in ['Weighted Logistic Regression', 'Weighted Decision Tree Classifier',
     #                   'Weighted SVM', 'Balanced Random Forest', 'Weighted XGBoost']:
 
-    if enc_method == 'catboost':
-        steps = [('s', SMOTENC(categorical_index)),
-                 ('enc', ce.CatBoostEncoder(cols=cat_cols)),
-                 ('m', model)]
-    elif enc_method == 'glmm':
-        steps = [('s', SMOTENC(categorical_index)),
-                 ('enc', ce.GLMMEncoder(cols=cat_cols)),
-                 ('m', model)]
-    elif enc_method == 'target':
-        steps = [('s', SMOTENC(categorical_index)),
-                 ('enc', ce.TargetEncoder(cols=cat_cols)),
-                 ('m', model)]
-    elif enc_method == 'mestimator':
-        steps = [('s', SMOTENC(categorical_index)),
-                 ('enc', ce.MEstimateEncoder(cols=cat_cols)),
-                 ('m', model)]
-    elif enc_method == 'james':
-        steps = [('s', SMOTENC(categorical_index)),
-                 ('enc', ce.JamesSteinEncoder(cols=cat_cols)),
-                 ('m', model)]
-    else:
-        steps = [('s', SMOTENC(categorical_index)),
-                 ('enc', ce.WOEEncoder(cols=cat_cols)),
-                 ('m', model)]
+    cat_cols_indxs = [X.columns.get_loc(c) for c in cat_cols if c in X]
 
+    if enc_method == 'catboost':
+        # cols_transformer = Pipeline(steps=[
+        #     ('enc', ce.CatBoostEncoder())
+        # ])
+        transformer = ColumnTransformer(transformers=[('cat', ce.CatBoostEncoder(), cat_cols_indxs)])
+    elif enc_method == 'glmm':
+        # cols_transformer = Pipeline(steps=[
+        #     ('enc', ce.GLMMEncoder())
+        # ])
+        transformer = ColumnTransformer(transformers=[('cat', ce.GLMMEncoder(), cat_cols_indxs)])
+    elif enc_method == 'target':
+        # cols_transformer = Pipeline(steps=[
+        #     ('enc', ce.TargetEncoder())
+        # ])
+        transformer = ColumnTransformer(transformers=[('cat', ce.TargetEncoder(), cat_cols_indxs)])
+    elif enc_method == 'mestimator':
+        # cols_transformer = Pipeline(steps=[
+        #     ('enc', ce.MEstimateEncoder())
+        # ])
+        transformer = ColumnTransformer(transformers=[('cat', ce.MEstimateEncoder(), cat_cols_indxs)])
+    elif enc_method == 'james':
+        # cols_transformer = Pipeline(steps=[
+        #     ('enc', ce.JamesSteinEncoder())
+        # ])
+        transformer = ColumnTransformer(transformers=[('cat', ce.JamesSteinEncoder(), cat_cols_indxs)])
+    else:
+        # cols_transformer = Pipeline(steps=[
+        #     ('enc', ce.WOEEncoder())
+        # ])
+        transformer = ColumnTransformer(transformers=[('cat', ce.WOEEncoder(), cat_cols_indxs)])
+
+    # preprocessor = ColumnTransformer(transformers=[
+    #     ('enccat', cols_transformer, cat_cols)
+    # ])
+    steps = [('s', SMOTENC(categorical_index)),
+             ('t', transformer),
+             ('m', model)]
     pipeline = Pipeline(steps=steps)
     return pipeline
 
@@ -356,8 +371,8 @@ if __name__ == '__main__':
         # Hiyam's question: Why lines 332 and 333 contain the class weight as a parameter ? Aren't we grid-searching them ?
         # (LogisticRegression(class_weight={0:1, 1:100}), 'Weighted Logistic Regression', True, False),
         # (DecisionTreeClassifier(class_weight={0:1, 1:100}), 'Weighted Decision Tree Classifier', True, False),
-        (LogisticRegression(class_weight={0: 1, 1: 100}), 'Weighted Logistic Regression', True, False), # class_weight
-        (DecisionTreeClassifier(class_weight={0: 1, 1: 100}), 'Weighted Decision Tree Classifier', True, False), # class_weight
+        (LogisticRegression(), 'Weighted Logistic Regression', True, False), # class_weight
+        (DecisionTreeClassifier(), 'Weighted Decision Tree Classifier', True, False), # class_weight
         (SVC(), 'Weighted SVM', False, False), # class_weight
         (KNeighborsClassifier(), 'KNeighbors', False, False),
         (BalancedRandomForestClassifier(), 'Balanced Random Forest', True, False), # class_weight
