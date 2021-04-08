@@ -387,10 +387,10 @@ if __name__ == '__main__':
             print('===================================================================\n')
 
             if proba:
-                df_proba = df_proba.sort_values(by='f2')
+                df_proba = df_proba.sort_values(by='f2', ascending=False)
                 df_proba.to_csv(os.path.join(out_proba, 'prob_results.csv'), index=False)
             else:
-                df_regular = df_regular.sort_values(by='f2')
+                df_regular = df_regular.sort_values(by='f2', ascending=False)
                 df_regular.to_csv(os.path.join(out_regular, 'regular_results.csv'), index=False)
 
         # now for one class classification
