@@ -245,11 +245,18 @@ def test_model_one_class(train_df, test_df, feature_importance, model_class, mod
     enc_methods = ['catboost', 'glmm', 'target', 'mestimator', 'james', 'woe']
 
     for enc in enc_methods:
-        X = train_df[feature_importance[:topn]]
-        y = train_df['dem1066']
-        # test_X=test_df[df.columns[:-1]]
-        test_X = test_df[feature_importance[:topn]]
-        test_y = test_df['dem1066']
+        if topn == 'all':
+            X = train_df.drop(['dem1066'], axis=1)
+            y = train_df['dem1066']
+
+            test_X = test_df.drop(['dem1066'], axis=1)
+            test_y = test_df['dem1066']
+        else:
+            X = train_df[feature_importance[:topn]]
+            y = train_df['dem1066']
+
+            test_X = test_df[feature_importance[:topn]]
+            test_y = test_df['dem1066']
 
         with open('../input/columns/categorical.p', 'rb') as f:
             categorical_cols = pickle.load(f)
@@ -277,18 +284,19 @@ def test_model_one_class(train_df, test_df, feature_importance, model_class, mod
 def test_model(train_df, test_df, feature_importance, model_class, model_name,
                df_results, proba=False, one_class=False,
                topn=10):
-    if one_class:
-        train_df = train_df[train_df['dem1066'] == 0]
 
-    # X=train_df[df.columns[:-1]]
-    X = train_df[feature_importance[:topn]]
-    y = train_df['dem1066']
-    # test_X=test_df[df.columns[:-1]]
-    test_X = test_df[feature_importance[:topn]]
-    test_y = test_df['dem1066']
-    if one_class:
-        test_y[test_y == 1] = -1
-        test_y[test_y == 0] = 1
+    if topn == 'all':
+        X = train_df.drop(['dem1066'], axis=1)
+        y = train_df['dem1066']
+
+        test_X = test_df.drop(['dem1066'], axis=1)
+        test_y = test_df['dem1066']
+    else:
+        X = train_df[feature_importance[:topn]]
+        y = train_df['dem1066']
+
+        test_X = test_df[feature_importance[:topn]]
+        test_y = test_df['dem1066']
 
     with open('../input/columns/categorical.p', 'rb') as f:
         categorical_cols = pickle.load(f)
@@ -298,21 +306,15 @@ def test_model(train_df, test_df, feature_importance, model_class, model_name,
     model, param_grid = create_model(y, model_class, model_name)
     for enc in enc_methods:
 
-        if not one_class:
-            pipeline = create_pipeline(model, X.columns, X, enc_method=enc, cat_cols=cat_cols)
-            cv = RepeatedStratifiedKFold(n_splits=10, n_repeats=3, random_state=1)
+        pipeline = create_pipeline(model, X.columns, X, enc_method=enc, cat_cols=cat_cols)
+        cv = RepeatedStratifiedKFold(n_splits=10, n_repeats=3, random_state=1)
 
-            grid = GridSearchCV(estimator=pipeline, param_grid=param_grid, cv=cv, scoring=f2_score)
-            grid_result = grid.fit(np.array(X), np.array(y))
-            print('Best model: %f using %s' % (grid_result.best_score_, grid_result.best_params_))
-            estimator = grid_result.best_estimator_
-            best_params = grid_result.best_params_
-            estimator.fit(X, y)
-        else:
-            estimator = model
-            best_params = {}
-            X, test_X, _ = encode_categorical_data_supervised(X, y, test_X, cat_cols, enc)
-            estimator.fit(X)
+        grid = GridSearchCV(estimator=pipeline, param_grid=param_grid, cv=cv, scoring=f2_score)
+        grid_result = grid.fit(np.array(X), np.array(y))
+        print('Best model: %f using %s' % (grid_result.best_score_, grid_result.best_params_))
+        estimator = grid_result.best_estimator_
+        best_params = grid_result.best_params_
+        estimator.fit(X, y)
 
         # estimator.fit(X, y)
         if proba:
@@ -345,7 +347,7 @@ if __name__ == '__main__':
     feature_importance = np.array(pd.read_csv('../input/feature_importance_modified.csv')['Feature'])
     # models_dict = {}
 
-    for topn in [10, 20]:
+    for topn in ['all', 10, 20]:
 
         out_proba = '../output/output_probabilistic/top{}/'.format(topn)
         mkdir(out_proba)
