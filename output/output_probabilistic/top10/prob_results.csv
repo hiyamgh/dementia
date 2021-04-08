@@ -1,25 +1,25 @@
 model_name,f2,gmean,bss,pr_auc,sampling_strategy,cost_matrix,encoding_strategy
-Weighted Decision Tree Classifier,0.73222,0.80124,-0.14427576050805846,0.42822,0.75,"{0: 162, 1: 639}",woe
-Weighted Decision Tree Classifier,0.73222,0.80124,-0.14427576050805846,0.42822,0.75,"{0: 162, 1: 639}",james
-Weighted Decision Tree Classifier,0.73222,0.80124,-0.14427576050805846,0.42822,0.75,"{0: 162, 1: 639}",catboost
-Balanced Bagging Classifier,0.73222,0.80124,-0.14427576050805846,0.42822,not minority,-,woe
-Weighted Decision Tree Classifier,0.73222,0.80124,-0.14427576050805846,0.42822,0.75,"{0: 162, 1: 639}",mestimator
-Weighted Decision Tree Classifier,0.73222,0.80124,-0.14427576050805846,0.42822,0.5,"{0: 162, 1: 639}",target
-Balanced Bagging Classifier,0.73469,0.79701,-0.24377800055223742,0.41512,not minority,-,mestimator
-Balanced Bagging Classifier,0.73469,0.79701,-0.24377800055223742,0.41512,not minority,-,target
-Balanced Bagging Classifier,0.73469,0.79701,-0.24377800055223742,0.41512,not minority,-,glmm
-Balanced Bagging Classifier,0.74380,0.80670,-0.1691513205191031,0.43013,not minority,-,catboost
-Weighted XGBoost,0.74380,0.80670,-0.1691513205191031,0.43013,not minority,10,glmm
-Weighted XGBoost,0.74380,0.80670,-0.1691513205191031,0.43013,not minority,10,mestimator
-Weighted XGBoost,0.74380,0.80670,-0.1691513205191031,0.43013,not minority,10,james
-Weighted XGBoost,0.74380,0.80670,-0.1691513205191031,0.43013,not minority,10,woe
-Weighted XGBoost,0.74380,0.80670,-0.1691513205191031,0.43013,not minority,10,catboost
-Weighted Decision Tree Classifier,0.74380,0.80670,-0.1691513205191031,0.43013,not minority,"{0: 1, 1: 10}",glmm
-Weighted XGBoost,0.74380,0.80670,-0.1691513205191031,0.43013,not minority,10,target
-Balanced Bagging Classifier,0.74419,0.83033,0.3034843196907471,0.53449,not minority,-,james
-Weighted Logistic Regression,0.74419,0.83033,0.3034843196907471,0.53449,not minority,"{0: 1, 1: 10}",glmm
-Weighted Logistic Regression,0.74419,0.83033,0.3034843196907471,0.53449,not minority,"{0: 1, 1: 10}",james
-Weighted Logistic Regression,0.74419,0.83033,0.3034843196907471,0.53449,not minority,"{0: 1, 1: 10}",woe
 Weighted Logistic Regression,0.74419,0.83033,0.3034843196907471,0.53449,not minority,"{0: 1, 1: 10}",catboost
 Weighted Logistic Regression,0.74419,0.83033,0.3034843196907471,0.53449,not minority,"{0: 1, 1: 10}",target
 Weighted Logistic Regression,0.74419,0.83033,0.3034843196907471,0.53449,not minority,"{0: 1, 1: 10}",mestimator
+Weighted Logistic Regression,0.74419,0.83033,0.3034843196907471,0.53449,not minority,"{0: 1, 1: 10}",james
+Weighted Logistic Regression,0.74419,0.83033,0.3034843196907471,0.53449,not minority,"{0: 1, 1: 10}",woe
+Balanced Bagging Classifier,0.74419,0.83033,0.3034843196907471,0.53449,not minority,-,james
+Weighted Logistic Regression,0.74419,0.83033,0.3034843196907471,0.53449,not minority,"{0: 1, 1: 10}",glmm
+Weighted XGBoost,0.74380,0.80670,-0.1691513205191031,0.43013,not minority,10,target
+Balanced Bagging Classifier,0.74380,0.80670,-0.1691513205191031,0.43013,not minority,-,catboost
+Weighted XGBoost,0.74380,0.80670,-0.1691513205191031,0.43013,not minority,10,glmm
+Weighted XGBoost,0.74380,0.80670,-0.1691513205191031,0.43013,not minority,10,catboost
+Weighted XGBoost,0.74380,0.80670,-0.1691513205191031,0.43013,not minority,10,mestimator
+Weighted XGBoost,0.74380,0.80670,-0.1691513205191031,0.43013,not minority,10,james
+Weighted XGBoost,0.74380,0.80670,-0.1691513205191031,0.43013,not minority,10,woe
+Weighted Decision Tree Classifier,0.74380,0.80670,-0.1691513205191031,0.43013,not minority,"{0: 1, 1: 10}",glmm
+Balanced Bagging Classifier,0.73469,0.79701,-0.24377800055223742,0.41512,not minority,-,glmm
+Balanced Bagging Classifier,0.73469,0.79701,-0.24377800055223742,0.41512,not minority,-,target
+Balanced Bagging Classifier,0.73469,0.79701,-0.24377800055223742,0.41512,not minority,-,mestimator
+Weighted Decision Tree Classifier,0.73222,0.80124,-0.14427576050805846,0.42822,0.75,"{0: 162, 1: 639}",catboost
+Weighted Decision Tree Classifier,0.73222,0.80124,-0.14427576050805846,0.42822,0.5,"{0: 162, 1: 639}",target
+Weighted Decision Tree Classifier,0.73222,0.80124,-0.14427576050805846,0.42822,0.75,"{0: 162, 1: 639}",mestimator
+Weighted Decision Tree Classifier,0.73222,0.80124,-0.14427576050805846,0.42822,0.75,"{0: 162, 1: 639}",james
+Weighted Decision Tree Classifier,0.73222,0.80124,-0.14427576050805846,0.42822,0.75,"{0: 162, 1: 639}",woe
+Balanced Bagging Classifier,0.73222,0.80124,-0.14427576050805846,0.42822,not minority,-,woe
