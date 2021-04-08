@@ -1,4 +1,19 @@
 model_name,f2,tn,fp,fn,tp,sampling_strategy,cost_matrix,encoding_strategy,roc_auc
-,0.73113,143,17,10,31,not minority,-,catboost,0.82492
-,0.78838,121,39,3,38,0.5,"{0: 1, 1: 10}",catboost,0.84154
-,0.79186,138,22,6,35,1.0,-,catboost,0.85808
+Weighted SVM,0.78189,119,41,3,38,0.5,"{0: 1, 1: 10}",james,0.83529
+Weighted SVM,0.78189,119,41,3,38,0.5,"{0: 1, 1: 10}",woe,0.83529
+KNeighbors,0.77982,140,20,7,34,minority,-,james,0.85213
+Weighted SVM,0.77869,118,42,3,38,0.75,"{0: 1, 1: 10}",glmm,0.83216
+Weighted SVM,0.77869,118,42,3,38,0.5,"{0: 1, 1: 10}",mestimator,0.83216
+KNeighbors,0.77626,139,21,7,34,1.0,-,catboost,0.84901
+KNeighbors,0.77273,138,22,7,34,minority,-,target,0.84588
+Weighted SVM,0.77236,116,44,3,38,0.5,"{0: 1, 1: 10}",target,0.82591
+Weighted SVM,0.76923,115,45,3,38,0.75,"{0: 1, 1: 10}",catboost,0.82279
+KNeighbors,0.76555,147,13,9,32,1,-,woe,0.84962
+KNeighbors,0.75610,150,10,10,31,minority,-,glmm,0.84680
+KNeighbors,0.74519,147,13,10,31,1,-,mestimator,0.83742
+Easy Ensemble Classifier,0.74419,141,19,9,32,not minority,-,glmm,0.83087
+Easy Ensemble Classifier,0.73733,139,21,9,32,not minority,-,woe,0.82462
+Easy Ensemble Classifier,0.71759,139,21,10,31,not minority,-,mestimator,0.81242
+Easy Ensemble Classifier,0.71749,133,27,9,32,not minority,-,target,0.80587
+Easy Ensemble Classifier,0.71429,138,22,10,31,not minority,-,james,0.80930
+Easy Ensemble Classifier,0.70093,140,20,11,30,not minority,-,catboost,0.80335

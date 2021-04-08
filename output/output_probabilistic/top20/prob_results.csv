@@ -1,5 +1,25 @@
 model_name,f2,gmean,bss,pr_auc,sampling_strategy,cost_matrix,encoding_strategy
+Balanced Bagging Classifier,0.83691,0.88090,0.20398207964656812,0.54760,not minority,-,catboost
+Balanced Bagging Classifier,0.83333,0.88177,0.2786087596797022,0.56523,not minority,-,mestimator
+Weighted Decision Tree Classifier,0.82969,0.87858,0.2537331996686576,0.55676,all,"{0: 162, 1: 639}",james
+Weighted XGBoost,0.82627,0.87124,0.12935539961343379,0.52519,minority,1,target
+Balanced Bagging Classifier,0.82222,0.87608,0.3034843196907471,0.56728,not minority,-,glmm
+Weighted XGBoost,0.81967,0.86022,-0.01989796045283465,0.49278,minority,10,glmm
+Weighted XGBoost,0.81897,0.86901,0.17910651963552326,0.53286,all,10,mestimator
+Balanced Bagging Classifier,0.81858,0.87292,0.2786087596797022,0.55845,not minority,-,target
+Weighted XGBoost,0.81633,0.85694,-0.0447735204638795,0.48676,all,10,woe
+Weighted XGBoost,0.81545,0.86580,0.15423095962447853,0.52535,all,10,catboost
+Weighted XGBoost,0.81545,0.86580,0.15423095962447853,0.52535,all,10,james
+Weighted Decision Tree Classifier,0.81545,0.86580,0.15423095962447853,0.52535,1,"{0: 162, 1: 639}",catboost
+Balanced Bagging Classifier,0.80579,0.85178,-0.01989796045283465,0.48556,not minority,-,woe
+Balanced Bagging Classifier,0.80357,0.86398,0.2786087596797022,0.55170,0.5,-,james
+Weighted Decision Tree Classifier,0.78475,0.85183,0.2537331996686576,0.53626,minority,"{0: 162, 1: 639}",woe
+Weighted Decision Tree Classifier,0.78475,0.85183,0.2537331996686576,0.53626,0.75,"{0: 162, 1: 639}",glmm
+Weighted Decision Tree Classifier,0.78261,0.84505,0.12935539961343379,0.50381,minority,"{0: 162, 1: 639}",mestimator
+Weighted Decision Tree Classifier,0.78125,0.84870,0.22885763965761285,0.52782,1,"{0: 162, 1: 639}",target
+Weighted Logistic Regression,0.77406,0.83144,-0.0447735204638795,0.46510,0.75,"{0: 162, 1: 639}",mestimator
+Weighted Logistic Regression,0.76763,0.82499,-0.09452464048596898,0.45354,0.75,"{0: 162, 1: 639}",glmm
+Weighted Logistic Regression,0.76446,0.82175,-0.11940020049701361,0.44798,all,"{0: 162, 1: 639}",james
+Weighted Logistic Regression,0.76132,0.81851,-0.14427576050805846,0.44256,0.75,"{0: 162, 1: 639}",target
 Weighted Logistic Regression,0.76132,0.81851,-0.14427576050805846,0.44256,0.75,"{0: 162, 1: 639}",catboost
-Weighted Decision Tree Classifier,0.79646,0.85769,0.22885763965761285,0.53471,0.75,"{0: 162, 1: 639}",catboost
-Weighted XGBoost,0.80357,0.86398,0.2786087596797022,0.55170,minority,10,catboost
-Balanced Bagging Classifier,0.81633,0.85694,-0.0447735204638795,0.48676,not minority,-,catboost
+Weighted Logistic Regression,0.75820,0.81527,-0.1691513205191031,0.43728,0.75,"{0: 162, 1: 639}",woe
