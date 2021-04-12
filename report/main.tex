@@ -1658,6 +1658,66 @@ In Tables \ref{Tab:winning_with_top10},\ref{Tab:winning_with_top20},\ref{Tab:win
 \item We realize that the highest PR\_AUC score reached by an MAML model, that \textbf{incorporated} FP Growth, and taking the top 20 columns selected by feature selection. \textbf{The highest PR\_AUC score is 0.79 shown in Table \ref{Tab:with_fp_top20_bss}}
 \end{enumerate}
 
+\subsection{Insights - Compare \& Contrast Meta Learners vs Shallow Models}
+
+\subsection*{F2-score - top 10 columns}
+\begin{table}[H]
+\input{\detokenize{tables/top_10_f2}}
+\caption{Best meta learners and shallow models in terms of f2 scores (results are sorted)}
+\label{Tab:top_10_f2}
+\end{table}
+
+\subsection*{F2-score - top 20 columns}
+\begin{table}[H]
+\input{\detokenize{tables/top_20_f2}}
+\caption{Best meta learners and shallow models in terms of f2 scores (results are sorted)}
+\label{Tab:top_20_f2}
+\end{table}
+
+\subsection*{BSS - top 10 columns}
+\begin{table}[H]
+\input{\detokenize{tables/top_10_bss}}
+\caption{Best meta learners and shallow models in terms of bss scores (results are sorted)}
+\label{Tab:top_10_bss}
+\end{table}
+
+\subsection*{BSS - top 20 columns}
+\begin{table}[H]
+\input{\detokenize{tables/top_20_bss}}
+\caption{Best meta learners and shallow models in terms of bss scores (results are sorted)}
+\label{Tab:top_20_bss}
+\end{table}
+
+\subsection*{GMEAN - top 10 columns}
+\begin{table}[H]
+\input{\detokenize{tables/top_10_gmean}}
+\caption{Best meta learners and shallow models in terms of gmean scores (results are sorted)}
+\label{Tab:top_10_gmean}
+\end{table}
+
+\subsection*{GMEAN - top 20 columns}
+\begin{table}[H]
+\input{\detokenize{tables/top_20_gmean}}
+\caption{Best meta learners and shallow models in terms of gmean scores (results are sorted)}
+\label{Tab:top_20_gmean}
+\end{table}
+
+\subsection*{PR\_AUC - top 10 columns}
+\begin{table}[H]
+\input{\detokenize{tables/top_10_pr_auc}}
+\caption{Best meta learners and shallow models in terms of pr\_auc scores (results are sorted)}
+\label{Tab:top_10_pr_auc}
+\end{table}
+
+\subsection*{PR\_AUC - top 20 columns}
+\begin{table}[H]
+\input{\detokenize{tables/top_20_pr_auc}}
+\caption{Best meta learners and shallow models in terms of pr\_auc scores (results are sorted)}
+\label{Tab:top_20_pr_auc}
+\end{table}
+
+We realize that in terms of quantitative results, meta learners always score better than the shallow models (except in table \ref{Tab:top_20_gmean}) the shallow models have slightly higher GMEAN
+
 \subsection{Insights on With FP vs. Without FP}
 In terms of error metrics, the differences are marginal between the experiments incorporating and those not incorporating FP growth. This observation is expected because, in both cases, we have modified the randomness in generating tasks for training the MAML model, in such a way that in both we made sure to generate tasks from all the heterogeneous data samples found in the dataset. However, although this is just a \textit{'heuristic'}, but it turns out to capture enough of the data.  \textbf{This heuristic covers tasks from all around the dataset in a \textit{round robin fashion}}
 
