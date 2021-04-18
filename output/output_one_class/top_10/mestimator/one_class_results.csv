@@ -1,0 +1,5 @@
+model_name,f2,encoding_strategy
+IsolationForest,0.30374,mestimator
+One Class SVM,0.29825,mestimator
+EllipticEnvelope,0.27059,mestimator
+LocalOutlierFactor,0.19139,mestimator

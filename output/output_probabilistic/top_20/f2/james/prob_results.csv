@@ -1,0 +1,5 @@
+model_name,f2,gmean,bss,pr_auc,sensitivity,specificity,sampling_strategy,cost_matrix,encoding_strategy,optimization_strategy
+Balanced Bagging Classifier,0.83700,0.88495,0.3034843196907471,0.57397,0.92683,0.84375,not minority,-,james,f2
+Weighted XGBoost,0.81633,0.85694,-0.0447735204638795,0.48676,0.97561,0.74375,1,10,james,f2
+Weighted Decision Tree Classifier,0.79741,0.85387,0.12935539961343379,0.51093,0.90244,0.80625,0.75,"{0: 162, 1: 639}",james,f2
+Weighted Logistic Regression,0.75820,0.81527,-0.1691513205191031,0.43728,0.90244,0.73125,0.75,"{0: 162, 1: 639}",james,f2

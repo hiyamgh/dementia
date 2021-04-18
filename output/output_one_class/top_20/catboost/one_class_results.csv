@@ -1,0 +1,5 @@
+model_name,f2,encoding_strategy
+One Class SVM,0.29825,catboost
+IsolationForest,0.29274,catboost
+LocalOutlierFactor,0.23132,catboost
+EllipticEnvelope,0.21998,catboost

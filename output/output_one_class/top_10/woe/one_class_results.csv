@@ -1,0 +1,5 @@
+model_name,f2,encoding_strategy
+One Class SVM,0.30922,woe
+IsolationForest,0.30374,woe
+EllipticEnvelope,0.27059,woe
+LocalOutlierFactor,0.12136,woe

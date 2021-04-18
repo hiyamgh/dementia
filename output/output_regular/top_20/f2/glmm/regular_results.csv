@@ -1,0 +1,4 @@
+model_name,f2,roc_auc,tn,fp,fn,tp,sampling_strategy,cost_matrix,encoding_strategy,optimization_strategy
+Weighted SVM,0.77869,0.83216,118,42,3,38,0.75,"{0: 1, 1: 10}",glmm,f2
+KNeighbors,0.75610,0.84680,150,10,10,31,minority,-,glmm,f2
+Easy Ensemble Classifier,0.74419,0.83087,141,19,9,32,not minority,-,glmm,f2

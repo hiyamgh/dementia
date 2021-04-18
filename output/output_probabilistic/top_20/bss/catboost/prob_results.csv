@@ -1,0 +1,5 @@
+model_name,f2,gmean,bss,pr_auc,sensitivity,specificity,sampling_strategy,cost_matrix,encoding_strategy,optimization_strategy
+Weighted Logistic Regression,0.75829,0.84255,0.40298655973492603,0.57617,0.78049,0.90625,not minority,"{0: 162, 1: 639}",catboost,bss
+Weighted XGBoost,0.84052,0.88412,0.22885763965761285,0.55550,0.95122,0.81875,not minority,1,catboost,bss
+Weighted Decision Tree Classifier,0.76754,0.83614,0.12935539961343379,0.49670,0.85366,0.81875,not minority,"{0: 162, 1: 639}",catboost,bss
+Balanced Bagging Classifier,0.80000,0.84045,-0.1691513205191031,0.45875,0.97561,0.71250,1,-,catboost,bss
