@@ -21,7 +21,8 @@ def get_winning_hyps(df_errors, hyper_parameters, outfile_name, output_folder, f
                 'ifp': params['ifp'],
                 'fp_supp': params['fp_supp'],
                 'weights': params['weights'],
-                'sampling_strategy': params['sampling_strategy']
+                'sampling_strategy': params['sampling_strategy'],
+                'encoding': params['encoding']
             }, ignore_index=True)
         df_hyper.to_csv('{}.csv'.format(outfile_name), index=False)
     else:
@@ -40,7 +41,8 @@ def get_winning_hyps(df_errors, hyper_parameters, outfile_name, output_folder, f
                 'nu': params['nu'],
                 'ifp': params['ifp'],
                 'weights': params['weights'],
-                'sampling_strategy': params['sampling_strategy']
+                'sampling_strategy': params['sampling_strategy'],
+                'encoding': params['encoding']
             }, ignore_index=True)
 
     if not os.path.exists(output_folder):

@@ -313,101 +313,86 @@ The Balanced Random Forest class from the imbalanced-learn library performs data
 in order to explicitly change the class distribution and performs random undersampling of the majority class in each bootstrap sample. This is generally referred to as Balanced Random
 Forest. It takes care of the class\_weight (cost matrix) and does not need it explicitly specified since it expects imbalanced datasets, Unlike other models provided by sklearn that need the cost matrix for imbalanced classification.
 
-\subsubsection{Results}
-\begin{tabular}{ |p{2cm}|p{1cm}|p{1cm}|p{1cm}|p{1cm}|p{1cm}|p{2cm}|p{2cm}|} 
- \hline
- Model Name&f2-score&G-MEAN&BSS&PR AUC&ROC AUC&sampling strategy& cost matrix\\ 
- \hline
-baseline logistic Reg. &0.66&0.79&0.55&0.56&0.79&-&-\\
- \hline
-Calibrated Weighted Logistic Reg. &0.752 &0.808 &0.273 &0.427 &0.810 &both& reverse\\
- \hline
-Calibrated Weighted Decision Tree  &0.722 &0.747 &0.321 &0.350 &0.758 &over-sampling&reverse\\
- \hline
-Balanced Random Forest &0.768 &0.797 &0.418 &0.398 &0.805 &under-sampling&-\\
- \hline
+\subsubsection{Results With Top 10 Features}
+\begin{table}[H]
+\resizebox{16cm}{!}{
+\begin{tabular}{|l|l|l|l|l|l|l|l|}
+\hline
+\textbf{model\_name}              & \textbf{f2} & \textbf{gmean} & \textbf{bss}        & \textbf{pr\_auc} & \textbf{sampling\_strategy} & \textbf{cost\_matrix} & \textbf{encoding\_strategy} \\ \hline
+Weighted Logistic Regression      & 0.74419     & 0.83033        & 0.30348  & 0.53449          & not minority                & \{0: 1, 1: 10\}       & catboost                    \\ \hline
+Balanced Bagging Classifier       & 0.74419     & 0.83033        & 0.30348  & 0.53449          & not minority                & -                     & james                       \\ \hline
+Weighted XGBoost                  & 0.74380     & 0.80670        & -0.16915 & 0.43013          & not minority                & 10                    & target                      \\ \hline
+Weighted Decision Tree Classifier & 0.74380     & 0.80670        & -0.16915 & 0.43013          & not minority                & \{0: 1, 1: 10\}       & glmm                        \\ \hline
 \end{tabular}
- \subsubsection{Results With Top 10 Features}
-\begin{tabular}{ |p{2cm}|p{1cm}|p{1cm}|p{1cm}|p{1cm}|p{1cm}|p{2cm}|p{2cm}|} 
- \hline
- Model Name&f2-score&G-MEAN&BSS&PR AUC&ROC AUC&sampling strategy& cost matrix\\ 
- \hline
-baseline logistic Reg. &0.657 &0.786 &0.548 &0.560 &0.792&-&-\\
- \hline
-Calibrated Weighted Logistic Reg. &0.728 &0.821 &0.300 &0.528 &0.821 &ratio=0.75& reverse\\
- \hline
-Calibrated Weighted Decision Tree  &0.647 &0.756 &0.353 &0.402 &0.756&both&reverse\\
- \hline
-Balanced Random Forest &0.727 &0.815 &0.379 &0.491 &0.815 &under-sampling&-\\
- \hline
-\end{tabular}
+}
+\end{table}
  \subsubsection{Results With Top 20 Features}
-\begin{tabular}{ |p{2cm}|p{1cm}|p{1cm}|p{1cm}|p{1cm}|p{1cm}|p{2cm}|p{2cm}|} 
- \hline
- Model Name&f2-score&G-MEAN&BSS&PR AUC&ROC AUC&sampling strategy& cost matrix\\ 
- \hline
-baseline logistic Reg.&0.657 &0.786 &0.548 &0.560 &0.792&-&-\\
- \hline
-Calibrated Weighted Logistic Reg. &0.758 &0.814 &0.293 &0.437 &0.816&over-sampling& reverse\\
- \hline
-Calibrated Weighted Decision Tree&0.759 &0.801 &0.390 &0.409 &0.806&ratio=1&reverse\\
- \hline
-Balanced Random Forest&0.822 &0.876 &0.457 &0.567 &0.876&under-sampling&-\\
- \hline
+ \begin{table}[H]
+ \resizebox{16cm}{!}{
+\begin{tabular}{|l|l|l|l|l|l|l|l|}
+\hline
+\textbf{model\_name}              & \textbf{f2} & \textbf{gmean} & \textbf{bss}        & \textbf{pr\_auc} & \textbf{sampling\_strategy} & \textbf{cost\_matrix} & \textbf{encoding\_strategy} \\ \hline
+Balanced Bagging Classifier       & 0.83691     & 0.88090        & 0.20398207964656812 & 0.54760          & not minority                & -                     & catboost                    \\ \hline
+Weighted Decision Tree Classifier & 0.82969     & 0.87858        & 0.2537331996686576  & 0.55676          & all                         & \{0: 162, 1: 639\}    & james                       \\ \hline
+Weighted XGBoost                  & 0.82627     & 0.87124        & 0.12935539961343379 & 0.52519          & minority                    & 1                     & target                      \\ \hline
+Weighted Logistic Regression      & 0.77406     & 0.83144        & -0.0447735204638795 & 0.46510          & 0.75                        & \{0: 162, 1: 639\}    & mestimator                  \\ \hline
 \end{tabular}
+}
+\end{table}
 
-\subsection{Classfication Models}
- \subsubsection{Results}
-\begin{tabular}{|c|c|c|c|c|} 
- \hline
- Model Name&f2-score&ROC AUC&sampling strategy& cost matrix\\ 
- \hline
-KNeighbors &0.709 &0.763 & over-sampling & -\\
- \hline
-Calibrated Weighted SVM &0.746 &0.787 &ratio=0.75&reverse\\
- \hline
-Easy Ensemble Classifier &0.729 &0.791 &under-sampling&-\\ 
- \hline
-\end{tabular}
+
+\subsection{Classification Models}
  \subsubsection{Results With Top 10 Features}
-\begin{tabular}{|c|c|c|c|c|} 
- \hline
- Model Name&f2-score&ROC AUC&sampling strategy& cost matrix\\ 
- \hline
-KNeighbors &0.658 &0.759&over-sampling&-\\
- \hline
-Calibrated Weighted SVM &0.725 &0.825&ratio=0.75&cost(0)=1,cost(1)=10\\
- \hline
-Easy Ensemble Classifier &0.702 &0.790&ratio=0.5&-\\ 
- \hline
+\begin{table}[H]
+\resizebox{16cm}{!}{
+\begin{tabular}{|l|l|l|l|l|l|l|l|l|l|}
+\hline
+\textbf{model\_name}     & \textbf{f2} & \textbf{tn} & \textbf{fp} & \textbf{fn} & \textbf{tp} & \textbf{sampling\_strategy} & \textbf{cost\_matrix} & \textbf{encoding\_strategy} & \textbf{roc\_auc} \\ \hline
+Weighted SVM             & 0.73222     & 120         & 40          & 6           & 35          & 0.75                        & \{0: 162, 1: 639\}    & catboost                    & 0.80183           \\ \hline
+Easy Ensemble Classifier & 0.72314     & 117         & 43          & 6           & 35          & not minority                & -                     & catboost                    & 0.79245           \\ \hline
+KNeighbors               & 0.70000     & 152         & 8           & 13          & 28          & 0.75                        & -                     & woe                         & 0.81646           \\ \hline
 \end{tabular}
- \subsubsection{Results With Top 20 Features}
-\begin{tabular}{|c|c|c|c|c|} 
- \hline
- Model Name&f2-score&ROC AUC&sampling strategy& cost matrix\\ 
- \hline
-KNeighbors&0.705 &0.793&both&-\\
- \hline
-Calibrated Weighted SVM&0.738 &0.801&over-sampling&cost(0)=1,cost(1)=10\\
- \hline
-Easy Ensemble Classifier&0.687 &0.767&under-sampling&-\\ 
- \hline
+}
+\end{table}
+
+\subsubsection*{Results With Top 20 Features}
+\begin{table}[H]
+\resizebox{16cm}{!}{
+\begin{tabular}{|l|l|l|l|l|l|l|l|l|l|}
+\hline
+\textbf{model\_name}     & \textbf{f2} & \textbf{tn} & \textbf{fp} & \textbf{fn} & \textbf{tp} & \textbf{sampling\_strategy} & \textbf{cost\_matrix} & \textbf{encoding\_strategy} & \textbf{roc\_auc} \\ \hline
+Weighted SVM             & 0.78189     & 119         & 41          & 3           & 38          & 0.5                         & \{0: 1, 1: 10\}       & james                       & 0.83529           \\ \hline
+KNeighbors               & 0.77982     & 140         & 20          & 7           & 34          & minority                    & -                     & james                       & 0.85213           \\ \hline
+Easy Ensemble Classifier & 0.74419     & 141         & 19          & 9           & 32          & not minority                & -                     & glmm                        & 0.83087           \\ \hline
 \end{tabular}
+}
+\end{table}
 
 \subsection{One-Class Classification}
-\begin{tabular}{|c|c|} 
+
+\subsubsection*{Results with Top 10 Features}
+\begin{table}[H]
+\begin{tabular}{|l|l|}
 \hline
-Model Name&f2-score\\
-\hline
-One class SVM&0.361\\
-\hline
-Elliptic Envelope&0.152\\
-\hline
-Isolation forest&0.261\\
-\hline
-Local Outlier Factor&0.269\\
-\hline
+\textbf{model\_name} & \textbf{f2} \\ \hline
+One Class SVM        & 0.67442     \\ \hline
+IsolationForest      & 0.31469     \\ \hline
+EllipticEnvelope     & 0.28722     \\ \hline
+LocalOutlierFactor   & 0.19139     \\ \hline
 \end{tabular}
+\end{table}
+
+\subsubsection*{Results with Top 20 Features}
+\begin{table}[H]
+\begin{tabular}{|l|l|}
+\hline
+\textbf{model\_name} & \textbf{f2} \\ \hline
+One Class SVM        & 0.72093     \\ \hline
+IsolationForest      & 0.30922     \\ \hline
+EllipticEnvelope     & 0.25384     \\ \hline
+LocalOutlierFactor   & 0.23132     \\ \hline
+\end{tabular}
+\end{table}
 
 \section{Encoding Categorical Data}
 Several Methods exist for encoding categorical data. Methods could be divided into two: \textit{\textbf{unsupervised and supervised.}} We include the encoding method inside our grid search (for shallow models) and hyper parameter search (for the deep learning models). We will use only the \textbf{supervised categorical encoding methods} because they do not add dimensionality to the data. We have used the \textit{category\_encoders} python module, which supports all the variations of categorical encoding mechanisms. \footnote{\url{https://github.com/scikit-learn-contrib/category_encoders}}
@@ -1532,6 +1517,22 @@ The table above shows that the cost of miss-classifying class 0 as class 1 or cl
 
 %%%%%%%%%%%%%%%%%%%%%%% Winning Hyper Parameters %%%%%%%%%%%%%%%%%%
 \subsection{Winning Hyper Parameters}
+In Tables \ref{Tab:winning_with_top10},\ref{Tab:winning_with_top20},\ref{Tab:winning_without_top10}, and \ref{Tab:winning_without_top20} below, we display the winning hyper parameters for the top 20 best MAML models trained and tested on dementia top 10 and top 20 columns selected by feature selection, with and without including sampling with frequent patterns, respectively. Each table contains the following information:
+\begin{itemize}
+\item \textbf{model:} the name of the winning model
+\item \textbf{miter:} the meta training iterations 
+\item \textbf{mbs:} the meta batch size
+\item \textbf{mlr:} the meta learning rate
+\item \textbf{ulr:} the update learning rate
+\item \textbf{dh:} dimensions hidden, i.e. the number of hidden layers and the number of nodes in each hidden layer. For example: \textit{128, 64} means that we have 2 hidden layers, the first having 128 nodes and the second having 64 nodes.
+\item \textbf{afn:} activation function.
+\item \textbf{nu:} number of testing updates. This is used by the meta learning code to repeat the evaluation on the query set, so here in this case, we evaluate the same query set 4 times for checking the generality of the results.
+\item \textbf{ifp:} a boolean variable of whether we are including sampling with frequent patterns or not. 1 means we are, 0 means we are not.
+\item \textbf{fp\_supp:} the minimum support used for discovering the frequent patterns.
+\item \textbf{encoding:} The categorical encoding mechanism applied for the categorical columns in the data
+\end{itemize}
+
+
 % winning - with fp - top 10
 \begin{table}[H]
 \resizebox{.7\width}{!}{\input{\detokenize{tables/winning_with_top10}}}
@@ -1546,6 +1547,20 @@ The table above shows that the cost of miss-classifying class 0 as class 1 or cl
 \label{Tab:winning_with_top20}
 \end{table}
 
+
+% winning - without fp - top 10
+\begin{table}[H]
+\resizebox{.7\width}{!}{\input{\detokenize{tables/winning_without_top10}}}
+\caption{Winning Hyper Parameters - MAML without FP, using top 10 columns}
+\label{Tab:winning_without_top10}
+\end{table}
+
+% winning - without fp - top 20
+\begin{table}[H]
+\resizebox{.7\width}{!}{\input{\detokenize{tables/winning_without_top20}}}
+\caption{Winning Hyper Parameters - MAML without FP, using top 20 columns}
+\label{Tab:winning_without_top20}
+\end{table}
 
 
 \subsection{Quantitative Results - Without FP Growth}
@@ -1586,11 +1601,13 @@ The table above shows that the cost of miss-classifying class 0 as class 1 or cl
 
 \subsection{Insights}
 \begin{enumerate}
-\item We realize that the highest F2 score reached was by an MAML model, that \textbf{did not} incorporate FP Growth, and taking the top 10 columns selected by feature selection. \textbf{The highest F2 score is 0.9 shown in Table \ref{Tab:without_fp_top10_f2}}
+\item We realize that the highest F2 score reached was by an MAML model, that \textbf{did not} incorporate FP Growth, and taking the top 20 columns selected by feature selection. \textbf{The highest F2 score is 0.91 shown in Table \ref{Tab:without_fp_top20_f2}}
 
-\item We realize that the highest BSS score reached by an MAML model, that \textbf{did not} incorporate FP Growth, and taking the top 20 columns selected by feature selection. The highest  BSS score is 0.72 shown in Table \ref{Tab:without_fp_top20_bss}
+\item We realize that the highest BSS score reached by an MAML model, that \textbf{did not} incorporate FP Growth, and taking the top 20 columns selected by feature selection.\textbf{ The highest  BSS score is 0.63 shown in Table \ref{Tab:without_fp_top20_bss}}
 
-\item the model named \textit{'model\_306'} found in table \ref{Tab:without_fp_top20_bss} seems to be a perfect model because, although not the highest in f2 score, it has an F2 score of 0.85, a GMEAN score of 0.86, a PR\_AUC score of 0.83, and a BSS score of 0.72. Therefore, this model is doing equivalently well in performance with regards to predicting the positive and the negative class. 
+\item We realize that the highest GMEAN score reached by an MAML model, that \textbf{did not} incorporate FP Growth, and taking the top 20 columns selected by feature selection.\textbf{ The highest  GMEAN score is 0.81 shown in Table \ref{Tab:without_fp_top20_bss}}
+
+\item We realize that the highest PR\_AUC score reached by an MAML model, that \textbf{did not} incorporate FP Growth, and taking the top 20 columns selected by feature selection. \textbf{The highest  PR\_AUC score is 0.76 shown in Table \ref{Tab:without_fp_top20_bss}}
 \end{enumerate}
 
 \subsection{Quantitative Results - With FP Growth}
@@ -1630,22 +1647,86 @@ The table above shows that the cost of miss-classifying class 0 as class 1 or cl
 
 \subsection{Insights}
 \begin{enumerate}
-\item We realize that the highest F2 score reached was by an MAML model, that \textbf{incorporated} FP Growth, and taking the top 10 columns selected by feature selection. \textbf{The highest F2 score is 0.89 shown in Table \ref{Tab:with_fp_top10_f2}}
+\item We realize that the highest F2 score reached was by an MAML model, that \textbf{incorporated} FP Growth, and taking the top 10 columns selected by feature selection. \textbf{The highest F2 score is 0.91 shown in Table \ref{Tab:with_fp_top20_f2}}
 
-\item We realize that the highest BSS score reached by an MAML model, that \textbf{incorporated} FP Growth, and taking the top 20 columns selected by feature selection. \textbf{The highest  BSS score is 0.76 shown in Table \ref{Tab:with_fp_top20_bss}}
+\item We realize that the highest BSS score reached by an MAML model, that \textbf{incorporated} FP Growth, and taking the top 10 columns selected by feature selection. \textbf{The highest  BSS score is 0.67 shown in Table \ref{Tab:with_fp_top10_bss}}
 
-\item the model named \textit{'model\_35'} found in Table \ref{Tab:with_fp_top20_bss} seems to be a perfect model because, although not the highest in f2 score, it has an F2 score of 0.88, a GMEAN score of 0.88, a PR\_AUC score of 0.85, and a BSS score of 0.76. Therefore, this model is doing equivalently well in performance with regards to predicting the positive and the negative class. 
+
+\item We realize that the highest GMEAN score reached by an MAML model, that \textbf{incorporated} FP Growth, and taking the top 10 columns selected by feature selection. \textbf{The highest  BSS score is 0.84 shown in Table \ref{Tab:with_fp_top10_bss}}
+
+
+\item We realize that the highest PR\_AUC score reached by an MAML model, that \textbf{incorporated} FP Growth, and taking the top 20 columns selected by feature selection. \textbf{The highest PR\_AUC score is 0.79 shown in Table \ref{Tab:with_fp_top20_bss}}
 \end{enumerate}
+
+\subsection{Insights - Compare \& Contrast Meta Learners vs Shallow Models}
+
+\subsection*{F2-score - top 10 columns}
+\begin{table}[H]
+\input{\detokenize{tables/top_10_f2}}
+\caption{Best meta learners and shallow models in terms of f2 scores (results are sorted)}
+\label{Tab:top_10_f2}
+\end{table}
+
+\subsection*{F2-score - top 20 columns}
+\begin{table}[H]
+\input{\detokenize{tables/top_20_f2}}
+\caption{Best meta learners and shallow models in terms of f2 scores (results are sorted)}
+\label{Tab:top_20_f2}
+\end{table}
+
+\subsection*{BSS - top 10 columns}
+\begin{table}[H]
+\input{\detokenize{tables/top_10_bss}}
+\caption{Best meta learners and shallow models in terms of bss scores (results are sorted)}
+\label{Tab:top_10_bss}
+\end{table}
+
+\subsection*{BSS - top 20 columns}
+\begin{table}[H]
+\input{\detokenize{tables/top_20_bss}}
+\caption{Best meta learners and shallow models in terms of bss scores (results are sorted)}
+\label{Tab:top_20_bss}
+\end{table}
+
+\subsection*{GMEAN - top 10 columns}
+\begin{table}[H]
+\input{\detokenize{tables/top_10_gmean}}
+\caption{Best meta learners and shallow models in terms of gmean scores (results are sorted)}
+\label{Tab:top_10_gmean}
+\end{table}
+
+\subsection*{GMEAN - top 20 columns}
+\begin{table}[H]
+\input{\detokenize{tables/top_20_gmean}}
+\caption{Best meta learners and shallow models in terms of gmean scores (results are sorted)}
+\label{Tab:top_20_gmean}
+\end{table}
+
+\subsection*{PR\_AUC - top 10 columns}
+\begin{table}[H]
+\input{\detokenize{tables/top_10_pr_auc}}
+\caption{Best meta learners and shallow models in terms of pr\_auc scores (results are sorted)}
+\label{Tab:top_10_pr_auc}
+\end{table}
+
+\subsection*{PR\_AUC - top 20 columns}
+\begin{table}[H]
+\input{\detokenize{tables/top_20_pr_auc}}
+\caption{Best meta learners and shallow models in terms of pr\_auc scores (results are sorted)}
+\label{Tab:top_20_pr_auc}
+\end{table}
+
+We realize that in terms of quantitative results, meta learners always score better than the shallow models (except in table \ref{Tab:top_20_gmean}) the shallow models have slightly higher GMEAN
 
 \subsection{Insights on With FP vs. Without FP}
 In terms of error metrics, the differences are marginal between the experiments incorporating and those not incorporating FP growth. This observation is expected because, in both cases, we have modified the randomness in generating tasks for training the MAML model, in such a way that in both we made sure to generate tasks from all the heterogeneous data samples found in the dataset. However, although this is just a \textit{'heuristic'}, but it turns out to capture enough of the data.  \textbf{This heuristic covers tasks from all around the dataset in a \textit{round robin fashion}}
 
 \subsection{Insights about PPV}
-Its is important to note that in most of the results, we realize that PPV (\textbf{P}robability \textbf{P}ositi\textbf{V}e Class) was always threshold approximately around 0.6, expect in Table \ref{Tab:with_fp_top10_f2} were we see that the top 20 best performing models had PPVs of 0.9. This means that these models were able to assign high risks to some of the instances, which means that they were able to assign high risks to patients that are most likely to be demented. This effect will be captured in the \textbf{empirical risk curves}
+Its is important to note that in all of the results, we realize that PPV (\textbf{P}robability \textbf{P}ositi\textbf{V}e Class) was always $\geq 0.9$. This means that these models were able to assign high risks to some of the instances, which means that they were able to assign high risks to patients that are most likely to be demented. This effect will be captured in the \textbf{empirical risk curves}
 
 \subsection{Qualitative Results}
 
-\subsection{Mean Empirical Risk Curves}
+\subsubsection{Mean Empirical Risk Curves}
 \begin{figure}[H]
 \begin{subfigure}{.6\textwidth}
   \centering
@@ -1686,9 +1767,9 @@ If the empirical risk curve is non-monotonic for some models, it implies that th
 scores are more likely to be demented compared to
 patients with higher risk scores.
 
-In the plots above, we realize that, whether with FP or without FP, the models that are trained using top 20 features have better empirical risk curves than those trained using top 10 features.
+In the plots above, we realize that, whether with FP or without FP, the models that are trained using top 20 features have better empirical risk curves than those trained using top 10 features. It is also worth noting that although some models are non-monotonic, some are.
 
-\subsection{Precision at Top K}
+\subsubsection{Precision at Top K}
 \begin{figure}[H]
 \begin{subfigure}{.6\textwidth}
   \centering
@@ -1725,9 +1806,9 @@ In the plots above, we realize that, whether with FP or without FP, the models t
 
 It might happen that hospitals, for example, might want to admit only a certain number of patients, and for that, it might want to admit only the patients that are at a very high risk of having dementia. For that reason, clinicians might be interested in models that provide good risk estimates to rank . Therefore, it might be very helpful to provide the precision/recall values of various models at different values of K.
 
-It is good to note that in all 4 figures above, the precision values do not drop a lot for smaller K values (with the exception of model\_14 and model\_306 in the first two upper figures). Realize that in the bottom figures, the range of values for precision is still between [0.7-1] and [0.92-1] 
+It is good to note that in all 4 figures above, the precision values do not drop a lot for smaller K values, for some models.
 
-\subsection{Recall at Top K}
+\subsubsection{Recall at Top K}
 \begin{figure}[H]
 \begin{subfigure}{.6\textwidth}
   \centering
@@ -1762,10 +1843,10 @@ It is good to note that in all 4 figures above, the precision values do not drop
 \label{fig:test}
 \end{figure}
 
-We realize that the recall values at top K stay stable at 1 with the exception of the model\_14 in the first figure; However, model\_14 increases back to reach 1.
+We realize that the recall values at top K stay stable at 1.
 
 
-\subsection{ROC Curves}
+\subsubsection{ROC Curves}
 \begin{figure}[H]
 \begin{subfigure}{.6\textwidth}
   \centering
