@@ -1,0 +1,8 @@
+\begin{tabular}{|l|l|l|l|l|l|l|l|l|l|}
+\hline
+\textbf{model\_name}         & \textbf{f2} & \textbf{roc\_auc} & \textbf{tn} & \textbf{fp} & \textbf{fn} & \textbf{tp} & \textbf{sampling\_strategy} & \textbf{cost\_matrix} & \textbf{encoding\_strategy} \\ \hline
+Easy Ensemble Classifier     & 0.73469     & 0.7984            & 115         & 45          & 5           & 36          & not minority                & -                     & woe                         \\ \hline
+Weighted SVM                 & 0.73222     & 0.80183           & 120         & 40          & 6           & 35          & 0.5                         & \{0: 162, 1: 639\}    & catboost                    \\ \hline
+KNeighbors                   & 0.7         & 0.81646           & 152         & 8           & 13          & 28          & 0.75                        & -                     & woe                         \\ \hline
+Weighted Logistic Regression & 0.76763     & 0.82499           & -0.09452    & 0.45354     & 0.90244     & 0.75        & not minority                & \{0: 1, 1: 100\}      & glmm                        \\ \hline
+\end{tabular}
