@@ -9,10 +9,31 @@ matplotlib.use('Agg')
 import matplotlib.pyplot as plt
 from sklearn.metrics import *
 from sklearn.preprocessing import MinMaxScaler, StandardScaler, RobustScaler
+import category_encoders as ce
 from fpgrowth_py import fpgrowth
 import warnings
 
 warnings.filterwarnings("ignore")
+
+
+def encode_categorical_data_supervised(X_train, y_train, X_test, cat_cols, enc_method):
+    if enc_method == 'catboost':
+        encoder = ce.CatBoostEncoder(cols=cat_cols)
+    elif enc_method == 'glmm':
+        encoder = ce.GLMMEncoder(cols=cat_cols)
+    elif enc_method == 'target':
+        encoder = ce.TargetEncoder(cols=cat_cols)
+    elif enc_method == 'mestimator':
+        encoder = ce.MEstimateEncoder(cols=cat_cols)
+    elif enc_method == 'james':
+        encoder = ce.JamesSteinEncoder(cols=cat_cols)
+    else: # woe
+        encoder = ce.WOEEncoder(cols=cat_cols)
+
+    X_train_enc = encoder.fit_transform(X_train, y_train)
+    X_test_enc = encoder.transform(X_test)
+    print(X_train_enc.shape, X_test_enc.shape)
+    return X_train_enc, X_test_enc, encoder
 
 
 class AdvancedEvaluator:
@@ -22,6 +43,8 @@ class AdvancedEvaluator:
                  fp_growth_output_folder,
                  models_dict,
                  scaling='robust',
+                 encodings_dict=None,
+                 cat_cols=None,
                  cols_drop=None,
                  pos_class_label=1):
 
@@ -33,7 +56,8 @@ class AdvancedEvaluator:
 
         # columns to drop -- if any
         # drop columns - check if they exist
-        self.all_cols = list(df_train.columns)
+
+        self.all_cols = list(df_test.columns)
         if cols_drop:
             # make sure all passed columns exist in the dataset
             for col in cols_drop:
@@ -61,7 +85,6 @@ class AdvancedEvaluator:
         # the label of the positive classes -- usually its 1 but with the exception of fake news data,
         # the positive (fake) is 0
         self.pos_class_label = pos_class_label
-
         # directory to load trained models from
         # if not os.path.exists(trained_models_dir):
         #     raise ValueError('Directory of trained models: {} does not exist'.format(trained_models_dir))
@@ -75,17 +98,23 @@ class AdvancedEvaluator:
 
         # get models dictionary
         self.models_dict = models_dict
+        self.scaling = scaling
 
-        #  scaling mechanism
-        if scaling not in ['minmax', 'z-score', 'robust']:
-            raise ValueError(
-                'Scaling mechanism {} not found. Choose from: {}'.format(scaling, ['minmax', 'z-score', 'robust']))
-        if scaling == 'minmax':
-            self.scaler = MinMaxScaler()
-        elif scaling == 'z-score':
-            self.scaler = StandardScaler()
-        else:
-            self.scaler = RobustScaler()
+        # scale the data, if need be
+        if self.scaling is not None:
+            if scaling not in ['minmax', 'z-score', 'robust']:
+                raise ValueError(
+                    'Scaling mechanism {} not found. Choose from: {}'.format(scaling, ['minmax', 'z-score', 'robust']))
+            if scaling == 'minmax':
+                self.scaler = MinMaxScaler()
+            elif scaling == 'z-score':
+                self.scaler = StandardScaler()
+            else:
+                self.scaler = RobustScaler()
+
+        # Encode categorical columns in the data, if need be
+        self.encodings_dict = encodings_dict # categorical encoding mechanism
+        self.cat_cols = cat_cols # categorical columns
 
     def mkdir(self, output_folder):
         ''' create directory if it does not already exist '''
@@ -93,11 +122,26 @@ class AdvancedEvaluator:
             os.makedirs(output_folder)
 
     def classify(self, trained_model, trained_model_name, nb_bins=10):
+        if self.encodings_dict is not None:
+            X_train_df = self.df_train.drop([self.target_variable], axis=1)
+            y_train_df = self.df_train[[self.target_variable]]
+            X_test_df = self.df_test.drop([self.target_variable], axis=1)
+            X_train_enc, X_test_enc, encoder = encode_categorical_data_supervised(X_train=X_train_df,
+                                                                                  y_train=y_train_df,
+                                                                                  X_test=X_test_df,
+                                                                                  cat_cols=self.cat_cols,
+                                                                                  enc_method=self.encodings_dict[trained_model_name])
+
+            self.X_train = np.array(X_train_enc)
+            self.X_test = np.array(X_test_enc)
+            self.encoder = encoder
+
         X_train, y_train, X_test, y_test = self.X_train, self.y_train, self.X_test, self.y_test
 
-        # scale the data so that you can predict on scaled testing data directly
-        X_train = self.scaler.fit_transform(X_train)
-        X_test = self.scaler.transform(X_test)
+        if self.scaling is not None:
+            # scale the data so that you can predict on scaled testing data directly
+            X_train = self.scaler.fit_transform(X_train)
+            X_test = self.scaler.transform(X_test)
 
         # number of bins for generating mean empirical risk curves
         self.nb_bins = nb_bins
