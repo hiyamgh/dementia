@@ -313,86 +313,128 @@ The Balanced Random Forest class from the imbalanced-learn library performs data
 in order to explicitly change the class distribution and performs random undersampling of the majority class in each bootstrap sample. This is generally referred to as Balanced Random
 Forest. It takes care of the class\_weight (cost matrix) and does not need it explicitly specified since it expects imbalanced datasets, Unlike other models provided by sklearn that need the cost matrix for imbalanced classification.
 
-\subsubsection{Results With Top 10 Features}
+\subsection{Results - Probabilistic}
+
+\subsubsection*{Top 10 - Optimization: F2}
 \begin{table}[H]
-\resizebox{16cm}{!}{
-\begin{tabular}{|l|l|l|l|l|l|l|l|}
-\hline
-\textbf{model\_name}              & \textbf{f2} & \textbf{gmean} & \textbf{bss}        & \textbf{pr\_auc} & \textbf{sampling\_strategy} & \textbf{cost\_matrix} & \textbf{encoding\_strategy} \\ \hline
-Weighted Logistic Regression      & 0.74419     & 0.83033        & 0.30348  & 0.53449          & not minority                & \{0: 1, 1: 10\}       & catboost                    \\ \hline
-Balanced Bagging Classifier       & 0.74419     & 0.83033        & 0.30348  & 0.53449          & not minority                & -                     & james                       \\ \hline
-Weighted XGBoost                  & 0.74380     & 0.80670        & -0.16915 & 0.43013          & not minority                & 10                    & target                      \\ \hline
-Weighted Decision Tree Classifier & 0.74380     & 0.80670        & -0.16915 & 0.43013          & not minority                & \{0: 1, 1: 10\}       & glmm                        \\ \hline
-\end{tabular}
-}
-\end{table}
- \subsubsection{Results With Top 20 Features}
- \begin{table}[H]
- \resizebox{16cm}{!}{
-\begin{tabular}{|l|l|l|l|l|l|l|l|}
-\hline
-\textbf{model\_name}              & \textbf{f2} & \textbf{gmean} & \textbf{bss}        & \textbf{pr\_auc} & \textbf{sampling\_strategy} & \textbf{cost\_matrix} & \textbf{encoding\_strategy} \\ \hline
-Balanced Bagging Classifier       & 0.83691     & 0.88090        & 0.20398207964656812 & 0.54760          & not minority                & -                     & catboost                    \\ \hline
-Weighted Decision Tree Classifier & 0.82969     & 0.87858        & 0.2537331996686576  & 0.55676          & all                         & \{0: 162, 1: 639\}    & james                       \\ \hline
-Weighted XGBoost                  & 0.82627     & 0.87124        & 0.12935539961343379 & 0.52519          & minority                    & 1                     & target                      \\ \hline
-Weighted Logistic Regression      & 0.77406     & 0.83144        & -0.0447735204638795 & 0.46510          & 0.75                        & \{0: 162, 1: 639\}    & mestimator                  \\ \hline
-\end{tabular}
-}
+\resizebox{.5\width}{!}{
+\input{\detokenize{tables/dementia_shallow/top_10_probabilistic_f2}}}
+\caption{Results of probabilistic shallow models - taking top 10 features - optimized by f2}
 \end{table}
 
-
-\subsection{Classification Models}
- \subsubsection{Results With Top 10 Features}
+\subsubsection*{Top 20 - Optimization: F2}
 \begin{table}[H]
-\resizebox{16cm}{!}{
-\begin{tabular}{|l|l|l|l|l|l|l|l|l|l|}
-\hline
-\textbf{model\_name}     & \textbf{f2} & \textbf{tn} & \textbf{fp} & \textbf{fn} & \textbf{tp} & \textbf{sampling\_strategy} & \textbf{cost\_matrix} & \textbf{encoding\_strategy} & \textbf{roc\_auc} \\ \hline
-Weighted SVM             & 0.73222     & 120         & 40          & 6           & 35          & 0.75                        & \{0: 162, 1: 639\}    & catboost                    & 0.80183           \\ \hline
-Easy Ensemble Classifier & 0.72314     & 117         & 43          & 6           & 35          & not minority                & -                     & catboost                    & 0.79245           \\ \hline
-KNeighbors               & 0.70000     & 152         & 8           & 13          & 28          & 0.75                        & -                     & woe                         & 0.81646           \\ \hline
-\end{tabular}
-}
+\resizebox{.5\width}{!}{
+\input{\detokenize{tables/dementia_shallow/top_20_probabilistic_f2}}}
+\caption{Results of probabilistic shallow models - taking top 20 features - optimized by f2}
 \end{table}
 
-\subsubsection*{Results With Top 20 Features}
+%%%%%%%%%%%%%%%%%% BSS %%%%%%%%%%%%%
+\subsubsection*{Top 10 - Optimization: BSS}
 \begin{table}[H]
-\resizebox{16cm}{!}{
-\begin{tabular}{|l|l|l|l|l|l|l|l|l|l|}
-\hline
-\textbf{model\_name}     & \textbf{f2} & \textbf{tn} & \textbf{fp} & \textbf{fn} & \textbf{tp} & \textbf{sampling\_strategy} & \textbf{cost\_matrix} & \textbf{encoding\_strategy} & \textbf{roc\_auc} \\ \hline
-Weighted SVM             & 0.78189     & 119         & 41          & 3           & 38          & 0.5                         & \{0: 1, 1: 10\}       & james                       & 0.83529           \\ \hline
-KNeighbors               & 0.77982     & 140         & 20          & 7           & 34          & minority                    & -                     & james                       & 0.85213           \\ \hline
-Easy Ensemble Classifier & 0.74419     & 141         & 19          & 9           & 32          & not minority                & -                     & glmm                        & 0.83087           \\ \hline
-\end{tabular}
-}
+\resizebox{.5\width}{!}{
+\input{\detokenize{tables/dementia_shallow/top_10_probabilistic_bss}}}
+\caption{Results of probabilistic shallow models - taking top 10 features - optimized by bss}
 \end{table}
 
-\subsection{One-Class Classification}
-
-\subsubsection*{Results with Top 10 Features}
+\subsubsection*{Top 20 - Optimization: BSS}
 \begin{table}[H]
-\begin{tabular}{|l|l|}
-\hline
-\textbf{model\_name} & \textbf{f2} \\ \hline
-One Class SVM        & 0.67442     \\ \hline
-IsolationForest      & 0.31469     \\ \hline
-EllipticEnvelope     & 0.28722     \\ \hline
-LocalOutlierFactor   & 0.19139     \\ \hline
-\end{tabular}
+\resizebox{.5\width}{!}{
+\input{\detokenize{tables/dementia_shallow/top_20_probabilistic_bss}}}
+\caption{Results of probabilistic shallow models - taking top 20 features - optimized by bss}
 \end{table}
 
-\subsubsection*{Results with Top 20 Features}
+%%%%%%%%%%%%%%%%%% GMEAN %%%%%%%%%%%%%
+\subsubsection*{Top 10 - Optimization: GMEAN}
 \begin{table}[H]
-\begin{tabular}{|l|l|}
-\hline
-\textbf{model\_name} & \textbf{f2} \\ \hline
-One Class SVM        & 0.72093     \\ \hline
-IsolationForest      & 0.30922     \\ \hline
-EllipticEnvelope     & 0.25384     \\ \hline
-LocalOutlierFactor   & 0.23132     \\ \hline
-\end{tabular}
+\resizebox{.5\width}{!}{
+\input{\detokenize{tables/dementia_shallow/top_10_probabilistic_gmean}}}
+\caption{Results of probabilistic shallow models - taking top 10 features - optimized by gmean}
 \end{table}
+
+\subsubsection*{Top 20 - Optimization: GMEAN}
+\begin{table}[H]
+\resizebox{.5\width}{!}{
+\input{\detokenize{tables/dementia_shallow/top_20_probabilistic_gmean}}}
+\caption{Results of probabilistic shallow models - taking top 20 features - optimized by gmean}
+\end{table}
+
+%%%%%%%%%%%%%%%%%% PR_AUC %%%%%%%%%%%%%
+\subsubsection*{Top 10 - Optimization: PR\_AUC}
+\begin{table}[H]
+\resizebox{.5\width}{!}{
+\input{\detokenize{tables/dementia_shallow/top_10_probabilistic_pr_auc}}}
+\caption{Results of probabilistic shallow models - taking top 10 features - optimized by pr\_auc}
+\end{table}
+
+\subsubsection*{Top 20 - Optimization: PR\_AUC}
+\begin{table}[H]
+\resizebox{.5\width}{!}{
+\input{\detokenize{tables/dementia_shallow/top_20_probabilistic_pr_auc}}}
+\caption{Results of probabilistic shallow models - taking top 20 features - optimized by pr\_auc}
+\end{table}
+
+%%%%%%%%%%%%%%%%%% Sensitivity %%%%%%%%%%%%%
+\subsubsection*{Top 10 - Optimization: Sensitivity}
+\begin{table}[H]
+\resizebox{.5\width}{!}{
+\input{\detokenize{tables/dementia_shallow/top_10_probabilistic_sensitivity}}}
+\caption{Results of probabilistic shallow models - taking top 10 features - optimized by sensitivity}
+\end{table}
+
+\subsubsection*{Top 20 - Optimization: Sensitivity}
+\begin{table}[H]
+\resizebox{.5\width}{!}{
+\input{\detokenize{tables/dementia_shallow/top_20_probabilistic_sensitivity}}}
+\caption{Results of probabilistic shallow models - taking top 20 features - optimized by sensitivity}
+\end{table}
+
+%%%%%%%%%%%%%%%%%% Specificity %%%%%%%%%%%%%
+\subsubsection*{Top 10 - Optimization: Specificity}
+\begin{table}[H]
+\resizebox{.5\width}{!}{
+\input{\detokenize{tables/dementia_shallow/top_10_probabilistic_specificity}}}
+\caption{Results of probabilistic shallow models - taking top 10 features - optimized by specificity}
+\end{table}
+
+\subsubsection*{Top 20 - Optimization: Specificity}
+\begin{table}[H]
+\resizebox{.5\width}{!}{
+\input{\detokenize{tables/dementia_shallow/top_20_probabilistic_specificity}}}
+\caption{Results of probabilistic shallow models - taking top 20 features - optimized by specificity}
+\end{table}
+
+\subsection{Results - Classification}
+%%%%%%%%%%%%%%%%%% Specificity %%%%%%%%%%%%%
+\subsubsection*{Top 10 - Optimization: F2}
+\begin{table}[H]
+\resizebox{.5\width}{!}{
+\input{\detokenize{tables/dementia_shallow/top_10_regular_f2}}}
+\caption{Results of classification shallow models - taking top 10 features - optimized by f2}
+\end{table}
+
+\subsubsection*{Top 20 - Optimization: F2}
+\begin{table}[H]
+\resizebox{.5\width}{!}{
+\input{\detokenize{tables/dementia_shallow/top_20_regular_f2}}}
+\caption{Results of classification shallow models - taking top 20 features - optimized by f2}
+\end{table}
+
+\subsection{Results - One Class Classification}
+\subsubsection*{Top 10 - Optimization: F2}
+\begin{table}[H]
+\input{\detokenize{tables/dementia_shallow/top_10_one_class_f2}}
+\caption{Results of one class classification shallow models - taking top 10 features - optimized by f2}
+\end{table}
+
+\subsubsection*{Top 20 - Optimization: F2}
+\begin{table}[H]
+\input{\detokenize{tables/dementia_shallow/top_20_one_class_f2}}
+\caption{Results of one class classification shallow models - taking top 20 features - optimized by f2}
+\end{table}
+
+
+
 
 \section{Encoding Categorical Data}
 Several Methods exist for encoding categorical data. Methods could be divided into two: \textit{\textbf{unsupervised and supervised.}} We include the encoding method inside our grid search (for shallow models) and hyper parameter search (for the deep learning models). We will use only the \textbf{supervised categorical encoding methods} because they do not add dimensionality to the data. We have used the \textit{category\_encoders} python module, which supports all the variations of categorical encoding mechanisms. \footnote{\url{https://github.com/scikit-learn-contrib/category_encoders}}
@@ -1581,6 +1623,39 @@ In Tables \ref{Tab:winning_with_top10},\ref{Tab:winning_with_top20},\ref{Tab:win
 \label{Tab:without_fp_top10_bss}
 \end{table}
 
+\subsubsection*{Without FP - Top 10 - GMEAN score}
+% without fp - top 10 - bss
+\begin{table}[H]
+\resizebox{.7\width}{!}{\input{\detokenize{tables/without_fp_top10_gmean}}}
+\caption{Results - MAML without FP, using top 10 columns - aggregated by gmean score}
+\label{Tab:without_fp_top10_gmean}
+\end{table}
+
+\subsubsection*{Without FP - Top 10 - PR\_AUC score}
+% without fp - top 10 - bss
+\begin{table}[H]
+\resizebox{.7\width}{!}{\input{\detokenize{tables/without_fp_top10_pr_auc}}}
+\caption{Results - MAML without FP, using top 10 columns - aggregated by PR\_AUC score}
+\label{Tab:without_fp_top10_pr_auc}
+\end{table}
+
+\subsubsection*{Without FP - Top 10 - Sensitivity score}
+% without fp - top 10 - bss
+\begin{table}[H]
+\resizebox{.7\width}{!}{\input{\detokenize{tables/without_fp_top10_sensitivity}}}
+\caption{Results - MAML without FP, using top 10 columns - aggregated by sensitivity score}
+\label{Tab:without_fp_top10_sensitivity}
+\end{table}
+
+\subsubsection*{Without FP - Top 10 - Specificity score}
+% without fp - top 10 - bss
+\begin{table}[H]
+\resizebox{.7\width}{!}{\input{\detokenize{tables/without_fp_top10_specificity}}}
+\caption{Results - MAML without FP, using top 10 columns - aggregated by specificity score}
+\label{Tab:without_fp_top10_specificity}
+\end{table}
+
+
 \subsubsection*{Without FP - Top 20 - F2 score}
 % without fp - top 20 - f2
 \begin{table}[H]
@@ -1597,6 +1672,39 @@ In Tables \ref{Tab:winning_with_top10},\ref{Tab:winning_with_top20},\ref{Tab:win
 \caption{Results - MAML without FP, using top 20 columns - aggregated by bss score}
 \label{Tab:without_fp_top20_bss}
 \end{table}
+
+\subsubsection*{Without FP - Top 20 - GMEAN score}
+% without fp - top 10 - bss
+\begin{table}[H]
+\resizebox{.7\width}{!}{\input{\detokenize{tables/without_fp_top20_gmean}}}
+\caption{Results - MAML without FP, using top 20 columns - aggregated by gmean score}
+\label{Tab:without_fp_top20_gmean}
+\end{table}
+
+\subsubsection*{Without FP - Top 20 - PR\_AUC score}
+% without fp - top 10 - bss
+\begin{table}[H]
+\resizebox{.7\width}{!}{\input{\detokenize{tables/without_fp_top20_pr_auc}}}
+\caption{Results - MAML without FP, using top 20 columns - aggregated by PR\_AUC score}
+\label{Tab:without_fp_top20_pr_auc}
+\end{table}
+
+\subsubsection*{Without FP - Top 20 - Sensitivity score}
+% without fp - top 10 - bss
+\begin{table}[H]
+\resizebox{.7\width}{!}{\input{\detokenize{tables/without_fp_top20_sensitivity}}}
+\caption{Results - MAML without FP, using top 20 columns - aggregated by sensitivity score}
+\label{Tab:without_fp_top20_sensitivity}
+\end{table}
+
+\subsubsection*{Without FP - Top 20 - Specificity score}
+% without fp - top 10 - bss
+\begin{table}[H]
+\resizebox{.7\width}{!}{\input{\detokenize{tables/without_fp_top20_specificity}}}
+\caption{Results - MAML without FP, using top 20 columns - aggregated by specificity score}
+\label{Tab:without_fp_top20_specificity}
+\end{table}
+
 
 
 \subsection{Insights}
@@ -1628,6 +1736,7 @@ In Tables \ref{Tab:winning_with_top10},\ref{Tab:winning_with_top20},\ref{Tab:win
 \label{Tab:with_fp_top10_bss}
 \end{table}
 
+
 \subsubsection*{With FP - Top 20 - F2 score}
 % without fp - top 20 - f2
 \begin{table}[H]
@@ -1645,6 +1754,7 @@ In Tables \ref{Tab:winning_with_top10},\ref{Tab:winning_with_top20},\ref{Tab:win
 \label{Tab:with_fp_top20_bss}
 \end{table}
 
+
 \subsection{Insights}
 \begin{enumerate}
 \item We realize that the highest F2 score reached was by an MAML model, that \textbf{incorporated} FP Growth, and taking the top 10 columns selected by feature selection. \textbf{The highest F2 score is 0.91 shown in Table \ref{Tab:with_fp_top20_f2}}
@@ -1658,65 +1768,65 @@ In Tables \ref{Tab:winning_with_top10},\ref{Tab:winning_with_top20},\ref{Tab:win
 \item We realize that the highest PR\_AUC score reached by an MAML model, that \textbf{incorporated} FP Growth, and taking the top 20 columns selected by feature selection. \textbf{The highest PR\_AUC score is 0.79 shown in Table \ref{Tab:with_fp_top20_bss}}
 \end{enumerate}
 
-\subsection{Insights - Compare \& Contrast Meta Learners vs Shallow Models}
-
-\subsection*{F2-score - top 10 columns}
-\begin{table}[H]
-\input{\detokenize{tables/top_10_f2}}
-\caption{Best meta learners and shallow models in terms of f2 scores (results are sorted)}
-\label{Tab:top_10_f2}
-\end{table}
-
-\subsection*{F2-score - top 20 columns}
-\begin{table}[H]
-\input{\detokenize{tables/top_20_f2}}
-\caption{Best meta learners and shallow models in terms of f2 scores (results are sorted)}
-\label{Tab:top_20_f2}
-\end{table}
-
-\subsection*{BSS - top 10 columns}
-\begin{table}[H]
-\input{\detokenize{tables/top_10_bss}}
-\caption{Best meta learners and shallow models in terms of bss scores (results are sorted)}
-\label{Tab:top_10_bss}
-\end{table}
-
-\subsection*{BSS - top 20 columns}
-\begin{table}[H]
-\input{\detokenize{tables/top_20_bss}}
-\caption{Best meta learners and shallow models in terms of bss scores (results are sorted)}
-\label{Tab:top_20_bss}
-\end{table}
-
-\subsection*{GMEAN - top 10 columns}
-\begin{table}[H]
-\input{\detokenize{tables/top_10_gmean}}
-\caption{Best meta learners and shallow models in terms of gmean scores (results are sorted)}
-\label{Tab:top_10_gmean}
-\end{table}
-
-\subsection*{GMEAN - top 20 columns}
-\begin{table}[H]
-\input{\detokenize{tables/top_20_gmean}}
-\caption{Best meta learners and shallow models in terms of gmean scores (results are sorted)}
-\label{Tab:top_20_gmean}
-\end{table}
-
-\subsection*{PR\_AUC - top 10 columns}
-\begin{table}[H]
-\input{\detokenize{tables/top_10_pr_auc}}
-\caption{Best meta learners and shallow models in terms of pr\_auc scores (results are sorted)}
-\label{Tab:top_10_pr_auc}
-\end{table}
-
-\subsection*{PR\_AUC - top 20 columns}
-\begin{table}[H]
-\input{\detokenize{tables/top_20_pr_auc}}
-\caption{Best meta learners and shallow models in terms of pr\_auc scores (results are sorted)}
-\label{Tab:top_20_pr_auc}
-\end{table}
-
-We realize that in terms of quantitative results, meta learners always score better than the shallow models (except in table \ref{Tab:top_20_gmean}) the shallow models have slightly higher GMEAN
+%\subsection{Insights - Compare \& Contrast Meta Learners vs Shallow Models}
+%
+%\subsection*{F2-score - top 10 columns}
+%\begin{table}[H]
+%\input{\detokenize{tables/top_10_f2}}
+%\caption{Best meta learners and shallow models in terms of f2 scores (results are sorted)}
+%\label{Tab:top_10_f2}
+%\end{table}
+%
+%\subsection*{F2-score - top 20 columns}
+%\begin{table}[H]
+%\input{\detokenize{tables/top_20_f2}}
+%\caption{Best meta learners and shallow models in terms of f2 scores (results are sorted)}
+%\label{Tab:top_20_f2}
+%\end{table}
+%
+%\subsection*{BSS - top 10 columns}
+%\begin{table}[H]
+%\input{\detokenize{tables/top_10_bss}}
+%\caption{Best meta learners and shallow models in terms of bss scores (results are sorted)}
+%\label{Tab:top_10_bss}
+%\end{table}
+%
+%\subsection*{BSS - top 20 columns}
+%\begin{table}[H]
+%\input{\detokenize{tables/top_20_bss}}
+%\caption{Best meta learners and shallow models in terms of bss scores (results are sorted)}
+%\label{Tab:top_20_bss}
+%\end{table}
+%
+%\subsection*{GMEAN - top 10 columns}
+%\begin{table}[H]
+%\input{\detokenize{tables/top_10_gmean}}
+%\caption{Best meta learners and shallow models in terms of gmean scores (results are sorted)}
+%\label{Tab:top_10_gmean}
+%\end{table}
+%
+%\subsection*{GMEAN - top 20 columns}
+%\begin{table}[H]
+%\input{\detokenize{tables/top_20_gmean}}
+%\caption{Best meta learners and shallow models in terms of gmean scores (results are sorted)}
+%\label{Tab:top_20_gmean}
+%\end{table}
+%
+%\subsection*{PR\_AUC - top 10 columns}
+%\begin{table}[H]
+%\input{\detokenize{tables/top_10_pr_auc}}
+%\caption{Best meta learners and shallow models in terms of pr\_auc scores (results are sorted)}
+%\label{Tab:top_10_pr_auc}
+%\end{table}
+%
+%\subsection*{PR\_AUC - top 20 columns}
+%\begin{table}[H]
+%\input{\detokenize{tables/top_20_pr_auc}}
+%\caption{Best meta learners and shallow models in terms of pr\_auc scores (results are sorted)}
+%\label{Tab:top_20_pr_auc}
+%\end{table}
+%
+%We realize that in terms of quantitative results, meta learners always score better than the shallow models (except in table \ref{Tab:top_20_gmean}) the shallow models have slightly higher GMEAN
 
 \subsection{Insights on With FP vs. Without FP}
 In terms of error metrics, the differences are marginal between the experiments incorporating and those not incorporating FP growth. This observation is expected because, in both cases, we have modified the randomness in generating tasks for training the MAML model, in such a way that in both we made sure to generate tasks from all the heterogeneous data samples found in the dataset. However, although this is just a \textit{'heuristic'}, but it turns out to capture enough of the data.  \textbf{This heuristic covers tasks from all around the dataset in a \textit{round robin fashion}}
@@ -1761,13 +1871,31 @@ Its is important to note that in all of the results, we realize that PPV (\textb
 \label{fig:test}
 \end{figure}
 
+\begin{figure}[H]
+\begin{subfigure}{.6\textwidth}
+  \centering
+  \includegraphics[width=.8\linewidth]{\detokenize{advanced_ml_shallow/top_10/probabilistic/f2/mean_empirical_risks.png}}
+  \caption{Mean Empirical Risks for top \textbf{shallow} models - top 10 columns}
+  \label{fig:sub1}
+\end{subfigure}%
+\begin{subfigure}{.6\textwidth}
+  \centering
+  \includegraphics[width=.8\linewidth]{\detokenize{advanced_ml_shallow/top_10/probabilistic/f2/mean_empirical_risks.png}}
+  \caption{Mean Empirical Risks for top \textbf{shallow} models - top 20 columns}
+  \label{fig:sub2}
+\end{subfigure}
+\caption{Mean Empirical Risks for top models - With and Without FP - as well as shallow models trained on top 10 and top 20 columns selected by feature selection}
+\label{fig:test}
+\end{figure}
+
+
 In order to produce empirical risk curves, first, we rank patients by descending order of their estimated risk scores. We then group patients into bins based on the percentiles they fall into when categorized using risk scores. In our experiments, we choose to create 10 bins. The bottom 10\% of patients who have the least risk are grouped into a single bin. Those who rank between 10th and 20th percentile are grouped in the next bin and so on. For each such bin, we compute the \textit{empirical risk score} \textbf{which is the fraction of patients from that bin who actually, as per ground truth, are demented}. A good model would be classifying patients correctly if the \textit{empirical risk curve} is monotonically non-decreasing.
 
 If the empirical risk curve is non-monotonic for some models, it implies that the classification using the model's risk scores may result in scenarios where patients with lower risk
 scores are more likely to be demented compared to
 patients with higher risk scores.
 
-In the plots above, we realize that, whether with FP or without FP, the models that are trained using top 20 features have better empirical risk curves than those trained using top 10 features. It is also worth noting that although some models are non-monotonic, some are.
+In the plots above, we realize that, whether with FP or without FP, the models that are trained using top 20 features have better empirical risk curves than those trained using top 10 features. It is also worth noting that although some models are non-monotonic, some are. \textbf{More importantly}, the shallow models are worse than meta learners, whereby their mean empirical risks decrease with the increase of risk, while the perfect behaviour must be exactly the opposite.
 
 \subsubsection{Precision at Top K}
 \begin{figure}[H]
@@ -1804,9 +1932,30 @@ In the plots above, we realize that, whether with FP or without FP, the models t
 \label{fig:test}
 \end{figure}
 
+\begin{figure}[H]
+\begin{subfigure}{.6\textwidth}
+  \centering
+  \includegraphics[width=.8\linewidth]{\detokenize{advanced_ml_shallow/top_10/probabilistic/f2/precisions_topK.png}}
+  \caption{Precisions at Top K for top \textbf{shallow} models - top 10 columns}
+  \label{fig:sub1}
+\end{subfigure}%
+\begin{subfigure}{.6\textwidth}
+  \centering
+  \includegraphics[width=.8\linewidth]{\detokenize{advanced_ml_shallow/top_20/probabilistic/f2/precisions_topK.png}}
+  \caption{Precisions at Top K for top \textbf{shallow} models - top 20 columns}
+  \label{fig:sub2}
+\end{subfigure}
+\caption{Precisions at Top K for top models - With and Without FP - trained on top 10 and top 20 columns selected by feature selection}
+\label{fig:test}
+\end{figure}
+
+
+
 It might happen that hospitals, for example, might want to admit only a certain number of patients, and for that, it might want to admit only the patients that are at a very high risk of having dementia. For that reason, clinicians might be interested in models that provide good risk estimates to rank . Therefore, it might be very helpful to provide the precision/recall values of various models at different values of K.
 
-It is good to note that in all 4 figures above, the precision values do not drop a lot for smaller K values, for some models.
+It is good to note that in the first 4 figures above (\textbf{meta learning}), the precision values do not drop a lot for smaller K values, for some models.
+
+It is also important to note the last 2 figures (\textbf{shallow}), the models trained on top 20 columns perform good, as their precision (except for the Weighted Logistic Regression model) remain nearly constant for small values of $K$. 
 
 \subsubsection{Recall at Top K}
 \begin{figure}[H]
@@ -1842,6 +1991,24 @@ It is good to note that in all 4 figures above, the precision values do not drop
 \caption{Recalls at Top K for top models - With and Without FP - trained on top 10 and top 20 columns selected by feature selection}
 \label{fig:test}
 \end{figure}
+
+\begin{figure}[H]
+\begin{subfigure}{.6\textwidth}
+  \centering
+  \includegraphics[width=.8\linewidth]{\detokenize{advanced_ml_shallow/top_10/probabilistic/f2/recalls_topK.png}}
+  \caption{Recalls for top \textbf{shallow} models - top 10 columns}
+  \label{fig:sub1}
+\end{subfigure}%
+\begin{subfigure}{.6\textwidth}
+  \centering
+  \includegraphics[width=.8\linewidth]{\detokenize{advanced_ml_shallow/top_10/probabilistic/f2/recalls_topK.png}}
+  \caption{Recalls at Top K for top \textbf{shallow} models - top 20 columns}
+  \label{fig:sub2}
+\end{subfigure}
+\caption{Recalls at Top K for top models - Without FP - as well as shallow models trained on top 10 and top 20 columns selected by feature selection}
+\label{fig:test}
+\end{figure}
+
 
 We realize that the recall values at top K stay stable at 1.
 
@@ -1881,7 +2048,24 @@ We realize that the recall values at top K stay stable at 1.
 \label{fig:test}
 \end{figure}
 
-We realize that the best ROC Curves are those of the models trained on the top 20 features selected by feature selection, whether with or without FP.
+\begin{figure}[H]
+\begin{subfigure}{.6\textwidth}
+  \centering
+  \includegraphics[width=.8\linewidth]{\detokenize{advanced_ml_shallow/top_10/probabilistic/f2/roc_curves.png}}
+  \caption{ROC Curves for top \textbf{shallow} models - top 10 columns}
+  \label{fig:sub1}
+\end{subfigure}%
+\begin{subfigure}{.6\textwidth}
+  \centering
+  \includegraphics[width=.8\linewidth]{\detokenize{advanced_ml_shallow/top_10/probabilistic/f2/roc_curves.png}}
+  \caption{ROC Curves for top \textbf{shallow} models - top 20 columns}
+  \label{fig:sub2}
+\end{subfigure}
+\caption{ROC Curves for top \textbf{shallow} models trained on top 10 and top 20 columns selected by feature selection}
+\label{fig:test}
+\end{figure}
+
+We realize that the best ROC Curves are those of the models trained on the top 20 features selected by feature selection, whether with or without FP. More importantly, the meta learners have much better roc curves than shallow models.
 
 
 \end{document}
