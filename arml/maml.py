@@ -30,7 +30,8 @@ class MAML:
         elif FLAGS.datasource in ['plainmulti', 'artmulti']:
             self.metagraph = MetaGraph(input_dim=FLAGS.hidden_dim, hidden_dim=FLAGS.hidden_dim)
 
-        self.dim_hidden = [128, 64]
+        # self.dim_hidden = [128, 64]
+        self.dim_hidden = list(map(int, list(FLAGS.dim_hidden.split(", "))))
         self.loss_func = xent
         self.classification = True
         self.forward = self.forward_fc

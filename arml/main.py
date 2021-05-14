@@ -67,7 +67,7 @@ flags.DEFINE_float('emb_loss_weight', 0.0, 'the weight of autoencoder')
 flags.DEFINE_integer('task_embedding_num_filters', 32, 'number of filters for task embedding')
 flags.DEFINE_integer('num_vertex', 4, 'number of vertex in the first layer')
 # flags.DEFINE_integer('num_vertex', 6, 'number of vertex in the first layer')
-
+flags.DEFINE_string('dim_hidden', '128, 64, 64', 'number of neurons in each hidden layer')
 flags.DEFINE_integer('model_num', 3, 'model number to store trained model. Better for tracking')
 
 ## define options for cost-sensitive learning
@@ -83,10 +83,9 @@ flags.DEFINE_integer('top_features', 10, 'top features selected by feature selec
 
 ## Logging, saving, and testing options
 flags.DEFINE_bool('log', True, 'if false, do not log summaries, for debugging code.')
-flags.DEFINE_string('logdir', './logs/', 'directory for summaries and checkpoints.')
-flags.DEFINE_string('datadir', './Data/', 'directory for datasets.')
+flags.DEFINE_string('logdir', 'logs/', 'directory for summaries and checkpoints.')
 flags.DEFINE_bool('resume', False, 'resume training if there is a model available')
-flags.DEFINE_bool('train', False, 'True to train, False to test.')
+flags.DEFINE_bool('train', True, 'True to train, False to test.')
 flags.DEFINE_bool('test_set', True, 'Set to true to evaluate on the the test set, False for the validation set.')
 
 
@@ -495,18 +494,26 @@ def main():
             labela = tf.slice(label_tensor, [0, 0, 0], [-1, num_classes * FLAGS.update_batch_size, -1]) # (25, 25, 5)
             labelb = tf.slice(label_tensor, [0, num_classes * FLAGS.update_batch_size, 0], [-1, -1, -1]) # (25, 75, 5)
             input_tensors = {'inputa': inputa, 'inputb': inputb, 'labela': labela, 'labelb': labelb}
-        else:
-            random.seed(6)
-            # if FLAGS.datasource == 'plainmulti':
-            #     image_tensor, label_tensor = data_generator.make_data_tensor_plainmulti(train=False)
-            # elif FLAGS.datasource == 'artmulti':
-            #     image_tensor, label_tensor = data_generator.make_data_tensor_artmulti(train=False)
-            image_tensor, label_tensor = data_generator.make_data_tensor(train=False)
-            inputa = tf.slice(image_tensor, [0, 0, 0], [-1, num_classes * FLAGS.update_batch_size, -1])
-            inputb = tf.slice(image_tensor, [0, num_classes * FLAGS.update_batch_size, 0], [-1, -1, -1])
-            labela = tf.slice(label_tensor, [0, 0, 0], [-1, num_classes * FLAGS.update_batch_size, -1])
-            labelb = tf.slice(label_tensor, [0, num_classes * FLAGS.update_batch_size, 0], [-1, -1, -1])
-            metaval_input_tensors = {'inputa': inputa, 'inputb': inputb, 'labela': labela, 'labelb': labelb}
+
+        random.seed(6)
+        image_tensor, label_tensor = data_generator.make_data_tensor(train=False)
+        inputa = tf.slice(image_tensor, [0, 0, 0], [-1, num_classes * FLAGS.update_batch_size, -1])
+        inputb = tf.slice(image_tensor, [0, num_classes * FLAGS.update_batch_size, 0], [-1, -1, -1])
+        labela = tf.slice(label_tensor, [0, 0, 0], [-1, num_classes * FLAGS.update_batch_size, -1])
+        labelb = tf.slice(label_tensor, [0, num_classes * FLAGS.update_batch_size, 0], [-1, -1, -1])
+        metaval_input_tensors = {'inputa': inputa, 'inputb': inputb, 'labela': labela, 'labelb': labelb}
+        # else:
+        #     random.seed(6)
+        #     # if FLAGS.datasource == 'plainmulti':
+        #     #     image_tensor, label_tensor = data_generator.make_data_tensor_plainmulti(train=False)
+        #     # elif FLAGS.datasource == 'artmulti':
+        #     #     image_tensor, label_tensor = data_generator.make_data_tensor_artmulti(train=False)
+        #     image_tensor, label_tensor = data_generator.make_data_tensor(train=False)
+        #     inputa = tf.slice(image_tensor, [0, 0, 0], [-1, num_classes * FLAGS.update_batch_size, -1])
+        #     inputb = tf.slice(image_tensor, [0, num_classes * FLAGS.update_batch_size, 0], [-1, -1, -1])
+        #     labela = tf.slice(label_tensor, [0, 0, 0], [-1, num_classes * FLAGS.update_batch_size, -1])
+        #     labelb = tf.slice(label_tensor, [0, num_classes * FLAGS.update_batch_size, 0], [-1, -1, -1])
+        #     metaval_input_tensors = {'inputa': inputa, 'inputb': inputb, 'labela': labela, 'labelb': labelb}
     else:
         input_tensors = None
         metaval_input_tensors=None
@@ -515,8 +522,9 @@ def main():
 
     if FLAGS.train:
         model.construct_model(input_tensors=input_tensors, prefix='metatrain_')
-    else:
-        model.construct_model(input_tensors=metaval_input_tensors, prefix='metaval_')
+    # else:
+    #     model.construct_model(input_tensors=metaval_input_tensors, prefix='metaval_')
+    model.construct_model(input_tensors=metaval_input_tensors, prefix='metaval_')
 
     saver = tf.train.Saver(tf.get_collection(tf.GraphKeys.TRAINABLE_VARIABLES), max_to_keep=60)
 
@@ -545,14 +553,23 @@ def main():
             print("Restoring model weights from " + model_file)
             saver.restore(sess, model_file)
     resume_itr = 0
+    # if FLAGS.resume or not FLAGS.train:
+    #     model_file = tf.train.latest_checkpoint(FLAGS.logdir + '/' + exp_string)
+    #     if FLAGS.test_iter > 0:
+    #         model_file = model_file[:model_file.index('model')] + 'model' + str(FLAGS.test_iter)
+    #     if model_file:
+    #         ind1 = model_file.index('model')
+    #         resume_itr = int(model_file[ind1+5:])
+    #         print("Restoring model weights from " + model_file)
+    #         saver.restore(sess, model_file)
 
     # if FLAGS.train:
     #     train(model, saver, sess, exp_string, data_generator, resume_itr)
     # else:
     #     test(model, sess, data_generator)
 
-    # FLAGS.train = True
-    # train(model, saver, sess, exp_string, data_generator, resume_itr)
+    FLAGS.train = True
+    train(model, saver, sess, exp_string, data_generator, resume_itr)
     FLAGS.train = False
     test(model, sess, exp_string, data_generator)
 
