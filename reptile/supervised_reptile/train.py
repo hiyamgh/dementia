@@ -13,8 +13,10 @@ from .variables import weight_decay
 # pylint: disable=R0913,R0914
 def train(sess,
           model,
-          train_set,
-          test_set,
+          X_train,
+          y_train,
+          X_test,
+          y_test,
           save_dir,
           num_classes=5,
           num_shots=5,
@@ -33,6 +35,7 @@ def train(sess,
           train_shots=None,
           transductive=False,
           reptile_fn=Reptile,
+          cost_sensitive=0,
           log_fn=print):
     """
     Train a model on a dataset.
@@ -50,22 +53,35 @@ def train(sess,
     test_writer = tf.summary.FileWriter(os.path.join(save_dir, 'test'), sess.graph)
     tf.global_variables_initializer().run()
     sess.run(tf.global_variables_initializer())
-    for i in range(meta_iters):
+    for i in range(meta_iters): # meta_iters 400000
         frac_done = i / meta_iters
         cur_meta_step_size = frac_done * meta_step_size_final + (1 - frac_done) * meta_step_size
-        reptile.train_step(train_set, model.input_ph, model.label_ph, model.minimize_op,
+        reptile.train_step(X_train, y_train, model.input_ph, model.label_ph, model.minimize_op,
                            num_classes=num_classes, num_shots=(train_shots or num_shots),
                            inner_batch_size=inner_batch_size, inner_iters=inner_iters,
                            replacement=replacement,
-                           meta_step_size=cur_meta_step_size, meta_batch_size=meta_batch_size)
+                           meta_step_size=cur_meta_step_size, meta_batch_size=meta_batch_size) # train_set is basically
+                            # iterating over meta_batch_size, creating mini-datasets in each iteration,
+                            # on that mini-dataset, looping over mini-batches and for each optmizing over loss
         if i % eval_interval == 0:
             accuracies = []
-            for dataset, writer in [(train_set, train_writer), (test_set, test_writer)]:
-                correct = reptile.evaluate(dataset, model.input_ph, model.label_ph,
-                                           model.minimize_op, model.predictions,
-                                           num_classes=num_classes, num_shots=num_shots,
-                                           inner_batch_size=eval_inner_batch_size,
-                                           inner_iters=eval_inner_iters, replacement=replacement)
+            # for dataset, writer in [(train_set, train_writer), (test_set, test_writer)]: # so we're basically evaluating
+            for X, y, writer in [(X_train, y_train, train_writer), (X_test, y_test, test_writer)]: # so we're basically evaluating
+                # predictions on the train set and on the testing set
+                if cost_sensitive == 0:
+                    correct, _ = reptile.evaluate(X, y, model.input_ph, model.label_ph,
+                                               model.minimize_op, model.predictions,
+                                               num_classes=num_classes, num_shots=num_shots,
+                                               inner_batch_size=eval_inner_batch_size,
+                                               inner_iters=eval_inner_iters, replacement=replacement,
+                                               cost_sensitive=cost_sensitive)
+                else:
+                    correct, _, _ = reptile.evaluate(X, y, model.input_ph, model.label_ph,
+                                                          model.minimize_op, model.predictions,
+                                                          num_classes=num_classes, num_shots=num_shots,
+                                                          inner_batch_size=eval_inner_batch_size,
+                                                          inner_iters=eval_inner_iters, replacement=replacement,
+                                                          cost_sensitive=cost_sensitive)
                 summary = sess.run(merged, feed_dict={accuracy_ph: correct/num_classes})
                 writer.add_summary(summary, i)
                 writer.flush()

@@ -4,10 +4,10 @@ Command-line argument parsing.
 
 import argparse
 from functools import partial
-
 import tensorflow as tf
 
 from .reptile import Reptile, FOML
+
 
 def argument_parser():
     """
@@ -18,8 +18,36 @@ def argument_parser():
                         action='store_true', default=False)
     parser.add_argument('--seed', help='random seed', default=0, type=int)
     parser.add_argument('--checkpoint', help='checkpoint directory', default='model_checkpoint')
-    parser.add_argument('--classes', help='number of classes per inner task', default=5, type=int)
-    parser.add_argument('--shots', help='number of examples per class', default=5, type=int)
+    # parser.add_argument('--classes', help='number of classes per inner task', default=5, type=int)
+    parser.add_argument('--classes', help='number of classes per inner task', default=2, type=int)
+    # parser.add_argument('--shots', help='number of examples per class', default=5, type=int)
+
+    # Data Pre-Processing related arguments
+    parser.add_argument('--training_data_path', help='path to training data', default='input/train_imputed_scaled.csv')
+    parser.add_argument('--testing_data_path', help='path to testing data', default='input/test_imputed_scaled.csv')
+    parser.add_argument('--target_variable', help='name of the column that acts as the target variable', default='dem1066')
+    parser.add_argument('--cols_drop', help='list of columns to drop from the dataset', default=None)
+    parser.add_argument('--special_encoding', help='special encoding while reading pandas dataframe, if any is needed', default=None)
+    parser.add_argument('--scaling', help='scaling mechanism needed for scaling the data (without data leakage)', default=None)
+    parser.add_argument('--categorical_columns', help='path to list of categorical columns in the dataset', default='input/categorical.p')
+    parser.add_argument('--categorical_encoding', help='categorical encoding mechanism', default='target')
+
+    # Model-related arguments
+    parser.add_argument('--dim_hidden', help='number of neurons in each hidden layer', default='128, 64, 64')
+    parser.add_argument('--dim_name', help='unique index name for the list of hidden layers (above)', default='dim0')
+    parser.add_argument('--activation_fn', help='activation function used', default='relu')
+    parser.add_argument('--model_num', help='model number to store trained model. Better for tracking', default=1)
+
+    # cost-sensitive related arguments
+    parser.add_argument('--cost_sensitive', help='whether to evaluate in cost sensitive mode or not', default=1)
+    parser.add_argument('--cost_sensitive_type', help='type of cost applied', default='weighted')
+    parser.add_argument('--weights_vector', help='respective weights of each class if cost_sensitive_type=weighted', default="10, 1")
+    parser.add_argument('--cost_matrix', help='cost matrix if cost_sensitive_type=miss-classification', default=[[1, 2.15], [2.15, 1]])
+    parser.add_argument('--sampling_strategy', help='how to resample data, only done when cost_sensitive=1', default='all')
+    parser.add_argument('--top_features', help='number of top features (by feature selection) to consider', default=10)
+
+    # Other arguments
+    parser.add_argument('--shots', help='number of examples per class', default=32, type=int)
     parser.add_argument('--train-shots', help='shots in a training batch', default=0, type=int)
     parser.add_argument('--inner-batch', help='inner batch size', default=5, type=int)
     parser.add_argument('--inner-iters', help='inner iterations', default=20, type=int)
@@ -29,7 +57,8 @@ def argument_parser():
     parser.add_argument('--meta-step-final', help='meta-training step size by the end',
                         default=0.1, type=float)
     parser.add_argument('--meta-batch', help='meta-training batch size', default=1, type=int)
-    parser.add_argument('--meta-iters', help='meta-training iterations', default=400000, type=int)
+    # parser.add_argument('--meta-iters', help='meta-training iterations', default=400000, type=int)
+    parser.add_argument('--meta-iters', help='meta-training iterations', default=1000, type=int)
     parser.add_argument('--eval-batch', help='eval inner batch size', default=5, type=int)
     parser.add_argument('--eval-iters', help='eval inner iterations', default=50, type=int)
     parser.add_argument('--eval-samples', help='evaluation samples', default=10000, type=int)
@@ -42,6 +71,22 @@ def argument_parser():
     parser.add_argument('--sgd', help='use vanilla SGD instead of Adam', action='store_true')
     return parser
 
+
+def dim_kwargs(parsed_args):
+    """
+    Build the dim_kwargs for the model for hyper parameterizing the
+    number of layers and nodes from the parsed command-line arguments
+    """
+    res = {}
+    res['dim_hidden'] = parsed_args.dim_hidden
+    res['activation_fn'] = parsed_args.activation_fn
+    res['cost_sensitive'] = parsed_args.cost_sensitive
+    res['cost_sensitive_type'] = parsed_args.cost_sensitive_type
+    res['weights_vector'] = parsed_args.weights_vector
+    res['cost_matrix'] = parsed_args.cost_matrix
+    return res
+
+
 def model_kwargs(parsed_args):
     """
     Build the kwargs for model constructors from the
@@ -51,6 +96,7 @@ def model_kwargs(parsed_args):
     if parsed_args.sgd:
         res['optimizer'] = tf.train.GradientDescentOptimizer
     return res
+
 
 def train_kwargs(parsed_args):
     """
@@ -73,8 +119,10 @@ def train_kwargs(parsed_args):
         'eval_interval': parsed_args.eval_interval,
         'weight_decay_rate': parsed_args.weight_decay,
         'transductive': parsed_args.transductive,
-        'reptile_fn': _args_reptile(parsed_args)
+        'reptile_fn': _args_reptile(parsed_args),
+        'cost_sensitive': parsed_args.cost_sensitive
     }
+
 
 def evaluate_kwargs(parsed_args):
     """
@@ -90,8 +138,10 @@ def evaluate_kwargs(parsed_args):
         'weight_decay_rate': parsed_args.weight_decay,
         'num_samples': parsed_args.eval_samples,
         'transductive': parsed_args.transductive,
-        'reptile_fn': _args_reptile(parsed_args)
+        'reptile_fn': _args_reptile(parsed_args),
+        'cost_sensitive': parsed_args.cost_sensitive
     }
+
 
 def _args_reptile(parsed_args):
     if parsed_args.foml:
