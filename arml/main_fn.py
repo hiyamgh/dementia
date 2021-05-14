@@ -67,7 +67,10 @@ flags.DEFINE_float('emb_loss_weight', 0.0, 'the weight of autoencoder')
 flags.DEFINE_integer('task_embedding_num_filters', 32, 'number of filters for task embedding')
 flags.DEFINE_integer('num_vertex', 4, 'number of vertex in the first layer')
 # flags.DEFINE_integer('num_vertex', 6, 'number of vertex in the first layer')
+
 flags.DEFINE_string('dim_hidden', '128, 64, 64', 'number of neurons in each hidden layer')
+flags.DEFINE_string('dim_name', 'dim0', 'unique index name for the list of hidden layers (above)')
+flags.DEFINE_string('activation_fn', 'relu', 'activation function used')
 flags.DEFINE_integer('model_num', 3, 'model number to store trained model. Better for tracking')
 
 ## define options for cost-sensitive learning

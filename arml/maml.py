@@ -11,6 +11,13 @@ from utils_arml import mse, xent, conv_block, normalize
 
 FLAGS = flags.FLAGS
 
+activations = {
+    'relu': tf.nn.relu,
+    'sigmoid': tf.nn.sigmoid,
+    'tanh': tf.nn.tanh,
+    'softmax': tf.nn.softmax,
+    'swish': tf.nn.swish
+}
 
 class MAML:
     def __init__(self, sess, dim_input=1, dim_output=1, test_num_updates=5):
@@ -301,13 +308,13 @@ class MAML:
         return weights
 
     def forward_fc(self, inp, weights, reuse=False):
+        ac_fn = activations[FLAGS.activation_fn]
         for key in weights:
             weights[key] = tf.cast(weights[key], tf.float64)
-        hidden = normalize(tf.matmul(inp, weights['w1']) + weights['b1'], activation=tf.nn.relu, reuse=reuse, scope='0')
+        hidden = normalize(tf.matmul(inp, weights['w1']) + weights['b1'], activation=ac_fn, reuse=reuse, scope='0')
         for i in range(1, len(self.dim_hidden)):
             hidden = tf.cast(hidden, tf.float64)
-            hidden = normalize(tf.matmul(hidden, weights['w' + str(i + 1)]) + weights['b' + str(i + 1)],
-                               activation=tf.nn.relu, reuse=reuse, scope=str(i + 1))
+            hidden = normalize(tf.matmul(hidden, weights['w' + str(i + 1)]) + weights['b' + str(i + 1)], activation=ac_fn, reuse=reuse, scope=str(i + 1))
             hidden = tf.cast(hidden, tf.float64)
 
         if len(self.dim_hidden) == 1:
