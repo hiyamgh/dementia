@@ -35,7 +35,7 @@ flags.DEFINE_string('target_variable', 'dem1066', 'name of the target variable c
 flags.DEFINE_list('cols_drop', None, 'list of column to drop from data, if any')
 flags.DEFINE_string('special_encoding', None, 'special encoding needed to read the data, if any')
 flags.DEFINE_string('scaling', None, 'scaling done to the dataset, if any')
-
+flags.DEFINE_string('categorical_encoding', 'target', 'type of categorical encoding')
 
 ## Training options
 # flags.DEFINE_integer('metatrain_iterations', 15000,

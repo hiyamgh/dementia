@@ -44,7 +44,7 @@ for miter in ${metatrain_iterations[@]}; do
                     for e in ${encoding[@]}; do
                         if [ $USCOUNTER -eq $SLURM_ARRAY_TASK_ID ]; then
                           echo "USCOUNTER: " $USCOUNTER
-                          echo "pretrain_iterations: 0 metatrain_iterations: ${miter} meta_batch_size: ${mbs} meta_lr: ${mlr} update_batch_size: ${mbs} update_lr: ${ulr} num_updates: ${nu} dim_hidden: ${dh} model_num: $SLURM_ARRAY_TASK_ID activation_fn: ${afn} num_vertex ${nv} weights_vector ${wt} --sampling_strategy ${ss} --top_features 10 --logdir dm_top20/ --categorical_encoding ${e}"
+                          echo "metatrain_iterations: ${miter} meta_batch_size: ${mbs} meta_lr: ${mlr} update_batch_size: ${mbs} update_lr: ${ulr} num_updates: ${nu} dim_hidden: ${dh} model_num: $SLURM_ARRAY_TASK_ID activation_fn: ${afn} num_vertex ${nv} weights_vector ${wt} --sampling_strategy ${ss} --top_features 10 --logdir dm_top20/ --categorical_encoding ${e}"
                           python main_dm.py --metatrain_iterations ${miter} --meta_batch_size ${mbs} --meta_lr ${mlr} --update_batch_size ${mbs} --update_lr ${ulr} --num_updates ${nu} --dim_hidden ${dh} --model_num $SLURM_ARRAY_TASK_ID --activation_fn ${afn} --categorical_encoding ${e} --num_vertex ${nv} --weights_vector ${wt} --sampling_strategy ${ss} --top_features 20 --logdir "dm_top20/"
                         fi
                         USCOUNTER=$(expr $USCOUNTER + 1)
