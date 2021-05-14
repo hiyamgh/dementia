@@ -1,16 +1,9 @@
 """ Code for loading data. """
-import os
 import random
-
-import matplotlib.pyplot as plt
 import numpy as np
-import tensorflow as tf
 from tensorflow.python.platform import flags
-import pickle
-from utils import get_images
 import pandas as pd
 from sklearn.preprocessing import MinMaxScaler, StandardScaler, RobustScaler
-import ipdb
 
 FLAGS = flags.FLAGS
 
