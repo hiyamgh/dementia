@@ -17,14 +17,9 @@ from tensorflow.python.platform import flags
 FLAGS = flags.FLAGS
 
 ## Dataset/method options
-# flags.DEFINE_string('datasource', 'plainmulti', '2D or plainmulti or artmulti')
 flags.DEFINE_string('datasource', 'plainmulti', '2D or plainmulti or artmulti')
-
-flags.DEFINE_integer('test_dataset', -1,
-                     'which data to be test, plainmulti: 0-3, artmulti: 0-11, -1: random select')
-# flags.DEFINE_integer('num_classes', 5, 'number of classes used in classification (e.g. 5-way classification).')
+flags.DEFINE_integer('test_dataset', -1, 'which data to be test, plainmulti: 0-3, artmulti: 0-11, -1: random select')
 flags.DEFINE_integer('num_classes', 2, 'number of classes used in classification (e.g. 5-way classification).')
-# flags.DEFINE_integer('num_test_task', 1000, 'number of test tasks.')
 flags.DEFINE_integer('num_test_task', 600, 'number of test tasks.')
 flags.DEFINE_integer('test_epoch', -1, 'test epoch, only work when test start')
 
@@ -35,23 +30,15 @@ flags.DEFINE_string('target_variable', 'label', 'name of the target variable col
 flags.DEFINE_list('cols_drop', ['article_title', 'article_content', 'source', 'source_category', 'unit_id'], 'list of column to drop from data, if any')
 flags.DEFINE_string('special_encoding', 'latin-1', 'special encoding needed to read the data, if any')
 flags.DEFINE_string('scaling', 'z-score', 'scaling done to the dataset, if any')
-
+flags.DEFINE_string('categorical_columns', 'input/categorical.p', 'path to list of categorical columns in the dataset')
+flags.DEFINE_string('categorical_encoding', None, 'type of categorical encoding')
 
 ## Training options
-# flags.DEFINE_integer('metatrain_iterations', 15000,
-#                      'number of metatraining iterations.')  # 15k for omniglot, 50k for sinusoid
-flags.DEFINE_integer('metatrain_iterations', 1000,
-                     'number of metatraining iterations.')  # 15k for omniglot, 50k for sinusoid
-# flags.DEFINE_integer('meta_batch_size', 25, 'number of tasks sampled per meta-update')
+flags.DEFINE_integer('metatrain_iterations', 1000, 'number of metatraining iterations.')  # 15k for omniglot, 50k for sinusoid
 flags.DEFINE_integer('meta_batch_size', 16, 'number of tasks sampled per meta-update')
-# flags.DEFINE_float('meta_lr', 0.001, 'the base learning rate of the generator')
 flags.DEFINE_float('meta_lr', 0.1, 'the base learning rate of the generator')
-# flags.DEFINE_integer('update_batch_size', 5,
-#                      'number of examples used for inner gradient update (K for K-shot learning).')
-flags.DEFINE_integer('update_batch_size', 16,
-                     'number of examples used for inner gradient update (K for K-shot learning).')
-flags.DEFINE_integer('update_batch_size_eval', 10,
-                     'number of examples used for inner gradient test (K for K-shot learning).')
+flags.DEFINE_integer('update_batch_size', 16, 'number of examples used for inner gradient update (K for K-shot learning).')
+flags.DEFINE_integer('update_batch_size_eval', 10, 'number of examples used for inner gradient test (K for K-shot learning).')
 flags.DEFINE_float('update_lr', 1e-1, 'step size alpha for inner gradient update.')  # 0.1 for omniglot
 flags.DEFINE_integer('num_updates', 1, 'number of inner gradient updates during training.')
 flags.DEFINE_integer('num_updates_test', 20, 'number of inner gradient updates during training.')
@@ -80,13 +67,13 @@ flags.DEFINE_string('weights_vector', "10, 1", 'if class_weights is used, then t
                                                 'of each classs')
 flags.DEFINE_list('cost_matrix', [[1, 2.15], [2.15, 1]], 'cost matrix used, only applicable when using'
                                                        'miss-classification cost sensitive method')
-flags.DEFINE_string('sampling_strategy', 'all', 'how to resample data, only done when cost sensitive is True')
-flags.DEFINE_integer('top_features', 10, 'top features selected by feature selection')
+flags.DEFINE_string('sampling_strategy', None, 'how to resample data, only done when cost sensitive is True')
+flags.DEFINE_integer('top_features', None, 'top features selected by feature selection')
 
 
 ## Logging, saving, and testing options
 flags.DEFINE_bool('log', True, 'if false, do not log summaries, for debugging code.')
-flags.DEFINE_string('logdir', 'logs/', 'directory for summaries and checkpoints.')
+flags.DEFINE_string('logdir', 'fn_batch2/', 'directory for summaries and checkpoints.')
 flags.DEFINE_bool('resume', False, 'resume training if there is a model available')
 flags.DEFINE_bool('train', True, 'True to train, False to test.')
 flags.DEFINE_bool('test_set', True, 'Set to true to evaluate on the the test set, False for the validation set.')

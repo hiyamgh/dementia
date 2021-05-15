@@ -62,11 +62,9 @@ class DataGenerator(object):
             codebook = pd.read_csv('input/erroneous_codebook_legal_outliers_filtered.csv')
             categorical_indices = self.get_categorical(self.df_train.columns, codebook)
             if self.isfloat(FLAGS.sampling_strategy):
-                sm = SMOTENC(random_state=42, categorical_features=categorical_indices,
-                             sampling_strategy=float(FLAGS.sampling_strategy))
+                sm = SMOTENC(random_state=42, categorical_features=categorical_indices, sampling_strategy=float(FLAGS.sampling_strategy))
             else:
-                sm = SMOTENC(random_state=42, categorical_features=categorical_indices,
-                             sampling_strategy=FLAGS.sampling_strategy)
+                sm = SMOTENC(random_state=42, categorical_features=categorical_indices, sampling_strategy=FLAGS.sampling_strategy)
             X_res, y_res = sm.fit_resample(self.X_train, self.y_train)
             self.X_train, self.y_train = X_res, y_res
             all_res = np.append(X_res, y_res.reshape(-1, 1), 1)
