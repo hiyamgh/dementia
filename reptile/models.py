@@ -6,17 +6,11 @@ from functools import partial
 
 import numpy as np
 import tensorflow as tf
-from supervised_reptile.args import argument_parser, dim_kwargs
-import random
-
+from .main import args, dim_kwargs
 DEFAULT_OPTIMIZER = partial(tf.train.AdamOptimizer, beta1=0)
-
-args = argument_parser().parse_args()
-random.seed(args.seed)
 dk = dim_kwargs(args)
 
 # pylint: disable=R0903
-
 activations = {
     'relu': tf.nn.relu,
     'sigmoid': tf.nn.sigmoid,
