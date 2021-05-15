@@ -2,8 +2,8 @@
 Helpers for evaluating models.
 """
 
-from .reptile import Reptile
-from .variables import weight_decay
+from reptile import Reptile
+from variables import weight_decay
 import numpy as np
 
 

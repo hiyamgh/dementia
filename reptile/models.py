@@ -6,9 +6,8 @@ from functools import partial
 
 import numpy as np
 import tensorflow as tf
-from .main import args, dim_kwargs
+from main_run import args
 DEFAULT_OPTIMIZER = partial(tf.train.AdamOptimizer, beta1=0)
-dk = dim_kwargs(args)
 
 # pylint: disable=R0903
 activations = {
@@ -26,9 +25,9 @@ class DataModel:
         self.input_ph = tf.placeholder(tf.float64, shape=[None, num_features])
         out = self.input_ph
 
-        dim_layers = dk['dim_hidden']
+        dim_layers = args.dim_hidden
         dim_hidden = list(map(int, list(dim_layers.split(", "))))
-        act_fn = dk['activation_fn']
+        act_fn = args.activation_fn
         for i in range(len(dim_hidden)):
             out = tf.layers.dense(inputs=out, units=int(dim_hidden[i]), activation=activations[act_fn])
         self.logits = tf.layers.dense(out, num_classes)
@@ -45,8 +44,8 @@ class DataModel:
         # self.logits = tf.layers.dense(h3, num_classes)
 
         self.label_ph = tf.placeholder(tf.int64, shape=(None,))
-        if dk['cost_sensitive'] == 1:
-            ws = list(map(int, list(dk['weights_vector'].split(", "))))
+        if args.cost_sensitive == 1:
+            ws = list(map(int, list(args.weights_vector.split(", "))))
             weights_vector = np.array(ws)
             scaled_logits = tf.math.multiply(self.logits, weights_vector)
             self.loss = tf.nn.sparse_softmax_cross_entropy_with_logits(labels=self.label_ph,

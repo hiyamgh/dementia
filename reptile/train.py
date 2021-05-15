@@ -7,8 +7,8 @@ import time
 
 import tensorflow as tf
 
-from .reptile import Reptile
-from .variables import weight_decay
+from reptile import Reptile
+from variables import weight_decay
 
 # pylint: disable=R0913,R0914
 def train(sess,

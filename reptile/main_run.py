@@ -7,13 +7,11 @@ import argparse
 from functools import partial
 # from supervised_reptile.args import model_kwargs, train_kwargs, evaluate_kwargs, dim_kwargs
 from eval import evaluate
-from models import DataModel
 from omniglot import load_datasets
 from reptile import Reptile, FOML
 from train import train
 import warnings
 warnings.filterwarnings('always')
-
 
 parser = argparse.ArgumentParser(formatter_class=argparse.ArgumentDefaultsHelpFormatter)
 parser.add_argument('--pretrained', help='evaluate a pre-trained model',
@@ -27,7 +25,7 @@ parser.add_argument('--training_data_path', help='path to training data', defaul
 parser.add_argument('--testing_data_path', help='path to testing data', default='input/test_imputed_scaled.csv')
 parser.add_argument('--target_variable', help='name of the column that acts as the target variable',
                         default='dem1066')
-parser.add_argument('--cols_drop', help='list of columns to drop from the dataset', default=None)
+parser.add_argument('--cols_drop', help='list of columns to drop from the dataset', default=['article_title', 'article_content', 'source', 'source_category', 'unit_id'])
 parser.add_argument('--special_encoding', help='special encoding while reading pandas dataframe, if any is needed',
                         default=None)
 parser.add_argument('--scaling', help='scaling mechanism needed for scaling the data (without data leakage)',
@@ -43,15 +41,15 @@ parser.add_argument('--activation_fn', help='activation function used', default=
 parser.add_argument('--model_num', help='model number to store trained model. Better for tracking', default=1)
 
 # cost-sensitive related arguments
-parser.add_argument('--cost_sensitive', help='whether to evaluate in cost sensitive mode or not', default=1)
+parser.add_argument('--cost_sensitive', help='whether to evaluate in cost sensitive mode or not', default=0)
 parser.add_argument('--cost_sensitive_type', help='type of cost applied', default='weighted')
 parser.add_argument('--weights_vector', help='respective weights of each class if cost_sensitive_type=weighted',
                         default="10, 1")
 parser.add_argument('--cost_matrix', help='cost matrix if cost_sensitive_type=miss-classification',
                         default=[[1, 2.15], [2.15, 1]])
 parser.add_argument('--sampling_strategy', help='how to resample data, only done when cost_sensitive=1',
-                        default='all')
-parser.add_argument('--top_features', help='number of top features (by feature selection) to consider', default=10)
+                        default=None)
+parser.add_argument('--top_features', help='number of top features (by feature selection) to consider', default=None)
 
 # Other arguments
 parser.add_argument('--shots', help='number of examples per class', default=32, type=int)
@@ -85,6 +83,7 @@ def main():
     """
 
     X_train, y_train, X_test, y_test = load_datasets(args)
+    from models import DataModel
     model = DataModel(args.classes, X_test.shape[1], **model_kwargs(args))
 
     # train_set, test_set = split_dataset(read_dataset(DATA_DIR))
@@ -112,9 +111,9 @@ def main():
 
         if args.cost_sensitive == 0:
             num_correct, _ = evaluate(sess, model, X_train, y_train, **eval_kwargs)
-            print('Train accuracy: ' + num_correct)
+            print('Train accuracy: ' + str(num_correct))
             num_correct, res_class = evaluate(sess, model, X_test, y_test, **eval_kwargs)
-            print('Test accuracy: ' + num_correct)
+            print('Test accuracy: ' + str(num_correct))
             for k, v in res_class.items():
                 print('Avg. {}: {}'.format(k, v))
         else:

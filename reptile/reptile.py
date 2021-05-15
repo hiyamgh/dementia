@@ -9,7 +9,7 @@ import tensorflow as tf
 from sklearn.utils import shuffle
 from sklearn.metrics import *
 from imblearn.metrics import geometric_mean_score
-from .variables import (interpolate_vars, average_vars, subtract_vars, add_vars, scale_vars,
+from variables import (interpolate_vars, average_vars, subtract_vars, add_vars, scale_vars,
                         VariableState)
 
 class Reptile:
