@@ -44,9 +44,6 @@ class DataGenerator(object):
         self.X_test = np.array(self.df_test.loc[:, self.df_test.columns != self.target_variable])
         self.y_test = np.array(self.df_test.loc[:, self.df_test.columns == self.target_variable])
 
-        self.dim_input = self.X_train.shape[1]
-        self.dim_output = self.num_classes
-
         # if we are taking top 10/20/etc features selected by feature selection
         if FLAGS.top_features is not None:
             df_fimp = pd.read_csv('input/feature_importance_modified.csv')
@@ -112,6 +109,9 @@ class DataGenerator(object):
                 scaler = RobustScaler()
             self.X_train = scaler.fit_transform(self.X_train)
             self.X_test = scaler.transform(self.X_test)
+
+        self.dim_input = self.X_train.shape[1]
+        self.dim_output = self.num_classes
 
     def isfloat(self, value):
         try:
