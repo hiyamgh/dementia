@@ -84,6 +84,7 @@ class Reptile:
                  label_ph,
                  minimize_op,
                  predictions,
+                 probabilities,
                  num_classes,
                  num_shots,
                  inner_batch_size,
@@ -128,7 +129,7 @@ class Reptile:
             if self._pre_step_op:
                 self.session.run(self._pre_step_op)
             self.session.run(minimize_op, feed_dict={input_ph: inputs, label_ph: labels}) # minimize loss of this batch
-        test_preds = self._test_predictions(train_set, test_set, input_ph, predictions)
+        test_preds, test_probas = self._test_predictions(train_set, test_set, input_ph, predictions, probabilities)
         num_correct = sum([pred == sample[1] for pred, sample in zip(test_preds, test_set)])
         test_actual = [sample[1] for sample in test_set]
         if cost_sensitive == 1:
@@ -138,23 +139,25 @@ class Reptile:
             res_cost = self.compile_results_cost_sensitive(accuracy, precision, recall, f1score, roc,
                                            f2, gmean, bss, pr_auc, sensitivity, specificity)
             self._full_state.import_variables(old_vars)
-            return num_correct, res_class, res_cost
+            return num_correct, res_class, res_cost, test_actual, test_preds, test_probas
         else:
             accuracy, precision, recall, f1score, roc = self.evaluate_predictions(test_actual, test_preds)
             res_class = self.compile_results(accuracy, precision, recall, f1score, roc)
             self._full_state.import_variables(old_vars)
-            return num_correct, res_class
+            return num_correct, res_class, test_actual, test_preds, test_probas
 
-    def _test_predictions(self, train_set, test_set, input_ph, predictions):
+    def _test_predictions(self, train_set, test_set, input_ph, predictions, probabilities):
         if self._transductive: # Not sure what transductive mode is ?
             inputs, _ = zip(*test_set)
             return self.session.run(predictions, feed_dict={input_ph: inputs})
-        res = []
+        res, probas = [], []
         for test_sample in test_set: # not sure what this is doing
             inputs, _ = zip(*train_set)
             inputs += (test_sample[0],)
             res.append(self.session.run(predictions, feed_dict={input_ph: inputs})[-1])
-        return res
+            # get the probability of the positive class
+            probas.append(self.session.run(probabilities, feed_dict={input_ph: inputs})[:, 1])
+        return res, probas
 
     def evaluate_predictions(self, y_test, y_pred):
         accuracy = accuracy_score(y_test, y_pred)

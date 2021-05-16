@@ -6,7 +6,7 @@ from functools import partial
 
 import numpy as np
 import tensorflow as tf
-from main_run import args
+from main_fn import args
 DEFAULT_OPTIMIZER = partial(tf.train.AdamOptimizer, beta1=0)
 
 # pylint: disable=R0903
@@ -55,6 +55,7 @@ class DataModel:
                                                                        logits=self.logits)
         self.predictions = tf.argmax(self.logits, axis=-1)
         self.minimize_op = optimizer(**optim_kwargs).minimize(self.loss)
+        self.probabilities = tf.nn.softmax(self.logits)
 
 
 class OmniglotModel:

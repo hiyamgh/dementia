@@ -69,15 +69,15 @@ def train(sess,
             for X, y, writer in [(X_train, y_train, train_writer), (X_test, y_test, test_writer)]: # so we're basically evaluating
                 # predictions on the train set and on the testing set
                 if cost_sensitive == 0:
-                    correct, _ = reptile.evaluate(X, y, model.input_ph, model.label_ph,
-                                               model.minimize_op, model.predictions,
+                    correct, _, _, _, _ = reptile.evaluate(X, y, model.input_ph, model.label_ph,
+                                               model.minimize_op, model.predictions, model.probabilities,
                                                num_classes=num_classes, num_shots=num_shots,
                                                inner_batch_size=eval_inner_batch_size,
                                                inner_iters=eval_inner_iters, replacement=replacement,
                                                cost_sensitive=cost_sensitive)
                 else:
-                    correct, _, _ = reptile.evaluate(X, y, model.input_ph, model.label_ph,
-                                                          model.minimize_op, model.predictions,
+                    correct, _, _, _, _, _ = reptile.evaluate(X, y, model.input_ph, model.label_ph,
+                                                          model.minimize_op, model.predictions, model.probabilities,
                                                           num_classes=num_classes, num_shots=num_shots,
                                                           inner_batch_size=eval_inner_batch_size,
                                                           inner_iters=eval_inner_iters, replacement=replacement,

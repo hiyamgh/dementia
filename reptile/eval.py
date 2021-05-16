@@ -6,7 +6,6 @@ from reptile import Reptile
 from variables import weight_decay
 import numpy as np
 
-
 # pylint: disable=R0913,R0914
 def evaluate(sess,
              model,
@@ -28,16 +27,23 @@ def evaluate(sess,
                          transductive=transductive,
                          pre_step_op=weight_decay(weight_decay_rate))
     total_correct = 0
+    actuals, predictions, probas = [], [], []
     accuracies, precisions, recalls, f1s, rocs = [], [], [], [], []
     if cost_sensitive == 0:
         for _ in range(num_samples):
-            num_correct, res_class = reptile.evaluate(X, y, model.input_ph, model.label_ph,
-                                              model.minimize_op, model.predictions,
+            num_correct, res_class, y_test, y_pred, proba = reptile.evaluate(X, y, model.input_ph, model.label_ph,
+                                              model.minimize_op, model.predictions, model.probabilities,
                                               num_classes=num_classes, num_shots=num_shots,
                                               inner_batch_size=eval_inner_batch_size,
                                               inner_iters=eval_inner_iters, replacement=replacement,
                                               cost_sensitive=cost_sensitive)
             total_correct += num_correct
+
+            # add the actuals, predictions, and probabilities for the risk data frame
+            actuals.extend(y_test)
+            predictions.extend(y_pred)
+            probas.extend(proba)
+            # error metrics
             accuracies.append(float(res_class['accuracy']))
             precisions.append(float(res_class['precision']))
             recalls.append(float(res_class['recall']))
@@ -51,19 +57,22 @@ def evaluate(sess,
             'f1': '{:.5f}'.format(np.mean(f1s)),
             'roc': '{:.5f}'.format(np.mean(rocs)),
         }
-        return total_correct / (num_samples * num_classes), final_res_class
+        return total_correct / (num_samples * num_classes), final_res_class, actuals, predictions, probas
 
     else:
         f2s, gmeans, bsss, pr_aucs, sensitivities, specificities = [], [], [], [], [], []
         for _ in range(num_samples):
-            num_correct, res_class, res_cost = reptile.evaluate(X, y, model.input_ph, model.label_ph,
-                                                      model.minimize_op, model.predictions,
+            num_correct, res_class, res_cost, y_test, y_pred, proba = reptile.evaluate(X, y, model.input_ph, model.label_ph,
+                                                      model.minimize_op, model.predictions, model.probabilities,
                                                       num_classes=num_classes, num_shots=num_shots,
                                                       inner_batch_size=eval_inner_batch_size,
                                                       inner_iters=eval_inner_iters, replacement=replacement,
                                                       cost_sensitive=cost_sensitive)
             total_correct += num_correct
-
+            # add the actuals, predictions, and probabilities for the risk data frame
+            actuals.extend(y_test)
+            predictions.extend(y_pred)
+            probas.extend(proba)
             # classification results
             accuracies.append(float(res_class['accuracy']))
             precisions.append(float(res_class['precision']))
@@ -93,4 +102,4 @@ def evaluate(sess,
             'specificity': '{:.5f}'.format(np.mean(specificities)),
         }
 
-        return total_correct / (num_samples * num_classes), final_res_cost
+        return total_correct / (num_samples * num_classes), final_res_cost, actuals, predictions, probas
