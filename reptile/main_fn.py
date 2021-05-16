@@ -84,6 +84,8 @@ def main():
     # model = OmniglotModel(args.classes, **model_kwargs(args))
 
     checkpoint = os.path.join(args.save_dir, 'model_{}/'.format(args.model_num))
+    if not os.path.exists(checkpoint):
+        os.makedirs(checkpoint)
     # My question is that why in train() function we are passing both training and testing datasets?
     with tf.Session() as sess:
         if not args.pretrained:
