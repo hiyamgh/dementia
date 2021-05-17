@@ -9,7 +9,7 @@ from eval import evaluate
 from omniglot import load_datasets
 from reptile import Reptile, FOML
 from train import train
-import os
+import os, pickle
 import pandas as pd
 import warnings
 warnings.filterwarnings('always')
@@ -111,6 +111,9 @@ def main():
             print('Test accuracy: ' + str(num_correct))
             for k, v in res_class.items():
                 print('Avg. {}: {}'.format(k, v))
+            # save dictionary of error metrics
+            with open(os.path.join(checkpoint, 'error_metrics.p'), 'wb') as f:
+                pickle.dump(res_class, f, pickle.HIGHEST_PROTOCOL)
         else:
             num_correct, _ = evaluate(sess, model, X_train, y_train, **eval_kwargs)
             print('Train accuracy: ' + str(num_correct))
@@ -118,6 +121,9 @@ def main():
             print('Test accuracy: ' + str(num_correct))
             for k, v in res_cost.items():
                 print('Avg. {}: {}'.format(k, v))
+            # save dictionary of error metrics
+            with open(os.path.join(checkpoint, 'error_metrics.p'), 'wb') as f:
+                pickle.dump(res_cost, f, pickle.HIGHEST_PROTOCOL)
 
         risk_df = pd.DataFrame()
         risk_df['test_indices'] = list(range(len(y_test)))
