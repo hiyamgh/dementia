@@ -46,7 +46,8 @@ def load_datasets(args):
     # if we are taking top 10/20/etc features selected by feature selection
     if args.top_features is not None:
         df_fimp = pd.read_csv('input/feature_importance_modified.csv')
-        top_features = list(df_fimp['Feature'])[:args.top_features]
+        num_feat = int(args.top_features)
+        top_features = list(df_fimp['Feature'])[:num_feat]
         df_train = df_train[top_features + [args.target_variable]]
         df_test = df_test[top_features + [args.target_variable]]
 

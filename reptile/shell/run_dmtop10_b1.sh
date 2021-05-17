@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
-#SBATCH --job-name=dm10r1
+#SBATCH --job-name=drp10b1
 #SBATCH --account=hkg02
 #SBATCH --partition=normal
 #SBATCH --nodes=1
@@ -42,9 +42,9 @@ for dh in ${dim_hidden[*]}; do
                                     for e in ${encoding[@]}; do
                                         if((USCOUNTER=SLURM_ARRAY_TASK_ID)); then
                                             echo "USCOUNTER: " $USCOUNTER
-                                            echo "$SLURM_ARRAY_TASK_ID: " $SLURM_ARRAY_TASK_ID
-                                            echo "main_dm.py --dim_hidden ${dh} --activation_fn ${af} --shots ${s} --train-shots ${ts} --inner-batch ${ib} --learning-rate ${lr} --save_dir "dm_top10/" --meta-batch ${mb} --weights_vector ${w} --sampling_strategy ${ss} --categorical_encoding ${e} --top_features 10"
-                                            python main_dm.py --dim_hidden ${dh} --activation_fn ${af} --shots ${s} --train-shots ${ts} --inner-batch ${ib} --learning-rate ${lr} --save_dir "dm_top10/" --meta-batch ${mb} --weights_vector ${w} --sampling_strategy ${ss} --categorical_encoding ${e} --top_features 10
+                                            echo "SLURM_ARRAY_TASK_ID: " $SLURM_ARRAY_TASK_ID
+                                            echo "main_dm.py --dim_hidden ${dh} --activation_fn ${af} --shots ${s} --train-shots ${ts} --inner-batch ${ib} --learning-rate ${lr} --save_dir "dm_top10/" --model_num $USCOUNTER --meta-batch ${mb} --weights_vector ${w} --sampling_strategy ${ss} --categorical_encoding ${e} --top_features 10"
+                                            python main_dm.py --dim_hidden ${dh} --activation_fn ${af} --shots ${s} --train-shots ${ts} --inner-batch ${ib} --learning-rate ${lr} --save_dir "dm_top10/" --model_num $USCOUNTER --meta-batch ${mb} --weights_vector ${w} --sampling_strategy ${ss} --categorical_encoding ${e} --top_features 10
                                         fi
                                         USCOUNTER=$(expr $USCOUNTER + 1)
                                     done

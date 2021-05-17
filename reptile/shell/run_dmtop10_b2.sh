@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
-#SBATCH --job-name=dm10r2
+#SBATCH --job-name=drp10b2
 #SBATCH --account=hkg02
 #SBATCH --partition=normal
 #SBATCH --nodes=1
@@ -8,7 +8,7 @@
 #SBATCH --mem=16000
 #SBATCH --mail-type=ALL
 #SBATCH --mail-user=hkg02@mail.aub.edu
-#SBATCH --array=1-720%5
+#SBATCH --array=1-720%2
 
 module load python/3
 module load python/tensorflow-1.14.0
@@ -43,8 +43,8 @@ for dh in ${dim_hidden[*]}; do
                                         if((USCOUNTER=SLURM_ARRAY_TASK_ID+900)); then
                                             echo "USCOUNTER: " $USCOUNTER
                                             echo "$SLURM_ARRAY_TASK_ID: " $SLURM_ARRAY_TASK_ID
-                                            echo "main_dm.py --dim_hidden ${dh} --activation_fn ${af} --shots ${s} --train-shots ${ts} --inner-batch ${ib} --learning-rate ${lr} --save_dir "dm_top10/" --meta-batch ${mb} --weights_vector ${w} --sampling_strategy ${ss} --categorical_encoding ${e} --top_features 10"
-                                            python main_dm.py --dim_hidden ${dh} --activation_fn ${af} --shots ${s} --train-shots ${ts} --inner-batch ${ib} --learning-rate ${lr} --save_dir "dm_top10/" --meta-batch ${mb} --weights_vector ${w} --sampling_strategy ${ss} --categorical_encoding ${e} --top_features 10
+                                            echo "main_dm.py --dim_hidden ${dh} --activation_fn ${af} --shots ${s} --train-shots ${ts} --inner-batch ${ib} --learning-rate ${lr} --save_dir "dm_top10/" --model_num $USCOUNTER --meta-batch ${mb} --weights_vector ${w} --sampling_strategy ${ss} --categorical_encoding ${e} --top_features 10"
+                                            python main_dm.py --dim_hidden ${dh} --activation_fn ${af} --shots ${s} --train-shots ${ts} --inner-batch ${ib} --learning-rate ${lr} --save_dir "dm_top10/" --model_num $USCOUNTER --meta-batch ${mb} --weights_vector ${w} --sampling_strategy ${ss} --categorical_encoding ${e} --top_features 10
                                         fi
                                         USCOUNTER=$(expr $USCOUNTER + 1)
                                     done

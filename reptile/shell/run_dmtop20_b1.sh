@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
-#SBATCH --job-name=dm20r1
+#SBATCH --job-name=drp20b1
 #SBATCH --account=hkg02
 #SBATCH --partition=normal
 #SBATCH --nodes=1
@@ -43,8 +43,8 @@ for dh in ${dim_hidden[*]}; do
                                         if((USCOUNTER=SLURM_ARRAY_TASK_ID)); then
                                             echo "USCOUNTER: " $USCOUNTER
                                             echo "$SLURM_ARRAY_TASK_ID: " $SLURM_ARRAY_TASK_ID
-                                            echo "main_dm.py --dim_hidden ${dh} --activation_fn ${af} --shots ${s} --train-shots ${ts} --inner-batch ${ib} --learning-rate ${lr} --save_dir "dm_top20/" --meta-batch ${mb} --weights_vector ${w} --sampling_strategy ${ss} --categorical_encoding ${e} --top_features 20"
-                                            python main_dm.py --dim_hidden ${dh} --activation_fn ${af} --shots ${s} --train-shots ${ts} --inner-batch ${ib} --learning-rate ${lr} --save_dir "dm_top20/" --meta-batch ${mb} --weights_vector ${w} --sampling_strategy ${ss} --categorical_encoding ${e} --top_features 20
+                                            echo "main_dm.py --dim_hidden ${dh} --activation_fn ${af} --shots ${s} --train-shots ${ts} --inner-batch ${ib} --learning-rate ${lr} --save_dir "dm_top20/" --model_num $USCOUNTER --meta-batch ${mb} --weights_vector ${w} --sampling_strategy ${ss} --categorical_encoding ${e} --top_features 20"
+                                            python main_dm.py --dim_hidden ${dh} --activation_fn ${af} --shots ${s} --train-shots ${ts} --inner-batch ${ib} --learning-rate ${lr} --save_dir "dm_top20/" --model_num $USCOUNTER --meta-batch ${mb} --weights_vector ${w} --sampling_strategy ${ss} --categorical_encoding ${e} --top_features 20
                                         fi
                                         USCOUNTER=$(expr $USCOUNTER + 1)
                                     done
