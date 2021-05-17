@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
-#SBATCH --job-name=dmart20b2
+#SBATCH --job-name=dar20b3
 #SBATCH --account=hkg02
 #SBATCH --partition=normal
 #SBATCH --nodes=1
@@ -8,7 +8,7 @@
 #SBATCH --mem=16000
 #SBATCH --mail-type=ALL
 #SBATCH --mail-user=hkg02@mail.aub.edu
-#SBATCH --array=1-900%5
+#SBATCH --array=1-900%2
 
 module load python/3
 module load python/tensorflow-1.14.0
@@ -49,7 +49,7 @@ for miter in ${metatrain_iterations[@]}; do
                           if ((USCOUNTER=SLURM_ARRAY_TASK_ID+1800)); then
                               echo "USCOUNTER: " $USCOUNTER
                               echo "SLURM_ARRAY_TASK_ID: " $SLURM_ARRAY_TASK_ID
-                              echo "main_dm.py --metatrain_iterations ${miter} --meta_batch_size ${mbs} --meta_lr ${mlr} --update_batch_size ${mbs} --update_lr ${ulr} --num_updates ${nu} --dim_hidden ${dh} --model_num $USCOUNTER --activation_fn ${afn} --categorical_encoding ${e} --num_vertex ${nv} --weights_vector ${wt} --sampling_strategy ${ss} --top_features 20 --logdir "dm_top20/" --num_filters ${nf} --emb_loss_weight ${elw}"
+                              echo "main_fn.py --metatrain_iterations ${miter} --meta_batch_size ${mbs} --meta_lr ${mlr} --update_batch_size ${mbs} --update_lr ${ulr} --num_updates ${nu} --dim_hidden ${dh} --model_num $USCOUNTER --activation_fn ${afn} --categorical_encoding ${e} --num_vertex ${nv} --weights_vector ${wt} --sampling_strategy ${ss} --top_features 20 --logdir "dm_top20/" --num_filters ${nf} --emb_loss_weight ${elw}"
                               python main_dm.py --metatrain_iterations ${miter} --meta_batch_size ${mbs} --meta_lr ${mlr} --update_batch_size ${mbs} --update_lr ${ulr} --num_updates ${nu} --dim_hidden ${dh} --model_num $USCOUNTER --activation_fn ${afn} --categorical_encoding ${e} --num_vertex ${nv} --weights_vector ${wt} --sampling_strategy ${ss} --top_features 20 --logdir "dm_top20/" --num_filters ${nf} --emb_loss_weight ${elw}
                              fi
                              USCOUNTER=$(expr $USCOUNTER + 1)
