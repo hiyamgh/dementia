@@ -156,7 +156,7 @@ class Reptile:
             inputs += (test_sample[0],)
             res.append(self.session.run(predictions, feed_dict={input_ph: inputs})[-1])
             # get the probability of the positive class
-            probas.append(self.session.run(probabilities, feed_dict={input_ph: inputs})[:, 1])
+            probas.append(self.session.run(probabilities, feed_dict={input_ph: inputs})[:, 1][-1])
         return res, probas
 
     def evaluate_predictions(self, y_test, y_pred):

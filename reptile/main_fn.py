@@ -31,10 +31,10 @@ parser.add_argument('--categorical_columns', help='path to list of categorical c
 parser.add_argument('--categorical_encoding', help='categorical encoding mechanism', default=None)
 
 # Model-related arguments
-parser.add_argument('--dim_hidden', help='number of neurons in each hidden layer', default='128, 64, 64')
+parser.add_argument('--dim_hidden', help='number of neurons in each hidden layer', default='128')
 parser.add_argument('--dim_name', help='unique index name for the list of hidden layers (above)', default='dim0')
 parser.add_argument('--activation_fn', help='activation function used', default='relu')
-parser.add_argument('--model_num', help='model number to store trained model. Better for tracking', default=1)
+parser.add_argument('--model_num', help='model number to store trained model. Better for tracking', default=3)
 
 # cost-sensitive related arguments
 parser.add_argument('--cost_sensitive', help='whether to evaluate in cost sensitive mode or not', default=0)
@@ -104,7 +104,7 @@ def main():
         # print('Test accuracy: ' + str(evaluate(sess, model, X_test, y_test, **eval_kwargs)))
 
         if args.cost_sensitive == 0:
-            num_correct, _ = evaluate(sess, model, X_train, y_train, **eval_kwargs)
+            num_correct, _, _, _, _ = evaluate(sess, model, X_train, y_train, **eval_kwargs)
             print('Train accuracy: ' + str(num_correct))
             num_correct, res_class, y_test, y_pred, probas = evaluate(sess, model, X_test, y_test, **eval_kwargs)
             print('Test accuracy: ' + str(num_correct))
@@ -114,7 +114,7 @@ def main():
             with open(os.path.join(checkpoint, 'error_metrics.p'), 'wb') as f:
                 pickle.dump(res_class, f, pickle.HIGHEST_PROTOCOL)
         else:
-            num_correct, _ = evaluate(sess, model, X_train, y_train, **eval_kwargs)
+            num_correct, _, _, _, _ = evaluate(sess, model, X_train, y_train, **eval_kwargs)
             print('Train accuracy: ' + str(num_correct))
             num_correct, res_cost, y_test, y_pred, probas = evaluate(sess, model, X_test, y_test, **eval_kwargs)
             print('Test accuracy: ' + str(num_correct))
@@ -129,6 +129,8 @@ def main():
         risk_df['y_test'] = y_test
         risk_df['y_pred'] = y_pred
         risk_df['risk_scores'] = probas
+
+        print(risk_df.head(10))
 
         # sort by ascending order of risk score
         risk_df = risk_df.sort_values(by='risk_scores', ascending=False)

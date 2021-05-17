@@ -105,7 +105,7 @@ def main():
         # print('Test accuracy: ' + str(evaluate(sess, model, X_test, y_test, **eval_kwargs)))
 
         if args.cost_sensitive == 0:
-            num_correct, _ = evaluate(sess, model, X_train, y_train, **eval_kwargs)
+            num_correct, _, _, _, _ = evaluate(sess, model, X_train, y_train, **eval_kwargs)
             print('Train accuracy: ' + str(num_correct))
             num_correct, res_class, y_test, y_pred, probas = evaluate(sess, model, X_test, y_test, **eval_kwargs)
             print('Test accuracy: ' + str(num_correct))
@@ -115,7 +115,7 @@ def main():
             with open(os.path.join(checkpoint, 'error_metrics.p'), 'wb') as f:
                 pickle.dump(res_class, f, pickle.HIGHEST_PROTOCOL)
         else:
-            num_correct, _ = evaluate(sess, model, X_train, y_train, **eval_kwargs)
+            num_correct, _, _, _, _ = evaluate(sess, model, X_train, y_train, **eval_kwargs)
             print('Train accuracy: ' + str(num_correct))
             num_correct, res_cost, y_test, y_pred, probas = evaluate(sess, model, X_test, y_test, **eval_kwargs)
             print('Test accuracy: ' + str(num_correct))
