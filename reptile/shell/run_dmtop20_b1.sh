@@ -40,7 +40,7 @@ for dh in ${dim_hidden[*]}; do
                             for w in ${weights[@]}; do
                                 for ss in ${sampling_strategy[@]}; do
                                     for e in ${encoding[@]}; do
-                                        if((USCOUNTER=SLURM_ARRAY_TASK_ID)); then
+                                        if [ $USCOUNTER -eq $SLURM_ARRAY_TASK_ID ]; then
                                             echo "USCOUNTER: " $USCOUNTER
                                             echo "$SLURM_ARRAY_TASK_ID: " $SLURM_ARRAY_TASK_ID
                                             echo "main_dm.py --dim_hidden ${dh} --activation_fn ${af} --shots ${s} --train-shots ${ts} --inner-batch ${ib} --learning-rate ${lr} --save_dir "dm_top20/" --model_num $USCOUNTER --meta-batch ${mb} --weights_vector ${w} --sampling_strategy ${ss} --categorical_encoding ${e} --top_features 20"

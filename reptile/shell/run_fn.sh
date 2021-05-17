@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
-#SBATCH --job-name=fnrept
+#SBATCH --job-name=fnrp
 #SBATCH --account=hkg02
 #SBATCH --partition=normal
 #SBATCH --nodes=1
@@ -8,7 +8,7 @@
 #SBATCH --mem=16000
 #SBATCH --mail-type=ALL
 #SBATCH --mail-user=hkg02@mail.aub.edu
-#SBATCH --array=1-810%5
+#SBATCH --array=1-810%2
 
 module load python/3
 module load python/tensorflow-1.14.0
@@ -31,11 +31,11 @@ for dh in ${dim_hidden[*]}; do
                 for ib in ${inner_batch[@]}; do
                     for lr in ${learning_rate[@]}; do
                         for mb in ${meta_batch[@]}; do
-                            if((USCOUNTER=SLURM_ARRAY_TASK_ID)); then
+                            if [ $USCOUNTER -eq $SLURM_ARRAY_TASK_ID ]; then
                                 echo "USCOUNTER: " $USCOUNTER
                                 echo "$SLURM_ARRAY_TASK_ID: " $SLURM_ARRAY_TASK_ID
-                                echo "main_fn.py --dim_hidden ${dh} --activation_fn ${af} --shots ${s} --train-shots ${ts} --inner-batch ${ib} --learning-rate ${lr} --save_dir "fn/" --meta-batch ${mb}"
-                                python main_fn.py --dim_hidden ${dh} --activation_fn ${af} --shots ${s} --train-shots ${ts} --inner-batch ${ib} --learning-rate ${lr} --save_dir "fn/" --meta-batch ${mb}
+                                echo "main_fn.py --dim_hidden ${dh} --activation_fn ${af} --shots ${s} --train-shots ${ts} --inner-batch ${ib} --learning-rate ${lr} --save_dir "fn/" --model_num $USCOUNTER --meta-batch ${mb}"
+                                python main_fn.py --dim_hidden ${dh} --activation_fn ${af} --shots ${s} --train-shots ${ts} --inner-batch ${ib} --learning-rate ${lr} --save_dir "fn/" --model_num $USCOUNTER --meta-batch ${mb}
                             fi
                             USCOUNTER=$(expr $USCOUNTER + 1)
                         done
