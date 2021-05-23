@@ -80,51 +80,33 @@
 \BOOKMARK [2][-]{subsection.18.11}{Extrapolation and Interpolation:}{section.18}% 80
 \BOOKMARK [2][-]{subsection.18.12}{Hot-Deck Imputation}{section.18}% 81
 \BOOKMARK [2][-]{subsection.18.13}{Some papers for handling missing categorical data \(did not read them at length \205 just the abstract\)}{section.18}% 82
-\BOOKMARK [1][-]{section.19}{Advanced ML Evaluation Techniques}{}% 83
-\BOOKMARK [2][-]{subsection.19.1}{Analysis of Predictive Models}{section.19}% 84
-\BOOKMARK [2][-]{subsection.19.2}{Evaluation Using Traditional Metrics}{section.19}% 85
-\BOOKMARK [2][-]{subsection.19.3}{Problem with Standard Evaluation Metrics}{section.19}% 86
-\BOOKMARK [2][-]{subsection.19.4}{Solution: Risk Estimates}{section.19}% 87
-\BOOKMARK [2][-]{subsection.19.5}{Ensuring Quality Of Risk Estimates}{section.19}% 88
-\BOOKMARK [3][-]{subsubsection.19.5.1}{From Models to Risk Estimates}{subsection.19.5}% 89
-\BOOKMARK [3][-]{subsubsection.19.5.2}{Measuring the Goodness of Risk Scores}{subsection.19.5}% 90
-\BOOKMARK [3][-]{subsubsection.19.5.3}{Comparative Evaluation of Risk Estimates}{subsection.19.5}% 91
-\BOOKMARK [2][-]{subsection.19.6}{Interpreting Classifier Outputs - FP Growth}{section.19}% 92
-\BOOKMARK [2][-]{subsection.19.7}{Technicalities}{section.19}% 93
-\BOOKMARK [2][-]{subsection.19.8}{Characterizing Prediction Mistakes}{section.19}% 94
-\BOOKMARK [2][-]{subsection.19.9}{Comparing Classifier Predictions}{section.19}% 95
-\BOOKMARK [1][-]{section.20}{Plan for the Paper}{}% 96
-\BOOKMARK [1][-]{section.21}{Model Agnostic Meta Learning \(MAML by Chelsea Finn\)}{}% 97
-\BOOKMARK [2][-]{subsection.21.1}{Code Modifications}{section.21}% 98
-\BOOKMARK [2][-]{subsection.21.2}{Modification of Data Generation Process}{section.21}% 99
-\BOOKMARK [2][-]{subsection.21.3}{Incorporating FP Growth}{section.21}% 100
-\BOOKMARK [2][-]{subsection.21.4}{Results}{section.21}% 101
-\BOOKMARK [1][-]{section.22}{Sampling Training/Testing Tasks}{}% 102
-\BOOKMARK [1][-]{section.23}{Meta Learning Vs. Shallow Models - FAKES}{}% 103
-\BOOKMARK [2][-]{subsection.23.1}{Methodology}{section.23}% 104
-\BOOKMARK [2][-]{subsection.23.2}{Frequent Patterns \046 FP Growth}{section.23}% 105
-\BOOKMARK [2][-]{subsection.23.3}{Hyperparameters}{section.23}% 106
-\BOOKMARK [2][-]{subsection.23.4}{Winning Hyper Parameters}{section.23}% 107
-\BOOKMARK [2][-]{subsection.23.5}{Quantitative Results}{section.23}% 108
-\BOOKMARK [2][-]{subsection.23.6}{Qualitative Results}{section.23}% 109
-\BOOKMARK [2][-]{subsection.23.7}{Mean Empirical Risk Curves}{section.23}% 110
-\BOOKMARK [2][-]{subsection.23.8}{Precisions Top K}{section.23}% 111
-\BOOKMARK [2][-]{subsection.23.9}{Recalls Top K}{section.23}% 112
-\BOOKMARK [2][-]{subsection.23.10}{ROC Curves}{section.23}% 113
-\BOOKMARK [2][-]{subsection.23.11}{Characterizing Prediction Mistakes}{section.23}% 114
-\BOOKMARK [2][-]{subsection.23.12}{Conclusion}{section.23}% 115
-\BOOKMARK [1][-]{section.24}{Meta Learning vs Shallow Models - Dementia Dataset}{}% 116
-\BOOKMARK [2][-]{subsection.24.1}{Cost Sensitive Learning in Neural Networks}{section.24}% 117
-\BOOKMARK [2][-]{subsection.24.2}{Hyper Parameters}{section.24}% 118
-\BOOKMARK [2][-]{subsection.24.3}{Winning Hyper Parameters}{section.24}% 119
-\BOOKMARK [2][-]{subsection.24.4}{Quantitative Results - Without FP Growth}{section.24}% 120
-\BOOKMARK [2][-]{subsection.24.5}{Insights}{section.24}% 121
-\BOOKMARK [2][-]{subsection.24.6}{Quantitative Results - With FP Growth}{section.24}% 122
-\BOOKMARK [2][-]{subsection.24.7}{Insights}{section.24}% 123
-\BOOKMARK [2][-]{subsection.24.8}{Insights on With FP vs. Without FP}{section.24}% 124
-\BOOKMARK [2][-]{subsection.24.9}{Insights about PPV}{section.24}% 125
-\BOOKMARK [2][-]{subsection.24.10}{Qualitative Results}{section.24}% 126
-\BOOKMARK [3][-]{subsubsection.24.10.1}{Mean Empirical Risk Curves}{subsection.24.10}% 127
-\BOOKMARK [3][-]{subsubsection.24.10.2}{Precision at Top K}{subsection.24.10}% 128
-\BOOKMARK [3][-]{subsubsection.24.10.3}{Recall at Top K}{subsection.24.10}% 129
-\BOOKMARK [3][-]{subsubsection.24.10.4}{ROC Curves}{subsection.24.10}% 130
+\BOOKMARK [1][-]{section.19}{Plan for the Paper}{}% 83
+\BOOKMARK [1][-]{section.20}{MAML - Sampling Training/Testing Tasks}{}% 84
+\BOOKMARK [1][-]{section.21}{MAML vs Shallow Models - Dementia Dataset}{}% 85
+\BOOKMARK [2][-]{subsection.21.1}{Cost Sensitive Learning in Neural Networks}{section.21}% 86
+\BOOKMARK [2][-]{subsection.21.2}{Hyper Parameters}{section.21}% 87
+\BOOKMARK [2][-]{subsection.21.3}{Winning Hyper Parameters}{section.21}% 88
+\BOOKMARK [2][-]{subsection.21.4}{Quantitative Results - Without FP Growth}{section.21}% 89
+\BOOKMARK [2][-]{subsection.21.5}{Insights}{section.21}% 90
+\BOOKMARK [2][-]{subsection.21.6}{Quantitative Results - With FP Growth}{section.21}% 91
+\BOOKMARK [2][-]{subsection.21.7}{Insights}{section.21}% 92
+\BOOKMARK [2][-]{subsection.21.8}{Insights on With FP vs. Without FP}{section.21}% 93
+\BOOKMARK [2][-]{subsection.21.9}{Insights about PPV}{section.21}% 94
+\BOOKMARK [2][-]{subsection.21.10}{Qualitative Results}{section.21}% 95
+\BOOKMARK [3][-]{subsubsection.21.10.1}{Mean Empirical Risk Curves}{subsection.21.10}% 96
+\BOOKMARK [3][-]{subsubsection.21.10.2}{Precision at Top K}{subsection.21.10}% 97
+\BOOKMARK [3][-]{subsubsection.21.10.3}{Recall at Top K}{subsection.21.10}% 98
+\BOOKMARK [3][-]{subsubsection.21.10.4}{ROC Curves}{subsection.21.10}% 99
+\BOOKMARK [1][-]{section.22}{ARML - Dementia}{}% 100
+\BOOKMARK [2][-]{subsection.22.1}{Quantitative Results - Dementia Top 10 Features}{section.22}% 101
+\BOOKMARK [2][-]{subsection.22.2}{Quantitative Results - Dementia Top 20 Features}{section.22}% 102
+\BOOKMARK [2][-]{subsection.22.3}{Winning Hyper Parameters}{section.22}% 103
+\BOOKMARK [2][-]{subsection.22.4}{Qualitative Results}{section.22}% 104
+\BOOKMARK [3][-]{subsubsection.22.4.1}{Mean Empirical Risk Curves}{subsection.22.4}% 105
+\BOOKMARK [3][-]{subsubsection.22.4.2}{Precision at Top K}{subsection.22.4}% 106
+\BOOKMARK [3][-]{subsubsection.22.4.3}{Recall at Top K}{subsection.22.4}% 107
+\BOOKMARK [3][-]{subsubsection.22.4.4}{ROC Curves}{subsection.22.4}% 108
+\BOOKMARK [2][-]{subsection.22.5}{Frequent Patterns and Probability of Mistakes}{section.22}% 109
+\BOOKMARK [1][-]{section.23}{All Results - Dementia - Quantitative}{}% 110
+\BOOKMARK [1][-]{section.24}{Reptile}{}% 111
+\BOOKMARK [2][-]{subsection.24.1}{Hyper Parameters}{section.24}% 112

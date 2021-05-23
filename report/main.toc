@@ -1,42 +1,42 @@
 \contentsline {section}{\numberline {1}Data Sources}{4}{section.1}%
 \contentsline {subsection}{\numberline {1.1}Datasets Used}{4}{subsection.1.1}%
-\contentsline {subsection}{\numberline {1.2}Dementia Output}{5}{subsection.1.2}%
+\contentsline {subsection}{\numberline {1.2}Dementia Output}{4}{subsection.1.2}%
 \contentsline {section}{\numberline {2}Split Into numeric and textual}{5}{section.2}%
 \contentsline {section}{\numberline {3}Numeric Features}{5}{section.3}%
 \contentsline {subsection}{\numberline {3.1}Informant and High Percentage of Missing}{6}{subsection.3.1}%
-\contentsline {subsection}{\numberline {3.2}Nested Questions and High percentage of missing}{7}{subsection.3.2}%
+\contentsline {subsection}{\numberline {3.2}Nested Questions and High percentage of missing}{6}{subsection.3.2}%
 \contentsline {subsection}{\numberline {3.3}Treating Features with High Percentage of Missing}{7}{subsection.3.3}%
-\contentsline {subsection}{\numberline {3.4}Detecting Erroneous Values Inside Features}{8}{subsection.3.4}%
+\contentsline {subsection}{\numberline {3.4}Detecting Erroneous Values Inside Features}{7}{subsection.3.4}%
 \contentsline {subsection}{\numberline {3.5}Working with Legal Features}{8}{subsection.3.5}%
 \contentsline {subsection}{\numberline {3.6}Filtering Legal Features with Erroneous Values - Erroneous Code-Book}{8}{subsection.3.6}%
-\contentsline {subsection}{\numberline {3.7}Detecting Outliers}{9}{subsection.3.7}%
-\contentsline {subsection}{\numberline {3.8}Outlier Detection and Scaling}{10}{subsection.3.8}%
-\contentsline {subsection}{\numberline {3.9}Erroneous Codebook}{10}{subsection.3.9}%
-\contentsline {subsection}{\numberline {3.10}Treating Erroneous Values}{11}{subsection.3.10}%
-\contentsline {subsection}{\numberline {3.11}Data Preprocessing}{11}{subsection.3.11}%
-\contentsline {subsubsection}{\numberline {3.11.1}Imputing Missing Values}{11}{subsubsection.3.11.1}%
+\contentsline {subsection}{\numberline {3.7}Detecting Outliers}{8}{subsection.3.7}%
+\contentsline {subsection}{\numberline {3.8}Outlier Detection and Scaling}{9}{subsection.3.8}%
+\contentsline {subsection}{\numberline {3.9}Erroneous Codebook}{9}{subsection.3.9}%
+\contentsline {subsection}{\numberline {3.10}Treating Erroneous Values}{10}{subsection.3.10}%
+\contentsline {subsection}{\numberline {3.11}Data Preprocessing}{10}{subsection.3.11}%
+\contentsline {subsubsection}{\numberline {3.11.1}Imputing Missing Values}{10}{subsubsection.3.11.1}%
 \contentsline {subsubsection}{\numberline {3.11.2}Scaling Features}{11}{subsubsection.3.11.2}%
 \contentsline {section}{\numberline {4}Feature Selection}{11}{section.4}%
 \contentsline {subsection}{\numberline {4.1}Decision Tree Feature Importance}{11}{subsection.4.1}%
-\contentsline {subsection}{\numberline {4.2}Select K Best Features}{12}{subsection.4.2}%
-\contentsline {subsubsection}{\numberline {4.2.1}Deciding "K"}{12}{subsubsection.4.2.1}%
-\contentsline {subsubsection}{\numberline {4.2.2}Selecting K Best Features}{12}{subsubsection.4.2.2}%
-\contentsline {section}{\numberline {5}Oversampling and Undersampling}{12}{section.5}%
+\contentsline {subsection}{\numberline {4.2}Select K Best Features}{11}{subsection.4.2}%
+\contentsline {subsubsection}{\numberline {4.2.1}Deciding "K"}{11}{subsubsection.4.2.1}%
+\contentsline {subsubsection}{\numberline {4.2.2}Selecting K Best Features}{11}{subsubsection.4.2.2}%
+\contentsline {section}{\numberline {5}Oversampling and Undersampling}{11}{section.5}%
 \contentsline {subsection}{\numberline {5.1}Dealing With Mixed Variables}{12}{subsection.5.1}%
-\contentsline {section}{\numberline {6}Cost-Sensitive Learning}{13}{section.6}%
-\contentsline {subsection}{\numberline {6.1}Cost sensitive learning consists of the following steps:}{13}{subsection.6.1}%
+\contentsline {section}{\numberline {6}Cost-Sensitive Learning}{12}{section.6}%
+\contentsline {subsection}{\numberline {6.1}Cost sensitive learning consists of the following steps:}{12}{subsection.6.1}%
 \contentsline {subsection}{\numberline {6.2}Tested sampling methods (using SMOTENC's sampling\_strategy options):}{13}{subsection.6.2}%
-\contentsline {subsection}{\numberline {6.3}Tested class\_weights: (costs for each label), combination of suggestions from book and built-in options:}{14}{subsection.6.3}%
+\contentsline {subsection}{\numberline {6.3}Tested class\_weights: (costs for each label), combination of suggestions from book and built-in options:}{13}{subsection.6.3}%
 \contentsline {subsection}{\numberline {6.4}Probabilistic Models}{14}{subsection.6.4}%
 \contentsline {subsubsection}{\numberline {6.4.1}Grid Search For Optimal Probability Threshold}{14}{subsubsection.6.4.1}%
 \contentsline {subsubsection}{\numberline {6.4.2}Calibrated Models}{14}{subsubsection.6.4.2}%
 \contentsline {subsubsection}{\numberline {6.4.3}Balanced Random Forest Results}{14}{subsubsection.6.4.3}%
-\contentsline {subsection}{\numberline {6.5}Results - Probabilistic}{15}{subsection.6.5}%
+\contentsline {subsection}{\numberline {6.5}Results - Probabilistic}{14}{subsection.6.5}%
 \contentsline {subsection}{\numberline {6.6}Results - Classification}{17}{subsection.6.6}%
-\contentsline {subsection}{\numberline {6.7}Results - One Class Classification}{18}{subsection.6.7}%
+\contentsline {subsection}{\numberline {6.7}Results - One Class Classification}{17}{subsection.6.7}%
 \contentsline {section}{\numberline {7}Encoding Categorical Data}{18}{section.7}%
-\contentsline {section}{\numberline {8}SHAP}{21}{section.8}%
-\contentsline {subsection}{\numberline {8.1}Global SHAP Summary Values Results}{21}{subsection.8.1}%
+\contentsline {section}{\numberline {8}SHAP}{20}{section.8}%
+\contentsline {subsection}{\numberline {8.1}Global SHAP Summary Values Results}{20}{subsection.8.1}%
 \contentsline {subsection}{\numberline {8.2}Global SHAP Interaction Values}{23}{subsection.8.2}%
 \contentsline {subsection}{\numberline {8.3}Multi-output Decision Plot for properly classified Rows}{24}{subsection.8.3}%
 \contentsline {subsection}{\numberline {8.4}Decision Plot for Miss-classified Row}{26}{subsection.8.4}%
@@ -80,51 +80,33 @@
 \contentsline {subsection}{\numberline {18.11}Extrapolation and Interpolation:}{34}{subsection.18.11}%
 \contentsline {subsection}{\numberline {18.12}Hot-Deck Imputation}{34}{subsection.18.12}%
 \contentsline {subsection}{\numberline {18.13}Some papers for handling missing categorical data (did not read them at length -- just the abstract)}{34}{subsection.18.13}%
-\contentsline {section}{\numberline {19}Advanced ML Evaluation Techniques}{34}{section.19}%
-\contentsline {subsection}{\numberline {19.1}Analysis of Predictive Models}{35}{subsection.19.1}%
-\contentsline {subsection}{\numberline {19.2}Evaluation Using Traditional Metrics}{35}{subsection.19.2}%
-\contentsline {subsection}{\numberline {19.3}Problem with Standard Evaluation Metrics}{36}{subsection.19.3}%
-\contentsline {subsection}{\numberline {19.4}Solution: Risk Estimates}{36}{subsection.19.4}%
-\contentsline {subsection}{\numberline {19.5}Ensuring Quality Of Risk Estimates}{37}{subsection.19.5}%
-\contentsline {subsubsection}{\numberline {19.5.1}From Models to Risk Estimates}{37}{subsubsection.19.5.1}%
-\contentsline {subsubsection}{\numberline {19.5.2}Measuring the Goodness of Risk Scores}{37}{subsubsection.19.5.2}%
-\contentsline {subsubsection}{\numberline {19.5.3}Comparative Evaluation of Risk Estimates}{38}{subsubsection.19.5.3}%
-\contentsline {subsection}{\numberline {19.6}Interpreting Classifier Outputs - FP Growth}{40}{subsection.19.6}%
-\contentsline {subsection}{\numberline {19.7}Technicalities}{40}{subsection.19.7}%
-\contentsline {subsection}{\numberline {19.8}Characterizing Prediction Mistakes}{41}{subsection.19.8}%
-\contentsline {subsection}{\numberline {19.9}Comparing Classifier Predictions}{41}{subsection.19.9}%
-\contentsline {section}{\numberline {20}Plan for the Paper}{42}{section.20}%
-\contentsline {section}{\numberline {21}Model Agnostic Meta Learning (MAML by Chelsea Finn)}{42}{section.21}%
-\contentsline {subsection}{\numberline {21.1}Code Modifications}{43}{subsection.21.1}%
-\contentsline {subsection}{\numberline {21.2}Modification of Data Generation Process}{44}{subsection.21.2}%
-\contentsline {subsection}{\numberline {21.3}Incorporating FP Growth}{45}{subsection.21.3}%
-\contentsline {subsection}{\numberline {21.4}Results}{47}{subsection.21.4}%
-\contentsline {section}{\numberline {22}Sampling Training/Testing Tasks}{48}{section.22}%
-\contentsline {section}{\numberline {23}Meta Learning Vs. Shallow Models - FAKES}{49}{section.23}%
-\contentsline {subsection}{\numberline {23.1}Methodology}{49}{subsection.23.1}%
-\contentsline {subsection}{\numberline {23.2}Frequent Patterns \& FP Growth}{50}{subsection.23.2}%
-\contentsline {subsection}{\numberline {23.3}Hyperparameters}{52}{subsection.23.3}%
-\contentsline {subsection}{\numberline {23.4}Winning Hyper Parameters}{53}{subsection.23.4}%
-\contentsline {subsection}{\numberline {23.5}Quantitative Results}{56}{subsection.23.5}%
-\contentsline {subsection}{\numberline {23.6}Qualitative Results}{58}{subsection.23.6}%
-\contentsline {subsection}{\numberline {23.7}Mean Empirical Risk Curves}{58}{subsection.23.7}%
-\contentsline {subsection}{\numberline {23.8}Precisions Top K}{59}{subsection.23.8}%
-\contentsline {subsection}{\numberline {23.9}Recalls Top K}{60}{subsection.23.9}%
-\contentsline {subsection}{\numberline {23.10}ROC Curves}{61}{subsection.23.10}%
-\contentsline {subsection}{\numberline {23.11}Characterizing Prediction Mistakes}{61}{subsection.23.11}%
-\contentsline {subsection}{\numberline {23.12}Conclusion}{63}{subsection.23.12}%
-\contentsline {section}{\numberline {24}Meta Learning vs Shallow Models - Dementia Dataset}{63}{section.24}%
-\contentsline {subsection}{\numberline {24.1}Cost Sensitive Learning in Neural Networks}{63}{subsection.24.1}%
-\contentsline {subsection}{\numberline {24.2}Hyper Parameters}{65}{subsection.24.2}%
-\contentsline {subsection}{\numberline {24.3}Winning Hyper Parameters}{65}{subsection.24.3}%
-\contentsline {subsection}{\numberline {24.4}Quantitative Results - Without FP Growth}{68}{subsection.24.4}%
-\contentsline {subsection}{\numberline {24.5}Insights}{74}{subsection.24.5}%
-\contentsline {subsection}{\numberline {24.6}Quantitative Results - With FP Growth}{75}{subsection.24.6}%
-\contentsline {subsection}{\numberline {24.7}Insights}{77}{subsection.24.7}%
-\contentsline {subsection}{\numberline {24.8}Insights on With FP vs. Without FP}{77}{subsection.24.8}%
-\contentsline {subsection}{\numberline {24.9}Insights about PPV}{77}{subsection.24.9}%
-\contentsline {subsection}{\numberline {24.10}Qualitative Results}{78}{subsection.24.10}%
-\contentsline {subsubsection}{\numberline {24.10.1}Mean Empirical Risk Curves}{78}{subsubsection.24.10.1}%
-\contentsline {subsubsection}{\numberline {24.10.2}Precision at Top K}{80}{subsubsection.24.10.2}%
-\contentsline {subsubsection}{\numberline {24.10.3}Recall at Top K}{82}{subsubsection.24.10.3}%
-\contentsline {subsubsection}{\numberline {24.10.4}ROC Curves}{83}{subsubsection.24.10.4}%
+\contentsline {section}{\numberline {19}Plan for the Paper}{34}{section.19}%
+\contentsline {section}{\numberline {20}MAML - Sampling Training/Testing Tasks}{35}{section.20}%
+\contentsline {section}{\numberline {21}MAML vs Shallow Models - Dementia Dataset}{37}{section.21}%
+\contentsline {subsection}{\numberline {21.1}Cost Sensitive Learning in Neural Networks}{37}{subsection.21.1}%
+\contentsline {subsection}{\numberline {21.2}Hyper Parameters}{38}{subsection.21.2}%
+\contentsline {subsection}{\numberline {21.3}Winning Hyper Parameters}{39}{subsection.21.3}%
+\contentsline {subsection}{\numberline {21.4}Quantitative Results - Without FP Growth}{42}{subsection.21.4}%
+\contentsline {subsection}{\numberline {21.5}Insights}{48}{subsection.21.5}%
+\contentsline {subsection}{\numberline {21.6}Quantitative Results - With FP Growth}{49}{subsection.21.6}%
+\contentsline {subsection}{\numberline {21.7}Insights}{51}{subsection.21.7}%
+\contentsline {subsection}{\numberline {21.8}Insights on With FP vs. Without FP}{51}{subsection.21.8}%
+\contentsline {subsection}{\numberline {21.9}Insights about PPV}{51}{subsection.21.9}%
+\contentsline {subsection}{\numberline {21.10}Qualitative Results}{52}{subsection.21.10}%
+\contentsline {subsubsection}{\numberline {21.10.1}Mean Empirical Risk Curves}{52}{subsubsection.21.10.1}%
+\contentsline {subsubsection}{\numberline {21.10.2}Precision at Top K}{54}{subsubsection.21.10.2}%
+\contentsline {subsubsection}{\numberline {21.10.3}Recall at Top K}{56}{subsubsection.21.10.3}%
+\contentsline {subsubsection}{\numberline {21.10.4}ROC Curves}{57}{subsubsection.21.10.4}%
+\contentsline {section}{\numberline {22}ARML - Dementia}{59}{section.22}%
+\contentsline {subsection}{\numberline {22.1}Quantitative Results - Dementia Top 10 Features}{59}{subsection.22.1}%
+\contentsline {subsection}{\numberline {22.2}Quantitative Results - Dementia Top 20 Features}{62}{subsection.22.2}%
+\contentsline {subsection}{\numberline {22.3}Winning Hyper Parameters}{65}{subsection.22.3}%
+\contentsline {subsection}{\numberline {22.4}Qualitative Results}{66}{subsection.22.4}%
+\contentsline {subsubsection}{\numberline {22.4.1}Mean Empirical Risk Curves}{66}{subsubsection.22.4.1}%
+\contentsline {subsubsection}{\numberline {22.4.2}Precision at Top K}{67}{subsubsection.22.4.2}%
+\contentsline {subsubsection}{\numberline {22.4.3}Recall at Top K}{68}{subsubsection.22.4.3}%
+\contentsline {subsubsection}{\numberline {22.4.4}ROC Curves}{68}{subsubsection.22.4.4}%
+\contentsline {subsection}{\numberline {22.5}Frequent Patterns and Probability of Mistakes}{69}{subsection.22.5}%
+\contentsline {section}{\numberline {23}All Results - Dementia - Quantitative}{69}{section.23}%
+\contentsline {section}{\numberline {24}Reptile}{69}{section.24}%
+\contentsline {subsection}{\numberline {24.1}Hyper Parameters}{69}{subsection.24.1}%
