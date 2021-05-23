@@ -1,12 +1,6 @@
 \begin{tabular}{|l|l|l|}
 \hline
-\multicolumn{1}{|c|}{\textbf{hyper parameter}} & \multicolumn{1}{c|}{\textbf{description}}                 & \multicolumn{1}{c|}{\textbf{values}}                                                                       \\ \hline
-\multicolumn{3}{|l|}{\textbf{Meta Learning Hyper Parameters}}                                                                                                                                                           \\ \hline
-meta batch size                                & number of tasks sampled pre meta update                   & 4, 8, 16                                                                                                   \\ \hline
-meta learning rate                             & the base learning rate of the generator                   & 0.1, 0.001                                                                                                 \\ \hline
-update batch size                              & number of examples used for inner gradient updates        & 4, 8, 16                                                                                                   \\ \hline
 \multicolumn{3}{|l|}{\textbf{Base Learner Hyper Parameters}}                                                                                                                                                            \\ \hline
-update learning rate                           & step size alpha for inner gradient update                 & 0.1, 0.001                                                                                                 \\ \hline
 hidden layers                                  & the number of hidden layers and their nodes               & \begin{tabular}[c]{@{}l@{}}264, 128, 64\\ 128, 64, 64\\ 128, 64\\ 128\end{tabular}                         \\ \hline
 activation functions                           & non-linear activation functions                           & \begin{tabular}[c]{@{}l@{}}relu, sigmoid, tanh, \\ softmax, swish\end{tabular}                             \\ \hline
 \multicolumn{3}{|l|}{\textbf{Cost Sensitive Hyper Parameters}}                                                                                                                                                          \\ \hline
