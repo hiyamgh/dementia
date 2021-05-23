@@ -1,8 +1,0 @@
-\begin{tabular}{|l|l|l|l|l|l|l|l|l|l|}
-\hline
-\textbf{model\_name}              & \textbf{f2} & \textbf{gmean} & \textbf{bss} & \textbf{pr\_auc} & \textbf{sensitivity} & \textbf{specificity} & \textbf{sampling\_strategy} & \textbf{cost\_matrix} & \textbf{encoding\_strategy} \\ \hline
-Weighted Logistic Regression      & 0.74419     & 0.8303         & 0.3034       & 0.53448          & 0.78049              & 0.88125              & not minority                & \{0: 1, 1: 10\}       & catboost                    \\ \hline
-Balanced Bagging Classifier       & 0.74419     & 0.83032        & 0.3034       & 0.53448          & 0.78049              & 0.88125              & not minority                & -                     & target                      \\ \hline
-Weighted Decision Tree Classifier & 0.7438      & 0.8067         & -0.1691      & 0.43013          & 0.87805              & 0.7375               & not minority                & \{0: 1, 1: 10\}       & glmm                        \\ \hline
-Weighted XGBoost                  & 0.7438      & 0.8067         & -0.1691      & 0.43013          & 0.87805              & 0.7375               & not minority                & 10                    & woe                         \\ \hline
-\end{tabular}
