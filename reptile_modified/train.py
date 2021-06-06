@@ -40,7 +40,7 @@ def train(sess,
     Train a model on a dataset.
     """
     if not os.path.exists(save_dir):
-        os.mkdir(save_dir)
+        os.makedirs(save_dir, exist_ok=True)
     saver = tf.train.Saver()
     reptile = reptile_fn(sess,
                          transductive=transductive,
@@ -63,8 +63,8 @@ def train(sess,
         if i % eval_interval == 0:
             accuracies = []
             for X, y, writer in [(X_train, y_train, train_writer), (X_test, y_test, test_writer)]:
-                correct, _, _ = reptile.evaluate(X, y, model.input_ph, model.label_ph,
-                                           model.minimize_op, model.predictions,
+                correct, _, _, _ = reptile.evaluate(X, y, model.input_ph, model.label_ph,
+                                           model.minimize_op, model.predictions, model.probas,
                                            num_classes=num_classes, num_shots=num_shots,
                                            inner_batch_size=eval_inner_batch_size,
                                            inner_iters=eval_inner_iters, replacement=replacement)

@@ -7,7 +7,10 @@ from variables import weight_decay
 from sklearn.metrics import *
 from imblearn.metrics import geometric_mean_score
 from tensorflow.python.platform import flags
+import pandas as pd
+import os, pickle
 FLAGS = flags.FLAGS
+
 
 # pylint: disable=R0913,R0914
 def evaluate(sess,
@@ -28,17 +31,19 @@ def evaluate(sess,
     reptile = reptile_fn(sess,
                          transductive=transductive,
                          pre_step_op=weight_decay(weight_decay_rate))
-    test_preds, test_actuals = [], []
+    exp_string = os.path.join(FLAGS.logdir, 'model_{}'.format(FLAGS.model_num))
+    test_preds, test_actuals, probabilities = [], [], []
     total_correct = 0
     for _ in range(num_samples):
-        correct, y_test, y_pred = reptile.evaluate(X, y, model.input_ph, model.label_ph,
-                                          model.minimize_op, model.predictions,
+        correct, y_test, y_pred, probas = reptile.evaluate(X, y, model.input_ph, model.label_ph,
+                                          model.minimize_op, model.predictions, model.probas,
                                           num_classes=num_classes, num_shots=num_shots,
                                           inner_batch_size=eval_inner_batch_size,
                                           inner_iters=eval_inner_iters, replacement=replacement)
         total_correct += correct
         test_actuals.extend(y_test)
         test_preds.extend(y_pred)
+        probabilities.extend(probas)
 
     accuracy, precision, recall, f1score, roc = evaluate_predictions(test_actuals, test_preds)
     if FLAGS.cost_sensitive == 1:
@@ -48,9 +53,24 @@ def evaluate(sess,
     else:
         results = compile_results(accuracy, precision, recall, f1score, roc)
 
+    risk_df = pd.DataFrame()
+    risk_df['test_indices'] = list(range(len(test_actuals)))
+    risk_df['y_test'] = test_actuals
+    risk_df['y_pred'] = test_preds
+    risk_df['risk_scores'] = probabilities
+
+    # sort by ascending order of risk score
+    risk_df = risk_df.sort_values(by='risk_scores', ascending=False)
+    risk_df.to_csv(os.path.join(exp_string, 'risk_df.csv'), index=False)
+
     print('\nEvaluation Results:')
     for k, v in results.items():
         print('{}: {}'.format(k, v))
+
+    # save dictionary of results
+    with open(os.path.join(exp_string, 'error_metrics.p'), 'wb') as f:
+        pickle.dump(results, f, pickle.HIGHEST_PROTOCOL)
+
     return total_correct / (num_samples * num_classes)
 
 
@@ -93,7 +113,7 @@ def compile_results(accuracy, precision, recall, f1score, roc):
 
 
 def compile_results_cost_sensitive(accuracy, precision, recall, f1score, roc,
-                                       f2, gmean, bss, pr_auc, sensitivity, specificity):
+                                    f2, gmean, bss, pr_auc, sensitivity, specificity):
     return {
         'accuracy': '{:.5f}'.format(accuracy),
         'precision': '{:.5f}'.format(precision),

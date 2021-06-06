@@ -10,6 +10,7 @@ import tensorflow as tf
 from variables import (interpolate_vars, average_vars, subtract_vars, add_vars, scale_vars,
                         VariableState)
 
+
 class Reptile:
     """
     A meta-learning session.
@@ -80,6 +81,7 @@ class Reptile:
                  label_ph,
                  minimize_op,
                  predictions,
+                 probas_op,
                  num_classes,
                  num_shots,
                  inner_batch_size,
@@ -120,27 +122,31 @@ class Reptile:
             if self._pre_step_op:
                 self.session.run(self._pre_step_op)
             self.session.run(minimize_op, feed_dict={input_ph: inputs, label_ph: labels})
-        test_preds = self._test_predictions(train_set, test_set, input_ph, predictions)
+        test_preds, probas = self._test_predictions(train_set, test_set, input_ph, predictions, probas_op)
         num_correct = sum([pred == sample[1] for pred, sample in zip(test_preds, test_set)])
         # Since we are sampling only 1 example per class in testing, and we have 2
         # classes, i.e. 2 examples in total, its not logical to compute
         # precision, recall, etc. on 2 examples in each iteration
-        # Thought: each iteration return y_test, and y_pred, and average over those.
+        # Thought: each iteration return y_test, and y_pred, and average over those when done with all iterations.
         self._full_state.import_variables(old_vars)
         y_test = [sample[1] for sample in test_set]
         y_pred = test_preds
-        return num_correct, y_test, y_pred
+        return num_correct, y_test, y_pred, probas
 
-    def _test_predictions(self, train_set, test_set, input_ph, predictions):
+    def _test_predictions(self, train_set, test_set, input_ph, predictions, probas_op):
         if self._transductive:
             inputs, _ = zip(*test_set)
-            return self.session.run(predictions, feed_dict={input_ph: inputs})
-        res = []
+            res = self.session.run(predictions, feed_dict={input_ph: inputs})
+            probas = self.session.run(probas_op, feed_dict={input_ph: inputs})[:, 1][-1]
+            return res, probas
+
+        res, probas = [], []
         for test_sample in test_set:
             inputs, _ = zip(*train_set) #
             inputs += (test_sample[0],)
             res.append(self.session.run(predictions, feed_dict={input_ph: inputs})[-1])
-        return res
+            probas.append(self.session.run(probas_op, feed_dict={input_ph: inputs})[:, 1][-1])
+        return res, probas
 
 
 class FOML(Reptile):
