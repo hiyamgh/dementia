@@ -152,8 +152,8 @@ def main():
 
         print('Evaluating...')
         eval_kwargs = evaluate_kwargs()
-        print('Train accuracy: ' + str(evaluate(sess, model, X_train, y_train, **eval_kwargs)))
-        print('Test accuracy: ' + str(evaluate(sess, model, X_test, y_test, **eval_kwargs)))
+        print('Train accuracy: ' + str(evaluate(sess, model, X_train, y_train, evaluate_testing=False, **eval_kwargs)))
+        print('Test accuracy: ' + str(evaluate(sess, model, X_test, y_test, evaluate_testing=True, **eval_kwargs)))
 
 
 if __name__ == '__main__':
