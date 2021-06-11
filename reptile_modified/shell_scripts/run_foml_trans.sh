@@ -25,7 +25,7 @@ eval_batch=(5 15 25)
 eval_iters=(5 10 30 50) # 10, 30 are additional from our own
 #eval_samples=()
 #eval_interval=(10)
-foml_tail=(4 5 8 10)
+foml_tail=(2 4 5 8 10)
 dim_hidden=("128, 64" "128" "128, 64, 64")
 IFS=""
 activation_fns=("relu" "sigmoid" "tanh" "softmax" "swish")
@@ -60,8 +60,8 @@ for shts in ${shots[@]}; do
                                                                     if [ $USCOUNTER -eq $SLURM_ARRAY_TASK_ID ]; then
                                                                         echo "USCOUNTER: " $USCOUNTER
                                                                         echo "SLURM_ARRAY_TASK_ID: " $SLURM_ARRAY_TASK_ID
-                                                                        echo "main.py --shots ${shts} --inner_batch ${ib} --inner_iters ${ii} --learning_rate ${lr} --meta_step ${ms} --meta_step_final ${msf} --meta_batch ${mb} --meta_iters ${mi} --eval_batch ${eb} --eval_iters ${ei} --dim_hidden ${dh} --activation_fn ${af} --weights_vector ${w} --sampling_strategy ${ss} --categorical_encoding ${e} --top_features ${tf} --logdir "trained_models/${tf}""
-                                                                        python main_foml_trans.py --shots ${shts} --inner_batch ${ib} --inner_iters ${ii} --learning_rate ${lr} --meta_step ${ms} --meta_step_final ${msf} --meta_batch ${mb} --meta_iters ${mi} --eval_batch ${eb} --eval_iters ${ei} --foml_tail ${ft} --dim_hidden ${dh} --activation_fn ${af} --weights_vector ${w} --sampling_strategy ${ss} --categorical_encoding ${e} --top_features ${tf} --logdir "FOML_trans_trained_models/${tf}/"
+                                                                        echo "main_foml_trans.py --shots ${shts} --inner_batch ${ib} --inner_iters ${ii} --learning_rate ${lr} --meta_step ${ms} --meta_step_final ${msf} --meta_batch ${mb} --meta_iters ${mi} --eval_batch ${eb} --eval_iters ${ei}  --foml_tail ${ft} --model_num $USCOUNTER --dim_hidden ${dh} --activation_fn ${af} --weights_vector ${w} --sampling_strategy ${ss} --categorical_encoding ${e} --top_features ${tf} --logdir "trained_models/${tf}""
+                                                                        python main_foml_trans.py --shots ${shts} --inner_batch ${ib} --inner_iters ${ii} --learning_rate ${lr} --meta_step ${ms} --meta_step_final ${msf} --meta_batch ${mb} --meta_iters ${mi} --eval_batch ${eb} --eval_iters ${ei} --foml_tail ${ft} --model_num $USCOUNTER --dim_hidden ${dh} --activation_fn ${af} --weights_vector ${w} --sampling_strategy ${ss} --categorical_encoding ${e} --top_features ${tf} --logdir "FOML_trans_trained_models/${tf}/"
                                                                     fi
                                                                     USCOUNTER=$(expr $USCOUNTER + 1)
                                                                 done
