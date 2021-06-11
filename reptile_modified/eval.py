@@ -16,6 +16,7 @@ FLAGS = flags.FLAGS
 def evaluate(sess,
              model,
              X, y,
+             evaluate_testing=True,
              num_classes=5,
              num_shots=5,
              eval_inner_batch_size=5,
@@ -53,23 +54,30 @@ def evaluate(sess,
     else:
         results = compile_results(accuracy, precision, recall, f1score, roc)
 
-    risk_df = pd.DataFrame()
-    risk_df['test_indices'] = list(range(len(test_actuals)))
-    risk_df['y_test'] = test_actuals
-    risk_df['y_pred'] = test_preds
-    risk_df['risk_scores'] = probabilities
+    # save risk data frame only when evaluating testing
+    if evaluate_testing:
+        risk_df = pd.DataFrame()
+        risk_df['test_indices'] = list(range(len(test_actuals)))
+        risk_df['y_test'] = test_actuals
+        risk_df['y_pred'] = test_preds
+        risk_df['risk_scores'] = probabilities
 
-    # sort by ascending order of risk score
-    risk_df = risk_df.sort_values(by='risk_scores', ascending=False)
-    risk_df.to_csv(os.path.join(exp_string, 'risk_df.csv'), index=False)
+        # sort by ascending order of risk score
+        risk_df = risk_df.sort_values(by='risk_scores', ascending=False)
+        risk_df.to_csv(os.path.join(exp_string, 'risk_df.csv'), index=False)
 
     print('\nEvaluation Results:')
     for k, v in results.items():
         print('{}: {}'.format(k, v))
 
-    # save dictionary of results
-    with open(os.path.join(exp_string, 'error_metrics.p'), 'wb') as f:
-        pickle.dump(results, f, pickle.HIGHEST_PROTOCOL)
+    if evaluate_testing:
+        # save dictionary of results
+        with open(os.path.join(exp_string, 'testing_error_metrics.p'), 'wb') as f:
+            pickle.dump(results, f, pickle.HIGHEST_PROTOCOL)
+    else:
+        # save dictionary of results
+        with open(os.path.join(exp_string, 'training_error_metrics.p'), 'wb') as f:
+            pickle.dump(results, f, pickle.HIGHEST_PROTOCOL)
 
     return total_correct / (num_samples * num_classes)
 
