@@ -137,8 +137,8 @@ class Reptile:
         if self._transductive:
             inputs, _ = zip(*test_set)
             res = self.session.run(predictions, feed_dict={input_ph: inputs})
-            probas = self.session.run(probas_op, feed_dict={input_ph: inputs})[:, 1][-1]
-            return res, probas
+            probas = self.session.run(probas_op, feed_dict={input_ph: inputs})[:, 1]
+            return res, list(probas)
 
         res, probas = [], []
         for test_sample in test_set:
