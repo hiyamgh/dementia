@@ -17,14 +17,12 @@ shots=(5 10 15 20 25)
 inner_batch=(10 20 25 100)
 inner_iters=(1 2 3 4 5 6 7 8 9 10 11 12 13 14 15)
 learning_rate=(0.001 0.0005 0.001)
-meta_step=(1.0 0.25) # I think this is the outer step size
+meta_step=(1.0 0.25)
 meta_step_final=(1.0 0.25)
-meta_batch=(5 8 16 32) # 8, 16, and 32 are additional from our own
+meta_batch=(5 8 16 32)
 meta_iters=(1000 5000 10000 20000 40000)
 eval_batch=(5 15 25)
-eval_iters=(5 10 30 50) # 10, 30 are additional from our own
-#eval_samples=()
-#eval_interval=(10)
+eval_iters=(5 10 30 50)
 dim_hidden=("128, 64" "128" "128, 64, 64")
 IFS=""
 activation_fns=("relu" "sigmoid" "tanh" "softmax" "swish")
@@ -37,7 +35,7 @@ encoding=("catboost" "glmm" "target" "mestimator" "james" "woe")
 IFS=""
 top_features=(10 20)
 USCOUNTER=1
-
+found_script=false
 
 for shts in ${shots[@]}; do
     for ib in ${inner_batch[@]}; do
@@ -51,18 +49,22 @@ for shts in ${shots[@]}; do
                                     for ei in ${eval_iters[@]}; do
                                         for dh in ${dim_hidden[*]}; do
                                             for af in ${activation_fns[*]}; do
-                                                for w in ${weights[@]}; do
-                                                    for ss in ${sampling_strategy[@]}; do
-                                                        for e in ${encoding[@]}; do
+                                                for w in ${weights[*]}; do
+                                                    for ss in ${sampling_strategy[*]}; do
+                                                        for e in ${encoding[*]}; do
                                                             for tf in ${top_features[@]}; do
                                                                 if [ $USCOUNTER -eq $SLURM_ARRAY_TASK_ID ]; then
+                                                                    found_script=true
                                                                     echo "USCOUNTER: " $USCOUNTER
                                                                     echo "SLURM_ARRAY_TASK_ID: " $SLURM_ARRAY_TASK_ID
-                                                                    echo "main_reptile_trans.py --shots ${shts} --inner_batch ${ib} --inner_iters ${ii} --learning_rate ${lr} --meta_step ${ms} --meta_step_final ${msf} --meta_batch ${mb} --meta_iters ${mi} --eval_batch ${eb} --eval_iters ${ei} --model_num $USCOUNTER --dim_hidden ${dh} --activation_fn ${af} --weights_vector ${w} --sampling_strategy ${ss} --categorical_encoding ${e} --top_features ${tf} --logdir "trained_models/${tf}""
+                                                                    echo "main_reptile_trans.py --shots ${shts} --inner_batch ${ib} --inner_iters ${ii} --learning_rate ${lr} --meta_step ${ms} --meta_step_final ${msf} --meta_batch ${mb} --meta_iters ${mi} --eval_batch ${eb} --eval_iters ${ei} --model_num $USCOUNTER --dim_hidden ${dh} --activation_fn ${af} --weights_vector ${w} --sampling_strategy ${ss} --categorical_encoding ${e} --top_features ${tf} --logdir trained_models/${tf}/"
                                                                     python main_reptile_trans.py --shots ${shts} --inner_batch ${ib} --inner_iters ${ii} --learning_rate ${lr} --meta_step ${ms} --meta_step_final ${msf} --meta_batch ${mb} --meta_iters ${mi} --eval_batch ${eb} --eval_iters ${ei} --model_num $USCOUNTER --dim_hidden ${dh} --activation_fn ${af} --weights_vector ${w} --sampling_strategy ${ss} --categorical_encoding ${e} --top_features ${tf} --logdir "reptile_trans_trained_models/${tf}/"
                                                                 fi
                                                                 USCOUNTER=$(expr $USCOUNTER + 1)
                                                             done
+                                                            if [ "$found_script" = true ] ; then
+                                                                    break 15
+                                                            fi
                                                         done
                                                     done
                                                 done
