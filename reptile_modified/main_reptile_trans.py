@@ -45,7 +45,7 @@ flags.DEFINE_integer('meta_batch', 5, 'meta-training batch size')
 flags.DEFINE_integer('meta_iters', 100, 'meta-training iterations')
 flags.DEFINE_integer('eval_batch', 10, 'eval inner batch size')
 flags.DEFINE_integer('eval_iters', 50, 'eval inner iterations')
-flags.DEFINE_integer('eval_samples', 10000, 'evaluation samples')
+flags.DEFINE_integer('eval_samples', 1000, 'evaluation samples')
 flags.DEFINE_integer('eval_interval', 10, 'train steps per eval')
 flags.DEFINE_float('weight_decay', 1, 'weight decay rate')
 flags.DEFINE_boolean('transductive', True, 'evaluate all samples at once')
@@ -154,6 +154,8 @@ def main():
         eval_kwargs = evaluate_kwargs()
         print('Train accuracy: ' + str(evaluate(sess, model, X_train, y_train, evaluate_testing=False, **eval_kwargs)))
         print('Test accuracy: ' + str(evaluate(sess, model, X_test, y_test, evaluate_testing=True, **eval_kwargs)))
+
+    return
 
 
 if __name__ == '__main__':

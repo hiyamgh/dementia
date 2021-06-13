@@ -45,12 +45,12 @@ flags.DEFINE_integer('meta_batch', 5, 'meta-training batch size')
 flags.DEFINE_integer('meta_iters', 1000, 'meta-training iterations')
 flags.DEFINE_integer('eval_batch', 10, 'eval inner batch size')
 flags.DEFINE_integer('eval_iters', 50, 'eval inner iterations')
-flags.DEFINE_integer('eval_samples', 10000, 'evaluation samples')
+flags.DEFINE_integer('eval_samples', 1000, 'evaluation samples')
 flags.DEFINE_integer('eval_interval', 10, 'train steps per eval')
 flags.DEFINE_float('weight_decay', 1, 'weight decay rate')
 flags.DEFINE_boolean('transductive', True, 'evaluate all samples at once')
 flags.DEFINE_boolean('foml', True, 'use FOML instead of Reptile')
-flags.DEFINE_integer('foml_tail', None, 'number of shots for the final mini-batch in FOML')
+flags.DEFINE_integer('foml_tail', 5, 'number of shots for the final mini-batch in FOML')
 flags.DEFINE_boolean('sgd', False, 'use vanilla SGD instead of Adam')
 
 ## Base model hyper parameters
@@ -143,9 +143,9 @@ def main():
             train(sess, model, X_train, y_train, X_test, y_test, exp_string, **train_kwargs())
             t2 = time.time()
             training_time = (t2 - t1) / 60
-            print('training time: {:.3f}'.format(training_time))
+            print('training time: {:.3f} mins'.format(training_time))
             with open(os.path.join(exp_string, 'statistics.txt'), 'w') as f:
-                f.write('training time: {:.3f}'.format(training_time))
+                f.write('training time: {:.3f} mins'.format(training_time))
         else:
             print('Restoring from checkpoint...')
             tf.train.Saver().restore(sess, tf.train.latest_checkpoint(FLAGS.checkpoint))
@@ -154,6 +154,7 @@ def main():
         eval_kwargs = evaluate_kwargs()
         print('Train accuracy: ' + str(evaluate(sess, model, X_train, y_train, evaluate_testing=False, **eval_kwargs)))
         print('Test accuracy: ' + str(evaluate(sess, model, X_test, y_test, evaluate_testing=True, **eval_kwargs)))
+    return
 
 
 if __name__ == '__main__':
