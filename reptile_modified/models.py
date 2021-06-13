@@ -21,6 +21,9 @@ activations = {
 }
 
 
+# More on batch normalization: https://stackoverflow.com/questions/29979251/batch-normalization-in-neural-network
+# Above link from: https://stackoverflow.com/questions/41269570/what-is-batch-normalizaiton-why-using-it-how-does-it-affect-prediction
+
 class StructuredModel:
     """
     A model for Structured/Tabular 2D datasets
@@ -36,6 +39,7 @@ class StructuredModel:
         out = tf.nn.relu(out)
         for i in range(1, len(dim_hidden)):
             out = tf.layers.dense(out, dim_hidden[i])
+            out = tf.layers.batch_normalization(out, training=True)
             out = ac_fn(out)
 
         self.logits = tf.layers.dense(out, num_classes)
