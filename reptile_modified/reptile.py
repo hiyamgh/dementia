@@ -4,9 +4,7 @@ datasets.
 """
 
 import random
-
 import tensorflow as tf
-
 from variables import (interpolate_vars, average_vars, subtract_vars, add_vars, scale_vars,
                         VariableState)
 
@@ -60,7 +58,7 @@ class Reptile:
           meta_step_size: interpolation coefficient.
           meta_batch_size: how many inner-loops to run.
         """
-        old_vars = self._model_state.export_variables()
+        old_vars = self._model_state.export_variables() # get latest weights
         new_vars = []
         for _ in range(meta_batch_size):
             # mini_dataset = _sample_mini_dataset(dataset, num_classes, num_shots)
@@ -69,6 +67,8 @@ class Reptile:
                 inputs, labels = zip(*batch)
                 if self._pre_step_op:
                     self.session.run(self._pre_step_op)
+                # minimize_op is optimizer(**optim_kwargs).minimize(self.loss)
+                # so basically perform gradient decsent on this mini-batch
                 self.session.run(minimize_op, feed_dict={input_ph: inputs, label_ph: labels})
             new_vars.append(self._model_state.export_variables())
             self._model_state.import_variables(old_vars)
@@ -253,6 +253,12 @@ def _sample_mini_tasks(X, y, num_classes, num_shots):
 
 
 def _mini_batches(samples, batch_size, num_batches, replacement):
+    # inner_batch_size is batch_size, inner_iters is num_batches,
+    # but batch_size must be less than the number of samples, or else:
+    # ValueError: Sample larger than population or is negative
+
+    # However, if without replacement inner batch size can be greater than number of samples, it works
+    # because of shuffling (look at while loop).
     """
     Generate mini-batches from some data.
 
@@ -267,6 +273,8 @@ def _mini_batches(samples, batch_size, num_batches, replacement):
         return
     cur_batch = []
     batch_count = 0
+    # basically if num_batches is greater than the number of samples, its fine
+    # because it will keep running (while(True)) and samples will be re-shuffled
     while True:
         random.shuffle(samples)
         for sample in samples:

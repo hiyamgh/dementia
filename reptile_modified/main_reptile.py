@@ -62,7 +62,7 @@ flags.DEFINE_integer('model_num', 1, 'model number to store trained model. Bette
 flags.DEFINE_integer('cost_sensitive', 1, 'whether to imply cost sensitive learning or not')
 flags.DEFINE_string('weights_vector', "1, 100", 'if class_weights is used, then this are the respective weights'
                                                 'of each classs')
-flags.DEFINE_string('sampling_strategy', 'all', 'how to resample data, only done when cost sensitive is True')
+flags.DEFINE_string('sampling_strategy', None, 'how to resample data, only done when cost sensitive is True')
 flags.DEFINE_integer('top_features', 20, 'top features selected by feature selection')
 
 

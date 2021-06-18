@@ -38,6 +38,8 @@ def scale_vars(var_seq, scale):
     """
     return [v * scale for v in var_seq]
 
+# https://stats.stackexchange.com/questions/29130/difference-between-neural-net-weight-decay-and-learning-rate
+# https://medium.com/analytics-vidhya/deep-learning-basics-weight-decay-3c68eb4344e9
 def weight_decay(rate, variables=None):
     """
     Create an Op that performs weight decay.

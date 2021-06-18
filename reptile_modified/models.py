@@ -23,7 +23,7 @@ activations = {
 
 # More on batch normalization: https://stackoverflow.com/questions/29979251/batch-normalization-in-neural-network
 # Above link from: https://stackoverflow.com/questions/41269570/what-is-batch-normalizaiton-why-using-it-how-does-it-affect-prediction
-
+# Should we scale data if we're doing batch normalization: https://stats.stackexchange.com/questions/249378/is-scaling-data-0-1-necessary-when-batch-normalization-is-used ?
 class StructuredModel:
     """
     A model for Structured/Tabular 2D datasets

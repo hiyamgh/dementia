@@ -34,23 +34,23 @@ flags.DEFINE_string('logdir', 'trained_models', 'checkpoint directory')
 flags.DEFINE_integer('classes', 2, 'number of classes per inner task')
 flags.DEFINE_integer('shots', 5, 'number of examples per class')
 flags.DEFINE_integer('train_shots', 0, 'shots in a training batch')
-flags.DEFINE_integer('inner_batch', 5, 'inner batch size')
-flags.DEFINE_integer('inner_iters', 20, 'inner iterations')
+flags.DEFINE_integer('inner_batch', 5, 'inner batch size') # mini batch size in meta-training
+flags.DEFINE_integer('inner_iters', 1, 'inner iterations') # number of mini-batches in meta-training
 flags.DEFINE_boolean('replacement', False, 'sample with replacement')
 flags.DEFINE_float('learning_rate', 1e-3, 'Adam step size')
-flags.DEFINE_float('meta_step', 0.1, 'meta-training step size')
-flags.DEFINE_float('meta_step_final', 0.1, 'meta-training step size by the end')
+flags.DEFINE_float('meta_step', 0.1, 'meta-training step size') # epsilon value in iterations
+flags.DEFINE_float('meta_step_final', 0.1, 'meta-training step size by the end') # epsilon value in final iteration (meta training + meta testing)
 # flags.DEFINE_integer('meta_batch', 1, 'meta-training batch size')
-flags.DEFINE_integer('meta_batch', 5, 'meta-training batch size')
-flags.DEFINE_integer('meta_iters', 1000, 'meta-training iterations')
-flags.DEFINE_integer('eval_batch', 10, 'eval inner batch size')
-flags.DEFINE_integer('eval_iters', 50, 'eval inner iterations')
-flags.DEFINE_integer('eval_samples', 1000, 'evaluation samples')
-flags.DEFINE_integer('eval_interval', 10, 'train steps per eval')
-flags.DEFINE_float('weight_decay', 1, 'weight decay rate')
+flags.DEFINE_integer('meta_batch', 5, 'meta-training batch size') # number of tasks to sample per iteration
+flags.DEFINE_integer('meta_iters', 1000, 'meta-training iterations') # number of iterations - meta training
+flags.DEFINE_integer('eval_batch', 5, 'eval inner batch size') # mini-batch size in meta-testing
+flags.DEFINE_integer('eval_iters', 5, 'eval inner iterations') # number of mini-batches in meta-testing
+flags.DEFINE_integer('eval_samples', 1000, 'evaluation samples') # number of iterations - meta-testing
+flags.DEFINE_integer('eval_interval', 10, 'train steps per eval') # at which speed to print evaluation results
+flags.DEFINE_float('weight_decay', 1, 'weight decay rate') # weight decay rate to avoid over-fitting
 flags.DEFINE_boolean('transductive', True, 'evaluate all samples at once')
 flags.DEFINE_boolean('foml', True, 'use FOML instead of Reptile')
-flags.DEFINE_integer('foml_tail', 5, 'number of shots for the final mini-batch in FOML')
+flags.DEFINE_integer('foml_tail', 2, 'number of shots for the final mini-batch in FOML')
 flags.DEFINE_boolean('sgd', False, 'use vanilla SGD instead of Adam')
 
 ## Base model hyper parameters
@@ -62,7 +62,7 @@ flags.DEFINE_integer('model_num', 1, 'model number to store trained model. Bette
 flags.DEFINE_integer('cost_sensitive', 1, 'whether to imply cost sensitive learning or not')
 flags.DEFINE_string('weights_vector', "1, 100", 'if class_weights is used, then this are the respective weights'
                                                 'of each classs')
-flags.DEFINE_string('sampling_strategy', 'all', 'how to resample data, only done when cost sensitive is True')
+flags.DEFINE_string('sampling_strategy', None, 'how to resample data, only done when cost sensitive is True')
 flags.DEFINE_integer('top_features', 20, 'top features selected by feature selection')
 
 
@@ -122,6 +122,7 @@ def evaluate_kwargs():
 
 def _args_reptile(FLAGS):
     if FLAGS.foml:
+        # https://stackoverflow.com/a/15331967/11212687
         return partial(FOML, tail_shots=FLAGS.foml_tail)
     return Reptile
 
