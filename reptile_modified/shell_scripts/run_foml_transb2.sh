@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
-#SBATCH --job-name=rpb1
+#SBATCH --job-name=fotrb2
 #SBATCH --account=hkg02
 #SBATCH --partition=normal
 #SBATCH --nodes=1
@@ -8,7 +8,7 @@
 #SBATCH --mem=16000
 #SBATCH --mail-type=ALL
 #SBATCH --mail-user=hkg02@mail.aub.edu
-#SBATCH --array=1-900%5
+#SBATCH --array=1-900%3
 
 module load python/3
 module load python/tensorflow-1.14.0
@@ -35,7 +35,6 @@ top_features=(10 20)
 USCOUNTER=1
 found_script=false
 
-
 for shts in ${shots[@]}; do
     for ib in ${inner_batch[@]}; do
         for ii in ${inner_iters[@]}; do
@@ -51,15 +50,14 @@ for shts in ${shots[@]}; do
                                                 for w in ${weights[*]}; do
                                                     for e in ${encoding[*]}; do
                                                         for tf in ${top_features[@]}; do
-                                                            if [ $USCOUNTER -eq $SLURM_ARRAY_TASK_ID ]; then
-                                                                    found_script=true
-                                                                    echo "USCOUNTER: " $USCOUNTER
-                                                                    echo "SLURM_ARRAY_TASK_ID: " $SLURM_ARRAY_TASK_ID
-                                                                    echo "main_reptile.py --shots ${shts} --inner_batch ${ib} --inner_iters ${ii} --learning_rate ${lr} --meta_step ${ms} --meta_step_final ${msf} --meta_batch ${mb} --meta_iters ${mi} --eval_batch ${eb} --eval_iters ${ei} --model_num $USCOUNTER --dim_hidden ${dh} --activation_fn ${af} --weights_vector ${w} --categorical_encoding ${e} --top_features ${tf} --logdir "reptile_trained_models/${tf}/""
-                                                                    python main_reptile.py --shots ${shts} --inner_batch ${ib} --inner_iters ${ii} --learning_rate ${lr} --meta_step ${ms} --meta_step_final ${msf} --meta_batch ${mb} --meta_iters ${mi} --eval_batch ${eb} --eval_iters ${ei} --model_num $USCOUNTER --dim_hidden ${dh} --activation_fn ${af} --weights_vector ${w} --categorical_encoding ${e} --top_features ${tf} --logdir "reptile_trained_models/${tf}/"
-                                                            fi
-                                                            USCOUNTER=$(expr $USCOUNTER + 1)
-                                                            echo "incremented USCOUNTER, now it is: " $USCOUNTER
+                                                               if [ $USCOUNTER -eq $((SLURM_ARRAY_TASK_ID+900)) ]; then
+                                                                   found_script=true
+                                                                   echo "USCOUNTER: " $USCOUNTER
+                                                                   echo "SLURM_ARRAY_TASK_ID: " $SLURM_ARRAY_TASK_ID
+                                                                   echo "main_foml_trans.py --shots ${shts} --inner_batch ${ib} --inner_iters ${ii} --learning_rate ${lr} --meta_step ${ms} --meta_step_final ${msf} --meta_batch ${mb} --meta_iters ${mi} --eval_batch ${eb} --eval_iters ${ei} --model_num $USCOUNTER --dim_hidden ${dh} --activation_fn ${af} --weights_vector ${w} --categorical_encoding ${e} --top_features ${tf} --logdir FOML_trans_trained_models/${tf}/"
+                                                                   python main_foml_trans.py --shots ${shts} --inner_batch ${ib} --inner_iters ${ii} --learning_rate ${lr} --meta_step ${ms} --meta_step_final ${msf} --meta_batch ${mb} --meta_iters ${mi} --eval_batch ${eb} --eval_iters ${ei} --model_num $USCOUNTER --dim_hidden ${dh} --activation_fn ${af} --weights_vector ${w} --categorical_encoding ${e} --top_features ${tf} --logdir "FOML_trans_trained_models/${tf}/"
+                                                               fi
+                                                               USCOUNTER=$(expr $USCOUNTER + 1)
                                                         done
                                                         if [ "$found_script" = true ] ; then
                                                                     break 15
