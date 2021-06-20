@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
-#SBATCH --job-name=fotrb4
+#SBATCH --job-name=fotrb5
 #SBATCH --account=hkg02
 #SBATCH --partition=normal
 #SBATCH --nodes=1
@@ -50,7 +50,7 @@ for shts in ${shots[@]}; do
                                                 for w in ${weights[*]}; do
                                                     for e in ${encoding[*]}; do
                                                         for tf in ${top_features[@]}; do
-                                                               if [ $USCOUNTER -eq $((SLURM_ARRAY_TASK_ID+2702)) ]; then
+                                                               if [ $USCOUNTER -eq $((SLURM_ARRAY_TASK_ID+3603)) ]; then
                                                                    found_script=true
                                                                    echo "USCOUNTER: " $USCOUNTER
                                                                    echo "SLURM_ARRAY_TASK_ID: " $SLURM_ARRAY_TASK_ID
