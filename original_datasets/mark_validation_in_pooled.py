@@ -27,6 +27,9 @@ print(df_test['dem1066'].value_counts())
 print('0: {}'.format(list(df_test['dem1066']).count('0')/len(df_test)))
 print('1: {}'.format(list(df_test['dem1066']).count('1')/len(df_test)))
 
+# size of the training/testing:
+print('\ntraining size: {}'.format(len(df_train)/len(df)))
+print('testing size: {}'.format(len(df_test)/len(df)))
 # df_train
 # 0    630
 # 1     79
