@@ -80,7 +80,7 @@ for shts in ${shots[@]}; do
     done
 done
 
-if [ $SLURM_ARRAY_TASK_ID -eq 900 ] && [ $ADDWHAT -lt 93,312 ]; then
+if [ $SLURM_ARRAY_TASK_ID -eq 900 ] && [ $ADDWHAT -lt 93312 ]; then
     sleep 2m
     ADDWHAT=$((ADDWHAT + 900))
     sbatch run_foml_trans_continuous.sh $ADDWHAT
