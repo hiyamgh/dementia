@@ -31,103 +31,82 @@
 \BOOKMARK [3][-]{subsubsection.6.4.1}{Grid Search For Optimal Probability Threshold}{subsection.6.4}% 31
 \BOOKMARK [3][-]{subsubsection.6.4.2}{Calibrated Models}{subsection.6.4}% 32
 \BOOKMARK [3][-]{subsubsection.6.4.3}{Balanced Random Forest Results}{subsection.6.4}% 33
-\BOOKMARK [3][-]{subsubsection.6.4.4}{Results With Top 10 Features}{subsection.6.4}% 34
-\BOOKMARK [3][-]{subsubsection.6.4.5}{Results With Top 20 Features}{subsection.6.4}% 35
-\BOOKMARK [2][-]{subsection.6.5}{Classification Models}{section.6}% 36
-\BOOKMARK [3][-]{subsubsection.6.5.1}{Results With Top 10 Features}{subsection.6.5}% 37
-\BOOKMARK [2][-]{subsection.6.6}{One-Class Classification}{section.6}% 38
-\BOOKMARK [1][-]{section.7}{Encoding Categorical Data}{}% 39
-\BOOKMARK [1][-]{section.8}{SHAP}{}% 40
-\BOOKMARK [2][-]{subsection.8.1}{Global SHAP Summary Values Results}{section.8}% 41
-\BOOKMARK [2][-]{subsection.8.2}{Global SHAP Interaction Values}{section.8}% 42
-\BOOKMARK [2][-]{subsection.8.3}{Multi-output Decision Plot for properly classified Rows}{section.8}% 43
-\BOOKMARK [2][-]{subsection.8.4}{Decision Plot for Miss-classified Row}{section.8}% 44
-\BOOKMARK [1][-]{section.9}{Chapter 6: Precision, Recall, and F-measure}{}% 45
-\BOOKMARK [1][-]{section.10}{Chapter 7:ROC Curves and Precision-Recall Curves}{}% 46
-\BOOKMARK [2][-]{subsection.10.1}{ROC Curve}{section.10}% 47
-\BOOKMARK [2][-]{subsection.10.2}{AUC}{section.10}% 48
-\BOOKMARK [1][-]{section.11}{Chapter 8: Probability Scoring Methods}{}% 49
-\BOOKMARK [2][-]{subsection.11.1}{Probability Metrics}{section.11}% 50
-\BOOKMARK [2][-]{subsection.11.2}{LogLoss Score}{section.11}% 51
-\BOOKMARK [1][-]{section.12}{Cross Validation for Imbalanced Datasets}{}% 52
-\BOOKMARK [1][-]{section.13}{Chapter 10}{}% 53
-\BOOKMARK [1][-]{section.14}{Chapter 12}{}% 54
-\BOOKMARK [2][-]{subsection.14.1}{Oversampling}{section.14}% 55
-\BOOKMARK [2][-]{subsection.14.2}{Undersampling Techniques}{section.14}% 56
-\BOOKMARK [1][-]{section.15}{Data Transforms \(Hiyam\)}{}% 57
-\BOOKMARK [2][-]{subsection.15.1}{Scaling Numeric Data \(chapter 17\)}{section.15}% 58
-\BOOKMARK [2][-]{subsection.15.2}{Scaling Data with Outliers \(chapter 18\)}{section.15}% 59
-\BOOKMARK [2][-]{subsection.15.3}{How to Encode Categorical Data \(chapter 19\)}{section.15}% 60
-\BOOKMARK [2][-]{subsection.15.4}{How to Make Distributions Look More Gaussian \(chapter 20\)}{section.15}% 61
-\BOOKMARK [1][-]{section.16}{Data Pre-Pocessing}{}% 62
-\BOOKMARK [2][-]{subsection.16.1}{Imputing Missing Values - Categorical Features}{section.16}% 63
-\BOOKMARK [2][-]{subsection.16.2}{Imputing Missing Values - Numerical/Ordinal Features}{section.16}% 64
-\BOOKMARK [2][-]{subsection.16.3}{Scaling - Numeric/Ordinal Features}{section.16}% 65
-\BOOKMARK [2][-]{subsection.16.4}{Scaling - Categorical Features}{section.16}% 66
-\BOOKMARK [1][-]{section.17}{Imputing Numerical Missing Data}{}% 67
-\BOOKMARK [2][-]{subsection.17.1}{Statistical Imputation}{section.17}% 68
-\BOOKMARK [2][-]{subsection.17.2}{K Nearest Neighbors}{section.17}% 69
-\BOOKMARK [2][-]{subsection.17.3}{Iterative Imputation}{section.17}% 70
-\BOOKMARK [1][-]{section.18}{Imputing Categorical Missing Data}{}% 71
-\BOOKMARK [2][-]{subsection.18.1}{Mean Imputation}{section.18}% 72
-\BOOKMARK [2][-]{subsection.18.2}{Imputation Using Most Frequent or \(Zero/Constant Values\)}{section.18}% 73
-\BOOKMARK [2][-]{subsection.18.3}{Create a New Category \(Random Category\) for NAN Values}{section.18}% 74
-\BOOKMARK [2][-]{subsection.18.4}{ Adding a Variable To Capture NAN}{section.18}% 75
-\BOOKMARK [2][-]{subsection.18.5}{Imputation Using Deep Learning \(Datawig\)}{section.18}% 76
-\BOOKMARK [2][-]{subsection.18.6}{Regression Imputation}{section.18}% 77
-\BOOKMARK [2][-]{subsection.18.7}{Imputation Using Interpolation}{section.18}% 78
-\BOOKMARK [2][-]{subsection.18.8}{Multivariate Normal Imputation \(MNVI\)}{section.18}% 79
-\BOOKMARK [2][-]{subsection.18.9}{Multiple Imputation by Chained Equations \(MICE\)}{section.18}% 80
-\BOOKMARK [2][-]{subsection.18.10}{Stochastic regression imputation:}{section.18}% 81
-\BOOKMARK [2][-]{subsection.18.11}{Extrapolation and Interpolation:}{section.18}% 82
-\BOOKMARK [2][-]{subsection.18.12}{Hot-Deck Imputation}{section.18}% 83
-\BOOKMARK [2][-]{subsection.18.13}{Some papers for handling missing categorical data \(did not read them at length \205 just the abstract\)}{section.18}% 84
-\BOOKMARK [1][-]{section.19}{Advanced ML Evaluation Techniques}{}% 85
-\BOOKMARK [2][-]{subsection.19.1}{Analysis of Predictive Models}{section.19}% 86
-\BOOKMARK [2][-]{subsection.19.2}{Evaluation Using Traditional Metrics}{section.19}% 87
-\BOOKMARK [2][-]{subsection.19.3}{Problem with Standard Evaluation Metrics}{section.19}% 88
-\BOOKMARK [2][-]{subsection.19.4}{Solution: Risk Estimates}{section.19}% 89
-\BOOKMARK [2][-]{subsection.19.5}{Ensuring Quality Of Risk Estimates}{section.19}% 90
-\BOOKMARK [3][-]{subsubsection.19.5.1}{From Models to Risk Estimates}{subsection.19.5}% 91
-\BOOKMARK [3][-]{subsubsection.19.5.2}{Measuring the Goodness of Risk Scores}{subsection.19.5}% 92
-\BOOKMARK [3][-]{subsubsection.19.5.3}{Comparative Evaluation of Risk Estimates}{subsection.19.5}% 93
-\BOOKMARK [2][-]{subsection.19.6}{Interpreting Classifier Outputs - FP Growth}{section.19}% 94
-\BOOKMARK [2][-]{subsection.19.7}{Technicalities}{section.19}% 95
-\BOOKMARK [2][-]{subsection.19.8}{Characterizing Prediction Mistakes}{section.19}% 96
-\BOOKMARK [2][-]{subsection.19.9}{Comparing Classifier Predictions}{section.19}% 97
-\BOOKMARK [1][-]{section.20}{Plan for the Paper}{}% 98
-\BOOKMARK [1][-]{section.21}{Model Agnostic Meta Learning \(MAML by Chelsea Finn\)}{}% 99
-\BOOKMARK [2][-]{subsection.21.1}{Code Modifications}{section.21}% 100
-\BOOKMARK [2][-]{subsection.21.2}{Modification of Data Generation Process}{section.21}% 101
-\BOOKMARK [2][-]{subsection.21.3}{Incorporating FP Growth}{section.21}% 102
-\BOOKMARK [2][-]{subsection.21.4}{Results}{section.21}% 103
-\BOOKMARK [1][-]{section.22}{Sampling Training/Testing Tasks}{}% 104
-\BOOKMARK [1][-]{section.23}{Meta Learning Vs. Shallow Models - FAKES}{}% 105
-\BOOKMARK [2][-]{subsection.23.1}{Methodology}{section.23}% 106
-\BOOKMARK [2][-]{subsection.23.2}{Frequent Patterns \046 FP Growth}{section.23}% 107
-\BOOKMARK [2][-]{subsection.23.3}{Hyperparameters}{section.23}% 108
-\BOOKMARK [2][-]{subsection.23.4}{Winning Hyper Parameters}{section.23}% 109
-\BOOKMARK [2][-]{subsection.23.5}{Quantitative Results}{section.23}% 110
-\BOOKMARK [2][-]{subsection.23.6}{Qualitative Results}{section.23}% 111
-\BOOKMARK [2][-]{subsection.23.7}{Mean Empirical Risk Curves}{section.23}% 112
-\BOOKMARK [2][-]{subsection.23.8}{Precisions Top K}{section.23}% 113
-\BOOKMARK [2][-]{subsection.23.9}{Recalls Top K}{section.23}% 114
-\BOOKMARK [2][-]{subsection.23.10}{ROC Curves}{section.23}% 115
-\BOOKMARK [2][-]{subsection.23.11}{Characterizing Prediction Mistakes}{section.23}% 116
-\BOOKMARK [2][-]{subsection.23.12}{Conclusion}{section.23}% 117
-\BOOKMARK [1][-]{section.24}{Meta Learning vs Shallow Models - Dementia Dataset}{}% 118
-\BOOKMARK [2][-]{subsection.24.1}{Cost Sensitive Learning in Neural Networks}{section.24}% 119
-\BOOKMARK [2][-]{subsection.24.2}{Hyper Parameters}{section.24}% 120
-\BOOKMARK [2][-]{subsection.24.3}{Winning Hyper Parameters}{section.24}% 121
-\BOOKMARK [2][-]{subsection.24.4}{Quantitative Results - Without FP Growth}{section.24}% 122
-\BOOKMARK [2][-]{subsection.24.5}{Insights}{section.24}% 123
-\BOOKMARK [2][-]{subsection.24.6}{Quantitative Results - With FP Growth}{section.24}% 124
-\BOOKMARK [2][-]{subsection.24.7}{Insights}{section.24}% 125
-\BOOKMARK [2][-]{subsection.24.8}{Insights - Compare \046 Contrast Meta Learners vs Shallow Models}{section.24}% 126
-\BOOKMARK [2][-]{subsection.24.9}{Insights on With FP vs. Without FP}{section.24}% 127
-\BOOKMARK [2][-]{subsection.24.10}{Insights about PPV}{section.24}% 128
-\BOOKMARK [2][-]{subsection.24.11}{Qualitative Results}{section.24}% 129
-\BOOKMARK [3][-]{subsubsection.24.11.1}{Mean Empirical Risk Curves}{subsection.24.11}% 130
-\BOOKMARK [3][-]{subsubsection.24.11.2}{Precision at Top K}{subsection.24.11}% 131
-\BOOKMARK [3][-]{subsubsection.24.11.3}{Recall at Top K}{subsection.24.11}% 132
-\BOOKMARK [3][-]{subsubsection.24.11.4}{ROC Curves}{subsection.24.11}% 133
+\BOOKMARK [2][-]{subsection.6.5}{Results - Probabilistic}{section.6}% 34
+\BOOKMARK [2][-]{subsection.6.6}{Results - Classification}{section.6}% 35
+\BOOKMARK [2][-]{subsection.6.7}{Results - One Class Classification}{section.6}% 36
+\BOOKMARK [1][-]{section.7}{Encoding Categorical Data}{}% 37
+\BOOKMARK [1][-]{section.8}{SHAP}{}% 38
+\BOOKMARK [2][-]{subsection.8.1}{Global SHAP Summary Values Results}{section.8}% 39
+\BOOKMARK [2][-]{subsection.8.2}{Global SHAP Interaction Values}{section.8}% 40
+\BOOKMARK [2][-]{subsection.8.3}{Multi-output Decision Plot for properly classified Rows}{section.8}% 41
+\BOOKMARK [2][-]{subsection.8.4}{Decision Plot for Miss-classified Row}{section.8}% 42
+\BOOKMARK [1][-]{section.9}{Chapter 6: Precision, Recall, and F-measure}{}% 43
+\BOOKMARK [1][-]{section.10}{Chapter 7:ROC Curves and Precision-Recall Curves}{}% 44
+\BOOKMARK [2][-]{subsection.10.1}{ROC Curve}{section.10}% 45
+\BOOKMARK [2][-]{subsection.10.2}{AUC}{section.10}% 46
+\BOOKMARK [1][-]{section.11}{Chapter 8: Probability Scoring Methods}{}% 47
+\BOOKMARK [2][-]{subsection.11.1}{Probability Metrics}{section.11}% 48
+\BOOKMARK [2][-]{subsection.11.2}{LogLoss Score}{section.11}% 49
+\BOOKMARK [1][-]{section.12}{Cross Validation for Imbalanced Datasets}{}% 50
+\BOOKMARK [1][-]{section.13}{Chapter 10}{}% 51
+\BOOKMARK [1][-]{section.14}{Chapter 12}{}% 52
+\BOOKMARK [2][-]{subsection.14.1}{Oversampling}{section.14}% 53
+\BOOKMARK [2][-]{subsection.14.2}{Undersampling Techniques}{section.14}% 54
+\BOOKMARK [1][-]{section.15}{Data Transforms \(Hiyam\)}{}% 55
+\BOOKMARK [2][-]{subsection.15.1}{Scaling Numeric Data \(chapter 17\)}{section.15}% 56
+\BOOKMARK [2][-]{subsection.15.2}{Scaling Data with Outliers \(chapter 18\)}{section.15}% 57
+\BOOKMARK [2][-]{subsection.15.3}{How to Encode Categorical Data \(chapter 19\)}{section.15}% 58
+\BOOKMARK [2][-]{subsection.15.4}{How to Make Distributions Look More Gaussian \(chapter 20\)}{section.15}% 59
+\BOOKMARK [1][-]{section.16}{Data Pre-Pocessing}{}% 60
+\BOOKMARK [2][-]{subsection.16.1}{Imputing Missing Values - Categorical Features}{section.16}% 61
+\BOOKMARK [2][-]{subsection.16.2}{Imputing Missing Values - Numerical/Ordinal Features}{section.16}% 62
+\BOOKMARK [2][-]{subsection.16.3}{Scaling - Numeric/Ordinal Features}{section.16}% 63
+\BOOKMARK [2][-]{subsection.16.4}{Scaling - Categorical Features}{section.16}% 64
+\BOOKMARK [1][-]{section.17}{Imputing Numerical Missing Data}{}% 65
+\BOOKMARK [2][-]{subsection.17.1}{Statistical Imputation}{section.17}% 66
+\BOOKMARK [2][-]{subsection.17.2}{K Nearest Neighbors}{section.17}% 67
+\BOOKMARK [2][-]{subsection.17.3}{Iterative Imputation}{section.17}% 68
+\BOOKMARK [1][-]{section.18}{Imputing Categorical Missing Data}{}% 69
+\BOOKMARK [2][-]{subsection.18.1}{Mean Imputation}{section.18}% 70
+\BOOKMARK [2][-]{subsection.18.2}{Imputation Using Most Frequent or \(Zero/Constant Values\)}{section.18}% 71
+\BOOKMARK [2][-]{subsection.18.3}{Create a New Category \(Random Category\) for NAN Values}{section.18}% 72
+\BOOKMARK [2][-]{subsection.18.4}{ Adding a Variable To Capture NAN}{section.18}% 73
+\BOOKMARK [2][-]{subsection.18.5}{Imputation Using Deep Learning \(Datawig\)}{section.18}% 74
+\BOOKMARK [2][-]{subsection.18.6}{Regression Imputation}{section.18}% 75
+\BOOKMARK [2][-]{subsection.18.7}{Imputation Using Interpolation}{section.18}% 76
+\BOOKMARK [2][-]{subsection.18.8}{Multivariate Normal Imputation \(MNVI\)}{section.18}% 77
+\BOOKMARK [2][-]{subsection.18.9}{Multiple Imputation by Chained Equations \(MICE\)}{section.18}% 78
+\BOOKMARK [2][-]{subsection.18.10}{Stochastic regression imputation:}{section.18}% 79
+\BOOKMARK [2][-]{subsection.18.11}{Extrapolation and Interpolation:}{section.18}% 80
+\BOOKMARK [2][-]{subsection.18.12}{Hot-Deck Imputation}{section.18}% 81
+\BOOKMARK [2][-]{subsection.18.13}{Some papers for handling missing categorical data \(did not read them at length \205 just the abstract\)}{section.18}% 82
+\BOOKMARK [1][-]{section.19}{Plan for the Paper}{}% 83
+\BOOKMARK [1][-]{section.20}{MAML - Sampling Training/Testing Tasks}{}% 84
+\BOOKMARK [1][-]{section.21}{MAML vs Shallow Models - Dementia Dataset}{}% 85
+\BOOKMARK [2][-]{subsection.21.1}{Cost Sensitive Learning in Neural Networks}{section.21}% 86
+\BOOKMARK [2][-]{subsection.21.2}{Hyper Parameters}{section.21}% 87
+\BOOKMARK [2][-]{subsection.21.3}{Winning Hyper Parameters}{section.21}% 88
+\BOOKMARK [2][-]{subsection.21.4}{Quantitative Results - Without FP Growth}{section.21}% 89
+\BOOKMARK [2][-]{subsection.21.5}{Insights}{section.21}% 90
+\BOOKMARK [2][-]{subsection.21.6}{Quantitative Results - With FP Growth}{section.21}% 91
+\BOOKMARK [2][-]{subsection.21.7}{Insights}{section.21}% 92
+\BOOKMARK [2][-]{subsection.21.8}{Insights on With FP vs. Without FP}{section.21}% 93
+\BOOKMARK [2][-]{subsection.21.9}{Insights about PPV}{section.21}% 94
+\BOOKMARK [2][-]{subsection.21.10}{Qualitative Results}{section.21}% 95
+\BOOKMARK [3][-]{subsubsection.21.10.1}{Mean Empirical Risk Curves}{subsection.21.10}% 96
+\BOOKMARK [3][-]{subsubsection.21.10.2}{Precision at Top K}{subsection.21.10}% 97
+\BOOKMARK [3][-]{subsubsection.21.10.3}{Recall at Top K}{subsection.21.10}% 98
+\BOOKMARK [3][-]{subsubsection.21.10.4}{ROC Curves}{subsection.21.10}% 99
+\BOOKMARK [1][-]{section.22}{ARML - Dementia}{}% 100
+\BOOKMARK [2][-]{subsection.22.1}{Quantitative Results - Dementia Top 10 Features}{section.22}% 101
+\BOOKMARK [2][-]{subsection.22.2}{Quantitative Results - Dementia Top 20 Features}{section.22}% 102
+\BOOKMARK [2][-]{subsection.22.3}{Winning Hyper Parameters}{section.22}% 103
+\BOOKMARK [2][-]{subsection.22.4}{Qualitative Results}{section.22}% 104
+\BOOKMARK [3][-]{subsubsection.22.4.1}{Mean Empirical Risk Curves}{subsection.22.4}% 105
+\BOOKMARK [3][-]{subsubsection.22.4.2}{Precision at Top K}{subsection.22.4}% 106
+\BOOKMARK [3][-]{subsubsection.22.4.3}{Recall at Top K}{subsection.22.4}% 107
+\BOOKMARK [3][-]{subsubsection.22.4.4}{ROC Curves}{subsection.22.4}% 108
+\BOOKMARK [2][-]{subsection.22.5}{Frequent Patterns and Probability of Mistakes}{section.22}% 109
+\BOOKMARK [1][-]{section.23}{All Results - Dementia - Quantitative}{}% 110
+\BOOKMARK [1][-]{section.24}{Reptile}{}% 111
+\BOOKMARK [2][-]{subsection.24.1}{Hyper Parameters}{section.24}% 112

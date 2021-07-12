@@ -1,313 +1,244 @@
 """ Code for loading data. """
-import os
-import random
-
-import matplotlib.pyplot as plt
+import random, os, pickle
 import numpy as np
-import tensorflow as tf
 from tensorflow.python.platform import flags
-import pickle
-from utils import get_images
-import ipdb
+import pandas as pd
+from imblearn.over_sampling import SMOTENC
+from sklearn.preprocessing import MinMaxScaler, StandardScaler, RobustScaler
+import category_encoders as ce
 
 FLAGS = flags.FLAGS
 
 
 class DataGenerator(object):
     def __init__(self, num_samples_per_class, batch_size, config={}):
-        self.batch_size = batch_size
+        self.meta_batchsz = batch_size
         self.num_samples_per_class = num_samples_per_class
-        self.num_classes = 1  # by default 1 (only relevant for classification problems)
+        self.num_classes = FLAGS.num_classes
 
-        if FLAGS.datasource == '2D':
-            self.dim_input = 2
-            self.dim_output = 1
-            self.input_range = config.get('input_range', [-5.0, 5.0])
+        # training and testing data
+        self.training_path = FLAGS.training_data_path
+        self.testing_path = FLAGS.testing_data_path
+        self.target_variable = FLAGS.target_variable
+        self.cols_drop = FLAGS.cols_drop
+        self.special_encoding = FLAGS.special_encoding
 
-        elif FLAGS.datasource == 'plainmulti':
-            self.num_classes = config.get('num_classes', FLAGS.num_classes)
-            self.img_size = config.get('img_size', (84, 84))
-            self.dim_input = np.prod(self.img_size) * 3
-            self.dim_output = self.num_classes
-            self.plainmulti = ['CUB_Bird', 'DTD_Texture', 'FGVC_Aircraft', 'FGVCx_Fungi']
-            metatrain_folders, metaval_folders = [], []
-            for eachdataset in self.plainmulti:
-                metatrain_folders.append(
-                    [os.path.join('{0}/plainmulti/{1}/train'.format(FLAGS.datadir, eachdataset), label) \
-                     for label in os.listdir('{0}/plainmulti/{1}/train'.format(FLAGS.datadir, eachdataset)) \
-                     if
-                     os.path.isdir(os.path.join('{0}/plainmulti/{1}/train'.format(FLAGS.datadir, eachdataset), label)) \
-                     ])
-                if FLAGS.test_set:
-                    metaval_folders.append(
-                        [os.path.join('{0}/plainmulti/{1}/test'.format(FLAGS.datadir, eachdataset), label) \
-                         for label in os.listdir('{0}/plainmulti/{1}/test'.format(FLAGS.datadir, eachdataset)) \
-                         if os.path.isdir(
-                            os.path.join('{0}/plainmulti/{1}/test'.format(FLAGS.datadir, eachdataset), label)) \
-                         ])
-                else:
-                    metaval_folders.append(
-                        [os.path.join('{0}/plainmulti/{1}/val'.format(FLAGS.datadir, eachdataset), label) \
-                         for label in os.listdir('{0}/plainmulti/{1}/val'.format(FLAGS.datadir, eachdataset)) \
-                         if os.path.isdir(
-                            os.path.join('{0}/plainmulti/{1}/val'.format(FLAGS.datadir, eachdataset), label)) \
-                         ])
-            self.metatrain_character_folders = metatrain_folders
-            self.metaval_character_folders = metaval_folders
-            self.rotations = config.get('rotations', [0])
-
-        elif FLAGS.datasource == 'artmulti':
-            self.num_classes = config.get('num_classes', FLAGS.num_classes)
-            self.img_size = config.get('img_size', (84, 84))
-            self.dim_input = np.prod(self.img_size) * 3
-            self.dim_output = self.num_classes
-            self.artmulti = ['CUB_Bird', 'DTD_Texture', 'FGVC_Aircraft', 'FGVCx_Fungi', 'CUB_Bird_blur',
-                                'DTD_Texture_blur', 'FGVC_Aircraft_blur', 'FGVCx_Fungi_blur', 'CUB_Bird_pencil',
-                                'DTD_Texture_pencil', 'FGVC_Aircraft_pencil', 'FGVCx_Fungi_pencil']
-            metatrain_folders, metaval_folders = [], []
-            for eachdataset in self.artmulti:
-                metatrain_folders.append(
-                    [os.path.join('{0}/artmulti/{1}/train'.format(FLAGS.datadir, eachdataset), label) \
-                     for label in os.listdir('{0}/artmulti/{1}/train'.format(FLAGS.datadir, eachdataset)) \
-                     if
-                     os.path.isdir(
-                         os.path.join('{0}/artmulti/{1}/train'.format(FLAGS.datadir, eachdataset), label)) \
-                     ])
-                if FLAGS.test_set:
-                    metaval_folders.append(
-                        [os.path.join('{0}/artmulti/{1}/test'.format(FLAGS.datadir, eachdataset), label) \
-                         for label in os.listdir('{0}/artmulti/{1}/test'.format(FLAGS.datadir, eachdataset)) \
-                         if os.path.isdir(
-                            os.path.join('{0}/artmulti/{1}/test'.format(FLAGS.datadir, eachdataset), label)) \
-                         ])
-                else:
-                    metaval_folders.append(
-                        [os.path.join('{0}/artmulti/{1}/val'.format(FLAGS.datadir, eachdataset), label) \
-                         for label in os.listdir('{0}/artmulti/{1}/val'.format(FLAGS.datadir, eachdataset)) \
-                         if os.path.isdir(
-                            os.path.join('{0}/artmulti/{1}/val'.format(FLAGS.datadir, eachdataset), label)) \
-                         ])
-            self.metatrain_character_folders = metatrain_folders
-            self.metaval_character_folders = metaval_folders
-            self.rotations = config.get('rotations', [0])
-
+        if self.cols_drop is not None:
+            if self.special_encoding:
+                self.df_train = pd.read_csv(self.training_path, encoding=self.special_encoding).drop(self.cols_drop, axis=1)
+                self.df_test = pd.read_csv(self.testing_path, encoding=self.special_encoding).drop(self.cols_drop, axis=1)
+            else:
+                self.df_train = pd.read_csv(self.training_path).drop(self.cols_drop, axis=1)
+                self.df_test = pd.read_csv(self.testing_path).drop(self.cols_drop, axis=1)
         else:
-            raise ValueError('Unrecognized data source')
+            if self.special_encoding is not None:
+                self.df_train = pd.read_csv(self.training_path, encoding=self.special_encoding)
+                self.df_test = pd.read_csv(self.testing_path, encoding=self.special_encoding)
+            else:
+                self.df_train = pd.read_csv(self.training_path)
+                self.df_test = pd.read_csv(self.testing_path)
 
-    def make_data_tensor_plainmulti(self, train=True):
+        self.X_train = np.array(self.df_train.loc[:, self.df_train.columns != self.target_variable])
+        self.y_train = np.array(self.df_train.loc[:, self.df_train.columns == self.target_variable])
+
+        self.X_test = np.array(self.df_test.loc[:, self.df_test.columns != self.target_variable])
+        self.y_test = np.array(self.df_test.loc[:, self.df_test.columns == self.target_variable])
+
+        # if we are taking top 10/20/etc features selected by feature selection
+        if FLAGS.top_features is not None:
+            df_fimp = pd.read_csv('input/feature_importance_modified.csv')
+            top_features = list(df_fimp['Feature'])[:FLAGS.top_features]
+            self.df_train = self.df_train[top_features + [FLAGS.target_variable]]
+            self.df_test = self.df_test[top_features + [FLAGS.target_variable]]
+
+        target_variable = FLAGS.target_variable
+        categorical_cols_path = FLAGS.categorical_columns
+        categorical_encoding = FLAGS.categorical_encoding
+
+        self.X_train = np.array(self.df_train.loc[:, self.df_train.columns != target_variable])
+        self.y_train = np.array(self.df_train.loc[:, self.df_train.columns == target_variable])
+
+        if FLAGS.sampling_strategy is not None:
+            codebook = pd.read_csv('input/erroneous_codebook_legal_outliers_filtered.csv')
+            categorical_indices = self.get_categorical(self.df_train.columns, codebook)
+            if self.isfloat(FLAGS.sampling_strategy):
+                sm = SMOTENC(random_state=42, categorical_features=categorical_indices, sampling_strategy=float(FLAGS.sampling_strategy))
+            else:
+                sm = SMOTENC(random_state=42, categorical_features=categorical_indices, sampling_strategy=FLAGS.sampling_strategy)
+            X_res, y_res = sm.fit_resample(self.X_train, self.y_train)
+            self.X_train, self.y_train = X_res, y_res
+            all_res = np.append(X_res, y_res.reshape(-1, 1), 1)
+            if FLAGS.top_features:
+                df_train_res = pd.DataFrame(all_res, columns=top_features + ['dem1066'])
+            else:
+                df_train_res = pd.DataFrame(all_res, columns=list(self.df_train.columns))
+            self.df_train = df_train_res
+
+        # if we want to encode categorical data
+        if categorical_encoding is not None:
+            if categorical_encoding not in ['catboost', 'glmm', 'target', 'mestimator', 'james', 'woe']:
+                raise ValueError('categorical encoding \'{}\' is not supported'.format(categorical_encoding))
+            with open(categorical_cols_path, 'rb') as f:
+                categorical_cols = pickle.load(f)
+            all_cols = list(self.df_test.columns)
+            df_train, df_test, encoder = self.encode_datasets(self.df_train, self.df_test, target_variable,
+                                                         cat_cols=[c for c in categorical_cols if c in all_cols],
+                                                         cat_enc=categorical_encoding)
+
+            # save the encoder, so that later we can do inverse_transform()
+            encoding_folder = 'encoders/'
+            self.mkdir(encoding_folder)
+            with open(os.path.join(encoding_folder, '{}_encoder.p'.format(categorical_encoding)), 'wb') as f:
+                pickle.dump(encoder, f)
+
+        if FLAGS.sampling_strategy is None:  # because if we re-sampled data, then we transformed training data
+            self.X_train = np.array(self.df_train.loc[:, self.df_train.columns != target_variable])
+            self.y_train = np.array(self.df_train.loc[:, self.df_train.columns == target_variable])
+
+        self.X_test = np.array(self.df_test.loc[:, self.df_test.columns != target_variable])
+        self.y_test = np.array(self.df_test.loc[:, self.df_test.columns == target_variable])
+
+        if FLAGS.scaling is not None:
+            if FLAGS.scaling == 'min-max':
+                scaler = MinMaxScaler()
+            elif FLAGS.scaling == 'z-score':
+                scaler = StandardScaler()
+            else:
+                scaler = RobustScaler()
+            self.X_train = scaler.fit_transform(self.X_train)
+            self.X_test = scaler.transform(self.X_test)
+
+        self.dim_input = self.X_train.shape[1]
+        self.dim_output = self.num_classes
+
+    def isfloat(self, value):
+        try:
+            float(value)
+            return True
+        except ValueError:
+            return False
+
+    def mkdir(self, folder):
+        if not os.path.exists(folder):
+            os.makedirs(folder)
+
+    def get_categorical(self, columns, codebook):
+        _, _, categorical = self.get_columns(codebook)
+        categorical_index = []
+        for col in categorical:
+            index = np.where(columns == col)
+            if len(index) > 0 and len(index[0]) > 0:
+                categorical_index.append(int(index[0][0]))
+        return categorical_index
+
+    def encode_datasets(self, df_train, df_test, target_variable, cat_cols, cat_enc):
+        # transform the train /test inputs and outputs into data frames which is needed for category_encoders module
+        Xtraindf = df_train.drop([target_variable], axis=1)
+        ytraindf = df_train[target_variable]
+        Xtestdf = df_test.drop([target_variable], axis=1)
+        ytestdf = df_test[target_variable]
+
+        # get the encoded training and testing datasets
+        Xtraindf_enc, Xtestdf_enc, encoder = self.encode_categorical_data_supervised(Xtraindf, ytraindf, Xtestdf,
+                                                                                cat_cols, cat_enc)
+        df_train = Xtraindf_enc
+        df_train[target_variable] = list(ytraindf)
+        df_test = Xtestdf_enc
+        df_test[target_variable] = list(ytestdf)
+
+        return df_train, df_test, encoder
+
+    def encode_categorical_data_supervised(self, X_train, y_train, X_test, cat_cols, enc_method):
+
+        if enc_method == 'catboost':
+            print('Encoding: {}'.format(enc_method))
+            encoder = ce.CatBoostEncoder(cols=cat_cols)
+        elif enc_method == 'glmm':
+            print('Encoding: {}'.format(enc_method))
+            encoder = ce.GLMMEncoder(cols=cat_cols)
+        elif enc_method == 'target':
+            print('Encoding: {}'.format(enc_method))
+            encoder = ce.TargetEncoder(cols=cat_cols)
+        elif enc_method == 'mestimator':
+            print('Encoding: {}'.format(enc_method))
+            encoder = ce.MEstimateEncoder(cols=cat_cols)
+        elif enc_method == 'james':
+            print('Encoding: {}'.format(enc_method))
+            encoder = ce.JamesSteinEncoder(cols=cat_cols)
+        else:  # woe
+            print('Encoding: {}'.format(enc_method))
+            encoder = ce.WOEEncoder(cols=cat_cols)
+
+        X_train_enc = encoder.fit_transform(X_train, y_train)
+        X_test_enc = encoder.transform(X_test)
+        print(X_train_enc.shape, X_test_enc.shape)
+        return X_train_enc, X_test_enc, encoder
+
+    def get_columns(self, erroneous_codebook):
+        get_numeric = lambda col_name, row: col_name if row['data_type'] == 'numeric' else -1
+        get_ordinal = lambda col_name, row: col_name if row['data_type'] == 'ordinal' else -1
+        get_categorical = lambda col_name, row: col_name if row['data_type'] == 'categorical' else -1
+
+        numeric, ordinal, categorical = [], [], []
+        for index, row in erroneous_codebook.iterrows():
+            col_name = row['COLUMN']
+            ordinal.append(get_ordinal(col_name, row))
+            categorical.append(get_categorical(col_name, row))
+            numeric.append(get_numeric(col_name, row))
+
+        # remove the -1s from lists
+        numeric = list(filter((-1).__ne__, numeric))
+        ordinal = list(filter((-1).__ne__, ordinal))
+        categorical = list(filter((-1).__ne__, categorical))
+
+        return numeric, ordinal, categorical
+
+    def sample_tasks(self, train):
+        all_idxs, all_labels = [], []
         if train:
-            folders = self.metatrain_character_folders
-            num_total_batches = 200000
+            x, y = self.X_train, self.y_train
         else:
-            folders = self.metaval_character_folders
-            num_total_batches = FLAGS.num_test_task
-        # make list of files
-        print('Generating filenames')
-        all_filenames = []
-        for image_itr in range(num_total_batches):
-            sel = np.random.randint(4)
-            if FLAGS.train == False and FLAGS.test_dataset != -1:
-                sel = FLAGS.test_dataset
-            sampled_character_folders = random.sample(folders[sel], self.num_classes)
-            random.shuffle(sampled_character_folders)
-            labels_and_images = get_images(sampled_character_folders, range(self.num_classes),
-                                           nb_samples=self.num_samples_per_class, shuffle=False)
-            # make sure the above isn't randomized order
-            labels = [li[0] for li in labels_and_images]
-            filenames = [li[1] for li in labels_and_images]
-            all_filenames.extend(filenames)
+            x, y = self.X_test, self.y_test
 
-        # make queue for tensorflow to read from
-        filename_queue = tf.train.string_input_producer(tf.convert_to_tensor(all_filenames), shuffle=False)
-        print('Generating image processing ops')
-        image_reader = tf.WholeFileReader()
-        _, image_file = image_reader.read(filename_queue)
-        if FLAGS.datasource in ['plainmulti', 'artmulti']:
-            image = tf.image.decode_jpeg(image_file, channels=3)
-            image.set_shape((self.img_size[0], self.img_size[1], 3))
-            image = tf.reshape(image, [self.dim_input])
-            image = tf.cast(image, tf.float32) / 255.0
-        else:
-            image = tf.image.decode_png(image_file)
-            image.set_shape((self.img_size[0], self.img_size[1], 1))
-            image = tf.reshape(image, [self.dim_input])
-            image = tf.cast(image, tf.float32) / 255.0
-            image = 1.0 - image  # invert
-        num_preprocess_threads = 1
-        min_queue_examples = 256
-        examples_per_batch = self.num_classes * self.num_samples_per_class
-        batch_image_size = self.batch_size * examples_per_batch
-        print('Batching images')
-        images = tf.train.batch(
-            [image],
-            batch_size=batch_image_size,
-            num_threads=num_preprocess_threads,
-            capacity=min_queue_examples + 3 * batch_image_size,
-        )
-        all_image_batches, all_label_batches = [], []
-        print('Manipulating image data to be right shape')
-        for i in range(self.batch_size):
-            image_batch = images[i * examples_per_batch:(i + 1) * examples_per_batch]
-            label_batch = tf.convert_to_tensor(labels)
-            new_list, new_label_list = [], []
-            for k in range(self.num_samples_per_class):
-                class_idxs = tf.range(0, self.num_classes)
-                class_idxs = tf.random_shuffle(class_idxs)
-                true_idxs = class_idxs * self.num_samples_per_class + k
-                new_list.append(tf.gather(image_batch, true_idxs))
-                new_label_list.append(tf.gather(label_batch, true_idxs))
-            new_list = tf.concat(new_list, 0)  # has shape [self.num_classes*self.num_samples_per_class, self.dim_input]
-            new_label_list = tf.concat(new_label_list, 0)
-            all_image_batches.append(new_list)
-            all_label_batches.append(new_label_list)
-        all_image_batches = tf.stack(all_image_batches)
-        all_label_batches = tf.stack(all_label_batches)
-        all_label_batches = tf.one_hot(all_label_batches, self.num_classes)
+        for i in range(self.num_classes):
+            idxs = [idx for idx in range(len(x)) if y[idx] == i]
+            idxs_chosen = random.sample(idxs, self.num_samples_per_class)
+            labels_curr = [i] * len(idxs_chosen)
+            labels_curr = np.array([labels_curr, -(np.array(labels_curr) - 1)]).T
+
+            all_idxs.extend(idxs_chosen)
+            all_labels.extend(labels_curr)
+
+        zipped = list(zip(all_idxs, all_labels))
+        random.shuffle(zipped)
+        all_idxs, all_labels = zip(*zipped)
+
+        return x[all_idxs, :], np.array(all_labels)
+
+    def make_data_tensor(self, train=True):
+
+        num_total_batches = 200000 if train else 600
+
+        all_data, all_labels = [], []
+        for ifold in range(num_total_batches):
+
+            data, labels = self.sample_tasks(train=train)
+
+            all_data.extend(data)
+            all_labels.extend(labels)
+
+        examples_per_batch = self.num_classes * self.num_samples_per_class  # 2*16 = 32
+
+        all_data_batches, all_label_batches = [], []
+        for i in range(self.meta_batchsz):  # 4 .. i.e. 4 * examples_per-batch = 4 * 32 = 128
+            # current task, 128 data points
+            data_batch = all_data[i * examples_per_batch:(i + 1) * examples_per_batch]
+            labels_batch = all_labels[i * examples_per_batch: (i + 1) * examples_per_batch]
+
+            all_data_batches.append(np.array(data_batch))
+            all_label_batches.append(np.array(labels_batch))
+
+        all_image_batches = np.array(all_data_batches) # (4, 32, nb_cols)
+        all_label_batches = np.array(all_label_batches) # (4, 32, 1)
+
         return all_image_batches, all_label_batches
-
-    def make_data_tensor_artmulti(self, train=True):
-        if train:
-            folders = self.metatrain_character_folders
-            num_total_batches = 200000
-        else:
-            folders = self.metaval_character_folders
-            num_total_batches = FLAGS.num_test_task
-
-        # make list of files
-        print('Generating filenames')
-        all_filenames = []
-        for _ in range(num_total_batches):
-            sel = np.random.randint(12)
-            if FLAGS.train == False and FLAGS.test_dataset != -1:
-                sel = FLAGS.test_dataset
-            sampled_character_folders = random.sample(folders[sel], self.num_classes)
-            random.shuffle(sampled_character_folders)
-            labels_and_images = get_images(sampled_character_folders, range(self.num_classes),
-                                           nb_samples=self.num_samples_per_class, shuffle=False)
-            # make sure the above isn't randomized order
-            labels = [li[0] for li in labels_and_images]
-            filenames = [li[1] for li in labels_and_images]
-            all_filenames.extend(filenames)
-
-        # make queue for tensorflow to read from
-        filename_queue = tf.train.string_input_producer(tf.convert_to_tensor(all_filenames), shuffle=False)
-        print('Generating image processing ops')
-        image_reader = tf.WholeFileReader()
-        _, image_file = image_reader.read(filename_queue)
-        # image_file=datadict[filename_queue]
-        if FLAGS.datasource in ['plainmulti', 'artmulti']:
-            image = tf.image.decode_jpeg(image_file, channels=3)
-            # image = tf.convert_to_tensor(image_file)
-            image.set_shape((self.img_size[0], self.img_size[1], 3))
-            image = tf.reshape(image, [self.dim_input])
-            image = tf.cast(image, tf.float32) / 255.0
-        else:
-            image = tf.image.decode_png(image_file)
-            image.set_shape((self.img_size[0], self.img_size[1], 1))
-            image = tf.reshape(image, [self.dim_input])
-            image = tf.cast(image, tf.float32) / 255.0
-            image = 1.0 - image  # invert
-        num_preprocess_threads = 1
-        min_queue_examples = 256
-        examples_per_batch = self.num_classes * self.num_samples_per_class
-        batch_image_size = self.batch_size * examples_per_batch
-        print('Batching images')
-        images = tf.train.batch(
-            [image],
-            batch_size=batch_image_size,
-            num_threads=num_preprocess_threads,
-            capacity=min_queue_examples + 3 * batch_image_size,
-        )
-        all_image_batches, all_label_batches = [], []
-        print('Manipulating image data to be right shape')
-        for i in range(self.batch_size):
-            image_batch = images[i * examples_per_batch:(i + 1) * examples_per_batch]
-            label_batch = tf.convert_to_tensor(labels)
-            new_list, new_label_list = [], []
-            for k in range(self.num_samples_per_class):
-                class_idxs = tf.range(0, self.num_classes)
-                class_idxs = tf.random_shuffle(class_idxs)
-                true_idxs = class_idxs * self.num_samples_per_class + k
-                new_list.append(tf.gather(image_batch, true_idxs))
-                new_label_list.append(tf.gather(label_batch, true_idxs))
-            new_list = tf.concat(new_list, 0)  # has shape [self.num_classes*self.num_samples_per_class, self.dim_input]
-            new_label_list = tf.concat(new_label_list, 0)
-            all_image_batches.append(new_list)
-            all_label_batches.append(new_label_list)
-        all_image_batches = tf.stack(all_image_batches)
-        all_label_batches = tf.stack(all_label_batches)
-        all_label_batches = tf.one_hot(all_label_batches, self.num_classes)
-        return all_image_batches, all_label_batches
-
-    def generate_2D_batch(self, train=False):
-        dim_input = self.dim_input
-        dim_output = self.dim_output
-        batch_size = self.batch_size
-        num_samples_per_class = self.num_samples_per_class
-
-        # sin
-        amp = np.random.uniform(0.1, 5.0, size=self.batch_size)
-        phase = np.random.uniform(0., 2 * np.pi, size=batch_size)
-        freq = np.random.uniform(0.8, 1.2, size=batch_size)
-
-        # linear
-        A = np.random.uniform(-3.0, 3.0, size=batch_size)
-        b = np.random.uniform(-3.0, 3.0, size=batch_size)
-
-        # quadratic
-        A_q = np.random.uniform(-0.2, 0.2, size=batch_size)
-        b_q = np.random.uniform(-2.0, 2.0, size=batch_size)
-        c_q = np.random.uniform(-3.0, 3.0, size=batch_size)
-
-        # cubic
-        A_c = np.random.uniform(-0.1, 0.1, size=batch_size)
-        b_c = np.random.uniform(-0.2, 0.2, size=batch_size)
-        c_c = np.random.uniform(-2.0, 2.0, size=batch_size)
-        d_c = np.random.uniform(-3.0, 3.0, size=batch_size)
-
-        # 3d curve
-        A_3cur = np.random.uniform(-1.0, 1.0, size=batch_size)
-        B_3cur = np.random.uniform(-1.0, 1.0, size=batch_size)
-
-        # ripple
-        A_r = np.random.uniform(-0.2, 0.2, size=batch_size)
-        B_r = np.random.uniform(-3.0, 3.0, size=batch_size)
-
-        sel_set = np.zeros(batch_size)
-
-        init_inputs = np.zeros([batch_size, num_samples_per_class, dim_input])
-        outputs = np.zeros([batch_size, num_samples_per_class, dim_output])
-
-        for func in range(batch_size):
-            init_inputs[func] = np.random.uniform(self.input_range[0], self.input_range[1], size=(num_samples_per_class, dim_input))
-            sel = np.random.randint(FLAGS.sync_group_num)
-            if FLAGS.train == False and FLAGS.test_dataset != -1:
-                sel = FLAGS.test_dataset
-            if sel == 0:
-                init_inputs[func, :, 1:2] = 1
-                outputs[func] = amp[func] * np.sin(freq[func] * init_inputs[func, :, 0:1] + phase[func])
-            elif sel == 1:
-                init_inputs[func, :, 1:2] = 1
-                outputs[func] = A[func] * init_inputs[func, :, 0:1] + b[func]
-            elif sel == 2:
-                # outputs[func] = A_q[func] * np.square(init_inputs[func] - c_q[func]) + b_q[func]
-                init_inputs[func, :, 1:2] = 1
-                outputs[func] = A_q[func] * np.square(init_inputs[func, :, 0:1]) + b_q[func] * init_inputs[func, :, 0:1] + \
-                                c_q[func]
-            elif sel == 3:
-                init_inputs[func, :, 1:2] = 1
-                outputs[func] = A_c[func] * np.power(init_inputs[func, :, 0:1],
-                                                     np.tile([3], init_inputs[func, :, 0:1].shape)) + b_c[
-                                    func] * np.square(init_inputs[func, :, 0:1]) + c_c[func] * init_inputs[func, :, 0:1] + \
-                                d_c[func]
-            elif sel == 4:
-                outputs[func] = A_3cur[func] * np.square(init_inputs[func, :, 0:1]) + B_3cur[func] * np.square(
-                    init_inputs[func, :, 1:2])
-            elif sel == 5:
-                outputs[func] = np.sin(
-                    -A_r[func] * (np.square(init_inputs[func, :, 0:1]) + np.square(init_inputs[func, :, 1:2]))) + B_r[func]
-            outputs[func] += np.random.normal(0, 0.3, size=(num_samples_per_class, dim_output))
-            sel_set[func] = sel
-        funcs_params = {'amp': amp, 'phase': phase, 'freq': freq, 'A': A, 'b': b, 'A_q': A_q, 'c_q': c_q, 'b_q': b_q,
-                        'A_c': A_c, 'b_c': b_c, 'c_c': c_c, 'd_c': d_c, 'A_3cur': A_3cur, 'B_3cur': B_3cur, 'A_r':A_r, 'B_r':B_r}
-        return init_inputs, outputs, funcs_params, sel_set
