@@ -63,15 +63,17 @@ class DataGenerator(object):
                 self.df_train = pd.read_csv(self.training_path)
                 self.df_test = pd.read_csv(self.testing_path)
 
+        self.codebook = pd.read_csv('input/erroneous_codebook_legal_outliers_filtered.csv')
+        self.feature_importances = pd.read_csv('input/feature_importance_modified.csv')
+
+        if FLAGS.top_features is not None:
+            print('sampling - turned on')
+            print('sampling strategy: {}'.format(FLAGS.sampling_strategy))
+            top_features = list(self.feature_importances['Feature'])[:FLAGS.top_features]
+            self.df_train = self.df_train[top_features + [self.target_variable]]
+            self.df_test = self.df_test[top_features + [self.target_variable]]
+
         if FLAGS.sampling_strategy is not None:
-            self.codebook = pd.read_csv('input/erroneous_codebook_legal_outliers_filtered.csv')
-            self.feature_importances = pd.read_csv('input/feature_importance_modified.csv')
-            if FLAGS.top_features is not None:
-                print('sampling - turned on')
-                print('sampling strategy: {}'.format(FLAGS.sampling_strategy))
-                top_features = list(self.feature_importances['Feature'])[:FLAGS.top_features]
-                self.df_train = self.df_train[top_features+[self.target_variable]]
-                self.df_test = self.df_test[top_features+[self.target_variable]]
 
             categorical_indices = self.get_categorical(self.df_train.columns)
             X_train = np.array(self.df_train.loc[:, self.df_train.columns != self.target_variable])

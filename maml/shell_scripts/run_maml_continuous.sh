@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
-#SBATCH --job-name=dm10
+#SBATCH --job-name=mamlcont
 #SBATCH --account=hkg02
 #SBATCH --partition=normal
 #SBATCH --nodes=1
@@ -9,7 +9,7 @@
 #SBATCH --mail-type=ALL
 #SBATCH --mail-user=hkg02@mail.aub.edu
 #SBATCH --nodelist=onode07
-#SBATCH --array=1-361%5
+#SBATCH --array=1-900%10
 
 module load python/3
 module load python/tensorflow-1.14.0

@@ -89,7 +89,7 @@ flags.DEFINE_string('weights_vector', "10, 1", 'if class_weights is used, then t
                                                 'of each classs')
 flags.DEFINE_list('cost_matrix', [[1, 2.15], [2.15, 1]], 'cost matrix used, only applicable when using'
                                                        'miss-classification cost sensitive method')
-flags.DEFINE_string('sampling_strategy', 'all', 'how to resample data, only done when cost sensitive is True')
+flags.DEFINE_string('sampling_strategy', None, 'how to resample data, only done when cost sensitive is True')
 flags.DEFINE_integer('top_features', 10, 'top features selected by feature selection')
 
 ## Logging, saving, and testing options
