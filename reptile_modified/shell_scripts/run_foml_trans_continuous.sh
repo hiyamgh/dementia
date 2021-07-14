@@ -8,6 +8,7 @@
 #SBATCH --mem=16000
 #SBATCH --mail-type=ALL
 #SBATCH --mail-user=hkg02@mail.aub.edu
+#SBATCH --nodelist=onode09
 #SBATCH --array=1-900%10
 
 module load python/3
@@ -48,22 +49,24 @@ for shts in ${shots[@]}; do
                             for mi in ${meta_iters[@]}; do
                                 for eb in ${eval_batch[@]}; do
                                     for ei in ${eval_iters[@]}; do
-                                        for dh in ${dim_hidden[*]}; do
-                                            for af in ${activation_fns[*]}; do
-                                                for w in ${weights[*]}; do
-                                                    for e in ${encoding[*]}; do
+                                        for dh in ${dim_hidden[@]}; do
+                                            for af in ${activation_fns[@]}; do
+                                                for w in ${weights[@]}; do
+                                                    for e in ${encoding[@]}; do
                                                         for tf in ${top_features[@]}; do
                                                                if [ $USCOUNTER -eq $((SLURM_ARRAY_TASK_ID+ADDWHAT)) ]; then
                                                                    found_script=true
                                                                    echo "USCOUNTER: " $USCOUNTER
                                                                    echo "SLURM_ARRAY_TASK_ID: " $SLURM_ARRAY_TASK_ID
+                                                                   echo "ADDWHAT" $ADDWHAT
                                                                    echo "main_foml_trans.py --shots ${shts} --inner_batch ${ib} --inner_iters ${ii} --learning_rate ${lr} --meta_step ${ms} --meta_step_final ${msf} --meta_batch ${mb} --meta_iters ${mi} --eval_batch ${eb} --eval_iters ${ei} --model_num $USCOUNTER --dim_hidden ${dh} --activation_fn ${af} --weights_vector ${w} --categorical_encoding ${e} --top_features ${tf} --logdir FOML_trans_trained_models/${tf}/"
                                                                    python main_foml_trans.py --shots ${shts} --inner_batch ${ib} --inner_iters ${ii} --learning_rate ${lr} --meta_step ${ms} --meta_step_final ${msf} --meta_batch ${mb} --meta_iters ${mi} --eval_batch ${eb} --eval_iters ${ei} --model_num $USCOUNTER --dim_hidden ${dh} --activation_fn ${af} --weights_vector ${w} --categorical_encoding ${e} --top_features ${tf} --logdir "FOML_trans_trained_models/${tf}/"
                                                                fi
-                                                               USCOUNTER=$(expr $USCOUNTER + 1)
+                                                            USCOUNTER=$(expr $USCOUNTER + 1)
                                                         done
                                                         if [ "$found_script" = true ] ; then
-                                                                    break 15
+                                                             echo "found script..."
+                                                             break 15
                                                         fi
                                                     done
                                                 done
@@ -80,7 +83,9 @@ for shts in ${shots[@]}; do
     done
 done
 
+echo "checking if the array task ID is equal to 900, if yes, then execute ..."
 if [ $SLURM_ARRAY_TASK_ID -eq 900 ] && [ $ADDWHAT -lt 93312 ]; then
+    echo "I am the job 900"
     sleep 2m
     ADDWHAT=$((ADDWHAT + 900))
     sbatch run_foml_trans_continuous.sh $ADDWHAT
