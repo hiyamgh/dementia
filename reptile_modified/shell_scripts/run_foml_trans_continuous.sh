@@ -8,8 +8,7 @@
 #SBATCH --mem=16000
 #SBATCH --mail-type=ALL
 #SBATCH --mail-user=hkg02@mail.aub.edu
-#SBATCH --nodelist=onode09
-#SBATCH --array=1-900%10
+#SBATCH --array=1-900%15
 
 module load python/3
 module load python/tensorflow-1.14.0
@@ -34,7 +33,8 @@ encoding=("catboost" "glmm" "target" "mestimator" "james" "woe") # 6
 IFS=""
 top_features=(10 20) # 2
 USCOUNTER=1
-ADDWHAT=$1
+ADDWHAT=$1 # initially 0
+NUMCALLS=$2 # initially 1
 found_script=false
 
 # 83,980,800 / 900 = 93,312
@@ -84,9 +84,10 @@ for shts in ${shots[@]}; do
 done
 
 echo "checking if the array task ID is equal to 900, if yes, then execute ..."
-if [ $SLURM_ARRAY_TASK_ID -eq 900 ] && [ $ADDWHAT -lt 93312 ]; then
+if [ $SLURM_ARRAY_TASK_ID -eq 900 ] && [ $NUMCALLS -lt 93312 ]; then
     echo "I am the job 900"
     sleep 2m
     ADDWHAT=$((ADDWHAT + 900))
-    sbatch run_foml_trans_continuous.sh $ADDWHAT
+    NUMCALLS=$((NUMCALLS + 1))
+    sbatch run_foml_trans_continuous.sh $ADDWHAT $NUMCALLS
 fi
