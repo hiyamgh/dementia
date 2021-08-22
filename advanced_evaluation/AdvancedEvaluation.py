@@ -4,6 +4,7 @@ import matplotlib
 matplotlib.use('Agg')
 matplotlib.rcParams['font.sans-serif'] = "Arial"
 matplotlib.rcParams['font.family'] = "sans-serif"
+matplotlib.rcParams['figure.dpi'] = 300
 import matplotlib.pyplot as plt
 from sklearn.metrics import *
 import warnings
@@ -137,10 +138,12 @@ class AdvancedEvaluator:
 if __name__ == '__main__':
 
     models_results = {
-        'MAML-top20': 'maml_dementia_nodataleakage/dementia_without_fp_top20/model_18/risk_df.csv',
-        'ARML-top20': 'arml/dm_top20/model_39/risk_df.csv',
-        'Reptile-top20': 'Reptile/reptile_trained_models/20/model_2850/risk_df.csv',
-        'Reptile Trans - top20': 'Reptile/reptile_trans_trained_models/20/model_1990/risk_df.csv',
+        'MAML': 'risk_dataframes/MAML - top20.csv',
+        # 'ARML-top20': 'arml/dm_top20/model_39/risk_df.csv',
+        'Reptile': 'risk_dataframes/Reptile - top20.csv',
+        'Reptile Trans': 'risk_dataframes/Reptile Trans - top20.csv',
+        'FOMAML': 'risk_dataframes/FOMAML - top20.csv',
+        'Balanced Bagging Classifier': 'risk_dataframes/risk_df_Balanced Bagging Classifier.csv'
     }
     ae = AdvancedEvaluator(plots_output_folder='advanced_ml_plots_top20/', models_results=models_results)
     ae.produce_empirical_risk_curves()
@@ -150,10 +153,12 @@ if __name__ == '__main__':
     print('~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~')
 
     models_results = {
-        'MAML-top10': 'maml_dementia_nodataleakage/dementia_without_fp_top10/model_27/risk_df.csv',
-        'ARML-top10': 'arml/dm_top10/model_896/risk_df.csv',
-        'Reptile-top10': 'Reptile/reptile_trained_models/10/model_2453/risk_df.csv',
-        'Reptile Trans - top10': 'Reptile/reptile_trans_trained_models/10/model_931/risk_df.csv',
+        'MAML': 'risk_dataframes/MAML - top10.csv',
+        # 'ARML-top20': 'arml/dm_top20/model_39/risk_df.csv',
+        'Reptile': 'risk_dataframes/Reptile - top10.csv',
+        'Reptile Trans': 'risk_dataframes/Reptile Trans - top10.csv',
+        'FOMAML': 'risk_dataframes/FOMAML Trans - top10.csv',
+        'Weighted Logistic Regression': 'risk_dataframes/risk_df_Weighted Logistic Regression.csv'
     }
     ae = AdvancedEvaluator(plots_output_folder='advanced_ml_plots_top10/', models_results=models_results)
     ae.produce_empirical_risk_curves()
