@@ -104,7 +104,8 @@ def evaluate_predictions_cost_sensitive(y_test, y_pred):
 
 
 def brier_skill_score(y, yhat):
-    probabilities = [0.01 for _ in range(len(y))]
+    # probabilities = [0.01 for _ in range(len(y))]
+    probabilities = [0.20 for _ in range(len(y))]
     brier_ref = brier_score_loss(y, probabilities)
     bs = brier_score_loss(y, yhat)
     return 1.0 - (bs / brier_ref)
