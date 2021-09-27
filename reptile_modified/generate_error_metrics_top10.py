@@ -82,7 +82,7 @@ if __name__ == '__main__':
     metrics = ['f2']
     out_folder = 'results_errors/'
 
-    models1 = get_results_dementia(trained_models_dir='FOMAML_trans_trained_models/10/',
-                         outfile_name='FOMAML_trans_10',
+    models1 = get_results_dementia(trained_models_dir='FOML_trans_trained_models/10/',
+                         outfile_name='FOML_trans_10',
                          output_folder=out_folder,
                          sort_by=metrics)
