@@ -79,33 +79,10 @@ def get_results_dementia(trained_models_dir, outfile_name, output_folder, sort_b
 
 if __name__ == '__main__':
 
-    metrics = ['f2', 'bss', 'gmean', 'pr_auc', 'sensitivity', 'specificity']
+    metrics = ['f2']
     out_folder = 'results_errors/'
 
-    models1 = get_results_dementia(trained_models_dir='reptile_trained_models/10/',
-                         outfile_name='reptile_10',
+    models1 = get_results_dementia(trained_models_dir='FOMAML_trans_trained_models/10/',
+                         outfile_name='FOMAML_trans_10',
                          output_folder=out_folder,
                          sort_by=metrics)
-    models2 = get_results_dementia(trained_models_dir='reptile_trained_models/20/',
-                         outfile_name='reptile_20',
-                         output_folder=out_folder,
-                         sort_by=metrics)
-
-    print("\n====================================================================================\n")
-    models3 = get_results_dementia(trained_models_dir='reptile_trans_trained_models/10/',
-                         outfile_name='reptile_trans_10',
-                         output_folder=out_folder,
-                         sort_by=metrics)
-    models4 = get_results_dementia(trained_models_dir='reptile_trans_trained_models/20/',
-                         outfile_name='reptile_trans_20',
-                         output_folder=out_folder,
-                         sort_by=metrics)
-    print("\n====================================================================================\n")
-    models5 = get_results_dementia(trained_models_dir='FOML_trans_trained_models/10/',
-                                   outfile_name='foml_trans_10',
-                                   output_folder=out_folder,
-                                   sort_by=metrics)
-    models6 = get_results_dementia(trained_models_dir='FOML_trans_trained_models/20/',
-                                   outfile_name='foml_trans_20',
-                                   output_folder=out_folder,
-                                   sort_by=metrics)
