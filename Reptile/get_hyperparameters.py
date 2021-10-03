@@ -56,5 +56,5 @@ if __name__ == '__main__':
 
                                                                     count += 1
                                                                 else:
-                                                                    with open('idx2hyps_{}.pkl'.format(count), 'wb') as f:
+                                                                    with open('idx2hyps.pkl'.format(count), 'wb') as f:
                                                                         pickle.dump(idx2hyps, f, pickle.HIGHEST_PROTOCOL)
