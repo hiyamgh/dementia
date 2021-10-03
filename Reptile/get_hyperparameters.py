@@ -35,28 +35,26 @@ if __name__ == '__main__':
                                                     for w in weights:
                                                         for e in encoding:
                                                             for tf in top_features:
-                                                                idx2hyps[count] = {
-                                                                    'shots': shts,
-                                                                    'inner_batch': ib,
-                                                                    'inner_iters': ii,
-                                                                    'lr': lr,
-                                                                    'meta_step': ms,
-                                                                    'meta_step_final': msf,
-                                                                    'meta_batch': mb,
-                                                                    'meta_iters': mi,
-                                                                    'eval_batch': eb,
-                                                                    'eval_iters': ei,
-                                                                    'dim_hidden': dh,
-                                                                    'activation_fns': af,
-                                                                    'weights': w,
-                                                                    'encoding': e,
-                                                                    'top_features': tf
-                                                                }
+                                                                if count <= 40000:
+                                                                    idx2hyps[count] = {
+                                                                        'shots': shts,
+                                                                        'inner_batch': ib,
+                                                                        'inner_iters': ii,
+                                                                        'lr': lr,
+                                                                        'meta_step': ms,
+                                                                        'meta_step_final': msf,
+                                                                        'meta_batch': mb,
+                                                                        'meta_iters': mi,
+                                                                        'eval_batch': eb,
+                                                                        'eval_iters': ei,
+                                                                        'dim_hidden': dh,
+                                                                        'activation_fns': af,
+                                                                        'weights': w,
+                                                                        'encoding': e,
+                                                                        'top_features': tf
+                                                                    }
 
-                                                                count += 1
-
-                                                                if count % 1000 == 0:
-                                                                    print(count)
+                                                                    count += 1
+                                                                else:
                                                                     with open('idx2hyps_{}.pkl'.format(count), 'wb') as f:
                                                                         pickle.dump(idx2hyps, f, pickle.HIGHEST_PROTOCOL)
-                                                                    idx2hyps = {}
