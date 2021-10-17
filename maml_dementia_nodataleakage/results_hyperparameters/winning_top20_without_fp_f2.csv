@@ -1,0 +1,407 @@
+model,miter,mbs,mlr,ulr,dh,afn,nu,ifp,weights,sampling_strategy,encoding
+model_144,1000,16,0.1,0.1,"128, 64",relu,4,0,"10, 1",0.75,woe
+model_324,1000,16,0.1,0.1,128,relu,4,0,"10, 1",0.75,woe
+model_48,1000,16,0.1,0.1,"128, 64",relu,4,0,"1, 10",not minority,woe
+model_323,1000,16,0.1,0.1,128,relu,4,0,"10, 1",0.75,james
+model_247,1000,16,0.1,0.1,128,relu,4,0,"1, 10",0.75,catboost
+model_119,1000,16,0.1,0.1,"128, 64",relu,4,0,"10, 1",not minority,james
+model_302,1000,16,0.1,0.1,128,relu,4,0,"10, 1",all,glmm
+model_120,1000,16,0.1,0.1,"128, 64",relu,4,0,"10, 1",not minority,woe
+model_293,1000,16,0.1,0.1,128,relu,4,0,"10, 1",minority,james
+model_46,1000,16,0.1,0.1,"128, 64",relu,4,0,"1, 10",not minority,mestimator
+model_231,1000,16,0.1,0.1,128,relu,4,0,"1, 10",all,target
+model_70,1000,16,0.1,0.1,"128, 64",relu,4,0,"1, 10",0.75,mestimator
+model_399,1000,16,0.1,0.1,"128, 64, 64",relu,4,0,"1, 10",minority,target
+model_243,1000,16,0.1,0.1,128,relu,4,0,"1, 10",1,target
+model_122,1000,16,0.1,0.1,"128, 64",relu,4,0,"10, 1",all,glmm
+model_285,1000,16,0.1,0.1,128,relu,4,0,"1, 100",0.75,target
+model_239,1000,16,0.1,0.1,128,relu,4,0,"1, 10",0.5,james
+model_116,1000,16,0.1,0.1,"128, 64",relu,4,0,"10, 1",not minority,glmm
+model_225,1000,16,0.1,0.1,128,relu,4,0,"1, 10",not minority,target
+model_233,1000,16,0.1,0.1,128,relu,4,0,"1, 10",all,james
+model_299,1000,16,0.1,0.1,128,relu,4,0,"10, 1",not minority,james
+model_249,1000,16,0.1,0.1,128,relu,4,0,"1, 10",0.75,target
+model_224,1000,16,0.1,0.1,128,relu,4,0,"1, 10",not minority,glmm
+model_118,1000,16,0.1,0.1,"128, 64",relu,4,0,"10, 1",not minority,mestimator
+model_295,1000,16,0.1,0.1,128,relu,4,0,"10, 1",not minority,catboost
+model_62,1000,16,0.1,0.1,"128, 64",relu,4,0,"1, 10",1,glmm
+model_296,1000,16,0.1,0.1,128,relu,4,0,"10, 1",not minority,glmm
+model_127,1000,16,0.1,0.1,"128, 64",relu,4,0,"10, 1",0.5,catboost
+model_68,1000,16,0.1,0.1,"128, 64",relu,4,0,"1, 10",0.75,glmm
+model_327,1000,16,0.1,0.1,128,relu,4,0,"100, 1",minority,target
+model_319,1000,16,0.1,0.1,128,relu,4,0,"10, 1",0.75,catboost
+model_276,1000,16,0.1,0.1,128,relu,4,0,"1, 100",0.5,woe
+model_252,1000,16,0.1,0.1,128,relu,4,0,"1, 10",0.75,woe
+model_91,1000,16,0.1,0.1,"128, 64",relu,4,0,"1, 100",0.5,catboost
+model_40,1000,16,0.1,0.1,"128, 64",relu,4,0,"1, 10",minority,mestimator
+model_303,1000,16,0.1,0.1,128,relu,4,0,"10, 1",all,target
+model_318,1000,16,0.1,0.1,128,relu,4,0,"10, 1",1,woe
+model_228,1000,16,0.1,0.1,128,relu,4,0,"1, 10",not minority,woe
+model_248,1000,16,0.1,0.1,128,relu,4,0,"1, 10",0.75,glmm
+model_313,1000,16,0.1,0.1,128,relu,4,0,"10, 1",1,catboost
+model_223,1000,16,0.1,0.1,128,relu,4,0,"1, 10",not minority,catboost
+model_242,1000,16,0.1,0.1,128,relu,4,0,"1, 10",1,glmm
+model_109,1000,16,0.1,0.1,"128, 64",relu,4,0,"10, 1",minority,catboost
+model_141,1000,16,0.1,0.1,"128, 64",relu,4,0,"10, 1",0.75,target
+model_220,1000,16,0.1,0.1,128,relu,4,0,"1, 10",minority,mestimator
+model_398,1000,16,0.1,0.1,"128, 64, 64",relu,4,0,"1, 10",minority,glmm
+model_41,1000,16,0.1,0.1,"128, 64",relu,4,0,"1, 10",minority,james
+model_234,1000,16,0.1,0.1,128,relu,4,0,"1, 10",all,woe
+model_218,1000,16,0.1,0.1,128,relu,4,0,"1, 10",minority,glmm
+model_124,1000,16,0.1,0.1,"128, 64",relu,4,0,"10, 1",all,mestimator
+model_38,1000,16,0.1,0.1,"128, 64",relu,4,0,"1, 10",minority,glmm
+model_51,1000,16,0.1,0.1,"128, 64",relu,4,0,"1, 10",all,target
+model_372,1000,16,0.1,0.1,"128, 64, 64",relu,4,0,"1, 1",not minority,woe
+model_322,1000,16,0.1,0.1,128,relu,4,0,"10, 1",0.75,mestimator
+model_291,1000,16,0.1,0.1,128,relu,4,0,"10, 1",minority,target
+model_227,1000,16,0.1,0.1,128,relu,4,0,"1, 10",not minority,james
+model_43,1000,16,0.1,0.1,"128, 64",relu,4,0,"1, 10",not minority,catboost
+model_259,1000,16,0.1,0.1,128,relu,4,0,"1, 100",not minority,catboost
+model_354,1000,16,0.1,0.1,128,relu,4,0,"100, 1",1,woe
+model_42,1000,16,0.1,0.1,"128, 64",relu,4,0,"1, 10",minority,woe
+model_57,1000,16,0.1,0.1,"128, 64",relu,4,0,"1, 10",0.5,target
+model_115,1000,16,0.1,0.1,"128, 64",relu,4,0,"10, 1",not minority,catboost
+model_402,1000,16,0.1,0.1,"128, 64, 64",relu,4,0,"1, 10",minority,woe
+model_283,1000,16,0.1,0.1,128,relu,4,0,"1, 100",0.75,catboost
+model_307,1000,16,0.1,0.1,128,relu,4,0,"10, 1",0.5,catboost
+model_188,1000,16,0.1,0.1,128,relu,4,0,"1, 1",not minority,glmm
+model_142,1000,16,0.1,0.1,"128, 64",relu,4,0,"10, 1",0.75,mestimator
+model_251,1000,16,0.1,0.1,128,relu,4,0,"1, 10",0.75,james
+model_65,1000,16,0.1,0.1,"128, 64",relu,4,0,"1, 10",1,james
+model_336,1000,16,0.1,0.1,128,relu,4,0,"100, 1",not minority,woe
+model_126,1000,16,0.1,0.1,"128, 64",relu,4,0,"10, 1",all,woe
+model_133,1000,16,0.1,0.1,"128, 64",relu,4,0,"10, 1",1,catboost
+model_140,1000,16,0.1,0.1,"128, 64",relu,4,0,"10, 1",0.75,glmm
+model_392,1000,16,0.1,0.1,"128, 64, 64",relu,4,0,"1, 1",0.75,glmm
+model_312,1000,16,0.1,0.1,128,relu,4,0,"10, 1",0.5,woe
+model_403,1000,16,0.1,0.1,"128, 64, 64",relu,4,0,"1, 10",not minority,catboost
+model_232,1000,16,0.1,0.1,128,relu,4,0,"1, 10",all,mestimator
+model_110,1000,16,0.1,0.1,"128, 64",relu,4,0,"10, 1",minority,glmm
+model_54,1000,16,0.1,0.1,"128, 64",relu,4,0,"1, 10",all,woe
+model_363,1000,16,0.1,0.1,"128, 64, 64",relu,4,0,"1, 1",minority,target
+model_137,1000,16,0.1,0.1,"128, 64",relu,4,0,"10, 1",1,james
+model_262,1000,16,0.1,0.1,128,relu,4,0,"1, 100",not minority,mestimator
+model_113,1000,16,0.1,0.1,"128, 64",relu,4,0,"10, 1",minority,james
+model_315,1000,16,0.1,0.1,128,relu,4,0,"10, 1",1,target
+model_394,1000,16,0.1,0.1,"128, 64, 64",relu,4,0,"1, 1",0.75,mestimator
+model_235,1000,16,0.1,0.1,128,relu,4,0,"1, 10",0.5,catboost
+model_290,1000,16,0.1,0.1,128,relu,4,0,"10, 1",minority,glmm
+model_186,1000,16,0.1,0.1,128,relu,4,0,"1, 1",minority,woe
+model_348,1000,16,0.1,0.1,128,relu,4,0,"100, 1",0.5,woe
+model_60,1000,16,0.1,0.1,"128, 64",relu,4,0,"1, 10",0.5,woe
+model_362,1000,16,0.1,0.1,"128, 64, 64",relu,4,0,"1, 1",minority,glmm
+model_8,1000,16,0.1,0.1,"128, 64",relu,4,0,"1, 1",not minority,glmm
+model_12,1000,16,0.1,0.1,"128, 64",relu,4,0,"1, 1",not minority,woe
+model_390,1000,16,0.1,0.1,"128, 64, 64",relu,4,0,"1, 1",1,woe
+model_111,1000,16,0.1,0.1,"128, 64",relu,4,0,"10, 1",minority,target
+model_69,1000,16,0.1,0.1,"128, 64",relu,4,0,"1, 10",0.75,target
+model_368,1000,16,0.1,0.1,"128, 64, 64",relu,4,0,"1, 1",not minority,glmm
+model_33,1000,16,0.1,0.1,"128, 64",relu,4,0,"1, 1",0.75,target
+model_289,1000,16,0.1,0.1,128,relu,4,0,"10, 1",minority,catboost
+model_321,1000,16,0.1,0.1,128,relu,4,0,"10, 1",0.75,target
+model_213,1000,16,0.1,0.1,128,relu,4,0,"1, 1",0.75,target
+model_83,1000,16,0.1,0.1,"128, 64",relu,4,0,"1, 100",not minority,james
+model_167,1000,16,0.1,0.1,"128, 64",relu,4,0,"100, 1",0.5,james
+model_240,1000,16,0.1,0.1,128,relu,4,0,"1, 10",0.5,woe
+model_250,1000,16,0.1,0.1,128,relu,4,0,"1, 10",0.75,mestimator
+model_166,1000,16,0.1,0.1,"128, 64",relu,4,0,"100, 1",0.5,mestimator
+model_320,1000,16,0.1,0.1,128,relu,4,0,"10, 1",0.75,glmm
+model_26,1000,16,0.1,0.1,"128, 64",relu,4,0,"1, 1",1,glmm
+model_31,1000,16,0.1,0.1,"128, 64",relu,4,0,"1, 1",0.75,catboost
+model_261,1000,16,0.1,0.1,128,relu,4,0,"1, 100",not minority,target
+model_18,1000,16,0.1,0.1,"128, 64",relu,4,0,"1, 1",all,woe
+model_260,1000,16,0.1,0.1,128,relu,4,0,"1, 100",not minority,glmm
+model_6,1000,16,0.1,0.1,"128, 64",relu,4,0,"1, 1",minority,woe
+model_27,1000,16,0.1,0.1,"128, 64",relu,4,0,"1, 1",1,target
+model_396,1000,16,0.1,0.1,"128, 64, 64",relu,4,0,"1, 1",0.75,woe
+model_164,1000,16,0.1,0.1,"128, 64",relu,4,0,"100, 1",0.5,glmm
+model_397,1000,16,0.1,0.1,"128, 64, 64",relu,4,0,"1, 10",minority,catboost
+model_14,1000,16,0.1,0.1,"128, 64",relu,4,0,"1, 1",all,glmm
+model_134,1000,16,0.1,0.1,"128, 64",relu,4,0,"10, 1",1,glmm
+model_20,1000,16,0.1,0.1,"128, 64",relu,4,0,"1, 1",0.5,glmm
+model_7,1000,16,0.1,0.1,"128, 64",relu,4,0,"1, 1",not minority,catboost
+model_22,1000,16,0.1,0.1,"128, 64",relu,4,0,"1, 1",0.5,mestimator
+model_183,1000,16,0.1,0.1,128,relu,4,0,"1, 1",minority,target
+model_131,1000,16,0.1,0.1,"128, 64",relu,4,0,"10, 1",0.5,james
+model_338,1000,16,0.1,0.1,128,relu,4,0,"100, 1",all,glmm
+model_382,1000,16,0.1,0.1,"128, 64, 64",relu,4,0,"1, 1",0.5,mestimator
+model_374,1000,16,0.1,0.1,"128, 64, 64",relu,4,0,"1, 1",all,glmm
+model_52,1000,16,0.1,0.1,"128, 64",relu,4,0,"1, 10",all,mestimator
+model_49,1000,16,0.1,0.1,"128, 64",relu,4,0,"1, 10",all,catboost
+model_385,1000,16,0.1,0.1,"128, 64, 64",relu,4,0,"1, 1",1,catboost
+model_371,1000,16,0.1,0.1,"128, 64, 64",relu,4,0,"1, 1",not minority,james
+model_361,1000,16,0.1,0.1,"128, 64, 64",relu,4,0,"1, 1",minority,catboost
+model_345,1000,16,0.1,0.1,128,relu,4,0,"100, 1",0.5,target
+model_216,1000,16,0.1,0.1,128,relu,4,0,"1, 1",0.75,woe
+model_383,1000,16,0.1,0.1,"128, 64, 64",relu,4,0,"1, 1",0.5,james
+model_125,1000,16,0.1,0.1,"128, 64",relu,4,0,"10, 1",all,james
+model_391,1000,16,0.1,0.1,"128, 64, 64",relu,4,0,"1, 1",0.75,catboost
+model_130,1000,16,0.1,0.1,"128, 64",relu,4,0,"10, 1",0.5,mestimator
+model_367,1000,16,0.1,0.1,"128, 64, 64",relu,4,0,"1, 1",not minority,catboost
+model_395,1000,16,0.1,0.1,"128, 64, 64",relu,4,0,"1, 1",0.75,james
+model_190,1000,16,0.1,0.1,128,relu,4,0,"1, 1",not minority,mestimator
+model_212,1000,16,0.1,0.1,128,relu,4,0,"1, 1",0.75,glmm
+model_393,1000,16,0.1,0.1,"128, 64, 64",relu,4,0,"1, 1",0.75,target
+model_30,1000,16,0.1,0.1,"128, 64",relu,4,0,"1, 1",1,woe
+model_370,1000,16,0.1,0.1,"128, 64, 64",relu,4,0,"1, 1",not minority,mestimator
+model_355,1000,16,0.1,0.1,128,relu,4,0,"100, 1",0.75,catboost
+model_265,1000,16,0.1,0.1,128,relu,4,0,"1, 100",all,catboost
+model_206,1000,16,0.1,0.1,128,relu,4,0,"1, 1",1,glmm
+model_198,1000,16,0.1,0.1,128,relu,4,0,"1, 1",all,woe
+model_377,1000,16,0.1,0.1,"128, 64, 64",relu,4,0,"1, 1",all,james
+model_55,1000,16,0.1,0.1,"128, 64",relu,4,0,"1, 10",0.5,catboost
+model_244,1000,16,0.1,0.1,128,relu,4,0,"1, 10",1,mestimator
+model_360,1000,16,0.1,0.1,128,relu,4,0,"100, 1",0.75,woe
+model_24,1000,16,0.1,0.1,"128, 64",relu,4,0,"1, 1",0.5,woe
+model_3,1000,16,0.1,0.1,"128, 64",relu,4,0,"1, 1",minority,target
+model_207,1000,16,0.1,0.1,128,relu,4,0,"1, 1",1,target
+model_378,1000,16,0.1,0.1,"128, 64, 64",relu,4,0,"1, 1",all,woe
+model_28,1000,16,0.1,0.1,"128, 64",relu,4,0,"1, 1",1,mestimator
+model_194,1000,16,0.1,0.1,128,relu,4,0,"1, 1",all,glmm
+model_34,1000,16,0.1,0.1,"128, 64",relu,4,0,"1, 1",0.75,mestimator
+model_102,1000,16,0.1,0.1,"128, 64",relu,4,0,"1, 100",1,woe
+model_29,1000,16,0.1,0.1,"128, 64",relu,4,0,"1, 1",1,james
+model_380,1000,16,0.1,0.1,"128, 64, 64",relu,4,0,"1, 1",0.5,glmm
+model_1,1000,16,0.1,0.1,"128, 64",relu,4,0,"1, 1",minority,catboost
+model_36,1000,16,0.1,0.1,"128, 64",relu,4,0,"1, 1",0.75,woe
+model_5,1000,16,0.1,0.1,"128, 64",relu,4,0,"1, 1",minority,james
+model_196,1000,16,0.1,0.1,128,relu,4,0,"1, 1",all,mestimator
+model_210,1000,16,0.1,0.1,128,relu,4,0,"1, 1",1,woe
+model_23,1000,16,0.1,0.1,"128, 64",relu,4,0,"1, 1",0.5,james
+model_25,1000,16,0.1,0.1,"128, 64",relu,4,0,"1, 1",1,catboost
+model_208,1000,16,0.1,0.1,128,relu,4,0,"1, 1",1,mestimator
+model_15,1000,16,0.1,0.1,"128, 64",relu,4,0,"1, 1",all,target
+model_187,1000,16,0.1,0.1,128,relu,4,0,"1, 1",not minority,catboost
+model_369,1000,16,0.1,0.1,"128, 64, 64",relu,4,0,"1, 1",not minority,target
+model_373,1000,16,0.1,0.1,"128, 64, 64",relu,4,0,"1, 1",all,catboost
+model_105,1000,16,0.1,0.1,"128, 64",relu,4,0,"1, 100",0.75,target
+model_215,1000,16,0.1,0.1,128,relu,4,0,"1, 1",0.75,james
+model_13,1000,16,0.1,0.1,"128, 64",relu,4,0,"1, 1",all,catboost
+model_305,1000,16,0.1,0.1,128,relu,4,0,"10, 1",all,james
+model_284,1000,16,0.1,0.1,128,relu,4,0,"1, 100",0.75,glmm
+model_32,1000,16,0.1,0.1,"128, 64",relu,4,0,"1, 1",0.75,glmm
+model_182,1000,16,0.1,0.1,128,relu,4,0,"1, 1",minority,glmm
+model_9,1000,16,0.1,0.1,"128, 64",relu,4,0,"1, 1",not minority,target
+model_282,1000,16,0.1,0.1,128,relu,4,0,"1, 100",1,woe
+model_59,1000,16,0.1,0.1,"128, 64",relu,4,0,"1, 10",0.5,james
+model_202,1000,16,0.1,0.1,128,relu,4,0,"1, 1",0.5,mestimator
+model_47,1000,16,0.1,0.1,"128, 64",relu,4,0,"1, 10",not minority,james
+model_209,1000,16,0.1,0.1,128,relu,4,0,"1, 1",1,james
+model_175,1000,16,0.1,0.1,"128, 64",relu,4,0,"100, 1",0.75,catboost
+model_352,1000,16,0.1,0.1,128,relu,4,0,"100, 1",1,mestimator
+model_61,1000,16,0.1,0.1,"128, 64",relu,4,0,"1, 10",1,catboost
+model_17,1000,16,0.1,0.1,"128, 64",relu,4,0,"1, 1",all,james
+model_181,1000,16,0.1,0.1,128,relu,4,0,"1, 1",minority,catboost
+model_353,1000,16,0.1,0.1,128,relu,4,0,"100, 1",1,james
+model_2,1000,16,0.1,0.1,"128, 64",relu,4,0,"1, 1",minority,glmm
+model_177,1000,16,0.1,0.1,"128, 64",relu,4,0,"100, 1",0.75,target
+model_379,1000,16,0.1,0.1,"128, 64, 64",relu,4,0,"1, 1",0.5,catboost
+model_280,1000,16,0.1,0.1,128,relu,4,0,"1, 100",1,mestimator
+model_203,1000,16,0.1,0.1,128,relu,4,0,"1, 1",0.5,james
+model_82,1000,16,0.1,0.1,"128, 64",relu,4,0,"1, 100",not minority,mestimator
+model_386,1000,16,0.1,0.1,"128, 64, 64",relu,4,0,"1, 1",1,glmm
+model_165,1000,16,0.1,0.1,"128, 64",relu,4,0,"100, 1",0.5,target
+model_364,1000,16,0.1,0.1,"128, 64, 64",relu,4,0,"1, 1",minority,mestimator
+model_347,1000,16,0.1,0.1,128,relu,4,0,"100, 1",0.5,james
+model_35,1000,16,0.1,0.1,"128, 64",relu,4,0,"1, 1",0.75,james
+model_86,1000,16,0.1,0.1,"128, 64",relu,4,0,"1, 100",all,glmm
+model_214,1000,16,0.1,0.1,128,relu,4,0,"1, 1",0.75,mestimator
+model_288,1000,16,0.1,0.1,128,relu,4,0,"1, 100",0.75,woe
+model_199,1000,16,0.1,0.1,128,relu,4,0,"1, 1",0.5,catboost
+model_381,1000,16,0.1,0.1,"128, 64, 64",relu,4,0,"1, 1",0.5,target
+model_10,1000,16,0.1,0.1,"128, 64",relu,4,0,"1, 1",not minority,mestimator
+model_104,1000,16,0.1,0.1,"128, 64",relu,4,0,"1, 100",0.75,glmm
+model_205,1000,16,0.1,0.1,128,relu,4,0,"1, 1",1,catboost
+model_184,1000,16,0.1,0.1,128,relu,4,0,"1, 1",minority,mestimator
+model_84,1000,16,0.1,0.1,"128, 64",relu,4,0,"1, 100",not minority,woe
+model_158,1000,16,0.1,0.1,"128, 64",relu,4,0,"100, 1",all,glmm
+model_329,1000,16,0.1,0.1,128,relu,4,0,"100, 1",minority,james
+model_211,1000,16,0.1,0.1,128,relu,4,0,"1, 1",0.75,catboost
+model_376,1000,16,0.1,0.1,"128, 64, 64",relu,4,0,"1, 1",all,mestimator
+model_269,1000,16,0.1,0.1,128,relu,4,0,"1, 100",all,james
+model_326,1000,16,0.1,0.1,128,relu,4,0,"100, 1",minority,glmm
+model_16,1000,16,0.1,0.1,"128, 64",relu,4,0,"1, 1",all,mestimator
+model_197,1000,16,0.1,0.1,128,relu,4,0,"1, 1",all,james
+model_365,1000,16,0.1,0.1,"128, 64, 64",relu,4,0,"1, 1",minority,james
+model_204,1000,16,0.1,0.1,128,relu,4,0,"1, 1",0.5,woe
+model_19,1000,16,0.1,0.1,"128, 64",relu,4,0,"1, 1",0.5,catboost
+model_107,1000,16,0.1,0.1,"128, 64",relu,4,0,"1, 100",0.75,james
+model_273,1000,16,0.1,0.1,128,relu,4,0,"1, 100",0.5,target
+model_333,1000,16,0.1,0.1,128,relu,4,0,"100, 1",not minority,target
+model_96,1000,16,0.1,0.1,"128, 64",relu,4,0,"1, 100",0.5,woe
+model_200,1000,16,0.1,0.1,128,relu,4,0,"1, 1",0.5,glmm
+model_180,1000,16,0.1,0.1,"128, 64",relu,4,0,"100, 1",0.75,woe
+model_389,1000,16,0.1,0.1,"128, 64, 64",relu,4,0,"1, 1",1,james
+model_78,1000,16,0.1,0.1,"128, 64",relu,4,0,"1, 100",minority,woe
+model_192,1000,16,0.1,0.1,128,relu,4,0,"1, 1",not minority,woe
+model_275,1000,16,0.1,0.1,128,relu,4,0,"1, 100",0.5,james
+model_74,1000,16,0.1,0.1,"128, 64",relu,4,0,"1, 100",minority,glmm
+model_98,1000,16,0.1,0.1,"128, 64",relu,4,0,"1, 100",1,glmm
+model_88,1000,16,0.1,0.1,"128, 64",relu,4,0,"1, 100",all,mestimator
+model_193,1000,16,0.1,0.1,128,relu,4,0,"1, 1",all,catboost
+model_156,1000,16,0.1,0.1,"128, 64",relu,4,0,"100, 1",not minority,woe
+model_89,1000,16,0.1,0.1,"128, 64",relu,4,0,"1, 100",all,james
+model_222,1000,16,0.1,0.1,128,relu,4,0,"1, 10",minority,woe
+model_356,1000,16,0.1,0.1,128,relu,4,0,"100, 1",0.75,glmm
+model_271,1000,16,0.1,0.1,128,relu,4,0,"1, 100",0.5,catboost
+model_108,1000,16,0.1,0.1,"128, 64",relu,4,0,"1, 100",0.75,woe
+model_75,1000,16,0.1,0.1,"128, 64",relu,4,0,"1, 100",minority,target
+model_332,1000,16,0.1,0.1,128,relu,4,0,"100, 1",not minority,glmm
+model_171,1000,16,0.1,0.1,"128, 64",relu,4,0,"100, 1",1,target
+model_87,1000,16,0.1,0.1,"128, 64",relu,4,0,"1, 100",all,target
+model_161,1000,16,0.1,0.1,"128, 64",relu,4,0,"100, 1",all,james
+model_4,1000,16,0.1,0.1,"128, 64",relu,4,0,"1, 1",minority,mestimator
+model_80,1000,16,0.1,0.1,"128, 64",relu,4,0,"1, 100",not minority,glmm
+model_334,1000,16,0.1,0.1,128,relu,4,0,"100, 1",not minority,mestimator
+model_366,1000,16,0.1,0.1,"128, 64, 64",relu,4,0,"1, 1",minority,woe
+model_219,1000,16,0.1,0.1,128,relu,4,0,"1, 10",minority,target
+model_384,1000,16,0.1,0.1,"128, 64, 64",relu,4,0,"1, 1",0.5,woe
+model_341,1000,16,0.1,0.1,128,relu,4,0,"100, 1",all,james
+model_346,1000,16,0.1,0.1,128,relu,4,0,"100, 1",0.5,mestimator
+model_195,1000,16,0.1,0.1,128,relu,4,0,"1, 1",all,target
+model_266,1000,16,0.1,0.1,128,relu,4,0,"1, 100",all,glmm
+model_168,1000,16,0.1,0.1,"128, 64",relu,4,0,"100, 1",0.5,woe
+model_76,1000,16,0.1,0.1,"128, 64",relu,4,0,"1, 100",minority,mestimator
+model_191,1000,16,0.1,0.1,128,relu,4,0,"1, 1",not minority,james
+model_328,1000,16,0.1,0.1,128,relu,4,0,"100, 1",minority,mestimator
+model_101,1000,16,0.1,0.1,"128, 64",relu,4,0,"1, 100",1,james
+model_351,1000,16,0.1,0.1,128,relu,4,0,"100, 1",1,target
+model_155,1000,16,0.1,0.1,"128, 64",relu,4,0,"100, 1",not minority,james
+model_185,1000,16,0.1,0.1,128,relu,4,0,"1, 1",minority,james
+model_189,1000,16,0.1,0.1,128,relu,4,0,"1, 1",not minority,target
+model_93,1000,16,0.1,0.1,"128, 64",relu,4,0,"1, 100",0.5,target
+model_37,1000,16,0.1,0.1,"128, 64",relu,4,0,"1, 10",minority,catboost
+model_387,1000,16,0.1,0.1,"128, 64, 64",relu,4,0,"1, 1",1,target
+model_174,1000,16,0.1,0.1,"128, 64",relu,4,0,"100, 1",1,woe
+model_339,1000,16,0.1,0.1,128,relu,4,0,"100, 1",all,target
+model_153,1000,16,0.1,0.1,"128, 64",relu,4,0,"100, 1",not minority,target
+model_325,1000,16,0.1,0.1,128,relu,4,0,"100, 1",minority,catboost
+model_152,1000,16,0.1,0.1,"128, 64",relu,4,0,"100, 1",not minority,glmm
+model_139,1000,16,0.1,0.1,"128, 64",relu,4,0,"10, 1",0.75,catboost
+model_21,1000,16,0.1,0.1,"128, 64",relu,4,0,"1, 1",0.5,target
+model_148,1000,16,0.1,0.1,"128, 64",relu,4,0,"100, 1",minority,mestimator
+model_201,1000,16,0.1,0.1,128,relu,4,0,"1, 1",0.5,target
+model_170,1000,16,0.1,0.1,"128, 64",relu,4,0,"100, 1",1,glmm
+model_264,1000,16,0.1,0.1,128,relu,4,0,"1, 100",not minority,woe
+model_254,1000,16,0.1,0.1,128,relu,4,0,"1, 100",minority,glmm
+model_258,1000,16,0.1,0.1,128,relu,4,0,"1, 100",minority,woe
+model_278,1000,16,0.1,0.1,128,relu,4,0,"1, 100",1,glmm
+model_150,1000,16,0.1,0.1,"128, 64",relu,4,0,"100, 1",minority,woe
+model_375,1000,16,0.1,0.1,"128, 64, 64",relu,4,0,"1, 1",all,target
+model_173,1000,16,0.1,0.1,"128, 64",relu,4,0,"100, 1",1,james
+model_297,1000,16,0.1,0.1,128,relu,4,0,"10, 1",not minority,target
+model_103,1000,16,0.1,0.1,"128, 64",relu,4,0,"1, 100",0.75,catboost
+model_176,1000,16,0.1,0.1,"128, 64",relu,4,0,"100, 1",0.75,glmm
+model_388,1000,16,0.1,0.1,"128, 64, 64",relu,4,0,"1, 1",1,mestimator
+model_272,1000,16,0.1,0.1,128,relu,4,0,"1, 100",0.5,glmm
+model_97,1000,16,0.1,0.1,"128, 64",relu,4,0,"1, 100",1,catboost
+model_157,1000,16,0.1,0.1,"128, 64",relu,4,0,"100, 1",all,catboost
+model_162,1000,16,0.1,0.1,"128, 64",relu,4,0,"100, 1",all,woe
+model_106,1000,16,0.1,0.1,"128, 64",relu,4,0,"1, 100",0.75,mestimator
+model_404,1000,16,0.1,0.1,"128, 64, 64",relu,4,0,"1, 10",not minority,glmm
+model_343,1000,16,0.1,0.1,128,relu,4,0,"100, 1",0.5,catboost
+model_256,1000,16,0.1,0.1,128,relu,4,0,"1, 100",minority,mestimator
+model_277,1000,16,0.1,0.1,128,relu,4,0,"1, 100",1,catboost
+model_230,1000,16,0.1,0.1,128,relu,4,0,"1, 10",all,glmm
+model_145,1000,16,0.1,0.1,"128, 64",relu,4,0,"100, 1",minority,catboost
+model_229,1000,16,0.1,0.1,128,relu,4,0,"1, 10",all,catboost
+model_11,1000,16,0.1,0.1,"128, 64",relu,4,0,"1, 1",not minority,james
+model_253,1000,16,0.1,0.1,128,relu,4,0,"1, 100",minority,catboost
+model_267,1000,16,0.1,0.1,128,relu,4,0,"1, 100",all,target
+model_159,1000,16,0.1,0.1,"128, 64",relu,4,0,"100, 1",all,target
+model_169,1000,16,0.1,0.1,"128, 64",relu,4,0,"100, 1",1,catboost
+model_99,1000,16,0.1,0.1,"128, 64",relu,4,0,"1, 100",1,target
+model_178,1000,16,0.1,0.1,"128, 64",relu,4,0,"100, 1",0.75,mestimator
+model_90,1000,16,0.1,0.1,"128, 64",relu,4,0,"1, 100",all,woe
+model_274,1000,16,0.1,0.1,128,relu,4,0,"1, 100",0.5,mestimator
+model_268,1000,16,0.1,0.1,128,relu,4,0,"1, 100",all,mestimator
+model_349,1000,16,0.1,0.1,128,relu,4,0,"100, 1",1,catboost
+model_160,1000,16,0.1,0.1,"128, 64",relu,4,0,"100, 1",all,mestimator
+model_95,1000,16,0.1,0.1,"128, 64",relu,4,0,"1, 100",0.5,james
+model_163,1000,16,0.1,0.1,"128, 64",relu,4,0,"100, 1",0.5,catboost
+model_73,1000,16,0.1,0.1,"128, 64",relu,4,0,"1, 100",minority,catboost
+model_221,1000,16,0.1,0.1,128,relu,4,0,"1, 10",minority,james
+model_100,1000,16,0.1,0.1,"128, 64",relu,4,0,"1, 100",1,mestimator
+model_270,1000,16,0.1,0.1,128,relu,4,0,"1, 100",all,woe
+model_330,1000,16,0.1,0.1,128,relu,4,0,"100, 1",minority,woe
+model_357,1000,16,0.1,0.1,128,relu,4,0,"100, 1",0.75,target
+model_263,1000,16,0.1,0.1,128,relu,4,0,"1, 100",not minority,james
+model_172,1000,16,0.1,0.1,"128, 64",relu,4,0,"100, 1",1,mestimator
+model_306,1000,16,0.1,0.1,128,relu,4,0,"10, 1",all,woe
+model_287,1000,16,0.1,0.1,128,relu,4,0,"1, 100",0.75,james
+model_147,1000,16,0.1,0.1,"128, 64",relu,4,0,"100, 1",minority,target
+model_337,1000,16,0.1,0.1,128,relu,4,0,"100, 1",all,catboost
+model_146,1000,16,0.1,0.1,"128, 64",relu,4,0,"100, 1",minority,glmm
+model_350,1000,16,0.1,0.1,128,relu,4,0,"100, 1",1,glmm
+model_257,1000,16,0.1,0.1,128,relu,4,0,"1, 100",minority,james
+model_316,1000,16,0.1,0.1,128,relu,4,0,"10, 1",1,mestimator
+model_340,1000,16,0.1,0.1,128,relu,4,0,"100, 1",all,mestimator
+model_304,1000,16,0.1,0.1,128,relu,4,0,"10, 1",all,mestimator
+model_317,1000,16,0.1,0.1,128,relu,4,0,"10, 1",1,james
+model_81,1000,16,0.1,0.1,"128, 64",relu,4,0,"1, 100",not minority,target
+model_279,1000,16,0.1,0.1,128,relu,4,0,"1, 100",1,target
+model_179,1000,16,0.1,0.1,"128, 64",relu,4,0,"100, 1",0.75,james
+model_310,1000,16,0.1,0.1,128,relu,4,0,"10, 1",0.5,mestimator
+model_85,1000,16,0.1,0.1,"128, 64",relu,4,0,"1, 100",all,catboost
+model_56,1000,16,0.1,0.1,"128, 64",relu,4,0,"1, 10",0.5,glmm
+model_226,1000,16,0.1,0.1,128,relu,4,0,"1, 10",not minority,mestimator
+model_53,1000,16,0.1,0.1,"128, 64",relu,4,0,"1, 10",all,james
+model_45,1000,16,0.1,0.1,"128, 64",relu,4,0,"1, 10",not minority,target
+model_331,1000,16,0.1,0.1,128,relu,4,0,"100, 1",not minority,catboost
+model_92,1000,16,0.1,0.1,"128, 64",relu,4,0,"1, 100",0.5,glmm
+model_286,1000,16,0.1,0.1,128,relu,4,0,"1, 100",0.75,mestimator
+model_151,1000,16,0.1,0.1,"128, 64",relu,4,0,"100, 1",not minority,catboost
+model_359,1000,16,0.1,0.1,128,relu,4,0,"100, 1",0.75,james
+model_342,1000,16,0.1,0.1,128,relu,4,0,"100, 1",all,woe
+model_112,1000,16,0.1,0.1,"128, 64",relu,4,0,"10, 1",minority,mestimator
+model_217,1000,16,0.1,0.1,128,relu,4,0,"1, 10",minority,catboost
+model_39,1000,16,0.1,0.1,"128, 64",relu,4,0,"1, 10",minority,target
+model_301,1000,16,0.1,0.1,128,relu,4,0,"10, 1",all,catboost
+model_281,1000,16,0.1,0.1,128,relu,4,0,"1, 100",1,james
+model_77,1000,16,0.1,0.1,"128, 64",relu,4,0,"1, 100",minority,james
+model_344,1000,16,0.1,0.1,128,relu,4,0,"100, 1",0.5,glmm
+model_255,1000,16,0.1,0.1,128,relu,4,0,"1, 100",minority,target
+model_335,1000,16,0.1,0.1,128,relu,4,0,"100, 1",not minority,james
+model_94,1000,16,0.1,0.1,"128, 64",relu,4,0,"1, 100",0.5,mestimator
+model_149,1000,16,0.1,0.1,"128, 64",relu,4,0,"100, 1",minority,james
+model_58,1000,16,0.1,0.1,"128, 64",relu,4,0,"1, 10",0.5,mestimator
+model_135,1000,16,0.1,0.1,"128, 64",relu,4,0,"10, 1",1,target
+model_132,1000,16,0.1,0.1,"128, 64",relu,4,0,"10, 1",0.5,woe
+model_358,1000,16,0.1,0.1,128,relu,4,0,"100, 1",0.75,mestimator
+model_64,1000,16,0.1,0.1,"128, 64",relu,4,0,"1, 10",1,mestimator
+model_314,1000,16,0.1,0.1,128,relu,4,0,"10, 1",1,glmm
+model_79,1000,16,0.1,0.1,"128, 64",relu,4,0,"1, 100",not minority,catboost
+model_71,1000,16,0.1,0.1,"128, 64",relu,4,0,"1, 10",0.75,james
+model_154,1000,16,0.1,0.1,"128, 64",relu,4,0,"100, 1",not minority,mestimator
+model_121,1000,16,0.1,0.1,"128, 64",relu,4,0,"10, 1",all,catboost
+model_245,1000,16,0.1,0.1,128,relu,4,0,"1, 10",1,james
+model_246,1000,16,0.1,0.1,128,relu,4,0,"1, 10",1,woe
+model_123,1000,16,0.1,0.1,"128, 64",relu,4,0,"10, 1",all,target
+model_308,1000,16,0.1,0.1,128,relu,4,0,"10, 1",0.5,glmm
+model_143,1000,16,0.1,0.1,"128, 64",relu,4,0,"10, 1",0.75,james
+model_66,1000,16,0.1,0.1,"128, 64",relu,4,0,"1, 10",1,woe
+model_63,1000,16,0.1,0.1,"128, 64",relu,4,0,"1, 10",1,target
+model_309,1000,16,0.1,0.1,128,relu,4,0,"10, 1",0.5,target
+model_128,1000,16,0.1,0.1,"128, 64",relu,4,0,"10, 1",0.5,glmm
+model_138,1000,16,0.1,0.1,"128, 64",relu,4,0,"10, 1",1,woe
+model_67,1000,16,0.1,0.1,"128, 64",relu,4,0,"1, 10",0.75,catboost
+model_241,1000,16,0.1,0.1,128,relu,4,0,"1, 10",1,catboost
+model_238,1000,16,0.1,0.1,128,relu,4,0,"1, 10",0.5,mestimator
+model_129,1000,16,0.1,0.1,"128, 64",relu,4,0,"10, 1",0.5,target
+model_401,1000,16,0.1,0.1,"128, 64, 64",relu,4,0,"1, 10",minority,james
+model_405,1000,16,0.1,0.1,"128, 64, 64",relu,4,0,"1, 10",not minority,target
+model_72,1000,16,0.1,0.1,"128, 64",relu,4,0,"1, 10",0.75,woe
+model_294,1000,16,0.1,0.1,128,relu,4,0,"10, 1",minority,woe
+model_44,1000,16,0.1,0.1,"128, 64",relu,4,0,"1, 10",not minority,glmm
+model_114,1000,16,0.1,0.1,"128, 64",relu,4,0,"10, 1",minority,woe
+model_300,1000,16,0.1,0.1,128,relu,4,0,"10, 1",not minority,woe
+model_292,1000,16,0.1,0.1,128,relu,4,0,"10, 1",minority,mestimator
+model_311,1000,16,0.1,0.1,128,relu,4,0,"10, 1",0.5,james
+model_400,1000,16,0.1,0.1,"128, 64, 64",relu,4,0,"1, 10",minority,mestimator
+model_136,1000,16,0.1,0.1,"128, 64",relu,4,0,"10, 1",1,mestimator
+model_236,1000,16,0.1,0.1,128,relu,4,0,"1, 10",0.5,glmm
+model_50,1000,16,0.1,0.1,"128, 64",relu,4,0,"1, 10",all,glmm
+model_117,1000,16,0.1,0.1,"128, 64",relu,4,0,"10, 1",not minority,target
+model_406,1000,16,0.1,0.1,"128, 64, 64",relu,4,0,"1, 10",not minority,mestimator
+model_298,1000,16,0.1,0.1,128,relu,4,0,"10, 1",not minority,mestimator
+model_237,1000,16,0.1,0.1,128,relu,4,0,"1, 10",0.5,target
