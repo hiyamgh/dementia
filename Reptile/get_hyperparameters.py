@@ -19,6 +19,7 @@ if __name__ == '__main__':
     top_features = [10, 20]
 
     count = 1
+    reached_max_count = False
     idx2hyps = {}
     for shts in shots:
         for ib in inner_batch:
@@ -53,8 +54,66 @@ if __name__ == '__main__':
                                                                         'encoding': e,
                                                                         'top_features': tf
                                                                     }
-
                                                                     count += 1
                                                                 else:
-                                                                    with open('idx2hyps.pkl'.format(count), 'wb') as f:
-                                                                        pickle.dump(idx2hyps, f, pickle.HIGHEST_PROTOCOL)
+                                                                    reached_max_count = True
+                                                                    break
+                                                            if reached_max_count:
+                                                                break
+                                                            else:
+                                                                continue
+                                                        if reached_max_count:
+                                                            break
+                                                        else:
+                                                            continue
+                                                    if reached_max_count:
+                                                        break
+                                                    else:
+                                                        continue
+                                                if reached_max_count:
+                                                    break
+                                                else:
+                                                    continue
+                                            if reached_max_count:
+                                                break
+                                            else:
+                                                continue
+                                        if reached_max_count:
+                                            break
+                                        else:
+                                            continue
+                                    if reached_max_count:
+                                        break
+                                    else:
+                                        continue
+                                if reached_max_count:
+                                    break
+                                else:
+                                    continue
+                            if reached_max_count:
+                                break
+                            else:
+                                continue
+                        if reached_max_count:
+                            break
+                        else:
+                            continue
+                    if reached_max_count:
+                        break
+                    else:
+                        continue
+                if reached_max_count:
+                    break
+                else:
+                    continue
+            if reached_max_count:
+                break
+            else:
+                continue
+        if reached_max_count:
+            break
+        else:
+            continue
+
+    with open('idx2hyps.pkl'.format(count), 'wb') as f:
+        pickle.dump(idx2hyps, f, pickle.HIGHEST_PROTOCOL)
