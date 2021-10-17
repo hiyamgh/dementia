@@ -56,7 +56,12 @@ if __name__ == '__main__':
                 'top_features':    hyps[bm]['top_features']
             }, ignore_index=True)
 
-            exp_string = 'FOML_trans_trained_models/{}/model_{}/'.format(args.top, bm)
+            if args.type == 'reptile':
+                exp_string = 'reptile_trained_models/{}/model_{}/'.format(args.top, bm)
+            elif args.type == 'reptile_trans':
+                exp_string = 'reptile_trans_trained_models/{}/model_{}/'.format(args.top, bm)
+            else:
+                exp_string = 'FOML_trans_trained_models/{}/model_{}/'.format(args.top, bm)
 
             # save dictionary of results
             with open(os.path.join(exp_string, 'testing_error_metrics.p'), 'rb') as f:
@@ -118,5 +123,5 @@ if __name__ == '__main__':
         else:
             continue
 
-    df_final_hyps.to_csv('results_errors/final_hyps_top{}.csv'.format(args.top), index=False)
-    df_final_results.to_csv('results_errors/final_results_top{}.csv'.format(args.top), index=False)
+    df_final_hyps.to_csv('results_errors/final_hyps_top{}_{}.csv'.format(args.top, args.type), index=False)
+    df_final_results.to_csv('results_errors/final_results_top{}_{}.csv'.format(args.top, args.type), index=False)
