@@ -1,0 +1,49 @@
+#!/usr/bin/env bash
+
+#foml top 10
+python tably.py results_errors_filtered/foml_trans_10_f2.csv -o results_errors_filtered/foml_trans_10_f2.tex
+python tably.py results_errors_filtered/foml_trans_10_bss.csv -o results_errors_filtered/foml_trans_10_bss.tex
+python tably.py results_errors_filtered/foml_trans_10_gmean.csv -o results_errors_filtered/foml_trans_10_gmean.tex
+python tably.py results_errors_filtered/foml_trans_10_pr_auc.csv -o results_errors_filtered/foml_trans_10_pr_auc.tex
+python tably.py results_errors_filtered/foml_trans_10_sensitivity.csv -o results_errors_filtered/foml_trans_10_sensitivity.tex
+python tably.py results_errors_filtered/foml_trans_10_specificity.csv -o results_errors_filtered/foml_trans_10_specificity.tex
+
+#foml top 20
+python tably.py results_errors_filtered/foml_trans_20_f2.csv -o results_errors_filtered/foml_trans_20_f2.tex
+python tably.py results_errors_filtered/foml_trans_20_bss.csv -o results_errors_filtered/foml_trans_20_bss.tex
+python tably.py results_errors_filtered/foml_trans_20_gmean.csv -o results_errors_filtered/foml_trans_20_gmean.tex
+python tably.py results_errors_filtered/foml_trans_20_pr_auc.csv -o results_errors_filtered/foml_trans_20_pr_auc.tex
+python tably.py results_errors_filtered/foml_trans_20_sensitivity.csv -o results_errors_filtered/foml_trans_20_sensitivity.tex
+python tably.py results_errors_filtered/foml_trans_20_specificity.csv -o results_errors_filtered/foml_trans_20_specificity.tex
+
+#reptile trans top 10
+python tably.py results_errors_filtered/reptile_trans_10_f2.csv -o results_errors_filtered/reptile_trans_10_f2.tex
+python tably.py results_errors_filtered/reptile_trans_10_bss.csv -o results_errors_filtered/reptile_trans_10_bss.tex
+python tably.py results_errors_filtered/reptile_trans_10_gmean.csv -o results_errors_filtered/reptile_trans_10_gmean.tex
+python tably.py results_errors_filtered/reptile_trans_10_pr_auc.csv -o results_errors_filtered/reptile_trans_10_pr_auc.tex
+python tably.py results_errors_filtered/reptile_trans_10_sensitivity.csv -o results_errors_filtered/reptile_trans_10_sensitivity.tex
+python tably.py results_errors_filtered/reptile_trans_10_specificity.csv -o results_errors_filtered/reptile_trans_10_specificity.tex
+
+#reptile trans top 20
+python tably.py results_errors_filtered/reptile_trans_20_f2.csv -o results_errors_filtered/reptile_trans_20_f2.tex
+python tably.py results_errors_filtered/reptile_trans_20_bss.csv -o results_errors_filtered/reptile_trans_20_bss.tex
+python tably.py results_errors_filtered/reptile_trans_20_gmean.csv -o results_errors_filtered/reptile_trans_20_gmean.tex
+python tably.py results_errors_filtered/reptile_trans_20_pr_auc.csv -o results_errors_filtered/reptile_trans_20_pr_auc.tex
+python tably.py results_errors_filtered/reptile_trans_20_sensitivity.csv -o results_errors_filtered/reptile_trans_20_sensitivity.tex
+python tably.py results_errors_filtered/reptile_trans_20_specificity.csv -o results_errors_filtered/reptile_trans_20_specificity.tex
+
+#reptile top 10
+python tably.py results_errors_filtered/reptile_10_f2.csv -o results_errors_filtered/reptile_10_f2.tex
+python tably.py results_errors_filtered/reptile_10_bss.csv -o results_errors_filtered/reptile_10_bss.tex
+python tably.py results_errors_filtered/reptile_10_gmean.csv -o results_errors_filtered/reptile_10_gmean.tex
+python tably.py results_errors_filtered/reptile_10_pr_auc.csv -o results_errors_filtered/reptile_10_pr_auc.tex
+python tably.py results_errors_filtered/reptile_10_sensitivity.csv -o results_errors_filtered/reptile_10_sensitivity.tex
+python tably.py results_errors_filtered/reptile_10_specificity.csv -o results_errors_filtered/reptile_10_specificity.tex
+
+#reptile top 20
+python tably.py results_errors_filtered/reptile_20_f2.csv -o results_errors_filtered/reptile_20_f2.tex
+python tably.py results_errors_filtered/reptile_20_bss.csv -o results_errors_filtered/reptile_20_bss.tex
+python tably.py results_errors_filtered/reptile_20_gmean.csv -o results_errors_filtered/reptile_20_gmean.tex
+python tably.py results_errors_filtered/reptile_20_pr_auc.csv -o results_errors_filtered/reptile_20_pr_auc.tex
+python tably.py results_errors_filtered/reptile_20_sensitivity.csv -o results_errors_filtered/reptile_20_sensitivity.tex
+python tably.py results_errors_filtered/reptile_20_specificity.csv -o results_errors_filtered/reptile_20_specificity.tex
