@@ -1,0 +1,3 @@
+experiment,model,f2,gmean,bss,pr_auc,sensitivity,specificity
+FOMAML - trans - top 10,23111_test,0.9646100000000001,0.964,0.92655,0.9468700000000001,0.965,0.963
+FOMAML - trans - top 20,39838_test,0.9743,0.9685,0.93573,0.94965,0.978,0.959
