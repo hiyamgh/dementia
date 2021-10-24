@@ -48,7 +48,7 @@ def evaluate(sess,
 
     accuracy, precision, recall, f1score, roc = evaluate_predictions(test_actuals, test_preds)
     if FLAGS.cost_sensitive == 1:
-        f2, gmean, bss, pr_auc, sensitivity, specificity = evaluate_predictions_cost_sensitive(test_actuals, test_preds)
+        f2, gmean, bss, pr_auc, sensitivity, specificity = evaluate_predictions_cost_sensitive(test_actuals, test_preds, probabilities)
         results = compile_results_cost_sensitive(accuracy, precision, recall, f1score, roc,
                                                  f2, gmean, bss, pr_auc, sensitivity, specificity)
     else:
@@ -92,10 +92,11 @@ def evaluate_predictions(y_test, y_pred):
     return accuracy, precision, recall, f1score, roc
 
 
-def evaluate_predictions_cost_sensitive(y_test, y_pred):
+def evaluate_predictions_cost_sensitive(y_test, y_pred, probabilities):
     f2 = fbeta_score(y_test, y_pred, beta=2)
     gmean = geometric_mean_score(y_test, y_pred, average='weighted')
-    bss = brier_skill_score(y_test, y_pred)
+    # bss = brier_skill_score(y_test, y_pred)
+    bss = brier_skill_score(y_test, probabilities)
     pr_auc = average_precision_score(y_test, y_pred)
     tn, fp, fn, tp = confusion_matrix(y_true=y_test, y_pred=y_pred).ravel()
     sensitivity = tp / (tp + fn)
@@ -104,8 +105,9 @@ def evaluate_predictions_cost_sensitive(y_test, y_pred):
 
 
 def brier_skill_score(y, yhat):
-    probabilities = [0.01 for _ in range(len(y))]
-    brier_ref = brier_score_loss(y, probabilities)
+    # probabilities = [0.01 for _ in range(len(y))]
+    naive_predictions = [0.20 for _ in range(len(y))]
+    brier_ref = brier_score_loss(y, naive_predictions)
     bs = brier_score_loss(y, yhat)
     return 1.0 - (bs / brier_ref)
 
