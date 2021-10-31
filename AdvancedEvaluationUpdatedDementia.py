@@ -147,8 +147,8 @@ if __name__ == '__main__':
     models_results = {
         'Weighted Log.Reg': 'risk_df_Weighted Logistic Regression.csv',
         'MAML': 'maml_dementia_nodataleakage/dementia_without_fp_top10/model_470/risk_df.csv',
-        'Reptile': 'Reptile_updated/reptile_bss_corr/10/model_1/risk_df.csv',
-        'Reptile-Trans': 'Reptile_updated/reptile_trans_bss_corr/10/model_1/risk_df.csv',
+        # 'Reptile': 'Reptile_updated/reptile_bss_corr/10/model_1/risk_df.csv',
+        # 'Reptile-Trans': 'Reptile_updated/reptile_trans_bss_corr/10/model_1/risk_df.csv',
         'FOMAML-Trans': 'Reptile_updated/FOML_trans_bss_corr/10/model_1/risk_df.csv',
     }
     ae = AdvancedEvaluator(plots_output_folder='advanced_ml_plots_dementia_all/10/', models_results=models_results)
@@ -164,8 +164,8 @@ if __name__ == '__main__':
     models_results = {
         'Weighted Log.Reg': 'risk_df_Balanced Bagging Classifier.csv',
         'MAML': 'maml_dementia_nodataleakage/dementia_without_fp_top10/model_144/risk_df.csv',
-        'Reptile': 'Reptile_updated/reptile_bss_corr/20/model_1/risk_df.csv',
-        'Reptile-Trans': 'Reptile_updated/reptile_trans_bss_corr/20/model_1/risk_df.csv',
+        # 'Reptile': 'Reptile_updated/reptile_bss_corr/20/model_1/risk_df.csv',
+        # 'Reptile-Trans': 'Reptile_updated/reptile_trans_bss_corr/20/model_1/risk_df.csv',
         'FOMAML-Trans': 'Reptile_updated/FOML_trans_bss_corr/20/model_1/risk_df.csv',
     }
     ae = AdvancedEvaluator(plots_output_folder='advanced_ml_plots_dementia_all/20/', models_results=models_results)
