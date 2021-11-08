@@ -18,10 +18,14 @@ print(len(df[df['is_validation'] == 1]))
 df_train = df[df['is_validation'] == 0]
 df_test = df[df['is_validation'] == 1]
 
+df_train = df_train.loc[df_train['dem1066'] != ' ', :]
+df_test = df_test.loc[df_test['dem1066'] != ' ', :]
+
 print('df_train')
 print(df_train['dem1066'].value_counts())
 print('0: {}'.format(list(df_train['dem1066']).count('0')/len(df_train)))
 print('1: {}'.format(list(df_train['dem1066']).count('1')/len(df_train)))
+
 print('df_test')
 print(df_test['dem1066'].value_counts())
 print('0: {}'.format(list(df_test['dem1066']).count('0')/len(df_test)))
