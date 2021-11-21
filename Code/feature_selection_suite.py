@@ -344,6 +344,7 @@ class FeatureSelection:
             fig = plt.gcf()
             fig.set_size_inches(15, 10.5)
             fig.savefig(output_folder + 'xgb_fs.png', dpi=300)
+            fig.savefig(output_folder + 'xgb_fs.pdf', dpi=300)
             plt.close()
 
             df_imp_xgb = pd.DataFrame(columns=['feature', 'importance'])
@@ -391,6 +392,7 @@ class FeatureSelection:
             fig = plt.gcf()
             fig.set_size_inches(15, 10.5)
             fig.savefig(output_folder + 'extratrees_fs.png', dpi=300)
+            fig.savefig(output_folder + 'extratrees_fs.pdf', dpi=300)
             plt.close()
             print('saved plot in {}/{}'.format(output_folder, 'extratrees_fs.png'))
             df_imp_ext.to_csv(os.path.join(output_folder, 'extratrees_fs_importances.csv'), index=False)
@@ -428,6 +430,7 @@ class FeatureSelection:
             fig = plt.gcf()
             fig.set_size_inches(15, 10.5)
             fig.savefig(output_folder + 'randomforest_fs.png', dpi=300)
+            fig.savefig(output_folder + 'randomforest_fs.pdf', dpi=300)
             plt.close()
             print('saved plot in {}/{}'.format(output_folder, 'randomforest_fs.png'))
             df_imp_rf.to_csv(os.path.join(output_folder, 'randomforest_fs_importances.csv'), index=False)
@@ -467,7 +470,8 @@ class FeatureSelection:
         if not os.path.exists(output_folder):
             os.makedirs(output_folder)
 
-        plt.savefig(output_folder + 'univariate_fs', dpi=300)
+        plt.savefig(output_folder + 'univariate_fs.png', dpi=300)
+        plt.savefig(output_folder + 'univariate_fs.pdf', dpi=300)
         plt.close()
 
         if self.regression:
