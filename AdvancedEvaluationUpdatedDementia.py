@@ -125,7 +125,7 @@ class AdvancedEvaluator:
                         metrics.append(recall_curr)
                 # plt.plot(topKs, metrics, label=self.model_names[i-1], marker='o')
                 plt.plot(topKs, metrics, label=model_num_name, marker='o', color=colors[i])
-                # plt.ylim([0.5, 1.1])
+                plt.ylim([0.0, 1.1])
                 i += 1
 
             plt.legend(loc='best')
