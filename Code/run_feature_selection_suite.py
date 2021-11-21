@@ -73,11 +73,11 @@ if __name__ == '__main__':
 
         print('{} found in {}'.format(f, found))
 
-    # ['Q451_2', 'PUT_2', 'Q1551_2', 'NRECALL_2', 'Q281_2', 'MONTH_2', 'Q401_2', 'LEARN3_2', 'LEARN2_2', 'LEARN1_2', 'LASTSEE_2', 'LASTDAY_2', 'Q722_2', 'Q72_2', 'FEED_2', 'Q1041_2', 'TRIALNO_2', 'ANIMALS_2', 'Q76_2', 'RECALL_2']
+    # ['MONTH_2', 'Q1551_2', 'PUT_2', 'Q281_2', 'Q401_2', 'Q42_2', 'Q451_2', 'LEARN3_2', 'LEARN2_2', 'LEARN1_2', 'Q722_2', 'LASTDAY_2', 'Q72_2', 'Q76_2', 'FEED_2', 'Q1141_2', 'ANIMALS_2', 'RECALL_2', 'CHEMIST_2', 'TRIALNO_2']
     # ['LASTDAY_2', 'TOILET_2', 'Q401_2', 'Q76_2', 'RECALL_2', 'Q72_2', 'MEMORY_2', 'PUT_2', 'ANIMALS_2', 'Q75_2', 'KEPT_2', 'Q1754_2', 'MONTH_2', 'Q722_2', 'MUDDLED_2', 'Q1061_2', 'Q191_2', 'Q1808_2', 'YEAR_2', 'Q32_2', 'Q41_2', 'Q71_2', 'ICINTCOM_2', 'SEASON_2', 'Q31_2', 'Q451_2', 'Q651_2', 'Q1141_2', 'CHANGE_2', 'Q1709_2']
     # ['LASTDAY_2', 'RECALL_2', 'LEARN1_2', 'Q75_2', 'LEARN2_2', 'YEAR_2', 'MEMORY_2', 'Q76_2', 'Q72_2', 'LEARN3_2', 'Q401_2', 'CONVERS_2', 'PUT_2', 'REASON_2', 'LASTSEE_2', 'MONEY_2', 'Q1781_2', 'ANIMALS_2', 'SEASON_2', 'MUDDLED_2', 'PAST_2', 'FRDNAME_2', 'Q74_2', 'STORY_2', 'WORDDEL_2', 'Q391_2', 'MONTH_2', 'Q1551_2', 'Q31_2', 'Q331_2']
     # ['MONEY_2', 'Q1781_2', 'LASTDAY_2', 'PUT_2', 'MEMORY_2', 'YEAR_2', 'Q75_2', 'Q76_2', 'SEASON_2', 'LASTSEE_2', 'Q401_2', 'PAST_2', 'Q72_2', 'REASON_2', 'MONTH_2', 'FRDNAME_2', 'RECALL_2', 'STORY_2', 'LEARN2_2', 'MENTAL_2', 'LEARN1_2', 'Q391_2', 'STREET_2', 'WORDFIND_2', 'Q73_2', 'LONGMEM_2', 'KEPT_2', 'Q31_2', 'LEARN3_2', 'Q74_2']
-    # ['CONVERS_2', 'Q72_2', 'FRDNAME_2', 'Q73_2', 'Q1781_2', 'CARENEED_2', 'LEARN1_2', 'MEMORY_2', 'LEARN2_2', 'REASON_2', 'MONEY_2', 'LASTSEE_2', 'LEARN3_2', 'YEAR_2', 'Q401_2', 'PUT_2', 'Q76_2', 'Q75_2', 'RECALL_2', 'LASTDAY_2']
+    # ['MUDDLED_2', 'REASON_2', 'CONVERS_2', 'CARENEED_2', 'STREET_2', 'MONTH_2', 'Q1781_2', 'MONEY_2', 'LEARN2_2', 'LEARN1_2', 'PUT_2', 'Q72_2', 'YEAR_2', 'Q401_2', 'MEMORY_2', 'Q76_2', 'LEARN3_2', 'Q75_2', 'RECALL_2', 'LASTDAY_2']
 
     # LASTDAY_2 found in ['rfe', 'xgb', 'rf', 'et', 'uni']
     # Q75_2 found in ['xgb', 'rf', 'et', 'uni']
@@ -95,7 +95,7 @@ if __name__ == '__main__':
     # MONEY_2 found in ['rf', 'et', 'uni']
     # STORY_2 found in ['rf', 'et']
     # CONVERS_2 found in ['rf', 'uni']
-    # STREET_2 found in ['et']
+    # STREET_2 found in ['et', 'uni']
     # REASON_2 found in ['rf', 'et', 'uni']
     # Q76_2 found in ['rfe', 'xgb', 'rf', 'et', 'uni']
     # ANIMALS_2 found in ['rfe', 'xgb', 'rf']
