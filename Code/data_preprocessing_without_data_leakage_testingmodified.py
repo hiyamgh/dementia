@@ -249,6 +249,9 @@ if __name__ == '__main__':
         df_train.drop(['is_validation'], axis=1, inplace=True)
         df_test.drop(['is_validation'], axis=1, inplace=True)
 
+        df_train.to_csv('../input/train_imputed_notscaled_validation_marked.csv', index=False)
+        df_test.to_csv('../input/test_imputed_notscaled_validation_marked.csv', index=False)
+
         print('\ntraining size: {}'.format(len(df_train) / len(pooled_imputed)))
         print('testing size: {}'.format(len(df_test) / len(pooled_imputed)))
 
