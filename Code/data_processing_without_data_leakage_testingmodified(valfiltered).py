@@ -154,34 +154,88 @@ def scale_ordinal(df):
     return pd.DataFrame(scaler.fit_transform(df), columns=all_cols)
 
 
-def scale_data(df_train, df_test, numeric_cols, ordinal_cols, categorical_cols, target_var):
+def scale_data(df_train, df_test, numeric_cols, ordinal_cols, categorical_cols, colnames_train,
+               colnames_test, target_var):
     print('scaling training and testing data ...')
-    df_train1 = df_train[numeric_cols + ordinal_cols] # the numeric & ordinal
-    df_train2 = df_train[categorical_cols] # the categorical
+    numeric_cols_mod = [c[:-2] if '_2' in c else c for c in numeric_cols]
+    ordinal_cols_mod = [c[:-2] if '_2' in c else c for c in ordinal_cols]
+    categorical_cols_mod = [c[:-2] if '_2' in c else c for c in categorical_cols]
+
+    numeric_cols_final = list(set(numeric_cols).union(set(numeric_cols_mod)))
+    ordinal_cols_final = list(set(ordinal_cols).union(set(ordinal_cols_mod)))
+    categorical_cols_final = list(set(categorical_cols).union(set(categorical_cols_mod)))
+
+    imp_feats = list(pd.read_csv('../input/feature_importance_modified.csv')['Feature'])[:20]
+
+    cols2type = {
+        'ordinal': [],
+        'numeric': [],
+        'categorical': []
+    }
+
+    df_train = df_train[imp_feats + [target_var]]
+    imp_feats_test = [c[:-2] if '_2' in c else c for c in imp_feats]
+    df_test = df_test[imp_feats_test + [target_var]]
+    df_test = df_test.rename(columns=dict(zip(imp_feats_test, imp_feats)))
+
+    print(df_train.columns)
+    print(df_test.columns)
+
+    print(df_train.shape)
+    print(df_test.shape)
+
+    for col in df_train.columns:
+        if col == target_var:
+            continue
+        if col in numeric_cols_final:
+            cols2type['numeric'].append(col)
+        elif col in ordinal_cols_final:
+            cols2type['ordinal'].append(col)
+        else:
+            cols2type['categorical'].append(col)
+
+    df_train1, df_train2, df_test1, df_test2 = None, None, None, None
+
+    if cols2type['numeric'] != [] or cols2type['ordinal'] != []:
+        df_train1 = df_train[cols2type['numeric'] + cols2type['ordinal']] # the numeric & ordinal
+        df_test1 = df_test[cols2type['numeric'] + cols2type['ordinal']]  # the numeric & ordinal
+
+    if cols2type['categorical'] != []:
+        df_train2 = df_train[cols2type['categorical']] # the categorical
+        df_test2 = df_test[cols2type['categorical']] # the categorical
+
     df_train_target = df_train[[target_var]] # the target variable
+    df_test_target = df_test[[target_var]] # the target variable
 
-    df_test1 = df_test[numeric_cols + ordinal_cols] # the numeric & ordinal
-    df_test2 = df_test[categorical_cols] # the categorical
-    df_test_target = df_test[[target_var]] # teh target variable
+    df_train1_new, df_test1_new = None, None
 
-    scaler = RobustScaler()
-    X_train = np.array(df_train1.loc[:, df_train1.columns != target_var]) # the numeric & ordinal
-    X_test = np.array(df_test1.loc[:, df_test1.columns != target_var]) # the numeric and ordinal
+    if df_train1 is not None and df_test1 is not None:
+        scaler = RobustScaler()
+        X_train = np.array(df_train1.loc[:, df_train1.columns != target_var]) # the numeric & ordinal
+        X_test = np.array(df_test1.loc[:, df_test1.columns != target_var]) # the numeric and ordinal
 
-    X_train = scaler.fit_transform(X_train) # the numeric & ordinal
-    X_test = scaler.transform(X_test) # the numeric & ordinal
+        X_train = scaler.fit_transform(X_train) # the numeric & ordinal
+        X_test = scaler.transform(X_test) # the numeric & ordinal
 
-    df_train1_new = pd.DataFrame(X_train, columns=numeric_cols + ordinal_cols) # the numeric & ordinal
-    df_test1_new = pd.DataFrame(X_test, columns=numeric_cols + ordinal_cols) # the numeric & ordinal
+        df_train1_new = pd.DataFrame(X_train, columns=cols2type['numeric'] + cols2type['ordinal']) # the numeric & ordinal
+        df_test1_new = pd.DataFrame(X_test, columns=cols2type['numeric'] + cols2type['ordinal']) # the numeric & ordinal
 
-    # df_train_scaled = pd.concat([df_train1_new, df_train2, df_train_target], axis=1)
-    # df_test_scaled = pd.concat([df_test1_new, df_test2, df_test_target], axis=1)
-    df_train_scaled = pd.DataFrame(np.hstack([df_train1_new, df_train2, df_train_target]), columns=numeric_cols + ordinal_cols + categorical_cols + [target_var])
-    df_test_scaled = pd.DataFrame(np.hstack([df_test1_new, df_test2, df_test_target]), columns=numeric_cols + ordinal_cols + categorical_cols + [target_var])
+    to_stack_train, to_stack_test = [], []
+    if df_train1_new is not None and df_test1_new is not None:
+        to_stack_train.append(df_train1_new)
+        to_stack_test.append(df_test1_new)
+
+    if df_train2 is not None and df_test2 is not None:
+        to_stack_train.append(df_train2)
+        to_stack_test.append(df_test2)
+
+    to_stack_train.append(df_train_target)
+    to_stack_test.append(df_test_target)
+
+    df_train_scaled = pd.DataFrame(np.hstack(to_stack_train), columns=cols2type['numeric'] + cols2type['ordinal'] + cols2type['categorical'] + [target_var])
+    df_test_scaled = pd.DataFrame(np.hstack(to_stack_test), columns=cols2type['numeric'] + cols2type['ordinal'] + cols2type['categorical'] + [target_var])
 
     return df_train_scaled, df_test_scaled
-
-#     pd.concat([numeric_ordinal_imp, categorical_df_imp, target], axis=1)
 
 
 def save_cols(numeric, ordinal, categorical, cols_dir):
@@ -240,17 +294,28 @@ if __name__ == '__main__':
         pooled_imputed.to_csv('../input/pooled_imputed_final.csv', index=False)
         from collections import Counter
         print(Counter(pooled_imputed['dem1066']))
+
         # split the data into train and test, then apply scaling (to avoid data leakage)
         # df_train, df_test = stratified_split(pooled_imputed, target_variable='dem1066',
         #                                      test_ratio=0.2, cols_drop=None)
+
         df_train = pooled_imputed[pooled_imputed['is_validation'] == 0]
-        df_test = pooled_imputed[pooled_imputed['is_validation'] == 1]
+        df_test = pd.read_csv('../original_datasets/full validation data (281).csv')
+
+        cols_train = list(df_train.columns)
+        cols_test = list(df_test.columns)
+        # df_imp = pd.read_csv('../input/feature_importance_modified.csv')
+        # imp_feats_orig = list(df_imp['Feature'])[:20]
+        # imp_feats = [f[:-2] if '_2' in f else f for f in imp_feats_orig]
+        # mapping = dict(zip(imp_feats, imp_feats_orig))
+        # df_test = df_test.rename(columns=mapping)
+        # df_train = df_train[imp_feats_orig + ['dem1066']]
 
         df_train.drop(['is_validation'], axis=1, inplace=True)
-        df_test.drop(['is_validation'], axis=1, inplace=True)
-
-        df_train.to_csv('../input/train_imputed_notscaled_validation_marked.csv', index=False)
-        df_test.to_csv('../input/test_imputed_notscaled_validation_marked.csv', index=False)
+        # df_test.drop(['is_validation'], axis=1, inplace=True)
+        #
+        # df_train.to_csv('../input/train_imputed_notscaled_validation_marked.csv', index=False)
+        # df_test.to_csv('../input/test_imputed_notscaled_validation_marked.csv', index=False)
 
         print('\ntraining size: {}'.format(len(df_train) / len(pooled_imputed)))
         print('testing size: {}'.format(len(df_test) / len(pooled_imputed)))
@@ -269,20 +334,18 @@ if __name__ == '__main__':
         # in order to avoid data leakage)
         df_train_scaled, df_test_scaled = scale_data(df_train, df_test, numeric_cols=numeric,
                                                      ordinal_cols=ordinal, categorical_cols=categorical,
+                                                     colnames_train=cols_train, colnames_test=cols_test,
                                                      target_var='dem1066')
 
-        df_train_scaled.to_csv('../input/train_imputed_scaled_validation_marked.csv', index=False)
-        df_test_scaled.to_csv('../input/test_imputed_scaled_validation_marked.csv', index=False)
+        print('\n Final after scaling')
+        print(df_train_scaled.columns)
+        print(df_test_scaled.columns)
 
-        # scaling the data
-        # scale numeric and ordinal with Robust scaler
-        # numeric_ordinal_imp = scale_numeric(df=numeric_ordinal_imp)
+        print(df_train_scaled.shape)
+        print(df_test_scaled.shape)
 
-        # concatenate all subsets back together
-        # pooled_imputed = pd.concat([numeric_ordinal_imp, categorical_df_imp, target], axis=1)
-
-        # # save the data
-        # pooled_imputed.to_csv('../input/pooled_imputed_scaled.csv', index=False)
+        df_train_scaled.to_csv('../input/train_imputed_scaled_validation_filtered.csv', index=False)
+        df_test_scaled.to_csv('../input/test_imputed_scaled_validation_filtered.csv', index=False)
 
 
 
