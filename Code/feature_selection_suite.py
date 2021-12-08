@@ -460,8 +460,8 @@ class FeatureSelection:
         univariate.index = X.columns
         univariate.sort_values(ascending=False, inplace=True)
         # Plot the P values
-        univariate.sort_values(ascending=False)[:NUM_FEATURES_UNIVARIATE].plot.bar(figsize=(25, 15))
-        univariate.sort_values(ascending=False)[:NUM_FEATURES_UNIVARIATE].plot.bar()
+        univariate.sort_values(ascending=False)[:NUM_FEATURES_UNIVARIATE].plot(figsize=(25, 15), kind='barh')
+        univariate.sort_values(ascending=False)[:NUM_FEATURES_UNIVARIATE].plot(kind='barh')
         # plt.show()
         # plt.yscale("log")
         plt.xticks(rotation=25)
