@@ -154,8 +154,7 @@ def scale_ordinal(df):
     return pd.DataFrame(scaler.fit_transform(df), columns=all_cols)
 
 
-def scale_data(df_train, df_test, numeric_cols, ordinal_cols, categorical_cols, colnames_train,
-               colnames_test, target_var):
+def scale_data(df_train, df_test, numeric_cols, ordinal_cols, categorical_cols, target_var):
     print('scaling training and testing data ...')
     numeric_cols_mod = [c[:-2] if '_2' in c else c for c in numeric_cols]
     ordinal_cols_mod = [c[:-2] if '_2' in c else c for c in ordinal_cols]
@@ -334,7 +333,6 @@ if __name__ == '__main__':
         # in order to avoid data leakage)
         df_train_scaled, df_test_scaled = scale_data(df_train, df_test, numeric_cols=numeric,
                                                      ordinal_cols=ordinal, categorical_cols=categorical,
-                                                     colnames_train=cols_train, colnames_test=cols_test,
                                                      target_var='dem1066')
 
         print('\n Final after scaling')
