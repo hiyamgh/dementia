@@ -28,8 +28,11 @@ def get_results_dementia(trained_models_dir):
 
 
 if __name__ == '__main__':
-    dir6 = 'FOML_trans_trained_models/'
-
+    dir6 = 'FOML_trans_trained_models/top20/'
     print('dir: {}'.format(dir6))
     get_results_dementia(dir6)
 
+    print('=========================================')
+    dir7 = 'FOML_trans_trained_models/top10/'
+    print('dir: {}'.format(dir7))
+    get_results_dementia(dir7)

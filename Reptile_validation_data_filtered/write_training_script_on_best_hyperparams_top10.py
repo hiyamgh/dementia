@@ -1,9 +1,9 @@
 import pickle
 
-with open('best_hyps_on_dem1066_top20.pkl', 'rb') as handle:
+with open('best_hyps_on_dem1066_top10.pkl', 'rb') as handle:
     properties = pickle.load(handle)
 
-with open('run_training_on_hyperparams_top20.sh', 'w') as f:
+with open('run_training_on_hyperparams_top10.sh', 'w') as f:
     f.writelines('#!/usr/bin/env bash\n')
     f.writelines('#SBATCH --job-name=fotrcont\n')
     f.writelines('#SBATCH --account=hkg02\n')
@@ -19,7 +19,7 @@ with open('run_training_on_hyperparams_top20.sh', 'w') as f:
     f.writelines('module load python/tensorflow-1.14.0\n')
 
     for k in properties:
-        f.writelines('python main_foml_trans.py --shots {} --inner_batch {} --inner_iters {} --learning_rate {} --meta_step {} --meta_step_final {} --meta_batch {} --meta_iters {} --eval_batch {} --eval_iters {} --model_num "{}" --dim_hidden "{}" --activation_fn "{}" --weights_vector  "{}" --categorical_encoding "{}"  --logdir \"FOML_trans_trained_models/top20/\"\n'.format(
+        f.writelines('python main_foml_trans.py --shots {} --inner_batch {} --inner_iters {} --learning_rate {} --meta_step {} --meta_step_final {} --meta_batch {} --meta_iters {} --eval_batch {} --eval_iters {} --model_num "{}" --dim_hidden "{}" --activation_fn "{}" --weights_vector  "{}" --categorical_encoding "{}"  --logdir \"FOML_trans_trained_models/top10/\"\n'.format(
             properties[k]['shots'],
             properties[k]['inner_batch'],
             properties[k]['inner_iters'],
